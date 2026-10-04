@@ -5,7 +5,8 @@ Questo file si aggiorna a ogni commit, così un'interruzione riprende dal passo 
 
 | Passo | Stato | Commit | Verifica |
 |---|---|---|---|
-| 0 | fatto | (questo commit) | `git show --stat HEAD` |
-| 1 | da fare | | |
+| 0 | fatto | e33855b | `git show --stat e33855b` |
+| 1 | fatto | (questo commit) | `python -m unittest -v v5.test.test_ambiente` → 4/4 OK; tomli a 5a77b12, 228 valide, 516 non valide |
+| 1b | da fare | | |
 
-**Prossimo passo:** 1 — scheletro, `config.py`, `ambiente.docker()` con timeout, `.gitignore`, clone di tomli al commit.
+**Prossimo passo:** 1b — inventario dei test di tomli e tabella di copertura (`fase2/INVENTARIO_TEST_TOMLI.md`).

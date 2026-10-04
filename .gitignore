@@ -1,0 +1,7 @@
+__pycache__/
+# D3: semi, documenti e oracolo dei carichi FINALE; mai in git
+segreti/
+segreti.tar
+segreti.tar.gpg
+# clone di tomli, pacchetti costruiti, sessioni
+lavoro_v5/
