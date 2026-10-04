@@ -44,6 +44,12 @@ OPZIONI_CONTAINER = [                    # brief, "Opzioni minime" (senza -v: Mo
 # (osservati il 2026-10-04 sull'immagine del pacchetto originale; vengono dall'immagine base Python
 # e da Docker). Nessuna viene dall'host. Verificato a ogni esecuzione dai controlli preliminari.
 AMBIENTE_AMMESSO = ["GPG_KEY", "HOME", "HOSTNAME", "LANG", "PATH", "PYTHON_SHA256", "PYTHON_VERSION"]
+OPZIONI_OSSERVATORE = [                  # v5/OSSERVATORE.md
+    "--network", "none", "--read-only", "--cap-drop", "ALL", "--security-opt", "no-new-privileges",
+    "--user", "65534:65534", "--pids-limit", "16", "--memory", "32m",
+    "-v", "/sys/fs/cgroup:/cg:ro",
+]
+FILE_OSSERVABILI = ("memory.peak", "memory.current", "cpu.stat", "memory.events")
 COMANDO_WORKER = ["python", "-I", "/opt/worker/worker.py"]
 COMANDO_WORKER_NULLO = ["python", "-I", "/opt/worker/worker_nullo.py"]
 COMANDO_WORKER_STRUMENTATO = ["python", "-I", "/opt/worker/worker_strumentato.py"]   # solo originale

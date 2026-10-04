@@ -3,6 +3,7 @@
 Nessun altro modulo della v5 lancia `docker` direttamente: lo verifica test_ambiente.
 """
 import hashlib
+import re
 import subprocess
 
 from v5 import config
@@ -60,6 +61,53 @@ def avvia_interattivo(nome, immagine, comando, etichette=()):
         args += ["--label", e]
     return subprocess.Popen([*args, immagine, *comando], stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE)
+
+
+# ------------------------------------------------------------------ osservatore
+
+ID_CONTAINER = re.compile(r"^[0-9a-f]{64}$")
+
+
+class Osservatore:
+    """Container separato che legge i file cgroup dei container misurati (v5/OSSERVATORE.md).
+
+    Accetta solo `cat /cg/docker/<id>/<file>` con <id> di 64 caratteri esadecimali e <file> in
+    config.FILE_OSSERVABILI. Mai montato né raggiungibile dal candidato.
+    """
+
+    def __init__(self, sessione):
+        self.nome = f"v5_osservatore_{sessione}"
+        docker("run", "-d", "--name", self.nome, "--label", f"benchmark-v5.sessione={sessione}",
+               *config.OPZIONI_OSSERVATORE, config.IMMAGINE_OSSERVATORE, "sleep", "86400", controlla=True)
+
+    def leggi(self, id_container, file):
+        if not ID_CONTAINER.match(id_container) or file not in config.FILE_OSSERVABILI:
+            raise ValueError("lettura non ammessa")
+        p = docker("exec", self.nome, "cat", f"/cg/docker/{id_container}/{file}", timeout=config.TIMEOUT_OSSERVATORE)
+        if p.returncode != 0:
+            raise DockerErrore(f"osservatore: {file} di {id_container[:12]}: {p.stderr.strip()[:200]}")
+        return p.stdout
+
+    def picco(self, id_container):
+        return int(self.leggi(id_container, "memory.peak"))
+
+    def cpu_us(self, id_container):
+        for riga in self.leggi(id_container, "cpu.stat").splitlines():
+            k, _, v = riga.partition(" ")
+            if k == "usage_usec":
+                return int(v)
+        raise DockerErrore("cpu.stat senza usage_usec")
+
+    def chiudi(self):
+        return rimuovi(self.nome)
+
+
+def id_di(nome):
+    p = docker("inspect", "--format", "{{.Id}}", nome)
+    cid = p.stdout.strip()
+    if p.returncode != 0 or not ID_CONTAINER.match(cid):
+        raise DockerErrore(f"id di {nome} non disponibile: {p.stderr.strip()[:200]}")
+    return cid
 
 
 # ------------------------------------------------------------------ immagini

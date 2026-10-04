@@ -1,0 +1,53 @@
+{
+  "comando": "python v5/supervisore.py osservatore-prova",
+  "esiti": {
+    "legge_memory_peak": true,
+    "legge_cpu_stat": true,
+    "legge_memory_events": true,
+    "uid": "65534",
+    "capacita_effettive": "CapEff:\t0000000000000000",
+    "scrittura_memory_peak_rifiutata": true,
+    "scrittura_cgroup_rifiutata": true,
+    "scrittura_rootfs_rifiutata": true,
+    "rete_tcp_rifiutata": true,
+    "dns_rifiutato": true,
+    "processi_visibili": "4",
+    "vede_processi_della_sonda": false,
+    "lettura_non_ammessa_rifiutata": true,
+    "id_non_valido_rifiutato": true
+  },
+  "attesi": {
+    "legge_memory_peak": true,
+    "legge_cpu_stat": true,
+    "legge_memory_events": true,
+    "uid": "65534",
+    "capacita_effettive": "CapEff:\t0000000000000000",
+    "scrittura_memory_peak_rifiutata": true,
+    "scrittura_cgroup_rifiutata": true,
+    "scrittura_rootfs_rifiutata": true,
+    "rete_tcp_rifiutata": true,
+    "dns_rifiutato": true,
+    "vede_processi_della_sonda": false,
+    "lettura_non_ammessa_rifiutata": true,
+    "id_non_valido_rifiutato": true
+  },
+  "difformi": {},
+  "opzioni": [
+    "--network",
+    "none",
+    "--read-only",
+    "--cap-drop",
+    "ALL",
+    "--security-opt",
+    "no-new-privileges",
+    "--user",
+    "65534:65534",
+    "--pids-limit",
+    "16",
+    "--memory",
+    "32m",
+    "-v",
+    "/sys/fs/cgroup:/cg:ro"
+  ],
+  "immagine": "alpine@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6"
+}
