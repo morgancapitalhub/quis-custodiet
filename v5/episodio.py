@@ -262,6 +262,38 @@ def con_ripetizione(registro, sessione, n, immagine, casi, osservatore, ruolo, *
     return r, None
 
 
+def riscalda(registro, sessione, immagini, osservatore, casi):
+    """Un episodio NON misurato per ogni immagine della sessione (piano: riscaldamento)."""
+    for k, immagine in enumerate(immagini):
+        r, _ = esegui(sessione, f"risc{k}", immagine, casi, osservatore, "riscaldamento")
+        r["ripetizione"] = 0
+        registro.episodio(r)
+
+
+def sonde_a_vuoto(registro, sessione, immagine, osservatore, quante):
+    """Picchi di memoria del worker nullo, senza casi: interprete + worker, niente tomli."""
+    picchi = []
+    for k in range(quante):
+        r, _ = esegui(sessione, f"vuoto{k}", immagine, [], osservatore, "sonda", comando=config.COMANDO_WORKER_NULLO)
+        r["ripetizione"] = 0
+        registro.episodio(r)
+        if not r["completato"]:
+            raise InfrastrutturaFallita(f"sonda a vuoto non completata: {r['motivo']}")
+        picchi.append(r["memory_peak"])
+    return picchi
+
+
+def controlla_picco_a_vuoto(registro, sessione, immagini, osservatore, casi_riscaldamento):
+    """Riscaldamento + 3 sonde nell'intervallo atteso; altrimenti un secondo riscaldamento; poi stop."""
+    lo, hi = config.PICCO_VUOTO_INTERVALLO
+    for tentativo in (1, 2):
+        riscalda(registro, sessione, immagini, osservatore, casi_riscaldamento)
+        picchi = sonde_a_vuoto(registro, sessione, immagini[0], osservatore, 3)
+        if all(lo <= p <= hi for p in picchi):
+            return {"tentativo": tentativo, "picchi": picchi}
+    raise InfrastrutturaFallita(f"picco a vuoto fuori intervallo [{lo}, {hi}] dopo due riscaldamenti: {picchi}")
+
+
 def valuta_risposte(frame):
     """Dopo la finestra: decodifica e impronta di ogni risposta. Una violazione respinge il candidato."""
     return [confine.esito_frame(f) for f in frame]

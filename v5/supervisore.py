@@ -167,9 +167,85 @@ def _utf8(b):
         return False
 
 
+# ------------------------------------------------------------------ calibra (passo 6)
+
+def _stat(v):
+    import statistics as st
+    m = st.median(v)
+    return {"min": min(v), "mediana": m, "max": max(v), "mad": st.median(abs(x - m) for x in v), "n": len(v)}
+
+
+def calibra(args):
+    """Passo 6: picco a vuoto, risoluzione del vincolo di memoria (D4), CPU pre-pronto.
+
+    python v5/supervisore.py calibra [n_doc sezioni]     (carico DEV provvisorio: 200 × 120)
+    """
+    from v5 import episodio
+    from v5.registro import Registro
+    n_doc, sezioni = (int(args.resto[0]), int(args.resto[1])) if len(args.resto) >= 2 else (200, 120)
+    MiB = 2 ** 20
+    sessione = nuova_sessione()
+    reg = Registro(sessione)
+    oss = ambiente.Osservatore(sessione)
+    try:
+        reg.imposta(controlli=ambiente.controlli(sessione, oss))
+        imm = ambiente.immagine_pacchetto(carichi.pacchetto_originale())
+        casi = carichi.carico_dev(n_doc, sezioni, seme_ordine=1)
+        with ambiente.MisureDiTempo(sessione, reg.diario):
+            # picco del PRIMO container della sessione, prima di qualunque riscaldamento
+            primo = episodio.sonde_a_vuoto(reg, sessione, imm, oss, 1)[0]
+            episodio.riscalda(reg, sessione, [imm], oss, casi[:20])
+            vuoto = episodio.sonde_a_vuoto(reg, sessione, imm, oss, 20)
+            importato, orig, cpu, finestre = [], [], [], []
+            for k in range(10):
+                r, _ = episodio.con_ripetizione(reg, sessione, f"imp{k}", imm, [], oss, "originale")
+                importato.append(r["memory_peak"])
+                cpu.append(r["cpu_pre_pronto_us"])
+                r, frame = episodio.con_ripetizione(reg, sessione, f"orig{k}", imm, casi, oss, "originale",
+                                                    timeout_completamento=600)
+                orig.append(r["memory_peak"])
+                cpu.append(r["cpu_pre_pronto_us"])
+                finestre.append(r["t_finestra_ns"] / 1e9)
+                print(f"{k}: finestra {finestre[-1]:.2f} s, picco {orig[-1] / MiB:.2f} MiB", flush=True)
+        reg.salva()
+    finally:
+        oss.chiudi()
+    sv, si, so, sc, sf = _stat(vuoto), _stat(importato), _stat(orig), _stat(cpu), _stat(finestre)
+    intervallo = [sv["mediana"] - MiB, min(sv["mediana"] + MiB, 8 * MiB)]
+    margine = 0.05 * so["mediana"] + MiB
+    memoria_parser = so["mediana"] - si["mediana"]
+    eccedenza_cpu = max(20_000, 5 * sc["mad"])
+    dati = {
+        "sessione": sessione, "carico": {"n_doc": n_doc, "sezioni": sezioni, "casi": len(casi),
+                                         "byte": sum(len(c) for _, c in casi)},
+        "picco_primo_container_MiB": round(primo / MiB, 3),
+        "picco_vuoto_MiB": {k: round(v / MiB, 3) if k != "n" else v for k, v in sv.items()},
+        "intervallo_picco_vuoto_byte": [int(x) for x in intervallo],
+        "picco_import_MiB": {k: round(v / MiB, 3) if k != "n" else v for k, v in si.items()},
+        "picco_originale_MiB": {k: round(v / MiB, 3) if k != "n" else v for k, v in so.items()},
+        "risoluzione_memoria": {
+            "margine_ammesso_MiB": round(margine / MiB, 3),
+            "di_cui_5_percento_MiB": round(0.05 * so["mediana"] / MiB, 3),
+            "memoria_del_parser_MiB (P_orig - P_import)": round(memoria_parser / MiB, 3),
+            "margine_relativo_sulla_memoria_del_parser": round(margine / memoria_parser, 3) if memoria_parser > 0 else None,
+            "dispersione_P_orig_MiB (max-min)": round((so["max"] - so["min"]) / MiB, 3),
+        },
+        "cpu_pre_pronto_ms": {k: round(v / 1000, 1) if k != "n" else v for k, v in sc.items()},
+        "tetto_cpu_pre_pronto_ms": round((sc["mediana"] + eccedenza_cpu) / 1000, 1),
+        "eccedenza_ammessa_ms": round(eccedenza_cpu / 1000, 1),
+        "finestra_originale_s": sf,
+        "limite_guadagno_ready_abuse": round(eccedenza_cpu / 1e6 / sf["mediana"], 4),
+        "diario": reg.diario,
+    }
+    scrivi_esito("calibrazione.json", dati)
+    print(json.dumps({k: v for k, v in dati.items() if k != "diario"}, indent=2, ensure_ascii=False))
+    return 0
+
+
 # ------------------------------------------------------------------ principale
 
-COMANDI = {"osservatore-prova": osservatore_prova, "controlli": controlli, "episodi-prova": episodi_prova}
+COMANDI = {"osservatore-prova": osservatore_prova, "controlli": controlli, "episodi-prova": episodi_prova,
+           "calibra": calibra}
 
 
 def main():

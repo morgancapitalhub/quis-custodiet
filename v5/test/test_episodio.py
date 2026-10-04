@@ -126,6 +126,13 @@ class TestEpisodio(unittest.TestCase):
             episodio.con_ripetizione(self.reg, self.sessione, "origrip", self.base, CASI, self.oss, "originale",
                                      comando=["python", "-I", "-c", DIFETTOSI["esce_a_meta"]], timeout_completamento=15)
 
+    def test_picco_a_vuoto_fuori_intervallo_ferma_la_sessione(self):
+        with mock.patch.object(config, "PICCO_VUOTO_INTERVALLO", (0, 1)):
+            with self.assertRaisesRegex(episodio.InfrastrutturaFallita, "picco a vuoto"):
+                episodio.controlla_picco_a_vuoto(self.reg, self.sessione, [self.originale], self.oss, CASI)
+        riscaldamenti = [e for e in self.reg.episodi() if e["ruolo"] == "riscaldamento"]
+        self.assertGreaterEqual(len(riscaldamenti), 2)
+
     def test_configurazione_difforme(self):
         info = {"Id": "x", "Mounts": [], "Config": {"Image": "i", "User": "65534:65534",
                                                      "Env": ["PATH=/x", "LANG=C", "GPG_KEY=k", "PYTHON_VERSION=3",

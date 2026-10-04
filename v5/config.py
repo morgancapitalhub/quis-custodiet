@@ -61,3 +61,8 @@ LIMITE_EPISODIO = 64 * 1024 * 1024    # byte per episodio (proposta)
 PROFONDITA_JSON = 8                   # Morgan P3: codifica piatta (era 128)
 LIMITE_NODI = 200_000                 # nodi per risposta (proposta P3, verificata al passo 9)
 LIMITE_STDERR = 64 * 1024             # byte di stderr conservati, solo per diagnosi
+
+# ------------------------------------------------------------- picco a vuoto (piano: mediana ± 1 MiB, max 8 MiB)
+# Calibrato il 2026-10-04 con `python v5/supervisore.py calibra` (fase2/esiti/calibrazione.json):
+# 20 sonde dopo il riscaldamento, mediana 5,086 MiB → [mediana − 1 MiB, mediana + 1 MiB].
+PICCO_VUOTO_INTERVALLO = (4284416, 6381568)
