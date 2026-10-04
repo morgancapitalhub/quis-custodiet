@@ -1,6 +1,6 @@
 # Stato della fase 2
 
-Piano: `fase2/PIANO_FASE2.md` (revisione 2 approvata, revisione 3 con le decisioni P1–P4 del 2026-10-04).
+Piano: `fase2/PIANO_FASE2.md` (revisione 2 approvata; revisioni 3–5 con le decisioni P1–P4, Q1–Q4, C1–C4 del 2026-10-04).
 Questo file si aggiorna a ogni commit, così un'interruzione riprende dal passo indicato.
 
 | Passo | Stato | Commit | Verifica |
@@ -16,9 +16,11 @@ Questo file si aggiorna a ogni commit, così un'interruzione riprende dal passo 
 | 6 | fatto | d7bdee9 | `python v5/supervisore.py calibra` → `fase2/esiti/calibrazione.json`; intervallo del picco a vuoto in `config.py`; `test_episodio` 15/15 (ramo negativo del picco a vuoto compreso) |
 | 7a | fatto | 137b1a9, 7abe55c | quota ufficiale 0,755–0,776 < 0,90; allungare non basta (`fase2/RAPPORTO_QUOTA.md`) |
 | 7b | decisioni Q1–Q4 registrate | e63dd02 | `REQUISITI_AGGIUNTI.md`, piano revisione 4 |
-| 7c | **in attesa della decisione di Morgan** sulla regola del criterio 4 | (questo commit) | codifica compatta ottimizzata; `patch-worker 30` → 1,096, IC95 [1,073; 1,120] (`fase2/RAPPORTO_CRITERIO4.md`); test 56/56 |
+| 7c | fatto (regola decisa: C1) | 8155bf2 | codifica compatta ottimizzata; `patch-worker 30` → 1,096, IC95 [1,073; 1,120] (`fase2/RAPPORTO_CRITERIO4.md`); test 56/56 |
+| 7d | decisioni C1–C4 registrate | (questo commit) | `REQUISITI_AGGIUNTI.md`, piano revisione 5 |
+| 7e | da fare | | |
 
-**Prossimo passo:** decisione di Morgan su `fase2/RAPPORTO_CRITERIO4.md` (regola statistica del criterio 4; opzione 1 raccomandata). Poi: carico DEV definitivo = 300 doc × 120 sezioni (~5 s), memoria Q3 e READY_ABUSE già misurati; passo 8a.
+**Prossimo passo:** 7e — confine: rifiuto dei letterali non finiti, test sul nuovo formato, controllo positivo di GRAFO_NODI; `patch-worker` a blocchi 30/60/120; `calibra-dispersione` e valori congelati in `config.py`. Poi 8a.
 
 Note del passo 6 (da riportare nel rapporto, `fase2/esiti/calibrazione.json`, carico provvisorio 200 × 120 sezioni):
 - picco a vuoto 4,58–5,40 MiB (mediana 5,09); intervallo [4,09; 6,09] MiB; il controllo passa al primo riscaldamento.

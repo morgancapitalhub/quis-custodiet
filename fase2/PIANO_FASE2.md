@@ -374,3 +374,25 @@ La verifica d'albero si applica ai riferimenti `#` (un genitore, raggiungibilit�
 - si riporta il margine `(0,05 × M + τ) / M`.
 
 **READY_ABUSE (Q4):** il limite si ricalcola sul carico DEV definitivo.
+
+---
+
+## Revisione 5 (2026-10-04): decisioni C1–C4
+
+Registrate in `REQUISITI_AGGIUNTI.md`.
+
+**Criterio 4 (C1).** `supervisore.py patch-worker` procede a blocchi: 30 → 60 → 120 coppie ABBA (originale con `worker.py` contro pavimento). Dopo ogni blocco: media geometrica dei rapporti e IC95 con t (gdl 29, 59, 119). Si ferma appena l'estremo superiore è ≤ 1,11 (**passa**); a 120 coppie senza riuscirci, **si riferisce**. Il limite dichiarato è sempre l'estremo superiore. L'aumento dell'errore di primo tipo dovuto ai tre controlli si dichiara nel rapporto. Valori t aggiunti: gdl 59 → 2,001; gdl 119 → 1,980.
+
+**Mappa della risoluzione (C2)**, nel rapporto della fase 2:
+- (a) accelerazione minima distinguibile dal rumore, dal cancello sui confronti nulli e dalla soglia t;
+- (b) fascia attribuibile al worker: fino all'estremo superiore dichiarato di PATCH_WORKER, più il limite di READY_ABUSE;
+- (c) oltre: attribuibile al parser.
+
+**Confine (C3).** `parse_float` del decodificatore rifiuta i letterali che danno ±inf (es. `1e400`). Test del confine rifatti sul nuovo formato. Controllo positivo di GRAFO_NODI in `v5/test/test_grafo_nodi.py`: una v5 indebolita **solo nel test** (verifica d'albero tolta, ricostruzione ingenua che segue i riferimenti) **accetta** una tabella con nodi condivisi che comprime un valore con sottoalberi ripetuti, e ottiene la stessa impronta dell'albero vero con molti meno nodi; **non termina** (o supera un tetto di espansione) su un ciclo. La v5 vera **respinge** entrambi.
+
+**Dispersioni (C4).** Nuovo comando `supervisore.py calibra-dispersione [sessioni]` (proposta: 5 sessioni × 40 episodi dell'originale sul carico DEV definitivo, più 3 episodi senza casi per sessione):
+- **memoria:** residui `P_orig − mediana di sessione` aggregati; dispersione = max − min dei residui aggregati; tolleranza τ = max(0,1 MiB, 10 × dispersione), congelata in `config.py`;
+- **pronto:** residui `CPU pre-pronto − mediana di sessione` aggregati; eccedenza ammessa = max(20 ms, **quantile 0,995** dei residui aggregati), congelata in `config.py`. Il quantile 0,995 è la mia proposta, da verificare in fase 4 con zero rifiuti dell'originale;
+- in ogni sessione di valutazione: posizione = mediane dell'originale della sessione; soglie = posizione + valori congelati.
+
+**Carico DEV definitivo:** 300 documenti × 120 sezioni (~5 s per episodio dell'originale).

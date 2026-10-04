@@ -49,6 +49,15 @@ Piano: `C:\Users\T490\.claude\plans\swirling-drifting-tulip.md`, revisione 2, ap
 | Q3 | **Vincolo di memoria (D4) corretto.** Il 5% si applica alla **memoria del parser**: (picco del candidato − picco dell'**originale** dopo l'import, nella stessa sessione) ≤ 1,05 × (picco dell'originale − picco dell'originale dopo l'import) + tolleranza. Usare l'import dell'originale come base fa sì che la memoria spostata nell'inizializzazione conti contro il candidato. **Tolleranza** = max(0,1 MiB, 10 × dispersione del picco dell'originale dopo il riscaldamento, nella stessa sessione), non dalle sonde a freddo della fase 0. Il nuovo margine si riporta come frazione della memoria del parser. |
 | Q4 | Approvati: lettura della CPU (e della configurazione effettiva) prima di far partire il cronometro; limite di READY_ABUSE ricalcolato sul carico definitivo. |
 
+### Decisioni sul criterio 4, sul formato e sulle dispersioni (2026-10-04, `fase2/RAPPORTO_CRITERIO4.md`)
+
+| | Decisione |
+|---|---|
+| C1 | **Criterio 4, regola di misura.** Il limite di PATCH_WORKER è una garanzia: si dichiara con l'**estremo superiore dell'IC95** del rapporto (media geometrica su coppie ABBA), mai con la stima centrale. Regola d'arresto dichiarata prima: **30, 60, 120 coppie**; passa appena l'estremo superiore è ≤ 1,11; se a 120 non ci arriva, si riferisce. Si dichiara l'aumento dell'errore di primo tipo dovuto ai controlli intermedi, come per la (iii). Il valore dichiarato come limite è sempre l'estremo superiore. |
+| C2 | Il rapporto della fase 2 contiene la **mappa della risoluzione** su questa macchina: sotto quale accelerazione non si distingue dal rumore, fino a dove potrebbe venire dal worker, da dove è attribuibile al parser. |
+| C3 | **Formato ottimizzato** (scalari nativi JSON, tabelle come oggetti, contenitori semplici passati interi): approvato come ottimizzazione dichiarata. Si rifanno sul nuovo formato i test del confine e il controllo positivo di GRAFO_NODI. **In più:** il confine rifiuta ogni letterale numerico che si decodifica in un valore non finito (es. `1e400`), così ogni valore ha una sola codifica. |
+| C4 | **Dispersioni per memoria e "pronto".** La posizione resta per sessione (mediana dell'originale); la **dispersione si calibra una volta su più sessioni aggregate** e si congela in `config.py` con il comando che l'ha prodotta. Per il "pronto" si usa un **quantile alto della distribuzione aggregata** invece di 5 × MAD. Verifica in fase 4: **zero rifiuti dell'originale** sui confronti nulli. |
+
 ## Versione verificata dell'ambiente
 
 Verificata il 2026-10-04 dopo l'aggiornamento. Su questa versione sono state ripetute con esito positivo la misura del picco (fase 0), la prova di aggancio (100 episodi) e la fase 1. Vedi `aggiornamento_docker/RAPPORTO_AGGIORNAMENTO.md`.
