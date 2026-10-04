@@ -55,6 +55,24 @@ COMANDO_WORKER_NULLO = ["python", "-I", "/opt/worker/worker_nullo.py"]
 COMANDO_WORKER_STRUMENTATO = ["python", "-I", "/opt/worker/worker_strumentato.py"]   # solo originale
 COMANDO_WORKER_PAVIMENTO = ["python", "-I", "/opt/worker/worker_pavimento.py"]       # solo originale, criterio 4
 LIMITE_PATCH_WORKER = 1.11        # Morgan Q2: T(worker) / T(pavimento) sull'originale, come quota 0,90
+BLOCCHI_PATCH_WORKER = (30, 60, 120)   # Morgan C1: regola d'arresto dichiarata prima
+
+# ------------------------------------------------------------- carico DEV definitivo (passo 7)
+CARICO_DEV = (300, 120)           # documenti × sezioni: ~5 s per episodio dell'originale
+
+# ------------------------------------------------------------- dispersioni congelate (Morgan C4)
+# Posizione per sessione = mediana dell'originale; dispersione calibrata UNA volta su più sessioni
+# aggregate con `python v5/supervisore.py calibra-dispersione` (fase2/esiti/dispersione.json).
+QUANTILE_PRONTO = 0.995           # proposta: quantile alto dei residui aggregati della CPU pre-pronto
+VINCOLO_MEMORIA = 1.05            # pilota_costo_v4.py riga 67, applicato alla memoria del parser (Q3)
+TOLLERANZA_MEMORIA = None         # byte, da calibrare
+ECCEDENZA_PRONTO = None           # microsecondi di CPU pre-pronto oltre la mediana dell'originale, da calibrare
+
+# ------------------------------------------------------------- statistica
+# t di Student bilaterale al 95% per gradi di libertà = coppie - 1. Da pilota_costo_v4.py riga 65,
+# più i valori per le regole a blocchi (D9, C1); ricalcolati da test_statistica per integrazione numerica.
+T_CRITICO_95 = {4: 2.776, 5: 2.571, 6: 2.447, 7: 2.365, 8: 2.306, 9: 2.262, 10: 2.228, 11: 2.201, 14: 2.145,
+                15: 2.131, 19: 2.093, 29: 2.045, 31: 2.040, 59: 2.001, 63: 1.998, 119: 1.980, 127: 1.979}
 
 # ------------------------------------------------------------- confine JSON (piano, revisione 3)
 FRAME_PRONTO = b'{"pronto":1}'

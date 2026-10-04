@@ -135,10 +135,16 @@ class TestFrame(unittest.TestCase):
 
     def test_rifiuti(self):
         casi = {
-            b'{"v":[["f",NaN]]}': "costante", b'{"v":[["f",Infinity]]}': "costante",
-            b'{"v":[["i","1"]],"v":[["i","2"]]}': "doppia", b'\xff': "UTF-8", b'{"v":': "non valido",
-            b'{"v":[["i","1"]]} x': "non valido",
+            b'{"v":[["l",[NaN]]]}': "costante", b'{"v":[["l",[-Infinity]]]}': "costante",
+            b'{"v":[["l",[1e400]]]}': "non finito", b'{"v":[["m",{"a":-1E+999}]]}': "non finito",
+            b'{"v":[["l",[]]],"v":[["l",[]]]}': "doppia", b'{"v":[["m",{"a":1,"a":2}]]}': "doppia",
+            b'\xff': "UTF-8", b'{"v":': "non valido", b'{"v":[["l",[]]]} x': "non valido",
         }
+        for dati, motivo in casi.items():
+            with self.subTest(dati=dati), self.assertRaisesRegex(ViolazioneConfine, motivo):
+                confine.esito_frame(dati)
+        # ogni valore ha una sola codifica nativa: 1e300 (finito) resta ammesso
+        self.assertEqual(confine.esito_frame(b'{"v":[["l",[1e300]]]}')[0], "v")
         for dati, motivo in casi.items():
             with self.subTest(dati=dati), self.assertRaisesRegex(ViolazioneConfine, motivo):
                 confine.esito_frame(dati)

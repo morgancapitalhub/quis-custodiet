@@ -15,6 +15,7 @@ Morgan P3, tre condizioni:
 """
 import hashlib
 import json
+import math
 from collections import deque
 
 from v5 import config
@@ -187,6 +188,15 @@ def _rifiuta_costante(nome):
     raise ViolazioneConfine(f"costante JSON non ammessa: {nome}")
 
 
+def _float_finito(testo):
+    """Morgan C3: un letterale numerico che si decodifica in ±inf (es. 1e400) è rifiutato, così ogni
+    valore ha una sola codifica (i float non finiti viaggiano solo come ["f", "inf"|"-inf"|"nan"])."""
+    x = float(testo)
+    if x != x or x in (math.inf, -math.inf):
+        raise ViolazioneConfine(f"letterale numerico non finito: {testo[:40]}")
+    return x
+
+
 def _senza_doppie(coppie):
     d = {}
     for k, v in coppie:
@@ -208,7 +218,8 @@ def decodifica(dati, limite_byte=config.LIMITE_FRAME, limite_profondita=config.P
     if p > limite_profondita:
         raise ViolazioneConfine(f"profondità JSON {p} oltre il limite {limite_profondita}")
     try:
-        return json.loads(testo, parse_constant=_rifiuta_costante, object_pairs_hook=_senza_doppie)
+        return json.loads(testo, parse_constant=_rifiuta_costante, object_pairs_hook=_senza_doppie,
+                          parse_float=_float_finito)
     except ValueError as e:
         if isinstance(e, ViolazioneConfine):
             raise

@@ -350,31 +350,30 @@ def quota(args):
 
 # ------------------------------------------------------------------ patch-worker (criterio 4, Q2)
 
-T_CRITICO_95 = {7: 2.365, 15: 2.131, 29: 2.045, 31: 2.040, 63: 1.998}   # t bilaterale 95% (v4 riga 65; piano)
-
-
 def patch_worker(args):
-    """Limite realistico di PATCH_WORKER con ABBA: originale con worker.py contro originale con il
-    pavimento (encoder JSON in C). Stima = media geometrica dei rapporti per coppia; IC95 con t.
+    """Criterio 4 (Morgan Q2, C1): limite di PATCH_WORKER = estremo superiore dell'IC95 del rapporto
+    T(originale con worker.py) / T(originale con il pavimento), coppie ABBA, media geometrica.
 
-    python v5/supervisore.py patch-worker [coppie]      (predefinito 30)
+    Regola d'arresto dichiarata prima: blocchi di 30, 60, 120 coppie; passa appena l'estremo
+    superiore è ≤ 1,11; a 120 senza riuscirci → si riferisce. Il limite dichiarato è sempre
+    l'estremo superiore.     python v5/supervisore.py patch-worker
     """
     import math
     import statistics as st
     from v5 import episodio
     from v5.registro import Registro
-    coppie = int(args.resto[0]) if args.resto else 30
     sessione = nuova_sessione()
     reg = Registro(sessione)
     oss = ambiente.Osservatore(sessione)
-    rapporti, t_w, t_p = [], [], []
+    rapporti, t_w, t_p, controlli_intermedi = [], [], [], []
+    esito = "riferire"
     try:
         reg.imposta(controlli=ambiente.controlli(sessione, oss))
         imm = ambiente.immagine_pacchetto(carichi.pacchetto_originale())
-        casi = carichi.carico_dev(300, 120, seme_ordine=1)
+        casi = carichi.carico_dev(*config.CARICO_DEV, seme_ordine=1)
         with ambiente.MisureDiTempo(sessione, reg.diario):
             episodio.controlla_picco_a_vuoto(reg, sessione, [imm], oss, casi[:20])
-            for k in range(coppie):
+            for k in range(max(config.BLOCCHI_PATCH_WORKER)):
                 ordine = [("w", config.COMANDO_WORKER), ("p", config.COMANDO_WORKER_PAVIMENTO)]
                 if k % 2:
                     ordine.reverse()
@@ -385,26 +384,103 @@ def patch_worker(args):
                     t[nome] = r["t_finestra_ns"] / 1e9
                 t_w.append(t["w"]); t_p.append(t["p"]); rapporti.append(t["w"] / t["p"])
                 print(f"coppia {k}: worker {t['w']:.3f} s, pavimento {t['p']:.3f} s, rapporto {rapporti[-1]:.4f}", flush=True)
+                if len(rapporti) in config.BLOCCHI_PATCH_WORKER:
+                    logr = [math.log(x) for x in rapporti]
+                    m, es = st.mean(logr), st.stdev(logr) / math.sqrt(len(logr))
+                    tc = config.T_CRITICO_95[len(logr) - 1]
+                    c = {"coppie": len(logr), "media_geometrica": round(math.exp(m), 4),
+                         "IC95": [round(math.exp(m - tc * es), 4), round(math.exp(m + tc * es), 4)]}
+                    controlli_intermedi.append(c)
+                    print(json.dumps(c), flush=True)
+                    if c["IC95"][1] <= config.LIMITE_PATCH_WORKER:
+                        esito = "passa"
+                        break
         reg.salva()
     finally:
         oss.chiudi()
-    logr = [math.log(x) for x in rapporti]
-    m, es = st.mean(logr), st.stdev(logr) / math.sqrt(len(logr))
-    tc = T_CRITICO_95.get(len(logr) - 1)
-    dati = {"sessione": sessione, "coppie": coppie, "rapporto_media_geometrica": round(math.exp(m), 4),
-            "IC95": [round(math.exp(m - tc * es), 4), round(math.exp(m + tc * es), 4)] if tc else None,
-            "rapporto_mediana": round(st.median(rapporti), 4), "soglia": config.LIMITE_PATCH_WORKER,
+    ultimo = controlli_intermedi[-1]
+    dati = {"sessione": sessione, "esito": esito, "limite_dichiarato": ultimo["IC95"][1],
+            "soglia": config.LIMITE_PATCH_WORKER, "blocchi": config.BLOCCHI_PATCH_WORKER,
+            "controlli_intermedi": controlli_intermedi, "rapporto_mediana": round(st.median(rapporti), 4),
             "T_worker_s": _stat(t_w), "T_pavimento_s": _stat(t_p), "rapporti": [round(x, 4) for x in rapporti],
+            "nota": "tre controlli intermedi sulla stessa serie: l'errore di primo tipo complessivo supera il 5% nominale",
             "diario": reg.diario}
     scrivi_esito("patch_worker.json", dati)
-    print(json.dumps({k: v for k, v in dati.items() if k != "diario"}, indent=2, ensure_ascii=False))
+    print(json.dumps({k: v for k, v in dati.items() if k not in ("diario", "rapporti")}, indent=2, ensure_ascii=False))
+    return 0 if esito == "passa" else 1
+
+
+# ------------------------------------------------------------------ calibra-dispersione (C4)
+
+def quantile_alto(valori, q):
+    """Quantile a rango più vicino (nessuna interpolazione): il valore osservato di rango ceil(q·n)."""
+    import math
+    v = sorted(valori)
+    return v[max(0, math.ceil(q * len(v)) - 1)]
+
+
+def calibra_dispersione(args):
+    """Morgan C4: dispersioni di memoria e CPU pre-pronto, aggregate su più sessioni, da congelare.
+
+    python v5/supervisore.py calibra-dispersione [sessioni episodi]    (predefinito 5 × 40)
+    Posizione per sessione = mediana dell'originale; qui si misurano i RESIDUI dalla mediana di sessione.
+    """
+    import statistics as st
+    from v5 import episodio
+    from v5.registro import Registro
+    sessioni, n_ep = (int(args.resto[0]), int(args.resto[1])) if len(args.resto) >= 2 else (5, 40)
+    MiB = 2 ** 20
+    per_sessione, res_picco, res_cpu = [], [], []
+    for s in range(sessioni):
+        sessione = nuova_sessione()
+        reg = Registro(sessione)
+        oss = ambiente.Osservatore(sessione)
+        try:
+            reg.imposta(controlli=ambiente.controlli(sessione, oss))
+            imm = ambiente.immagine_pacchetto(carichi.pacchetto_originale())
+            casi = carichi.carico_dev(*config.CARICO_DEV, seme_ordine=1)
+            with ambiente.MisureDiTempo(sessione, reg.diario):
+                episodio.controlla_picco_a_vuoto(reg, sessione, [imm], oss, casi[:20])
+                imp = [episodio.con_ripetizione(reg, sessione, f"imp{k}", imm, [], oss, "originale")[0]["memory_peak"]
+                       for k in range(3)]
+                picchi, cpu, tempi = [], [], []
+                for k in range(n_ep):
+                    r, _ = episodio.con_ripetizione(reg, sessione, f"orig{k}", imm, casi, oss, "originale",
+                                                    timeout_completamento=600)
+                    picchi.append(r["memory_peak"]); cpu.append(r["cpu_pre_pronto_us"])
+                    tempi.append(r["t_finestra_ns"] / 1e9)
+            reg.salva()
+        finally:
+            oss.chiudi()
+        mp, mc = st.median(picchi), st.median(cpu)
+        res_picco += [p - mp for p in picchi]
+        res_cpu += [c - mc for c in cpu]
+        per_sessione.append({"sessione": sessione, "P_import_MiB": round(st.median(imp) / MiB, 4),
+                             "P_orig_mediana_MiB": round(mp / MiB, 4), "P_orig_max_meno_min_MiB": round((max(picchi) - min(picchi)) / MiB, 4),
+                             "cpu_pre_pronto_mediana_ms": round(mc / 1000, 1), "T_orig_mediana_s": round(st.median(tempi), 3),
+                             "diario": reg.diario})
+        print(json.dumps({k: v for k, v in per_sessione[-1].items() if k != "diario"}), flush=True)
+    dispersione = max(res_picco) - min(res_picco)
+    tau = max(0.1 * MiB, 10 * dispersione)
+    q = quantile_alto(res_cpu, config.QUANTILE_PRONTO)
+    eccedenza = max(20_000, q)
+    t_med = st.median(x["T_orig_mediana_s"] for x in per_sessione)
+    dati = {"sessioni": sessioni, "episodi_per_sessione": n_ep, "per_sessione": per_sessione,
+            "memoria": {"residui_n": len(res_picco), "dispersione_byte (max-min dei residui aggregati)": dispersione,
+                        "tolleranza_byte": int(tau), "tolleranza_MiB": round(tau / MiB, 4)},
+            "pronto": {"residui_n": len(res_cpu), "quantile": config.QUANTILE_PRONTO,
+                       "quantile_residui_us": q, "max_residui_us": max(res_cpu),
+                       "eccedenza_ammessa_us": int(eccedenza), "limite_guadagno_ready_abuse": round(eccedenza / 1e6 / t_med, 4)}}
+    scrivi_esito("dispersione.json", dati)
+    print(json.dumps({k: v for k, v in dati.items() if k != "per_sessione"}, indent=2, ensure_ascii=False))
     return 0
 
 
 # ------------------------------------------------------------------ principale
 
 COMANDI = {"osservatore-prova": osservatore_prova, "controlli": controlli, "episodi-prova": episodi_prova,
-           "calibra": calibra, "quota": quota, "patch-worker": patch_worker}
+           "calibra": calibra, "quota": quota, "patch-worker": patch_worker,
+           "calibra-dispersione": calibra_dispersione}
 
 
 def main():
