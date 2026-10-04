@@ -350,3 +350,27 @@ Limiti del confine aggiornati: **profondità JSON 8** (era 128). **`LIMITE_NODI`
 **Suite (fase 3):** si aggiunge **GRAFO_NODI** (nodi condivisi e cicli), con controllo positivo su una v5 indebolita senza la verifica d'albero. Come per le altre varianti indebolite, la sostituzione avviene solo nel processo di prova.
 
 **Ordine dei passi:** la parte di `confine.py` che riguarda la tabella di nodi (verifica d'albero e impronta) si costruisce al **passo 2**, insieme al worker, perché sono le due metà dello stesso formato. Al passo 5 restano frame, limiti di dimensione e profondità, ed episodio.
+
+---
+
+## Revisione 4 (2026-10-04): decisioni sulla quota e sulla memoria (Q1–Q4)
+
+Registrate in `REQUISITI_AGGIUNTI.md`.
+
+**Codifica compatta (Q1).** Formato di una risposta valore: `{"v": [nodo, …]}`, radice = nodo 0; i nodi sono solo **contenitori**:
+- `["m", [[chiave, etichetta, contenuto], …]]`, `["l", [[etichetta, contenuto], …]]`, `["T", [[etichetta, contenuto], …]]`;
+- un figlio contenitore è `["#", indice]` (in `m`: `[chiave, "#", indice]`);
+- uno scalare è `[etichetta, contenuto]` con etichette `s i f b n D dt d t x`, come prima;
+- una radice scalare (mai prodotta dall'originale) è `["S", [etichetta, contenuto]]`.
+
+La verifica d'albero si applica ai riferimenti `#` (un genitore, raggiungibilità, limite di nodi); impronta e ricostruzione restano iterative e dipendono dal valore. Profondità JSON massima 7 ≤ 8.
+
+**Criterio 4 (Q2).** Nuovo worker `worker_pavimento.py`, **solo originale**: stessa API, codifica con `json.dumps` annidato della libreria standard (encoder in C, `default=str` per date e orari; risultato non verificabile, serve solo come pavimento di tempo). `supervisore.py quota` misura a rotazione orig / nullo / strumentato / pavimento e riporta il **limite realistico di PATCH_WORKER = mediana(T_orig) / mediana(T_pavimento)**. Il criterio passa se il limite è ≤ 1,11. Se non passa: ottimizzazione della codifica compatta; se ancora non basta, si riferisce.
+
+**Memoria (Q3).** In ogni sessione di valutazione: 3 episodi dell'originale **senza casi** (picco dopo l'import, `P_import`), più i picchi degli episodi dell'originale (`P_orig`).
+- memoria del parser dell'originale `M = mediana(P_orig) − mediana(P_import)`;
+- tolleranza `τ = max(0,1 MiB, 10 × (max(P_orig) − min(P_orig)))`. **Dispersione = max − min** dei picchi dell'originale nella sessione, dopo il riscaldamento (definizione operativa, dichiarata);
+- vincolo: `mediana(P_cand) − mediana(P_import) ≤ 1,05 × M + τ`;
+- si riporta il margine `(0,05 × M + τ) / M`.
+
+**READY_ABUSE (Q4):** il limite si ricalcola sul carico DEV definitivo.
