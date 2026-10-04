@@ -13,10 +13,10 @@ Questo file si aggiorna a ogni commit, così un'interruzione riprende dal passo 
 | 3 | fatto | d42387c | `python v5/supervisore.py osservatore-prova` → nessuna difformità (`fase2/esiti/osservatore.json`) |
 | 4 | fatto | abc4665 | `python -m unittest v5.test.test_controlli` → 7/7; `python v5/supervisore.py controlli` → superati in 10,1 s (`fase2/esiti/controlli.json`) |
 | 5 | fatto | 8802496 | `python -m unittest v5.test.test_confine v5.test.test_episodio` → 29/29; `python v5/supervisore.py episodi-prova 100` → 100/100 completi, esiti identici, 0 ripetizioni, 0 client bloccati (`fase2/esiti/episodi_prova.json`) |
-| 6 | fatto | (questo commit) | `python v5/supervisore.py calibra` → `fase2/esiti/calibrazione.json`; intervallo del picco a vuoto in `config.py`; `test_episodio` 15/15 (ramo negativo del picco a vuoto compreso) |
-| 7 | da fare | | |
+| 6 | fatto | d7bdee9 | `python v5/supervisore.py calibra` → `fase2/esiti/calibrazione.json`; intervallo del picco a vuoto in `config.py`; `test_episodio` 15/15 (ramo negativo del picco a vuoto compreso) |
+| 7 | **in attesa della decisione di Morgan** | (questo commit) | quota ufficiale 0,755–0,776 < 0,90; allungare i documenti non basta (`fase2/RAPPORTO_QUOTA.md`) |
 
-**Prossimo passo:** 7 — quota di parsing (worker nullo + strumentato), dimensione definitiva del carico DEV, risoluzione della memoria aggiornata.
+**Prossimo passo:** decisione di Morgan su `fase2/RAPPORTO_QUOTA.md` (opzione 1 raccomandata: codifica compatta + limite dichiarato). Poi: completare il passo 7 (rimisura della quota, dimensione definitiva del carico DEV, risoluzione della memoria aggiornata) e proseguire con 8a.
 
 Note del passo 6 (da riportare nel rapporto, `fase2/esiti/calibrazione.json`, carico provvisorio 200 × 120 sezioni):
 - picco a vuoto 4,58–5,40 MiB (mediana 5,09); intervallo [4,09; 6,09] MiB; il controllo passa al primo riscaldamento.

@@ -242,10 +242,77 @@ def calibra(args):
     return 0
 
 
+# ------------------------------------------------------------------ quota (passo 7)
+
+def misura_quota(reg, sessione, oss, imm, casi, giri=10, etichetta="dev"):
+    """Brief, "Sovraccarico misurato": worker vero, nullo e strumentato sullo stesso flusso, a rotazione.
+
+    quota_e = 1 - mediana(T_nullo) / mediana(T_orig)        (il nullo non codifica: sottostima il sovraccarico)
+    quota_i = mediana(t_dentro_API / T_finestra) sul worker strumentato (solo originale, codice fidato)
+    quota   = min(quota_e, quota_i);  guadagno massimo PATCH_WORKER = 1 / quota
+    """
+    from v5 import episodio
+    import statistics as st
+    varianti = {"orig": (config.COMANDO_WORKER, False), "nullo": (config.COMANDO_WORKER_NULLO, False),
+                "strum": (config.COMANDO_WORKER_STRUMENTATO, True)}
+    ordine = ["orig", "nullo", "strum"]
+    t = {k: [] for k in varianti}
+    rapporti_i, codifica, fuori_dal_worker = [], [], []
+    for g in range(giri):
+        for nome in (ordine if g % 2 == 0 else ordine[::-1]):
+            comando, finale = varianti[nome]
+            r, _ = episodio.con_ripetizione(reg, sessione, f"{etichetta}_{nome}{g}", imm, casi, oss, "originale",
+                                            comando=comando, frame_finale=finale, timeout_completamento=600)
+            t[nome].append(r["t_finestra_ns"] / 1e9)
+            if finale:
+                ff = json.loads(r["frame_finale"])
+                rapporti_i.append(ff["t_api_ns"] / r["t_finestra_ns"])
+                codifica.append((ff["t_caso_ns"] - ff["t_api_ns"]) / r["t_finestra_ns"])
+                fuori_dal_worker.append(1 - ff["t_caso_ns"] / r["t_finestra_ns"])
+        print(f"giro {g}: " + ", ".join(f"{k} {v[-1]:.3f} s" for k, v in t.items()), flush=True)
+    quota_e = 1 - st.median(t["nullo"]) / st.median(t["orig"])
+    quota_i = st.median(rapporti_i)
+    quota = min(quota_e, quota_i)
+    return {"carico": etichetta, "giri": giri, "casi": len(casi), "byte": sum(len(c) for _, c in casi),
+            "T_orig_s": _stat(t["orig"]), "T_nullo_s": _stat(t["nullo"]), "T_strumentato_s": _stat(t["strum"]),
+            "quota_esterna": round(quota_e, 4), "quota_interna": round(quota_i, 4),
+            "quota_interna_min_max": [round(min(rapporti_i), 4), round(max(rapporti_i), 4)],
+            "scomposizione_della_finestra (strumentato, mediane)": {
+                "dentro_API": round(quota_i, 4), "codifica_nodi_e_JSON": round(st.median(codifica), 4),
+                "fuori_dal_worker (lettura, trasporto, scrittura)": round(st.median(fuori_dal_worker), 4)},
+            "quota_ufficiale": round(quota, 4), "guadagno_massimo_patch_worker": round(1 / quota, 4),
+            "soglia": 0.90, "superata": quota >= 0.90}
+
+
+def quota(args):
+    """python v5/supervisore.py quota [n_doc sezioni]   (carico DEV)"""
+    from v5 import episodio
+    from v5.registro import Registro
+    n_doc, sezioni = (int(args.resto[0]), int(args.resto[1])) if len(args.resto) >= 2 else (300, 120)
+    sessione = nuova_sessione()
+    reg = Registro(sessione)
+    oss = ambiente.Osservatore(sessione)
+    try:
+        reg.imposta(controlli=ambiente.controlli(sessione, oss))
+        imm = ambiente.immagine_pacchetto(carichi.pacchetto_originale())
+        casi = carichi.carico_dev(n_doc, sezioni, seme_ordine=1)
+        with ambiente.MisureDiTempo(sessione, reg.diario):
+            vuoto = episodio.controlla_picco_a_vuoto(reg, sessione, [imm], oss, casi[:20])
+            esito = misura_quota(reg, sessione, oss, imm, casi)
+        reg.salva()
+    finally:
+        oss.chiudi()
+    dati = {"sessione": sessione, "n_doc": n_doc, "sezioni": sezioni, "picco_a_vuoto": vuoto, **esito,
+            "diario": reg.diario}
+    scrivi_esito(f"quota_dev_{n_doc}x{sezioni}.json", dati)
+    print(json.dumps({k: v for k, v in dati.items() if k != "diario"}, indent=2, ensure_ascii=False))
+    return 0 if esito["superata"] else 1
+
+
 # ------------------------------------------------------------------ principale
 
 COMANDI = {"osservatore-prova": osservatore_prova, "controlli": controlli, "episodi-prova": episodi_prova,
-           "calibra": calibra}
+           "calibra": calibra, "quota": quota}
 
 
 def main():

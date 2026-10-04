@@ -1,0 +1,78 @@
+{
+  "comando": "python v5/supervisore.py quota 100 360",
+  "sessione": "202610041543096272e1",
+  "n_doc": 100,
+  "sezioni": 360,
+  "picco_a_vuoto": {
+    "tentativo": 1,
+    "picchi": [
+      5582848,
+      5074944,
+      5079040
+    ]
+  },
+  "carico": "dev",
+  "giri": 10,
+  "casi": 116,
+  "byte": 7584454,
+  "T_orig_s": {
+    "min": 4.7784602,
+    "mediana": 4.87144105,
+    "max": 5.2934935,
+    "mad": 0.05901460000000025,
+    "n": 10
+  },
+  "T_nullo_s": {
+    "min": 0.381016,
+    "mediana": 0.45164725,
+    "max": 0.5338608,
+    "mad": 0.03719214999999998,
+    "n": 10
+  },
+  "T_strumentato_s": {
+    "min": 4.7454022,
+    "mediana": 4.8952915,
+    "max": 5.1055441,
+    "mad": 0.07256299999999971,
+    "n": 10
+  },
+  "quota_esterna": 0.9073,
+  "quota_interna": 0.7545,
+  "quota_interna_min_max": [
+    0.7501,
+    0.7587
+  ],
+  "scomposizione_della_finestra (strumentato, mediane)": {
+    "dentro_API": 0.7545,
+    "codifica_nodi_e_JSON": 0.2284,
+    "fuori_dal_worker (lettura, trasporto, scrittura)": 0.0171
+  },
+  "quota_ufficiale": 0.7545,
+  "guadagno_massimo_patch_worker": 1.3254,
+  "soglia": 0.9,
+  "superata": false,
+  "diario": [
+    {
+      "evento": "fermati",
+      "container": [
+        "sqz_demo_landing",
+        "sqz_demo_api",
+        "sqz_demo_grafana",
+        "sqz_demo_postgres",
+        "sqz_demo_prometheus"
+      ],
+      "ora": "2026-10-04T13:43:43.714224+00:00"
+    },
+    {
+      "evento": "riavviati",
+      "esiti": {
+        "sqz_demo_landing": true,
+        "sqz_demo_api": true,
+        "sqz_demo_grafana": true,
+        "sqz_demo_postgres": true,
+        "sqz_demo_prometheus": true
+      },
+      "ora": "2026-10-04T13:46:27.473429+00:00"
+    }
+  ]
+}

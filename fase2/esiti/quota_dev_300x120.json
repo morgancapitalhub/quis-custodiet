@@ -1,0 +1,73 @@
+{
+  "comando": "python v5/supervisore.py quota 300 120",
+  "sessione": "20261004153430ffccf1",
+  "n_doc": 300,
+  "sezioni": 120,
+  "picco_a_vuoto": {
+    "tentativo": 1,
+    "picchi": [
+      5685248,
+      4595712,
+      5607424
+    ]
+  },
+  "carico": "dev",
+  "giri": 10,
+  "casi": 316,
+  "byte": 7550775,
+  "T_orig_s": {
+    "min": 4.8470934,
+    "mediana": 5.0578015,
+    "max": 5.1573658,
+    "mad": 0.06930894999999992,
+    "n": 10
+  },
+  "T_nullo_s": {
+    "min": 0.4234949,
+    "mediana": 0.49528635,
+    "max": 0.5761064,
+    "mad": 0.031809350000000014,
+    "n": 10
+  },
+  "T_strumentato_s": {
+    "min": 4.9508271,
+    "mediana": 5.056328000000001,
+    "max": 5.1182784,
+    "mad": 0.04594755000000017,
+    "n": 10
+  },
+  "quota_esterna": 0.9021,
+  "quota_interna": 0.7756,
+  "quota_interna_min_max": [
+    0.7729,
+    0.7778
+  ],
+  "quota_ufficiale": 0.7756,
+  "guadagno_massimo_patch_worker": 1.2893,
+  "soglia": 0.9,
+  "superata": false,
+  "diario": [
+    {
+      "evento": "fermati",
+      "container": [
+        "sqz_demo_landing",
+        "sqz_demo_api",
+        "sqz_demo_grafana",
+        "sqz_demo_postgres",
+        "sqz_demo_prometheus"
+      ],
+      "ora": "2026-10-04T13:34:49.267171+00:00"
+    },
+    {
+      "evento": "riavviati",
+      "esiti": {
+        "sqz_demo_landing": true,
+        "sqz_demo_api": true,
+        "sqz_demo_grafana": true,
+        "sqz_demo_postgres": true,
+        "sqz_demo_prometheus": true
+      },
+      "ora": "2026-10-04T13:37:38.120658+00:00"
+    }
+  ]
+}
