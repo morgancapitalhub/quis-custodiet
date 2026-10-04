@@ -1,0 +1,16 @@
+{
+  "episodi": 100,
+  "righe_per_episodio": 200,
+  "con_tutte_le_risposte_corrette": 100,
+  "con_picco_letto": 100,
+  "client_bloccati_dopo_eof": 4,
+  "bloccati_con_tutte_le_risposte": 4,
+  "bloccati_con_picco_letto": 4,
+  "rm_falliti": 0,
+  "episodi_bloccati": [
+    11,
+    36,
+    47,
+    92
+  ]
+}
