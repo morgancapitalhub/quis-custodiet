@@ -28,19 +28,21 @@ La codifica cresce con la dimensione del risultato, quindi con il documento: per
 
 ## Quanto si può ridurre la codifica (misura sull'host, Python 3.14, 40 documenti da 120 sezioni)
 
-| Codifica | Costo rispetto al parse | Comando |
-|---|---|---|
-| attuale (P3: un nodo per ogni valore) | 40% | script in Python con `worker.nodi` + `json.dumps` (riportato nel registro della sessione) |
-| **compatta**: solo i contenitori sono nodi; gli scalari restano nel genitore come `[etichetta, contenuto]` | **23%** | idem, con la variante compatta |
-| riferimento: `json.dumps` annidato nativo in C, **senza etichette di tipo** | 8% | idem |
+Comando: `python fase2/strumenti/confronto_codifica.py` (due esecuzioni; sull'host i rapporti variano tra una e l'altra).
 
-Nel container la codifica attuale pesa il 30% del parse (22,8 / 75,5), meno che sull'host. Con la variante compatta la stima è ~17%, cioè **quota ≈ 0,84** e limite ≈ 1,19×. Anche il riferimento in C, che non si può usare così com'è (perde i tipi, ed è annidato fino a ~1000 livelli contro P3), lascerebbe la quota intorno a 0,87–0,90.
+| Codifica | Costo rispetto al parse |
+|---|---|
+| attuale (P3: un nodo per ogni valore) | 35–40% (di cui visita in nodi 24–25%) |
+| **compatta**: solo i contenitori sono nodi; gli scalari restano nel genitore come `[etichetta, contenuto]` | **23–26%** |
+| riferimento: `json.dumps` annidato nativo in C, **senza etichette di tipo** | 6–8% |
+
+Nel container la codifica attuale pesa il 30% del parse (22,8 / 75,5). Con la variante compatta la codifica costerebbe il 57–74% di quella attuale, cioè il 13–17% della finestra. Quota stimata **≈ 0,80–0,84**, limite ≈ 1,19–1,25×, da rimisurare. Il riferimento in C non si può usare così com'è: perde i tipi ed è annidato fino a ~1000 livelli, contro P3. Anche con quello la quota resterebbe intorno a 0,87–0,90.
 
 **Conclusione:** con un'uscita tipizzata, verificabile caso per caso e codificata nel processo del candidato, 0,90 non si raggiunge su questa macchina. Si possono solo ridurre il sovraccarico e dichiararne il limite.
 
 ## Opzioni
 
-1. **Codifica compatta + limite dichiarato** *(raccomandata)*. Rimane il formato piatto di P3, ma solo i contenitori sono nodi. La verifica d'albero, la ricostruzione iterativa e l'impronta che dipende dal valore restano identiche; gli scalari, che sono foglie, non possono creare cicli né condivisioni. Quota attesa ~0,84, PATCH_WORKER limitato a ~1,19×, da rimisurare. Il criterio d'accettazione 4 (quota ≥ 90%) diventa "quota misurata e limite dichiarato": accelerazioni sotto il limite si dichiarano non attribuibili con certezza al parser, come il brief prevede già per PATCH_WORKER.
+1. **Codifica compatta + limite dichiarato** *(raccomandata)*. Rimane il formato piatto di P3, ma solo i contenitori sono nodi. La verifica d'albero, la ricostruzione iterativa e l'impronta che dipende dal valore restano identiche; gli scalari, che sono foglie, non possono creare cicli né condivisioni. Quota attesa ~0,80–0,84, PATCH_WORKER limitato a ~1,19–1,25×, da rimisurare. Il criterio d'accettazione 4 (quota ≥ 90%) diventa "quota misurata e limite dichiarato": accelerazioni sotto il limite si dichiarano non attribuibili con certezza al parser, come il brief prevede già per PATCH_WORKER.
 2. **Codifica ibrida**: JSON annidato con l'encoder in C per i risultati poco profondi, formato piatto per quelli profondi. Quota attesa ~0,87–0,90, ma due formati al confine, nuovo esame di P3 (profondità del JSON, verifica dei tipi esatti più debole: l'encoder in C accetta le sottoclassi di `dict`, `list` e `str`).
 3. **Mantenere 0,90 come requisito**: con il disegno attuale il criterio 4 non è soddisfacibile, e la v5 non arriva all'accettazione.
 
