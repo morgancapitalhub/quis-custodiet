@@ -1,0 +1,21 @@
+{
+  "attacco": "ARGV_CACHE",
+  "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+  "esito_v4": "valido",
+  "accettato_da_una_corsa": true,
+  "accelerazione": 64.95695136438351,
+  "t": 15.092803246976468,
+  "piu_veloce": true,
+  "piu_lento": false,
+  "picco": 177406,
+  "crescita": 16040,
+  "finale_sintetico_nella_cartella_candidato": [
+    "finale_sintetico_201.toml",
+    "finale_sintetico_202.toml",
+    "finale_sintetico_203.toml",
+    "finale_sintetico_204.toml",
+    "finale_sintetico_205.toml"
+  ],
+  "originale_raggiungibile_da_candidato": true,
+  "durata_s": 26
+}

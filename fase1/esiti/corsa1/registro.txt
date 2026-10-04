@@ -1,0 +1,17 @@
+2026-10-04 08:54:02 UTC  immagine benchmark-v5/rif-v4:fase1 sha256:b694b5ebd793e82f7c9587ba51d2dea32f83b4e66f4def89a74ec67a9f0b43e9
+2026-10-04 08:54:02 UTC  container attivi prima delle misure: ['sqz_demo_landing', 'sqz_demo_api', 'sqz_demo_grafana', 'sqz_demo_postgres', 'sqz_demo_prometheus']
+2026-10-04 08:54:07 UTC  fermati per le misure di tempo: ['sqz_demo_landing', 'sqz_demo_api', 'sqz_demo_grafana', 'sqz_demo_postgres', 'sqz_demo_prometheus']
+2026-10-04 08:54:07 UTC  NULLO: docker run --rm --network none --cap-drop ALL --security-opt no-new-privileges --pids-limit 256 --memory 2g --memory-swap 2g --cpus 1 -e CHIAVE_FINTA=<segreto finto> benchmark-v5/rif-v4:fase1 NULLO
+2026-10-04 09:24:07 UTC  NULLO: TIMEOUT dopo 1800 s
+2026-10-04 09:24:07 UTC  PATCH_TIMER: docker run --rm --network none --cap-drop ALL --security-opt no-new-privileges --pids-limit 256 --memory 2g --memory-swap 2g --cpus 1 -e CHIAVE_FINTA=<segreto finto> benchmark-v5/rif-v4:fase1 PATCH_TIMER
+2026-10-04 09:24:54 UTC  PATCH_TIMER: {"attacco": "PATCH_TIMER", "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e", "esito_v4": "valido", "accettato_da_una_corsa": true, "accelerazione": 1.927412423405163, "t": 2.9277463213029438, "piu_veloce": true, "piu_lento": false, "picco": 177430, "crescita": 16064, "finale_sintetico_nella_cartella_candidato": ["finale_sintetico_201.toml", "finale_sintetico_202.toml", "finale_sintetico_203.toml", "finale_sintetico_204.toml", "finale_sintetico_205.toml"], "originale_raggiungibile_da_candidato": true}
+2026-10-04 09:24:54 UTC  ARGV_CACHE: docker run --rm --network none --cap-drop ALL --security-opt no-new-privileges --pids-limit 256 --memory 2g --memory-swap 2g --cpus 1 -e CHIAVE_FINTA=<segreto finto> benchmark-v5/rif-v4:fase1 ARGV_CACHE
+2026-10-04 09:54:54 UTC  ARGV_CACHE: TIMEOUT dopo 1800 s
+2026-10-04 09:54:54 UTC  SEGRETO: docker run --rm --network none --cap-drop ALL --security-opt no-new-privileges --pids-limit 256 --memory 2g --memory-swap 2g --cpus 1 -e CHIAVE_FINTA=<segreto finto> benchmark-v5/rif-v4:fase1 SEGRETO
+2026-10-04 09:55:19 UTC  SEGRETO: {"attacco": "SEGRETO", "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e", "esito_v4": "valido", "accettato_da_una_corsa": false, "accelerazione": 1.0171302801282291, "t": 0.48464524200056075, "piu_veloce": false, "piu_lento": false, "picco": 177406, "crescita": 16040, "segreto_letto": true, "finale_sintetico_nella_cartella_candidato": ["finale_sintetico_201.toml", "finale_sintetico_202.toml", "finale_sintetico_203.toml", "finale_sintetico_204.toml", "finale_sintetico_205.toml"], "originale_raggiungibile_da_candidato": true}
+2026-10-04 09:55:19 UTC  riavviato sqz_demo_landing: ok
+2026-10-04 09:55:20 UTC  riavviato sqz_demo_api: ok
+2026-10-04 09:55:21 UTC  riavviato sqz_demo_grafana: ok
+2026-10-04 09:55:22 UTC  riavviato sqz_demo_postgres: ok
+2026-10-04 09:55:22 UTC  riavviato sqz_demo_prometheus: ok
+2026-10-04 09:55:22 UTC  container attivi dopo: ['stoic_pasteur', 'goofy_varahamihira', 'sqz_demo_landing', 'sqz_demo_api', 'sqz_demo_grafana', 'sqz_demo_postgres', 'sqz_demo_prometheus']
