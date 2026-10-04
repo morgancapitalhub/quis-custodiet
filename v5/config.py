@@ -29,3 +29,29 @@ TIMEOUT_OSSERVATORE = 10     # s, docker exec nell'osservatore
 TIMEOUT_COSTRUZIONE = 1200   # s, docker build
 TIMEOUT_RM = 60              # s, docker rm -f
 ATTESA_RITORNO_CLIENT = 15   # s, dopo la chiusura di stdin (prova di aggancio)
+
+# ------------------------------------------------------------- immagini e container misurati
+# Base fissata per digest (fase 1); il pacchetto entra nell'immagine con COPY (Morgan D1).
+IMMAGINE_PYTHON = "python@sha256:b1b81d67b8df73bf6067191790c233ef9e598b863fc1ccf447956138ca466d99"
+IMMAGINE_OSSERVATORE = "alpine@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6"
+OPZIONI_CONTAINER = [                    # brief, "Opzioni minime" (senza -v: Morgan D1)
+    "--network", "none", "--read-only", "--cap-drop", "ALL",
+    "--security-opt", "no-new-privileges", "--pids-limit", "64",
+    "--memory", "1g", "--memory-swap", "1g", "--cpus", "1", "--user", "65534:65534",
+    "--tmpfs", "/tmp:rw,size=64m",
+]
+# Nomi delle variabili d'ambiente nel container misurato: devono essere ESATTAMENTE questi
+# (osservati il 2026-10-04 sull'immagine del pacchetto originale; vengono dall'immagine base Python
+# e da Docker). Nessuna viene dall'host. Verificato a ogni esecuzione dai controlli preliminari.
+AMBIENTE_AMMESSO = ["GPG_KEY", "HOME", "HOSTNAME", "LANG", "PATH", "PYTHON_SHA256", "PYTHON_VERSION"]
+COMANDO_WORKER = ["python", "-I", "/opt/worker/worker.py"]
+COMANDO_WORKER_NULLO = ["python", "-I", "/opt/worker/worker_nullo.py"]
+COMANDO_WORKER_STRUMENTATO = ["python", "-I", "/opt/worker/worker_strumentato.py"]   # solo originale
+
+# ------------------------------------------------------------- confine JSON (piano, revisione 3)
+FRAME_PRONTO = b'{"pronto":1}'
+LIMITE_FRAME = 2 * 1024 * 1024        # byte per frame di risposta (proposta, verificata al passo 9)
+LIMITE_EPISODIO = 64 * 1024 * 1024    # byte per episodio (proposta)
+PROFONDITA_JSON = 8                   # Morgan P3: codifica piatta (era 128)
+LIMITE_NODI = 200_000                 # nodi per risposta (proposta P3, verificata al passo 9)
+LIMITE_STDERR = 64 * 1024             # byte di stderr conservati, solo per diagnosi

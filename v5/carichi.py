@@ -42,6 +42,46 @@ def verifica_tomli():
         raise RuntimeError(f"attese {config.FIXTURE_VALIDE_ATTESE} fixture valide, trovate {n}")
 
 
+PACCHETTI = config.LAVORO / "pacchetti"
+
+
+def _pacchetto(parser=None):
+    """Cartella con il solo tomli/ (originale, o con _parser.py sostituito). Nome = impronta.
+
+    Ritorna il percorso della cartella da usare come contesto di costruzione dell'immagine.
+    Il testo del candidato è solo scritto su disco: l'host non lo esegue mai.
+    """
+    import shutil
+    import tempfile
+    from v5 import ambiente
+    PACCHETTI.mkdir(parents=True, exist_ok=True)
+    tmp = Path(tempfile.mkdtemp(dir=PACCHETTI, prefix="tmp_"))
+    shutil.copytree(TOMLI / "src" / "tomli", tmp / "tomli", ignore=shutil.ignore_patterns("__pycache__"))
+    if parser is not None:
+        (tmp / "tomli" / "_parser.py").write_bytes(parser if isinstance(parser, bytes) else parser.encode("utf-8"))
+    impronta = ambiente.impronta_file([p for p in tmp.rglob("*") if p.is_file()], tmp)
+    finale = PACCHETTI / impronta[:16]
+    if finale.exists():
+        shutil.rmtree(tmp)
+    else:
+        tmp.rename(finale)
+    return finale
+
+
+def pacchetto_originale():
+    verifica_tomli()
+    return _pacchetto()
+
+
+def pacchetto_candidato(testo_parser):
+    verifica_tomli()
+    return _pacchetto(testo_parser)
+
+
+def parser_originale():
+    return (TOMLI / "src" / "tomli" / "_parser.py").read_text(encoding="utf-8")
+
+
 def fixture_valide():
     return sorted((TOMLI / "tests" / "data" / "valid").rglob("*.toml"))
 

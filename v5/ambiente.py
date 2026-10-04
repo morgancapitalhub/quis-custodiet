@@ -2,6 +2,7 @@
 
 Nessun altro modulo della v5 lancia `docker` direttamente: lo verifica test_ambiente.
 """
+import hashlib
 import subprocess
 
 from v5 import config
@@ -45,3 +46,58 @@ def esiste(nome_o_id):
     p = docker("ps", "-a", "-q", "--no-trunc", "--filter", f"name=^{nome_o_id}$")
     q = docker("ps", "-a", "-q", "--no-trunc", "--filter", f"id={nome_o_id}")
     return bool(p.stdout.strip() or q.stdout.strip())
+
+
+def avvia_interattivo(nome, immagine, comando, etichette=()):
+    """`docker run -i` agganciato con le opzioni del brief (config.OPZIONI_CONTAINER).
+
+    Restituisce il Popen con pipe binarie: è l'unico punto della v5 che apre un container
+    in streaming. Nessuna variabile d'ambiente passata (-e) e nessun montaggio dell'host.
+    Le scadenze del protocollo le applica chi legge (episodio.py); lo smontaggio è rimuovi().
+    """
+    args = ["docker", "run", "-i", "--rm", "--name", nome, *config.OPZIONI_CONTAINER]
+    for e in etichette:
+        args += ["--label", e]
+    return subprocess.Popen([*args, immagine, *comando], stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE)
+
+
+# ------------------------------------------------------------------ immagini
+
+def impronta_file(percorsi, radice):
+    """SHA-256 della lista ordinata (percorso relativo, SHA-256 del contenuto)."""
+    righe = []
+    for p in sorted(percorsi, key=lambda q: q.relative_to(radice).as_posix()):
+        righe.append(f"{p.relative_to(radice).as_posix()} {hashlib.sha256(p.read_bytes()).hexdigest()}\n")
+    return hashlib.sha256("".join(righe).encode()).hexdigest()
+
+
+def _esiste_immagine(tag):
+    return docker("image", "inspect", tag, "--format", "{{.Id}}").returncode == 0
+
+
+def immagine_base():
+    """Costruisce (se manca) l'immagine base; il tag dipende da Dockerfile, worker e digest."""
+    v5 = config.RADICE / "v5"
+    file = [v5 / "docker" / "Dockerfile.base", v5 / ".dockerignore", *sorted((v5 / "worker").glob("*.py"))]
+    impronta = hashlib.sha256((impronta_file(file, v5) + config.IMMAGINE_PYTHON).encode()).hexdigest()
+    tag = f"benchmark-v5/base:{impronta[:16]}"
+    if not _esiste_immagine(tag):
+        docker("build", "-q", "-f", str(v5 / "docker" / "Dockerfile.base"),
+               "--build-arg", f"IMMAGINE_PYTHON={config.IMMAGINE_PYTHON}",
+               "--label", f"benchmark-v5.base={impronta}", "-t", tag, str(v5),
+               timeout=config.TIMEOUT_COSTRUZIONE, controlla=True)
+    return tag
+
+
+def immagine_pacchetto(cartella):
+    """Costruisce (se manca) l'immagine di un pacchetto. `cartella` contiene solo tomli/."""
+    base = immagine_base()
+    impronta_pacchetto = impronta_file([p for p in cartella.rglob("*") if p.is_file()], cartella)
+    impronta = hashlib.sha256((base + impronta_pacchetto).encode()).hexdigest()
+    tag = f"benchmark-v5/pacchetto:{impronta[:16]}"
+    if not _esiste_immagine(tag):
+        docker("build", "-q", "-f", str(config.RADICE / "v5" / "docker" / "Dockerfile.pacchetto"),
+               "--build-arg", f"BASE={base}", "--label", f"benchmark-v5.pacchetto={impronta_pacchetto}",
+               "-t", tag, str(cartella), timeout=config.TIMEOUT_COSTRUZIONE, controlla=True)
+    return tag

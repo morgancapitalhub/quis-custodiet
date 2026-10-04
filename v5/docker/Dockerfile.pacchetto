@@ -1,0 +1,9 @@
+# v5 — immagine di un pacchetto (originale o candidato): base + tomli in /work (Morgan D1).
+# Contesto di costruzione: la sola cartella del pacchetto (lavoro_v5/pacchetti/<impronta>/),
+# che contiene soltanto tomli/. L'originale non entra mai nel contesto di un candidato.
+ARG BASE
+FROM ${BASE}
+USER 0:0
+COPY tomli /work/tomli
+RUN chmod -R a-w /work
+USER 65534:65534
