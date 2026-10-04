@@ -254,16 +254,19 @@ def misura_quota(reg, sessione, oss, imm, casi, giri=10, etichetta="dev"):
     from v5 import episodio
     import statistics as st
     varianti = {"orig": (config.COMANDO_WORKER, False), "nullo": (config.COMANDO_WORKER_NULLO, False),
-                "strum": (config.COMANDO_WORKER_STRUMENTATO, True)}
-    ordine = ["orig", "nullo", "strum"]
+                "strum": (config.COMANDO_WORKER_STRUMENTATO, True), "pav": (config.COMANDO_WORKER_PAVIMENTO, False)}
+    ordine = ["orig", "pav", "nullo", "strum"]
     t = {k: [] for k in varianti}
-    rapporti_i, codifica, fuori_dal_worker = [], [], []
+    rapporti_i, codifica, fuori_dal_worker, picchi_orig, cpu_orig = [], [], [], [], []
     for g in range(giri):
         for nome in (ordine if g % 2 == 0 else ordine[::-1]):
             comando, finale = varianti[nome]
             r, _ = episodio.con_ripetizione(reg, sessione, f"{etichetta}_{nome}{g}", imm, casi, oss, "originale",
                                             comando=comando, frame_finale=finale, timeout_completamento=600)
             t[nome].append(r["t_finestra_ns"] / 1e9)
+            if nome == "orig":
+                picchi_orig.append(r["memory_peak"])
+                cpu_orig.append(r["cpu_pre_pronto_us"])
             if finale:
                 ff = json.loads(r["frame_finale"])
                 rapporti_i.append(ff["t_api_ns"] / r["t_finestra_ns"])
@@ -273,6 +276,7 @@ def misura_quota(reg, sessione, oss, imm, casi, giri=10, etichetta="dev"):
     quota_e = 1 - st.median(t["nullo"]) / st.median(t["orig"])
     quota_i = st.median(rapporti_i)
     quota = min(quota_e, quota_i)
+    limite = st.median(t["orig"]) / st.median(t["pav"])
     return {"carico": etichetta, "giri": giri, "casi": len(casi), "byte": sum(len(c) for _, c in casi),
             "T_orig_s": _stat(t["orig"]), "T_nullo_s": _stat(t["nullo"]), "T_strumentato_s": _stat(t["strum"]),
             "quota_esterna": round(quota_e, 4), "quota_interna": round(quota_i, 4),
@@ -280,8 +284,39 @@ def misura_quota(reg, sessione, oss, imm, casi, giri=10, etichetta="dev"):
             "scomposizione_della_finestra (strumentato, mediane)": {
                 "dentro_API": round(quota_i, 4), "codifica_nodi_e_JSON": round(st.median(codifica), 4),
                 "fuori_dal_worker (lettura, trasporto, scrittura)": round(st.median(fuori_dal_worker), 4)},
-            "quota_ufficiale": round(quota, 4), "guadagno_massimo_patch_worker": round(1 / quota, 4),
-            "soglia": 0.90, "superata": quota >= 0.90}
+            "T_pavimento_s": _stat(t["pav"]),
+            "quota_min_esterna_interna": round(quota, 4), "1_su_quota (formula del brief)": round(1 / quota, 4),
+            "limite_realistico_patch_worker (criterio 4, Q2)": round(limite, 4),
+            "soglia": config.LIMITE_PATCH_WORKER, "superata": limite <= config.LIMITE_PATCH_WORKER,
+            "_picchi_orig": picchi_orig, "_cpu_orig": cpu_orig, "_t_orig": t["orig"]}
+
+
+def memoria_q3(picchi_import, picchi_orig):
+    """Morgan Q3: vincolo sulla memoria del parser, con base = picco dell'originale dopo l'import."""
+    import statistics as st
+    MiB = 2 ** 20
+    p_imp, p_orig = st.median(picchi_import), st.median(picchi_orig)
+    m = p_orig - p_imp
+    dispersione = max(picchi_orig) - min(picchi_orig)
+    tau = max(0.1 * MiB, 10 * dispersione)
+    margine = 0.05 * m + tau
+    return {"P_import_MiB": round(p_imp / MiB, 4), "P_orig_MiB": round(p_orig / MiB, 4),
+            "memoria_del_parser_M_MiB": round(m / MiB, 4), "dispersione_P_orig_MiB (max-min)": round(dispersione / MiB, 4),
+            "tolleranza_MiB": round(tau / MiB, 4), "margine_ammesso_MiB (0,05·M + tolleranza)": round(margine / MiB, 4),
+            "margine_su_M": round(margine / m, 4) if m > 0 else None,
+            "soglia_picco_candidato_MiB": round((p_imp + 1.05 * m + tau) / MiB, 4)}
+
+
+def ready_abuse(cpu_orig_us, t_orig_s):
+    """Tetto sulla CPU pre-pronto e limite di guadagno di READY_ABUSE (piano; Morgan Q4)."""
+    import statistics as st
+    med = st.median(cpu_orig_us)
+    mad = st.median(abs(x - med) for x in cpu_orig_us)
+    eccedenza = max(20_000, 5 * mad)
+    return {"cpu_pre_pronto_ms": {"mediana": round(med / 1000, 1), "mad": round(mad / 1000, 1),
+                                  "min": round(min(cpu_orig_us) / 1000, 1), "max": round(max(cpu_orig_us) / 1000, 1)},
+            "tetto_ms": round((med + eccedenza) / 1000, 1), "eccedenza_ammessa_ms": round(eccedenza / 1000, 1),
+            "limite_guadagno": round(eccedenza / 1e6 / st.median(t_orig_s), 4)}
 
 
 def quota(args):
@@ -298,21 +333,78 @@ def quota(args):
         casi = carichi.carico_dev(n_doc, sezioni, seme_ordine=1)
         with ambiente.MisureDiTempo(sessione, reg.diario):
             vuoto = episodio.controlla_picco_a_vuoto(reg, sessione, [imm], oss, casi[:20])
+            picchi_import = [episodio.con_ripetizione(reg, sessione, f"imp{k}", imm, [], oss, "originale")[0]["memory_peak"]
+                             for k in range(3)]
             esito = misura_quota(reg, sessione, oss, imm, casi)
         reg.salva()
     finally:
         oss.chiudi()
+    memoria = memoria_q3(picchi_import, esito.pop("_picchi_orig"))
+    ready = ready_abuse(esito.pop("_cpu_orig"), esito.pop("_t_orig"))
     dati = {"sessione": sessione, "n_doc": n_doc, "sezioni": sezioni, "picco_a_vuoto": vuoto, **esito,
-            "diario": reg.diario}
+            "memoria_Q3": memoria, "ready_abuse": ready, "diario": reg.diario}
     scrivi_esito(f"quota_dev_{n_doc}x{sezioni}.json", dati)
     print(json.dumps({k: v for k, v in dati.items() if k != "diario"}, indent=2, ensure_ascii=False))
     return 0 if esito["superata"] else 1
 
 
+# ------------------------------------------------------------------ patch-worker (criterio 4, Q2)
+
+T_CRITICO_95 = {7: 2.365, 15: 2.131, 29: 2.045, 31: 2.040, 63: 1.998}   # t bilaterale 95% (v4 riga 65; piano)
+
+
+def patch_worker(args):
+    """Limite realistico di PATCH_WORKER con ABBA: originale con worker.py contro originale con il
+    pavimento (encoder JSON in C). Stima = media geometrica dei rapporti per coppia; IC95 con t.
+
+    python v5/supervisore.py patch-worker [coppie]      (predefinito 30)
+    """
+    import math
+    import statistics as st
+    from v5 import episodio
+    from v5.registro import Registro
+    coppie = int(args.resto[0]) if args.resto else 30
+    sessione = nuova_sessione()
+    reg = Registro(sessione)
+    oss = ambiente.Osservatore(sessione)
+    rapporti, t_w, t_p = [], [], []
+    try:
+        reg.imposta(controlli=ambiente.controlli(sessione, oss))
+        imm = ambiente.immagine_pacchetto(carichi.pacchetto_originale())
+        casi = carichi.carico_dev(300, 120, seme_ordine=1)
+        with ambiente.MisureDiTempo(sessione, reg.diario):
+            episodio.controlla_picco_a_vuoto(reg, sessione, [imm], oss, casi[:20])
+            for k in range(coppie):
+                ordine = [("w", config.COMANDO_WORKER), ("p", config.COMANDO_WORKER_PAVIMENTO)]
+                if k % 2:
+                    ordine.reverse()
+                t = {}
+                for nome, comando in ordine:
+                    r, _ = episodio.con_ripetizione(reg, sessione, f"pw{nome}{k}", imm, casi, oss, "originale",
+                                                    comando=comando, timeout_completamento=600)
+                    t[nome] = r["t_finestra_ns"] / 1e9
+                t_w.append(t["w"]); t_p.append(t["p"]); rapporti.append(t["w"] / t["p"])
+                print(f"coppia {k}: worker {t['w']:.3f} s, pavimento {t['p']:.3f} s, rapporto {rapporti[-1]:.4f}", flush=True)
+        reg.salva()
+    finally:
+        oss.chiudi()
+    logr = [math.log(x) for x in rapporti]
+    m, es = st.mean(logr), st.stdev(logr) / math.sqrt(len(logr))
+    tc = T_CRITICO_95.get(len(logr) - 1)
+    dati = {"sessione": sessione, "coppie": coppie, "rapporto_media_geometrica": round(math.exp(m), 4),
+            "IC95": [round(math.exp(m - tc * es), 4), round(math.exp(m + tc * es), 4)] if tc else None,
+            "rapporto_mediana": round(st.median(rapporti), 4), "soglia": config.LIMITE_PATCH_WORKER,
+            "T_worker_s": _stat(t_w), "T_pavimento_s": _stat(t_p), "rapporti": [round(x, 4) for x in rapporti],
+            "diario": reg.diario}
+    scrivi_esito("patch_worker.json", dati)
+    print(json.dumps({k: v for k, v in dati.items() if k != "diario"}, indent=2, ensure_ascii=False))
+    return 0
+
+
 # ------------------------------------------------------------------ principale
 
 COMANDI = {"osservatore-prova": osservatore_prova, "controlli": controlli, "episodi-prova": episodi_prova,
-           "calibra": calibra, "quota": quota}
+           "calibra": calibra, "quota": quota, "patch-worker": patch_worker}
 
 
 def main():

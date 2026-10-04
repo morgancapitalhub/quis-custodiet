@@ -10,26 +10,34 @@ from v5 import confine
 from v5.confine import ViolazioneConfine
 
 
+def _rif(v, mappa):
+    return ["#", mappa[v[1]]] if type(v) is list and v[0] == "#" else v
+
+
 def renumera(tabella, seme):
-    """Stesso valore, numerazione diversa dei nodi (la radice resta 0)."""
+    """Stesso valore, numerazione diversa dei nodi contenitore (la radice resta 0) e ordine
+    d'inserimento delle chiavi rimescolato."""
     rnd = random.Random(seme)
     altri = list(range(1, len(tabella)))
     rnd.shuffle(altri)
     mappa = {0: 0, **{vecchio: nuovo for vecchio, nuovo in zip(range(1, len(tabella)), altri)}}
     nuova = [None] * len(tabella)
-    for i, (tag, c) in enumerate(tabella):
-        if tag in ("l", "T"):
-            c = [mappa[j] for j in c]
-        elif tag == "m":
-            c = [[k, mappa[j]] for k, j in c]
-            rnd.shuffle(c)                       # anche l'ordine d'inserimento delle chiavi
-        nuova[mappa[i]] = [tag, c]
+    for i, (tag, voci) in enumerate(tabella):
+        if tag == "m":
+            chiavi = list(voci)
+            rnd.shuffle(chiavi)
+            voci = {k: _rif(voci[k], mappa) for k in chiavi}
+        elif tag in ("l", "T"):
+            voci = [_rif(v, mappa) for v in voci]
+        nuova[mappa[i]] = [tag, voci]
     return nuova
 
 
-ESEMPIO = [["m", [["a", 1], ["b", 2], ["c", 5]]], ["i", "1"], ["l", [3, 4]], ["s", "x"],
-           ["dt", ["1979-05-27T00:32:00-07:00", "datetime.timezone", "-1 day, 17:00:00"]],
-           ["m", [["z", 6]]], ["f", "-0.0"]]
+# {"a": 1, "b": ["x", dt], "c": {"z": -0.0, "w": {}, "n": nan}}
+ESEMPIO = [["m", {"a": 1, "b": ["#", 1], "c": ["#", 2]}],
+           ["l", ["x", ["dt", ["1979-05-27T00:32:00-07:00", "datetime.timezone", "-1 day, 17:00:00"]]]],
+           ["m", {"z": -0.0, "w": ["#", 3], "n": ["f", "nan"]}],
+           ["m", {}]]
 
 
 class TestAlbero(unittest.TestCase):
@@ -41,52 +49,59 @@ class TestAlbero(unittest.TestCase):
         for seme in range(20):
             self.assertEqual(confine.esito({"v": renumera(ESEMPIO, seme)})[1], base)
 
+    def test_nativo_ed_etichettato_coincidono(self):
+        """Lo stesso valore, nativo o etichettato, ha la stessa impronta: conta il valore."""
+        a = confine.esito({"v": [["l", ["x", 1, 1.5, True]]]})[1]
+        b = confine.esito({"v": [["l", [["s", "x"], ["i", "1"], ["f", "1.5"], ["b", True]]]]})[1]
+        self.assertEqual(a, b)
+
     def test_impronta_dipende_dal_valore(self):
-        base = confine.esito({"v": ESEMPIO})[1]
         varianti = [
-            [["m", [["a", 1]]], ["i", "1"]],
-            [["m", [["a", 1]]], ["f", "1.0"]],                 # 1 contro 1.0
-            [["m", [["a", 1]]], ["D", "1.0"]],                 # float contro Decimal
-            [["m", [["a", 1]]], ["T", []]], [["m", [["a", 1]]], ["l", []]],   # tupla contro lista
+            [["m", {"a": 1}]], [["m", {"a": 1.0}]], [["m", {"a": True}]], [["m", {"a": "1"}]],
+            [["m", {"a": ["D", "1.0"]}]],                       # Decimal
+            [["m", {"a": ["#", 1]}], ["T", []]], [["m", {"a": ["#", 1]}], ["l", []]],
+            [["m", {"a": ["#", 1]}], ["m", {}]], [["m", {"a": ["n", None]}]],
+            [["S", ["i", "1"]]], ESEMPIO,
         ]
-        impronte = {confine.esito({"v": v})[1] for v in varianti} | {base}
-        self.assertEqual(len(impronte), len(varianti) + 1)
-        # la differenza fra liste conta l'ordine
-        a = [["l", [1, 2]], ["i", "1"], ["i", "2"]]
-        b = [["l", [1, 2]], ["i", "2"], ["i", "1"]]
-        self.assertNotEqual(confine.esito({"v": a})[1], confine.esito({"v": b})[1])
+        impronte = {confine.esito({"v": v})[1] for v in varianti}
+        self.assertEqual(len(impronte), len(varianti))
+        self.assertNotEqual(confine.esito({"v": [["l", [1, 2]]]})[1], confine.esito({"v": [["l", [2, 1]]]})[1])
 
     def test_nodo_condiviso(self):
         with self.assertRaisesRegex(ViolazioneConfine, "più di un genitore"):
-            confine.esito({"v": [["l", [1, 1]], ["i", "1"]]})
+            confine.esito({"v": [["l", [["#", 1], ["#", 1]]], ["l", []]]})
         with self.assertRaisesRegex(ViolazioneConfine, "più di un genitore"):
-            confine.esito({"v": [["l", [1, 2]], ["l", [3]], ["l", [3]], ["i", "1"]]})
+            confine.esito({"v": [["m", {"a": ["#", 1], "b": ["#", 2]}], ["l", [["#", 3]]], ["l", [["#", 3]]], ["l", []]]})
 
     def test_cicli(self):
         with self.assertRaisesRegex(ViolazioneConfine, "non raggiungibili"):
-            confine.esito({"v": [["l", []], ["l", [2]], ["l", [1]]]})      # ciclo staccato
+            confine.esito({"v": [["l", []], ["l", [["#", 2]]], ["l", [["#", 1]]]]})   # ciclo staccato
         with self.assertRaisesRegex(ViolazioneConfine, "non raggiungibili"):
-            confine.esito({"v": [["l", []], ["l", [1]]]})                  # autoanello
-        with self.assertRaisesRegex(ViolazioneConfine, "fuori intervallo"):
-            confine.esito({"v": [["l", [0]]]})                             # radice come figlia
+            confine.esito({"v": [["l", []], ["l", [["#", 1]]]]})                      # autoanello
+        with self.assertRaisesRegex(ViolazioneConfine, "riferimento"):
+            confine.esito({"v": [["l", [["#", 0]]]]})                                 # radice come figlia
 
     def test_orfano_e_fuori_intervallo(self):
         with self.assertRaisesRegex(ViolazioneConfine, "non raggiungibili"):
-            confine.esito({"v": [["l", []], ["i", "1"]]})
-        with self.assertRaisesRegex(ViolazioneConfine, "fuori intervallo"):
-            confine.esito({"v": [["l", [5]]]})
+            confine.esito({"v": [["l", []], ["l", []]]})
+        with self.assertRaisesRegex(ViolazioneConfine, "riferimento"):
+            confine.esito({"v": [["l", [["#", 5]]]]})
+        with self.assertRaisesRegex(ViolazioneConfine, "riferimento"):
+            confine.esito({"v": [["l", [["#", True]]], ["l", []]]})
 
     def test_limite_nodi(self):
-        tabella = [["l", list(range(1, 11))]] + [["i", "1"]] * 10
+        tabella = [["l", [["#", j] for j in range(1, 11)]]] + [["l", []] for _ in range(10)]
         confine.verifica_albero(tabella, limite=11)
         with self.assertRaisesRegex(ViolazioneConfine, "oltre il limite"):
             confine.verifica_albero(tabella, limite=10)
 
     def test_tipi_e_forme(self):
         cattivi = [
-            [["i", 1]], [["b", 1]], [["n", 0]], [["s", None]], [["q", "x"]], [["l", [True]]],
-            [["m", [["a", 1], ["a", 2]]], ["i", "1"], ["i", "2"]],         # chiave doppia
-            [["m", [[1, 1]]], ["i", "1"]], [["dt", ["x", None]]], [["t", ["x"]]], [["l"]], ["l", []], [],
+            [["l", [None]]], [["l", [{}]]], [["m", {"a": None}]], [["l", [["n", 0]]]], [["l", [["s", None]]]],
+            [["l", [["q", "x"]]]], [["l", [["dt", ["x", None]]]]], [["l", [["t", ["x"]]]]], [["l", [["i", "1", "2"]]]],
+            [["l", [[1, "x"]]]], [["m", [["a", 1]]]], [["l", {}]],
+            [["l"]], ["l", []], [], [["q", []]],
+            [["S", ["i", "1"]], ["l", []]], [["l", [["#", 1]]], ["S", ["i", "1"]]], [["S", ["#", 0]]],
         ]
         for t in cattivi:
             with self.subTest(t=t), self.assertRaises(ViolazioneConfine):
@@ -95,7 +110,7 @@ class TestAlbero(unittest.TestCase):
     def test_profondo_senza_ricorsione(self):
         """Una catena di 50 000 livelli non tocca il limite di ricorsione del supervisore."""
         n = 50_000
-        tabella = [["l", [i + 1]] for i in range(n)] + [["i", "0"]]
+        tabella = [["l", [["#", i + 1]]] for i in range(n)] + [["l", [0]]]
         limite = sys.getrecursionlimit()
         sys.setrecursionlimit(200)
         try:
@@ -106,7 +121,7 @@ class TestAlbero(unittest.TestCase):
 
 class TestFrame(unittest.TestCase):
     def test_valido(self):
-        self.assertEqual(confine.esito_frame(b'{"v":[["i","1"]]}')[0], "v")
+        self.assertEqual(confine.esito_frame(b'{"v":[["m",{"a":1}]]}')[0], "v")
 
     def test_profondita_senza_parser(self):
         self.assertEqual(confine.profondita(b'{"a":[1,{"b":"[[[["}]}'), 3)       # parentesi nelle stringhe ignorate
@@ -148,7 +163,7 @@ class TestEccezione(unittest.TestCase):
                 confine.esito({"e": e})
 
     def test_risposta_non_valida(self):
-        for r in [None, [], {}, {"v": [["i", "1"]], "e": {}}, {"w": 1}]:
+        for r in [None, [], {}, {"v": [["l", []]], "e": {}}, {"w": 1}]:
             with self.subTest(r=r), self.assertRaises(ViolazioneConfine):
                 confine.esito(r)
 

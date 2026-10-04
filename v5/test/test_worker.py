@@ -43,19 +43,26 @@ def scambia(immagine, casi, comando=config.COMANDO_WORKER, timeout=120):
 
 
 def valore(tabella):
-    """Ricostruisce il valore Python (solo per i test; il supervisore usa solo l'impronta)."""
-    confine.verifica_albero(tabella)
+    """Ricostruisce il valore dalla codifica compatta (solo per i test; il supervisore usa solo
+    l'impronta). Scalari come (etichetta, contenuto), con le etichette della forma canonica."""
+    ordine = confine.verifica_albero(tabella)
     fatti = [None] * len(tabella)
-    for i in reversed(confine.verifica_albero(tabella)):
-        tag, c = tabella[i]
-        if tag == "l":
-            fatti[i] = [fatti[j] for j in c]
+
+    def el(v):
+        if type(v) is list:
+            return fatti[v[1]] if v[0] == "#" else (v[0], v[1])
+        return {str: "s", bool: "b", int: "i", float: "f"}[type(v)], (repr(v) if type(v) is float else
+                                                                         str(v) if type(v) is int else v)
+    for i in reversed(ordine):
+        tag, voci = tabella[i]
+        if tag == "m":
+            fatti[i] = {k: el(v) for k, v in voci.items()}
+        elif tag == "l":
+            fatti[i] = [el(v) for v in voci]
         elif tag == "T":
-            fatti[i] = tuple(fatti[j] for j in c)
-        elif tag == "m":
-            fatti[i] = {k: fatti[j] for k, j in c}
+            fatti[i] = tuple(el(v) for v in voci)
         else:
-            fatti[i] = (tag, c)
+            fatti[i] = tuple(voci)
     return fatti[0]
 
 
@@ -194,7 +201,7 @@ class TestWorker(unittest.TestCase):
             tipo, _, nome = confine.esito(x)
             if tipo == "e":
                 self.assertEqual(nome, "builtins.RecursionError")
-        self.assertEqual(len(r[5]["v"]), 1000)          # 999 tabelle + il valore 1
+        self.assertEqual(len(r[5]["v"]), 999)           # 999 tabelle annidate; il valore 1 resta nel genitore
 
     def test_eof_e_uscita(self):
         risposte, codice, _ = scambia(self.immagine, [])
@@ -203,7 +210,7 @@ class TestWorker(unittest.TestCase):
     def test_worker_nullo(self):
         risposte, codice, _ = scambia(self.immagine, [(0, DOC), (2, b"\xff")], comando=config.COMANDO_WORKER_NULLO)
         self.assertEqual(codice, 0)
-        self.assertEqual(risposte, [config.FRAME_PRONTO, b'{"v":[["n",null]]}', b'{"v":[["n",null]]}'])
+        self.assertEqual(risposte, [config.FRAME_PRONTO, b'{"v":[["l",[]]]}', b'{"v":[["l",[]]]}'])
 
     def test_worker_strumentato(self):
         risposte, codice, _ = scambia(self.immagine, [(0, DOC)], comando=config.COMANDO_WORKER_STRUMENTATO)

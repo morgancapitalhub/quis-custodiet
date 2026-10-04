@@ -7,7 +7,7 @@ import struct
 import sys
 
 FRAME_PRONTO = b'{"pronto":1}'
-RISPOSTA = b'{"v":[["n",null]]}'
+RISPOSTA = b'{"v":[["l",[]]]}'
 
 
 def main():

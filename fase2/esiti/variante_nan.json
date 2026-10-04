@@ -1,0 +1,73 @@
+{
+  "comando": "python fase2/strumenti/misura_variante_nan.py 10",
+  "sessione": "varnanff60c021",
+  "mediane_s": {
+    "attuale": 4.40419855,
+    "nan_ammessi": 4.4082389,
+    "pavimento": 4.052505
+  },
+  "limite_attuale": 1.0868,
+  "limite_con_nan_ammessi": 1.0878,
+  "tempi_s": {
+    "attuale": [
+      3.9307104,
+      4.5599959,
+      4.4302452,
+      4.5362909,
+      4.6199022,
+      4.2990842,
+      4.4321823,
+      4.3781519,
+      4.3412329,
+      4.3488985
+    ],
+    "nan_ammessi": [
+      4.5367507,
+      4.1409212,
+      4.1651279,
+      4.2629791,
+      4.4360477,
+      4.4127594,
+      4.6052035,
+      4.4037184,
+      4.3793976,
+      4.4750453
+    ],
+    "pavimento": [
+      4.0491563,
+      4.0558537,
+      4.1334073,
+      3.9507542,
+      4.0142433,
+      3.9829128,
+      4.0223842,
+      4.1603748,
+      4.1192587,
+      4.1906245
+    ]
+  },
+  "diario": [
+    {
+      "evento": "fermati",
+      "container": [
+        "sqz_demo_landing",
+        "sqz_demo_api",
+        "sqz_demo_grafana",
+        "sqz_demo_postgres",
+        "sqz_demo_prometheus"
+      ],
+      "ora": "2026-10-04T14:21:51.952791+00:00"
+    },
+    {
+      "evento": "riavviati",
+      "esiti": {
+        "sqz_demo_landing": true,
+        "sqz_demo_api": true,
+        "sqz_demo_grafana": true,
+        "sqz_demo_postgres": true,
+        "sqz_demo_prometheus": true
+      },
+      "ora": "2026-10-04T14:25:13.458563+00:00"
+    }
+  ]
+}

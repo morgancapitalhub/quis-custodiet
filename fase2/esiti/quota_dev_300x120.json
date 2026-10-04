@@ -1,14 +1,14 @@
 {
   "comando": "python v5/supervisore.py quota 300 120",
-  "sessione": "20261004153430ffccf1",
+  "sessione": "202610041616095105ef",
   "n_doc": 300,
   "sezioni": 120,
   "picco_a_vuoto": {
     "tentativo": 1,
     "picchi": [
-      5685248,
-      4595712,
-      5607424
+      5316608,
+      5677056,
+      5066752
     ]
   },
   "carico": "dev",
@@ -16,36 +16,70 @@
   "casi": 316,
   "byte": 7550775,
   "T_orig_s": {
-    "min": 4.8470934,
-    "mediana": 5.0578015,
-    "max": 5.1573658,
-    "mad": 0.06930894999999992,
+    "min": 4.4071376,
+    "mediana": 4.584672449999999,
+    "max": 5.8281015,
+    "mad": 0.07036635000000002,
     "n": 10
   },
   "T_nullo_s": {
-    "min": 0.4234949,
-    "mediana": 0.49528635,
-    "max": 0.5761064,
-    "mad": 0.031809350000000014,
+    "min": 0.3436524,
+    "mediana": 0.39210714999999996,
+    "max": 1.1151157,
+    "mad": 0.021062799999999993,
     "n": 10
   },
   "T_strumentato_s": {
-    "min": 4.9508271,
-    "mediana": 5.056328000000001,
-    "max": 5.1182784,
-    "mad": 0.04594755000000017,
+    "min": 4.058917,
+    "mediana": 4.4264274,
+    "max": 4.7690613,
+    "mad": 0.08937854999999972,
     "n": 10
   },
-  "quota_esterna": 0.9021,
-  "quota_interna": 0.7756,
+  "quota_esterna": 0.9145,
+  "quota_interna": 0.8471,
   "quota_interna_min_max": [
-    0.7729,
-    0.7778
+    0.8444,
+    0.8487
   ],
-  "quota_ufficiale": 0.7756,
-  "guadagno_massimo_patch_worker": 1.2893,
-  "soglia": 0.9,
+  "scomposizione_della_finestra (strumentato, mediane)": {
+    "dentro_API": 0.8471,
+    "codifica_nodi_e_JSON": 0.1459,
+    "fuori_dal_worker (lettura, trasporto, scrittura)": 0.0071
+  },
+  "T_pavimento_s": {
+    "min": 3.8563954,
+    "mediana": 4.02029535,
+    "max": 7.0291771,
+    "mad": 0.07212039999999953,
+    "n": 10
+  },
+  "quota_min_esterna_interna": 0.8471,
+  "1_su_quota (formula del brief)": 1.1805,
+  "limite_realistico_patch_worker (criterio 4, Q2)": 1.1404,
+  "soglia": 1.11,
   "superata": false,
+  "memoria_Q3": {
+    "P_import_MiB": 11.6367,
+    "P_orig_MiB": 12.0156,
+    "memoria_del_parser_M_MiB": 0.3789,
+    "dispersione_P_orig_MiB (max-min)": 0.0195,
+    "tolleranza_MiB": 0.1953,
+    "margine_ammesso_MiB (0,05·M + tolleranza)": 0.2143,
+    "margine_su_M": 0.5655,
+    "soglia_picco_candidato_MiB": 12.2299
+  },
+  "ready_abuse": {
+    "cpu_pre_pronto_ms": {
+      "mediana": 297.7,
+      "mad": 16.5,
+      "min": 262.7,
+      "max": 345.5
+    },
+    "tetto_ms": 380.2,
+    "eccedenza_ammessa_ms": 82.6,
+    "limite_guadagno": 0.018
+  },
   "diario": [
     {
       "evento": "fermati",
@@ -56,7 +90,7 @@
         "sqz_demo_postgres",
         "sqz_demo_prometheus"
       ],
-      "ora": "2026-10-04T13:34:49.267171+00:00"
+      "ora": "2026-10-04T14:16:31.615977+00:00"
     },
     {
       "evento": "riavviati",
@@ -67,7 +101,7 @@
         "sqz_demo_postgres": true,
         "sqz_demo_prometheus": true
       },
-      "ora": "2026-10-04T13:37:38.120658+00:00"
+      "ora": "2026-10-04T14:20:34.531021+00:00"
     }
   ]
 }

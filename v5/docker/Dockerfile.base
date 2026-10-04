@@ -2,7 +2,7 @@
 # installata a runtime. Contesto di costruzione: v5/ (v5/.dockerignore lascia passare solo worker/).
 ARG IMMAGINE_PYTHON
 FROM ${IMMAGINE_PYTHON}
-COPY worker/worker.py worker/worker_nullo.py worker/worker_strumentato.py /opt/worker/
+COPY worker/worker.py worker/worker_nullo.py worker/worker_strumentato.py worker/worker_pavimento.py /opt/worker/
 RUN chmod 0555 /opt/worker && chmod 0444 /opt/worker/*.py
 USER 65534:65534
 WORKDIR /tmp

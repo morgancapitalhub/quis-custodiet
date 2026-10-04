@@ -20,7 +20,7 @@ from collections import deque
 from v5 import config
 
 SCALARI = {"s": str, "i": str, "f": str, "D": str, "d": str, "x": str, "b": bool}
-CONTENITORI = {"l", "T", "m"}
+CONTENITORI = {"m", "l", "T"}
 
 
 class ViolazioneConfine(Exception):
@@ -31,49 +31,64 @@ def _opz_str(x):
     return x is None or type(x) is str
 
 
+def _scalare_valido(tag, c):
+    if tag in SCALARI:
+        return type(c) is SCALARI[tag]
+    if tag == "n":
+        return c is None
+    if tag == "dt":
+        return type(c) is list and len(c) == 3 and type(c[0]) is str and _opz_str(c[1]) and _opz_str(c[2])
+    if tag == "t":
+        return type(c) is list and len(c) == 2 and type(c[0]) is str and _opz_str(c[1])
+    return False
+
+
+NATIVI = (str, int, float, bool)        # tipi che json.loads restituisce esatti; NaN/Infinity rifiutati
+
+
+def _elemento(i, v, n, figli):
+    """Controlla un elemento di un contenitore: scalare nativo JSON, oppure [etichetta, contenuto].
+    Un riferimento ["#", indice] a un figlio contenitore ne registra l'indice."""
+    if type(v) in NATIVI:
+        return
+    if type(v) is not list or len(v) != 2 or type(v[0]) is not str:
+        raise ViolazioneConfine(f"nodo {i}: elemento non valido")
+    tag, c = v
+    if tag == "#":
+        if type(c) is not int or not 0 < c < n:      # la radice (0) non può essere figlia di nessuno
+            raise ViolazioneConfine(f"nodo {i}: riferimento {c!r} non valido")
+        figli.append(c)
+    elif not _scalare_valido(tag, c):
+        raise ViolazioneConfine(f"nodo {i}: scalare '{tag}' non valido")
+
+
 def _controlla_nodo(i, nodo, n):
-    """Restituisce la lista dei figli del nodo (indici), dopo averne controllato forma e tipi."""
+    """Codifica compatta (Morgan Q1, ottimizzata per Q2): restituisce gli indici dei figli contenitori."""
     if type(nodo) is not list or len(nodo) != 2 or type(nodo[0]) is not str:
         raise ViolazioneConfine(f"nodo {i}: forma non valida")
-    tag, c = nodo
-    if tag in SCALARI:
-        if type(c) is not SCALARI[tag]:
-            raise ViolazioneConfine(f"nodo {i}: contenuto di '{tag}' del tipo sbagliato")
-        return ()
-    if tag == "n":
-        if c is not None:
-            raise ViolazioneConfine(f"nodo {i}: 'n' con contenuto")
-        return ()
-    if tag == "dt":
-        if not (type(c) is list and len(c) == 3 and type(c[0]) is str and _opz_str(c[1]) and _opz_str(c[2])):
-            raise ViolazioneConfine(f"nodo {i}: 'dt' non valido")
-        return ()
-    if tag == "t":
-        if not (type(c) is list and len(c) == 2 and type(c[0]) is str and _opz_str(c[1])):
-            raise ViolazioneConfine(f"nodo {i}: 't' non valido")
-        return ()
-    if tag in ("l", "T"):
-        if type(c) is not list or any(type(j) is not int for j in c):
-            raise ViolazioneConfine(f"nodo {i}: figli di '{tag}' non interi")
-        figli = c
-    elif tag == "m":
-        if type(c) is not list or any(not (type(p) is list and len(p) == 2 and type(p[0]) is str
-                                           and type(p[1]) is int) for p in c):
-            raise ViolazioneConfine(f"nodo {i}: coppie di 'm' non valide")
-        chiavi = [p[0] for p in c]
-        if len(set(chiavi)) != len(chiavi):
-            raise ViolazioneConfine(f"nodo {i}: chiave doppia")
-        figli = [p[1] for p in c]
+    tag, voci = nodo
+    figli = []
+    if tag == "m":
+        if type(voci) is not dict:                   # oggetto JSON; le chiavi doppie sono già rifiutate
+            raise ViolazioneConfine(f"nodo {i}: 'm' senza oggetto")
+        for v in voci.values():
+            _elemento(i, v, n, figli)
+    elif tag in ("l", "T"):
+        if type(voci) is not list:
+            raise ViolazioneConfine(f"nodo {i}: '{tag}' senza lista")
+        for v in voci:
+            _elemento(i, v, n, figli)
+    elif tag == "S":
+        if (i != 0 or n != 1 or type(voci) is not list or len(voci) != 2 or voci[0] == "#"
+                or not _scalare_valido(voci[0], voci[1])):
+            raise ViolazioneConfine(f"nodo {i}: radice scalare non valida")
     else:
         raise ViolazioneConfine(f"nodo {i}: etichetta sconosciuta")
-    for j in figli:
-        if not 0 < j < n:            # la radice (0) non può essere figlia di nessuno
-            raise ViolazioneConfine(f"nodo {i}: figlio {j} fuori intervallo")
     return figli
 
 
 def verifica_albero(tabella, limite=config.LIMITE_NODI):
-    """Condizione 1. Restituisce l'ordine di visita dalla radice (genitori prima dei figli)."""
+    """Morgan P3, condizione 1. Restituisce l'ordine di visita dalla radice (genitori prima dei figli)."""
     if type(tabella) is not list or not tabella:
         raise ViolazioneConfine("tabella di nodi vuota o non lista")
     n = len(tabella)
@@ -88,8 +103,8 @@ def verifica_albero(tabella, limite=config.LIMITE_NODI):
                 raise ViolazioneConfine(f"nodo {j} con più di un genitore")
             genitore[j] = i
         figli_di.append(figli)
-    # Ogni nodo diverso dalla radice ha ora al più un genitore; resta da escludere i cicli
-    # (e i nodi orfani): tutti devono essere raggiungibili dalla radice.
+    # Ogni nodo diverso dalla radice ha al più un genitore; restano da escludere cicli e orfani:
+    # tutti i nodi devono essere raggiungibili dalla radice.
     ordine, coda = [], deque([0])
     while coda:
         i = coda.popleft()
@@ -104,23 +119,42 @@ def _j(x):
     return json.dumps(x, ensure_ascii=False, separators=(",", ":"))
 
 
+def _canonica_scalare(v):
+    t = type(v)
+    if t is str:
+        return _j(["s", v])
+    if t is bool:
+        return _j(["b", v])
+    if t is int:
+        return _j(["i", str(v)])
+    return _j(["f", repr(v)])                       # float nativo (sempre finito)
+
+
 def forma_canonica(tabella):
-    """Condizioni 2 e 3: forma canonica del valore, in post-ordine iterativo. Richiede un albero."""
+    """P3, condizioni 2 e 3: forma canonica del VALORE, in post-ordine iterativo; richiede un albero.
+    Uno scalare nativo e lo stesso scalare etichettato hanno la stessa forma canonica; chiavi delle
+    tabelle ordinate; un figlio contenitore è sostituito dalla sua forma canonica."""
     ordine = verifica_albero(tabella)
     canonica = [None] * len(tabella)
+
+    def elemento(v):
+        if type(v) is not list:
+            return _canonica_scalare(v)
+        tag, c = v
+        if tag == "#":
+            s, canonica[c] = canonica[c], None
+            return s
+        return _j([tag, c])
+
     for i in reversed(ordine):                      # figli prima dei genitori
-        tag, c = tabella[i]
-        if tag in ("l", "T"):
-            canonica[i] = f'["{tag}",[' + ",".join(canonica[j] for j in c) + "]]"
-            for j in c:
-                canonica[j] = None
-        elif tag == "m":
-            coppie = sorted(c, key=lambda p: p[0])
-            canonica[i] = '["m",[' + ",".join("[" + _j(k) + "," + canonica[j] + "]" for k, j in coppie) + "]]"
-            for _, j in c:
-                canonica[j] = None
+        tag, voci = tabella[i]
+        if tag == "m":
+            canonica[i] = '["m",[' + ",".join("[" + _j(k) + "," + elemento(voci[k]) + "]"
+                                             for k in sorted(voci)) + "]]"
+        elif tag == "S":
+            canonica[i] = _j(voci)
         else:
-            canonica[i] = _j([tag, c])
+            canonica[i] = f'["{tag}",[' + ",".join(elemento(v) for v in voci) + "]]"
     return canonica[0]
 
 

@@ -15,10 +15,10 @@ Questo file si aggiorna a ogni commit, così un'interruzione riprende dal passo 
 | 5 | fatto | 8802496 | `python -m unittest v5.test.test_confine v5.test.test_episodio` → 29/29; `python v5/supervisore.py episodi-prova 100` → 100/100 completi, esiti identici, 0 ripetizioni, 0 client bloccati (`fase2/esiti/episodi_prova.json`) |
 | 6 | fatto | d7bdee9 | `python v5/supervisore.py calibra` → `fase2/esiti/calibrazione.json`; intervallo del picco a vuoto in `config.py`; `test_episodio` 15/15 (ramo negativo del picco a vuoto compreso) |
 | 7a | fatto | 137b1a9, 7abe55c | quota ufficiale 0,755–0,776 < 0,90; allungare non basta (`fase2/RAPPORTO_QUOTA.md`) |
-| 7b | decisioni Q1–Q4 registrate | (questo commit) | `REQUISITI_AGGIUNTI.md`, piano revisione 4 |
-| 7c | da fare | | |
+| 7b | decisioni Q1–Q4 registrate | e63dd02 | `REQUISITI_AGGIUNTI.md`, piano revisione 4 |
+| 7c | **in attesa della decisione di Morgan** sulla regola del criterio 4 | (questo commit) | codifica compatta ottimizzata; `patch-worker 30` → 1,096, IC95 [1,073; 1,120] (`fase2/RAPPORTO_CRITERIO4.md`); test 56/56 |
 
-**Prossimo passo:** 7c — codifica compatta (worker + confine + test), `worker_pavimento.py`, misura del limite realistico di PATCH_WORKER (≤ 1,11), dimensione definitiva del carico DEV, memoria secondo Q3, limite di READY_ABUSE sul carico definitivo.
+**Prossimo passo:** decisione di Morgan su `fase2/RAPPORTO_CRITERIO4.md` (regola statistica del criterio 4; opzione 1 raccomandata). Poi: carico DEV definitivo = 300 doc × 120 sezioni (~5 s), memoria Q3 e READY_ABUSE già misurati; passo 8a.
 
 Note del passo 6 (da riportare nel rapporto, `fase2/esiti/calibrazione.json`, carico provvisorio 200 × 120 sezioni):
 - picco a vuoto 4,58–5,40 MiB (mediana 5,09); intervallo [4,09; 6,09] MiB; il controllo passa al primo riscaldamento.

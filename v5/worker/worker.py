@@ -49,64 +49,119 @@ def _tz(x):
     return None if x.tzinfo is None else nome(type(x.tzinfo))
 
 
-def nodi(radice):
-    """Tabella di nodi del valore, senza ricorsione. Radice = nodo 0.
+_STR, _INT, _FLOAT, _BOOL = str, int, float, bool
+_DICT, _LIST, _TUPLA = dict, list, tuple
+_DEC, _DT, _D, _T = decimal.Decimal, datetime.datetime, datetime.date, datetime.time
+_MAX_BIT = 14000            # sotto il limite di 4300 cifre decimali di str(int) in Python 3.11
 
-    Tipi ammessi solo per tipo ESATTO; qualunque altra cosa diventa ["x", nome del tipo],
-    che non coincide mai con l'originale. Un contenitore già visitato (condiviso o ciclico)
-    diventa ["x", "condiviso"].
+
+def scalare(x):
+    """[etichetta, contenuto] di un valore che non è un contenitore. Tipo ESATTO, altrimenti "x"."""
+    t = type(x)
+    if t is _STR:
+        return ["s", x]
+    if t is _INT:
+        return ["i", str(x)] if x.bit_length() < _MAX_BIT else ["x", "int enorme"]
+    if t is _FLOAT:
+        return ["f", repr(x)]
+    if t is _BOOL:
+        return ["b", x]
+    if x is None:
+        return ["n", None]
+    if t is _DEC:
+        return ["D", str(x)]
+    if t is _DT:
+        try:
+            off = x.utcoffset()
+            return ["dt", [x.isoformat(), _tz(x), None if off is None else str(off)]]
+        except Exception:
+            return ["x", "datetime"]
+    if t is _D:
+        return ["d", x.isoformat()]
+    if t is _T:
+        return ["t", [x.isoformat(), _tz(x)]]
+    return ["x", nome(t)]
+
+
+_SEMPLICI_SENZA_FLOAT = frozenset((str, int, bool))
+_INF = float("inf")
+
+
+def nodi(radice):
+    """Codifica compatta (Morgan Q1), ottimizzata per il criterio 4 (Q2).
+
+    Tabella di nodi in cui sono nodi solo i CONTENITORI; radice = nodo 0:
+      ["m", {chiave: elemento, …}]      dict (oggetto JSON: l'ordine si conserva, ma l'impronta ordina)
+      ["l", [elemento, …]]              list            ["T", [elemento, …]]   tuple
+    elemento = scalare NATIVO JSON per str, int, float finito, bool (json.loads restituisce
+               esattamente quei tipi); altrimenti [etichetta, contenuto]: "#" + indice del figlio
+               contenitore, "n", "D", "dt", "d", "t", "f" (solo float non finiti), "x".
+    Radice scalare (mai prodotta dall'originale): [["S", [etichetta, contenuto]]].
+    Un contenitore con soli str/int/bool passa intero all'encoder JSON in C (tipi esatti
+    controllati con set(map(type, …))). Senza ricorsione. Un contenitore già visitato diventa
+    ["x", "condiviso"]; un dict con chiavi non str diventa ["l", [["x", "chiave non str"]]].
     """
+    t0 = type(radice)
+    if not (t0 is _DICT or t0 is _LIST or t0 is _TUPLA):
+        return [["S", scalare(radice)]]
+    semplici, chiavi_str = _SEMPLICI_SENZA_FLOAT, frozenset((_STR,))
     tabella = [None]
     pila = [(radice, 0)]
-    visti = set()
+    visti = {id(radice)}
     while pila:
         x, i = pila.pop()
-        t = type(x)
-        if t is dict or t is list or t is tuple:
-            if id(x) in visti:
-                tabella[i] = ["x", "condiviso"]
+        if type(x) is _DICT:
+            if not set(map(type, x)) <= chiavi_str:
+                tabella[i] = ["l", [["x", "chiave non str"]]]
                 continue
-            visti.add(id(x))
-            if t is dict:
-                if any(type(k) is not str for k in x):
-                    tabella[i] = ["x", "chiave non str"]
+            if set(map(type, x.values())) <= semplici:
+                tabella[i] = ["m", x]
+                continue
+            c = dict(x)
+            for k, v in x.items():
+                tv = type(v)
+                if tv is _STR or tv is _BOOL or (tv is _INT and v.bit_length() < _MAX_BIT):
                     continue
-                coppie = []
-                for k, v in x.items():
-                    j = len(tabella); tabella.append(None); coppie.append([k, j]); pila.append((v, j))
-                tabella[i] = ["m", coppie]
-            else:
-                figli = []
-                for v in x:
-                    j = len(tabella); tabella.append(None); figli.append(j); pila.append((v, j))
-                tabella[i] = ["l" if t is list else "T", figli]
-        elif t is str:
-            tabella[i] = ["s", x]
-        elif t is bool:
-            tabella[i] = ["b", x]
-        elif t is int:
-            try:
-                tabella[i] = ["i", str(x)]
-            except ValueError:                       # oltre il limite di cifre di Python
-                tabella[i] = ["x", "int enorme"]
-        elif t is float:
-            tabella[i] = ["f", repr(x)]
-        elif x is None:
-            tabella[i] = ["n", None]
-        elif t is decimal.Decimal:
-            tabella[i] = ["D", str(x)]
-        elif t is datetime.datetime:
-            try:
-                off = x.utcoffset()
-                tabella[i] = ["dt", [x.isoformat(), _tz(x), None if off is None else str(off)]]
-            except Exception:
-                tabella[i] = ["x", "datetime"]
-        elif t is datetime.date:
-            tabella[i] = ["d", x.isoformat()]
-        elif t is datetime.time:
-            tabella[i] = ["t", [x.isoformat(), _tz(x)]]
+                if tv is _FLOAT:
+                    if v != v or v == _INF or v == -_INF:
+                        c[k] = ["f", repr(v)]
+                elif tv is _DICT or tv is _LIST or tv is _TUPLA:
+                    if id(v) in visti:
+                        c[k] = ["x", "condiviso"]
+                    else:
+                        visti.add(id(v))
+                        j = len(tabella)
+                        tabella.append(None)
+                        c[k] = ["#", j]
+                        pila.append((v, j))
+                else:
+                    c[k] = scalare(v)
+            tabella[i] = ["m", c]
         else:
-            tabella[i] = ["x", nome(t)]
+            nome_nodo = "l" if type(x) is _LIST else "T"
+            if set(map(type, x)) <= semplici:
+                tabella[i] = [nome_nodo, x]
+                continue
+            c = list(x)
+            for n, v in enumerate(x):
+                tv = type(v)
+                if tv is _STR or tv is _BOOL or (tv is _INT and v.bit_length() < _MAX_BIT):
+                    continue
+                if tv is _FLOAT:
+                    if v != v or v == _INF or v == -_INF:
+                        c[n] = ["f", repr(v)]
+                elif tv is _DICT or tv is _LIST or tv is _TUPLA:
+                    if id(v) in visti:
+                        c[n] = ["x", "condiviso"]
+                    else:
+                        visti.add(id(v))
+                        j = len(tabella)
+                        tabella.append(None)
+                        c[n] = ["#", j]
+                        pila.append((v, j))
+                else:
+                    c[n] = scalare(v)
+            tabella[i] = [nome_nodo, c]
     return tabella
 
 
@@ -167,16 +222,20 @@ def esegui(op, contenuto):
     raise ValueError(f"op sconosciuta {op}")
 
 
+_JSON = json.JSONEncoder(ensure_ascii=True, separators=(",", ":"), allow_nan=False).encode
+
+
 def codifica(op, contenuto, esegui_op=esegui):
-    """Esegue e codifica in JSON. Un risultato non codificabile diventa un nodo "x"."""
+    """Esegue e codifica in JSON rigoroso (niente NaN/Infinity). Un risultato non codificabile
+    (p.es. un int oltre il limite di cifre dentro un contenitore semplice) diventa ["x", …]."""
     try:
         oggetto = {"v": nodi(esegui_op(op, contenuto))}
     except Exception as e:
         oggetto = {"e": info_eccezione(e)}
     try:
-        return json.dumps(oggetto, ensure_ascii=False, separators=(",", ":"), allow_nan=False).encode("utf-8")
-    except (ValueError, UnicodeEncodeError):
-        return b'{"v":[["x","non codificabile"]]}'
+        return _JSON(oggetto).encode("ascii")
+    except (ValueError, TypeError):
+        return b'{"v":[["S",["x","non codificabile"]]]}'
 
 
 def manda(uscita, dati):

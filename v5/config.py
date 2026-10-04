@@ -53,6 +53,8 @@ FILE_OSSERVABILI = ("memory.peak", "memory.current", "cpu.stat", "memory.events"
 COMANDO_WORKER = ["python", "-I", "/opt/worker/worker.py"]
 COMANDO_WORKER_NULLO = ["python", "-I", "/opt/worker/worker_nullo.py"]
 COMANDO_WORKER_STRUMENTATO = ["python", "-I", "/opt/worker/worker_strumentato.py"]   # solo originale
+COMANDO_WORKER_PAVIMENTO = ["python", "-I", "/opt/worker/worker_pavimento.py"]       # solo originale, criterio 4
+LIMITE_PATCH_WORKER = 1.11        # Morgan Q2: T(worker) / T(pavimento) sull'originale, come quota 0,90
 
 # ------------------------------------------------------------- confine JSON (piano, revisione 3)
 FRAME_PRONTO = b'{"pronto":1}'

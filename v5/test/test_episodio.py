@@ -12,16 +12,16 @@ TESTA = ("import sys,struct,time\no=sys.stdout.buffer\ni=sys.stdin.buffer\n"
          "def m(b):\n    o.write(struct.pack('>I',len(b))+b); o.flush()\n"
          "def leggi():\n    t=i.read(5)\n    if len(t)<5: return None\n    return i.read(struct.unpack('>BI',t)[1])\n")
 PRONTO = "m(b'{\"pronto\":1}')\n"
-RISPONDI_TUTTO = "while leggi() is not None:\n    m(b'{\"v\":[[\"n\",null]]}')\n"
+RISPONDI_TUTTO = "while leggi() is not None:\n    m(b'{\"v\":[[\"l\",[]]]}')\n"
 DIFETTOSI = {
     "mai_pronto": TESTA + "time.sleep(60)\n",
     "byte_prima_del_pronto": TESTA + "m(b'{\"x\":1}')\ntime.sleep(60)\n",
-    "esce_a_meta": TESTA + PRONTO + "leggi()\nm(b'{\"v\":[[\"n\",null]]}')\nsys.exit(0)\n",
+    "esce_a_meta": TESTA + PRONTO + "leggi()\nm(b'{\"v\":[[\"l\",[]]]}')\nsys.exit(0)\n",
     "frame_enorme": TESTA + PRONTO + "o.write(struct.pack('>I', 3*1024*1024)); o.flush()\ntime.sleep(60)\n",
-    "frame_in_piu": TESTA + PRONTO + "n=0\nwhile leggi() is not None:\n    m(b'{\"v\":[[\"n\",null]]}'); n+=1\n"
-                    "    if n==3: m(b'{\"v\":[[\"n\",null]]}')\n",
+    "frame_in_piu": TESTA + PRONTO + "n=0\nwhile leggi() is not None:\n    m(b'{\"v\":[[\"l\",[]]]}'); n+=1\n"
+                    "    if n==3: m(b'{\"v\":[[\"l\",[]]]}')\n",
     "json_profondo": TESTA + PRONTO + "while leggi() is not None:\n    m(b'{\"v\":[[\"l\",[[[[[[[[1]]]]]]]]]]}')\n",
-    "nodi_condivisi": TESTA + PRONTO + "while leggi() is not None:\n    m(b'{\"v\":[[\"l\",[1,1]],[\"i\",\"1\"]]}')\n",
+    "nodi_condivisi": TESTA + PRONTO + "while leggi() is not None:\n    m(b'{\"v\":[[\"l\",[[\"#\",1],[\"#\",1]]],[\"l\",[]]]}')\n",
     "onesto": TESTA + PRONTO + RISPONDI_TUTTO,
 }
 CASI = [(0, b"a = 1"), (0, b"b = 2"), (1, b"c = 1.5")]
