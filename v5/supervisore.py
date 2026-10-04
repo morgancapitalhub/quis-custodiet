@@ -83,9 +83,34 @@ def _rifiutata(f):
     return False
 
 
+# ------------------------------------------------------------------ controlli
+
+def nuova_sessione():
+    return time.strftime("%Y%m%d%H%M%S") + secrets.token_hex(3)
+
+
+def controlli(_args):
+    """Controlli preliminari (REQUISITI_AGGIUNTI.md). Codice d'uscita 0 solo se tutti valgono."""
+    sessione = nuova_sessione()
+    oss = ambiente.Osservatore(sessione)
+    t0 = time.monotonic()
+    try:
+        esiti = ambiente.controlli(sessione, oss)
+        esito, errore = "superati", None
+    except ambiente.ControlloFallito as e:
+        esiti, esito, errore = {}, "FALLITI", str(e)
+    finally:
+        oss.chiudi()
+    dati = {"sessione": sessione, "esito": esito, "errore": errore, "esiti": esiti,
+            "durata_s": round(time.monotonic() - t0, 1)}
+    scrivi_esito("controlli.json", dati)
+    print(json.dumps(dati, indent=2, ensure_ascii=False))
+    return 0 if errore is None else 1
+
+
 # ------------------------------------------------------------------ principale
 
-COMANDI = {"osservatore-prova": osservatore_prova}
+COMANDI = {"osservatore-prova": osservatore_prova, "controlli": controlli}
 
 
 def main():

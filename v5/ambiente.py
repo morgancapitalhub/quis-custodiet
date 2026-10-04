@@ -4,6 +4,7 @@ Nessun altro modulo della v5 lancia `docker` direttamente: lo verifica test_ambi
 """
 import hashlib
 import re
+import secrets
 import subprocess
 
 from v5 import config
@@ -108,6 +109,152 @@ def id_di(nome):
     if p.returncode != 0 or not ID_CONTAINER.match(cid):
         raise DockerErrore(f"id di {nome} non disponibile: {p.stderr.strip()[:200]}")
     return cid
+
+
+# ------------------------------------------------------------------ controlli preliminari
+
+class ControlloFallito(Exception):
+    """Un fatto verificato dell'ambiente non vale più: il supervisore non parte."""
+
+
+SONDA_SCRITTURA = ("import sys\ntry:\n    open('/sys/fs/cgroup/memory.peak','w').write('0')\n"
+                   "    print('SCRITTO')\nexcept OSError as e:\n    print('RIFIUTATO', type(e).__name__)")
+SONDA_RETE = ("import socket\nr=[]\ntry:\n    socket.create_connection(('1.1.1.1',53),timeout=3); r.append('tcp')\n"
+              "except OSError: pass\ntry:\n    socket.getaddrinfo('example.com',80); r.append('dns')\nexcept OSError: pass\n"
+              "print('RETE:' + ','.join(r))")
+SONDA_AMBIENTE = "import os,json;print(json.dumps(sorted(os.environ)))"
+SONDA_WORKER = ("import hashlib,glob,json;print(json.dumps({p.rsplit('/',1)[1]: hashlib.sha256(open(p,'rb').read())"
+                ".hexdigest() for p in sorted(glob.glob('/opt/worker/*.py'))}))")
+
+
+def _esegui_sonda(sessione, immagine, codice, timeout=config.TIMEOUT_DOCKER):
+    nome = f"v5_sonda_{sessione}_{secrets_hex()}"
+    try:
+        return docker("run", "--name", nome, "--label", f"benchmark-v5.sessione={sessione}",
+                      *config.OPZIONI_CONTAINER, immagine, "python", "-I", "-c", codice, timeout=timeout)
+    finally:
+        rimuovi(nome)
+
+
+def secrets_hex():
+    return secrets.token_hex(4)
+
+
+def contenitori_attivi():
+    """[(nome, etichetta di sessione o '')] dei container in esecuzione."""
+    p = docker("ps", "--format", '{{.Names}}\t{{.Label "benchmark-v5.sessione"}}', controlla=True)
+    return [tuple((r.split("\t") + [""])[:2]) for r in p.stdout.splitlines() if r.strip()]
+
+
+def controlli(sessione, osservatore, modalita="costruzione"):
+    """Riverifica i fatti dell'ambiente (REQUISITI_AGGIUNTI.md, requisiti 1 e 4). Esito: dict.
+
+    Solleva ControlloFallito al primo fatto che non vale. modalita="costruzione": la chiave
+    API non deve esistere nemmeno nel supervisore; "corsa": può esistere solo nel supervisore.
+    """
+    import json
+    import os
+    esiti = {}
+
+    def richiedi(nome, osservato, atteso):
+        esiti[nome] = osservato
+        if osservato != atteso:
+            raise ControlloFallito(f"{nome}: osservato {osservato!r}, atteso {atteso!r}")
+
+    # 1. chiave
+    if modalita == "costruzione":
+        richiedi("chiave_assente_nel_supervisore", "ANTHROPIC_API_KEY" not in os.environ, True)
+    # 2. versioni (uguaglianza esatta)
+    v = docker("version", "--format", "{{.Server.Platform.Name}}|{{.Server.Version}}|{{.Client.Version}}|"
+               "{{.Server.APIVersion}}", controlla=True).stdout.strip().split("|")
+    richiedi("docker_desktop", v[0], config.DOCKER_DESKTOP)
+    richiedi("motore", v[1], config.DOCKER_ENGINE)
+    richiedi("client", v[2], config.DOCKER_ENGINE)
+    richiedi("api", v[3], config.DOCKER_API)
+    i = docker("info", "--format", "{{.KernelVersion}}|{{.CgroupVersion}}|{{.CgroupDriver}}",
+               controlla=True).stdout.strip().split("|")
+    richiedi("kernel", i[0], config.KERNEL_VM)
+    richiedi("cgroup", (i[1], i[2]), (config.CGROUP_VERSIONE, config.CGROUP_DRIVER))
+    # 3. container estranei (D6): ammessi solo sqz_demo_* e quelli di questa sessione
+    estranei = [n for n, s in contenitori_attivi() if not n.startswith("sqz_demo_") and s != sessione]
+    richiedi("container_estranei", estranei, [])
+    base = immagine_base()
+    # 4. ambiente del candidato: nomi esattamente quelli ammessi
+    p = _esegui_sonda(sessione, base, SONDA_AMBIENTE)
+    richiedi("ambiente_del_candidato", json.loads(p.stdout or "null"), config.AMBIENTE_AMMESSO)
+    # 5. memory.peak non scrivibile dal candidato
+    p = _esegui_sonda(sessione, base, SONDA_SCRITTURA)
+    richiedi("memory_peak_non_scrivibile", p.stdout.split()[:1], ["RIFIUTATO"])
+    # 6. rete assente
+    p = _esegui_sonda(sessione, base, SONDA_RETE)
+    richiedi("rete_assente", p.stdout.strip(), "RETE:")
+    # 7. worker nell'immagine = worker del repository
+    p = _esegui_sonda(sessione, base, SONDA_WORKER)
+    attesi = {f.name: hashlib.sha256(f.read_bytes()).hexdigest()
+              for f in sorted((config.RADICE / "v5" / "worker").glob("*.py"))}
+    richiedi("worker_nell_immagine", json.loads(p.stdout or "null"), attesi)
+    # 8. osservatore: legge picco e CPU di una sonda viva
+    nome = f"v5_sonda_{sessione}_{secrets_hex()}"
+    try:
+        docker("run", "-d", "--name", nome, "--label", f"benchmark-v5.sessione={sessione}", *config.OPZIONI_CONTAINER,
+               base, "python", "-I", "-c", "import time; time.sleep(60)", controlla=True)
+        cid = id_di(nome)
+        richiedi("osservatore_legge_picco", osservatore.picco(cid) > 0, True)
+        richiedi("osservatore_legge_cpu", osservatore.cpu_us(cid) >= 0, True)
+    finally:
+        rimuovi(nome)
+    # 9. OOM visibile dall'esterno
+    nome = f"v5_sonda_{sessione}_{secrets_hex()}"
+    try:
+        docker("run", "-d", "--name", nome, "--label", f"benchmark-v5.sessione={sessione}", *config.OPZIONI_CONTAINER,
+               base, "python", "-I", "-c", "b = bytearray(1200 * 1048576)", controlla=True)
+        docker("wait", nome, timeout=config.TIMEOUT_DOCKER)
+        s = docker("inspect", nome, "--format", "{{.State.OOMKilled}} {{.State.ExitCode}}").stdout.split()
+        richiedi("oom_visibile", s, ["true", "137"])
+    finally:
+        rimuovi(nome)
+    return esiti
+
+
+class MisureDiTempo:
+    """Contesto delle misure di tempo (RIGA B, D6): ferma sqz_demo_*, verifica che restino solo
+    i container della sessione, e in uscita riavvia ciò che ha fermato. Registra tutto in `diario`."""
+
+    def __init__(self, sessione, diario):
+        self.sessione, self.diario, self.fermati = sessione, diario, []
+
+    def __enter__(self):
+        import datetime
+        try:
+            attivi = contenitori_attivi()
+            estranei = [n for n, s in attivi if not n.startswith("sqz_demo_") and s != self.sessione]
+            if estranei:
+                raise ControlloFallito(f"container estranei attivi: {estranei}")
+            for nome, _ in attivi:
+                if nome.startswith("sqz_demo_"):
+                    docker("stop", nome, controlla=True)
+                    self.fermati.append(nome)
+            self.diario.append({"evento": "fermati", "container": self.fermati,
+                                "ora": datetime.datetime.now(datetime.timezone.utc).isoformat()})
+            estranei = [n for n, s in contenitori_attivi() if s != self.sessione]
+            if estranei:
+                raise ControlloFallito(f"dopo la fermata restano container estranei: {estranei}")
+        except BaseException:
+            self.__exit__(None, None, None)        # riavvia ciò che è già stato fermato
+            raise
+        return self
+
+    def __exit__(self, *_):
+        import datetime
+        esiti = {}
+        for nome in self.fermati:
+            try:
+                esiti[nome] = docker("start", nome).returncode == 0
+            except DockerTimeout:
+                esiti[nome] = False
+        self.diario.append({"evento": "riavviati", "esiti": esiti,
+                            "ora": datetime.datetime.now(datetime.timezone.utc).isoformat()})
+        return False
 
 
 # ------------------------------------------------------------------ immagini

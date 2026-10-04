@@ -10,9 +10,10 @@ Questo file si aggiorna a ogni commit, così un'interruzione riprende dal passo 
 | 1b | fatto | 0b71869 | `fase2/INVENTARIO_TEST_TOMLI.md`: 18 test, 18 righe |
 | 1c | fatto | e7ef7ed | decisioni P1–P4 in `REQUISITI_AGGIUNTI.md`; piano revisione 3 |
 | 2 | fatto | 70b6908 | `python -m unittest v5.test.test_confine` → 12/12; `python -m unittest v5.test.test_worker` → 14/14 (nel container dell'originale); suite intera 30/30 |
-| 3 | fatto | (questo commit) | `python v5/supervisore.py osservatore-prova` → nessuna difformità (`fase2/esiti/osservatore.json`) |
-| 4 | da fare | | |
+| 3 | fatto | d42387c | `python v5/supervisore.py osservatore-prova` → nessuna difformità (`fase2/esiti/osservatore.json`) |
+| 4 | fatto | (questo commit) | `python -m unittest v5.test.test_controlli` → 7/7; `python v5/supervisore.py controlli` → superati in 10,1 s (`fase2/esiti/controlli.json`) |
+| 5 | da fare | | |
 
-**Prossimo passo:** 4 — controlli preliminari completi, gestione di `sqz_demo_*`, rifiuto con altri container (D6).
+**Prossimo passo:** 5 — frame e limiti del confine, protocollo d'episodio (pronto, streaming, completamento, picco, CPU, smontaggio, ripetizione), registro, inspect della configurazione effettiva.
 
 Nota: al passo 2 si è costruita anche la parte di `confine.py` sulla tabella di nodi (piano, revisione 3). Lista ammessa dell'ambiente osservata: `GPG_KEY HOME HOSTNAME LANG PATH PYTHON_SHA256 PYTHON_VERSION` (`config.AMBIENTE_AMMESSO`).

@@ -1,0 +1,44 @@
+{
+  "comando": "python v5/supervisore.py controlli",
+  "sessione": "20261004144612feb28f",
+  "esito": "superati",
+  "errore": null,
+  "esiti": {
+    "chiave_assente_nel_supervisore": true,
+    "docker_desktop": "Docker Desktop 4.93.0 (240920)",
+    "motore": "29.8.1",
+    "client": "29.8.1",
+    "api": "1.56",
+    "kernel": "6.6.87.2-microsoft-standard-WSL2",
+    "cgroup": [
+      "2",
+      "cgroupfs"
+    ],
+    "container_estranei": [],
+    "ambiente_del_candidato": [
+      "GPG_KEY",
+      "HOME",
+      "HOSTNAME",
+      "LANG",
+      "PATH",
+      "PYTHON_SHA256",
+      "PYTHON_VERSION"
+    ],
+    "memory_peak_non_scrivibile": [
+      "RIFIUTATO"
+    ],
+    "rete_assente": "RETE:",
+    "worker_nell_immagine": {
+      "worker.py": "f607c8425b595150d01135f94617e03fe9d693e8f67d4c1437fa8d95fa4a9a5d",
+      "worker_nullo.py": "23db258274467162e4b57826ab94ad8d856c72caade9a5b60814a7d95209b745",
+      "worker_strumentato.py": "0f3f67db69695031882f391100c6f4e5c71883201f379d338d05b25fcdd5e55f"
+    },
+    "osservatore_legge_picco": true,
+    "osservatore_legge_cpu": true,
+    "oom_visibile": [
+      "true",
+      "137"
+    ]
+  },
+  "durata_s": 10.1
+}
