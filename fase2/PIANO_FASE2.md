@@ -314,3 +314,39 @@ python v5/supervisore.py controlli && python v5/supervisore.py collaudo && pytho
 ```
 
 Tutti verdi. Poi `fase2/RAPPORTO_FASE2.md` con i comandi, il commit "Fase 2" e mi fermo. I sette criteri d'accettazione restano alla fase 4.
+
+---
+
+## Revisione 3 (2026-10-04): decisioni di Morgan sull'inventario (P1–P4)
+
+Registrate in `REQUISITI_AGGIUNTI.md`. Cambiano il piano così:
+
+**Operazioni del worker (definitive):**
+
+| op | Chiamata | Contenuto del caso |
+|---|---|---|
+| 0 | `loads(s)` | testo UTF-8 |
+| 1 | `loads(s, parse_float=decimal.Decimal)` | testo UTF-8 |
+| 2 | `load(io.BytesIO(b))` | **byte grezzi** (P4: anche gli 11 non UTF-8) |
+| 3 | `loads(s, parse_float=<lista>)` | testo UTF-8 |
+| 4 | `load(io.StringIO(s))` | testo UTF-8 |
+| 5 | `loads(b)` (byte) | byte grezzi |
+| 6 | `loads(False)` | ignorato |
+| 7 | `loads(s, parse_float=<dict>)` | testo UTF-8 |
+| 8 | `TOMLDecodeError(*args)` sui 9 insiemi di `test_deprecated_tomldecodeerror`: categorie degli avvisi ed `e.args` | ignorato |
+| 9 | `TOMLDecodeError(prima riga di s, s, len(s)//2)`: `args`, `msg`, `pos`, `lineno`, `colno`, `doc == s`, `__mro__`, istanza di `tomli.TOMLDecodeError` e di `ValueError` | testo UTF-8 |
+
+**Esito di ogni eccezione (P1):** `{"e": {"t": modulo.qualname, "mro": [nomi di __mro__], "td": isinstance(e, tomli.TOMLDecodeError), "ve": isinstance(e, ValueError)}}`. Si confronta tutto con l'originale. **Rischio residuo dichiarato:** questi dati nascono nel processo del candidato e sono falsificabili; non danno vantaggio di velocità.
+
+**Flusso profondo (P2):** in ogni episodio 7 casi op 0 con nomi casuali: array annidati 470 e 1002, tabelle in linea 310 e 1002, chiavi puntate 310, 998 e 1002.
+
+**Codifica piatta (P3):** il valore è una tabella di nodi `{"v": [[etichetta, contenuto], …]}` con radice 0. Etichette: `s i f b n D dt d t l T m`, più `x` per un tipo non ammesso. `l`/`T` contengono gli indici dei figli; `m` contiene coppie `[chiave, indice]`. Il supervisore:
+1. verifica che sia un **albero**: radice senza genitori, ogni altro nodo con **esattamente un** genitore, tutti raggiungibili dalla radice (quindi nessun ciclo), al massimo `LIMITE_NODI` nodi, etichette e contenuti del tipo atteso, nessuna chiave doppia;
+2. ricostruisce la forma canonica e l'impronta **in modo iterativo** (post-ordine con pila esplicita);
+3. calcola l'impronta sulla forma canonica del **valore** (chiavi delle tabelle ordinate, figli per contenuto): due numerazioni diverse dello stesso valore danno la stessa impronta.
+
+Limiti del confine aggiornati: **profondità JSON 8** (era 128). **`LIMITE_NODI` = 200 000 per risposta** (proposta, entro il limite di 2 MiB per frame), da verificare al passo 9 come gli altri limiti (≥ 4× il massimo dell'oracolo).
+
+**Suite (fase 3):** si aggiunge **GRAFO_NODI** (nodi condivisi e cicli), con controllo positivo su una v5 indebolita senza la verifica d'albero. Come per le altre varianti indebolite, la sostituzione avviene solo nel processo di prova.
+
+**Ordine dei passi:** la parte di `confine.py` che riguarda la tabella di nodi (verifica d'albero e impronta) si costruisce al **passo 2**, insieme al worker, perché sono le due metà dello stesso formato. Al passo 5 restano frame, limiti di dimensione e profondità, ed episodio.

@@ -24,11 +24,21 @@ Piano: `C:\Users\T490\.claude\plans\swirling-drifting-tulip.md`, revisione 2, ap
 | D2 | Niente suite pytest nella v5, **a condizione** che l'oracolo copra l'API pubblica: `loads`; `loads` con `parse_float` non predefinito (es. `decimal.Decimal`); `load` su flusso binario; tipo d'eccezione sugli input non validi. Inventario dei test di tomli con tabella "verifica → casi dell'oracolo"; ciò che non è coperto si dichiara. Il collaudo comprende una variante che ignora `parse_float`, che l'oracolo deve respingere. |
 | D3 | Semi, documenti e oracolo dei carichi FINALE in `segreti/`, fuori da git; nel repository solo le impronte. Il rapporto indica come conservare una copia cifrata fuori dal PC: senza i semi il FINALE non si può riverificare. |
 | D4 | Vincolo di memoria: picco ≤ 1,05 × mediana dell'originale **+ 1 MiB**. Tetto CPU sul "pronto" superato → una ripetizione, poi rifiuto. Al passo 6 si misura e si riporta la risoluzione effettiva del vincolo in MiB (il 5% è sul picco dell'intero container, interprete compreso). |
-| D5 | DEV = sintetico DEV + non validi mutati con semi DEV. FINALE sintetico = semi segreti. FINALE fixture = 228 valide × K varianti + non validi mutati con semi segreti, mescolati. File non UTF-8 esclusi e contati. |
+| D5 | DEV = sintetico DEV + non validi mutati con semi DEV. FINALE sintetico = semi segreti. FINALE fixture = 228 valide × K varianti + non validi mutati con semi segreti, mescolati. ~~File non UTF-8 esclusi e contati.~~ **Modificata da P4:** gli 11 file non validi non UTF-8 non si escludono; passano a op 2 come byte grezzi. |
 | D6 | Container attivi diversi da `sqz_demo_*` → il supervisore si rifiuta di partire. |
 | D7 | Ciclo col modello costruito già in fase 2 e provato solo con client finti. **Precondizione di ogni corsa: 20 confronti nulli, come nella v4.** I 40 confronti nulli servono all'accettazione in fase 4. |
 | D8 | Se la quota di parsing del FINALE fixture è < 0,90, la si riporta separata col suo limite di guadagno, senza bloccare. |
 | D9 | La verifica (iii) del mutatore passa **solo se l'IC95 del rapporto dei tempi dell'originale (trasformate / pubbliche) sta tutto dentro ±3%**. Si aumentano le coppie quanto serve; se non si raggiunge, si riferisce. "Nessuna differenza significativa" non basta. |
+
+### Decisioni sull'inventario dei test di tomli (2026-10-04, `fase2/INVENTARIO_TEST_TOMLI.md`)
+
+| | Decisione |
+|---|---|
+| P1 | Approvate le op 5–9 (`loads(s.encode())`, `loads(False)`, `parse_float` che restituisce un dict, `TOMLDecodeError(*args)` deprecato, `TOMLDecodeError(msg, doc, pos)`). **Aggiunta:** per **ogni eccezione** il worker riporta anche la gerarchia delle classi (`__mro__`) e se l'eccezione è istanza di `tomli.TOMLDecodeError` (la classe esportata) e di `ValueError`. Tutto si confronta con l'originale. **Rischio residuo da dichiarare:** questi dati sono prodotti nel processo del candidato e sono falsificabili, anche se non danno vantaggio di velocità. |
+| P2 | Approvato il "flusso profondo": 7 casi per episodio sui limiti di ricorsione (test 14–16), con nomi casuali. |
+| P3 | Approvata la codifica piatta dei risultati (tabella di nodi; profondità JSON del confine 8), a tre condizioni, perché la tabella è un nuovo ingresso non fidato: (1) il supervisore verifica che sia un **albero**: ogni nodo con un solo genitore, nessun ciclo, numero di nodi limitato; altrimenti rifiuto; (2) ricostruzione e impronta **iterative, senza ricorsione**, anche sul supervisore; (3) l'impronta dipende dal **valore**, non dalla numerazione dei nodi. |
+| P4 | Approvata: gli 11 file non validi non UTF-8 passano a op 2 come byte grezzi. Modifica D5 (sopra). |
+| — | Le verifiche non coperte restano dichiarate come in `fase2/INVENTARIO_TEST_TOMLI.md`: messaggi e posizioni delle eccezioni del parser, confronto con i `.json`, `test_lazy_import`. |
 
 ## Versione verificata dell'ambiente
 
@@ -64,4 +74,5 @@ Verificata il 2026-10-04 dopo l'aggiornamento. Su questa versione sono state rip
 ## Suite d'attacco (fase 3)
 
 - **Famiglia D, nuovo attacco PRECOMPUTE.** Il candidato legge in anticipo tutti i casi dell'episodio e precalcola le risposte prima che parta il cronometro. È possibile se i casi gli arrivano tutti insieme (per esempio come file) invece che in streaming. Serve un controllo positivo su un riferimento vulnerabile, come per ogni attacco.
+- **GRAFO_NODI.** Il candidato manda una tabella di nodi che non è un albero: nodi condivisi (un figlio con più genitori, per gonfiare la ricostruzione o far coincidere l'impronta) e cicli (per bloccare o far esplodere la ricostruzione). Il controllo positivo si fa su una **v5 deliberatamente indebolita, senza la verifica d'albero**.
 - **READY_ABUSE.** Il candidato ritarda o sfrutta il segnale "pronto", per esempio lavorando prima di emetterlo, dato che il tempo d'avvio non è nella finestra cronometrata. Il controllo positivo si fa su una **v5 deliberatamente indebolita, senza il tetto** sul tempo d'avvio.
