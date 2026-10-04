@@ -104,6 +104,33 @@ class TestAlbero(unittest.TestCase):
             sys.setrecursionlimit(limite)
 
 
+class TestFrame(unittest.TestCase):
+    def test_valido(self):
+        self.assertEqual(confine.esito_frame(b'{"v":[["i","1"]]}')[0], "v")
+
+    def test_profondita_senza_parser(self):
+        self.assertEqual(confine.profondita(b'{"a":[1,{"b":"[[[["}]}'), 3)       # parentesi nelle stringhe ignorate
+        self.assertEqual(confine.profondita(b'"\\"[["'), 0)
+        profondo = b"[" * 9 + b"]" * 9
+        with self.assertRaisesRegex(ViolazioneConfine, "profondità"):
+            confine.decodifica(profondo)
+        enorme = b"[" * 200000 + b"]" * 200000                                   # mai passato a json.loads
+        with self.assertRaisesRegex(ViolazioneConfine, "profondità"):
+            confine.decodifica(enorme, limite_byte=10**6)
+
+    def test_rifiuti(self):
+        casi = {
+            b'{"v":[["f",NaN]]}': "costante", b'{"v":[["f",Infinity]]}': "costante",
+            b'{"v":[["i","1"]],"v":[["i","2"]]}': "doppia", b'\xff': "UTF-8", b'{"v":': "non valido",
+            b'{"v":[["i","1"]]} x': "non valido",
+        }
+        for dati, motivo in casi.items():
+            with self.subTest(dati=dati), self.assertRaisesRegex(ViolazioneConfine, motivo):
+                confine.esito_frame(dati)
+        with self.assertRaisesRegex(ViolazioneConfine, "oltre il limite"):
+            confine.decodifica(b" " * 11, limite_byte=10)
+
+
 class TestEccezione(unittest.TestCase):
     BUONA = {"t": "tomli._parser.TOMLDecodeError", "mro": ["tomli._parser.TOMLDecodeError", "builtins.ValueError"],
              "td": True, "ve": True}

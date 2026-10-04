@@ -124,6 +124,68 @@ def forma_canonica(tabella):
     return canonica[0]
 
 
+# ------------------------------------------------------------------ frame → JSON (passo 5)
+
+def profondita(dati):
+    """Profondità massima di annidamento di un testo JSON, contata senza ricorsione e PRIMA
+    di json.loads: un JSON troppo profondo non arriva mai al parser."""
+    massimo = livello = 0
+    in_stringa = escape = False
+    for b in dati:
+        if in_stringa:
+            if escape:
+                escape = False
+            elif b == 0x5C:          # \
+                escape = True
+            elif b == 0x22:          # "
+                in_stringa = False
+        elif b == 0x22:
+            in_stringa = True
+        elif b in (0x5B, 0x7B):      # [ {
+            livello += 1
+            massimo = max(massimo, livello)
+        elif b in (0x5D, 0x7D):      # ] }
+            livello -= 1
+    return massimo
+
+
+def _rifiuta_costante(nome):
+    raise ViolazioneConfine(f"costante JSON non ammessa: {nome}")
+
+
+def _senza_doppie(coppie):
+    d = {}
+    for k, v in coppie:
+        if k in d:
+            raise ViolazioneConfine(f"chiave JSON doppia: {k!r}")
+        d[k] = v
+    return d
+
+
+def decodifica(dati, limite_byte=config.LIMITE_FRAME, limite_profondita=config.PROFONDITA_JSON):
+    """Da byte di un frame a oggetto JSON: dimensione, UTF-8 rigoroso, profondità, JSON rigoroso."""
+    if len(dati) > limite_byte:
+        raise ViolazioneConfine(f"frame di {len(dati)} byte oltre il limite {limite_byte}")
+    try:
+        testo = dati.decode("utf-8")
+    except UnicodeDecodeError as e:
+        raise ViolazioneConfine("frame non UTF-8") from e
+    p = profondita(dati)
+    if p > limite_profondita:
+        raise ViolazioneConfine(f"profondità JSON {p} oltre il limite {limite_profondita}")
+    try:
+        return json.loads(testo, parse_constant=_rifiuta_costante, object_pairs_hook=_senza_doppie)
+    except ValueError as e:
+        if isinstance(e, ViolazioneConfine):
+            raise
+        raise ViolazioneConfine(f"JSON non valido: {str(e)[:100]}") from e
+
+
+def esito_frame(dati):
+    """Frame grezzo di una risposta → (tipo, impronta, nome dell'eccezione)."""
+    return esito(decodifica(dati))
+
+
 CAMPI_ECCEZIONE = {"t": str, "mro": list, "td": bool, "ve": bool}
 
 

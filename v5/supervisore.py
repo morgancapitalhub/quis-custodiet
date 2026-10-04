@@ -108,15 +108,75 @@ def controlli(_args):
     return 0 if errore is None else 1
 
 
+# ------------------------------------------------------------------ episodi-prova
+
+def episodi_prova(args):
+    """Passo 5: N episodi dell'originale in streaming; tutti devono completare con esiti identici."""
+    from v5 import episodio
+    from v5.registro import Registro
+    n = int(args.resto[0]) if args.resto else 100
+    sessione = nuova_sessione()
+    reg = Registro(sessione)
+    oss = ambiente.Osservatore(sessione)
+    try:
+        reg.imposta(controlli=ambiente.controlli(sessione, oss))
+        immagine = ambiente.immagine_pacchetto(carichi.pacchetto_originale())
+        valide = [p.read_bytes() for p in carichi.fixture_valide()]
+        non_valide = [p.read_bytes() for p in carichi.fixture_non_valide()[:40]]
+        casi = ([(0, b) for b in valide] + [(1, b) for b in valide[:20]] + [(2, b) for b in valide[20:40]]
+                + [(0, b) for b in non_valide if _utf8(b)][:30] + [(3, b"f=0.1"), (4, b"a=1"), (5, b"a=1"),
+                                                                    (6, b"x"), (7, b"f=0.1"), (8, b""), (9, b"a=1\nb=2")])
+        riferimento, righe = None, []
+        with ambiente.MisureDiTempo(sessione, reg.diario):
+            for k in range(n):
+                r, frame = episodio.con_ripetizione(reg, sessione, k, immagine, casi, oss, "originale")
+                esiti = episodio.valuta_risposte(frame)
+                riferimento = riferimento or esiti
+                righe.append({"n": k, "t_finestra_s": r["t_finestra_ns"] / 1e9, "picco": r["memory_peak"],
+                              "s_avvio_pronto": r["s_avvio_pronto"], "cpu_pre_pronto_us": r["cpu_pre_pronto_us"],
+                              "bloccato_dopo": r["client_bloccato_dopo"], "ripetizione": r["ripetizione"],
+                              "esiti_identici": esiti == riferimento})
+                print(f"{k:3d} {righe[-1]}", flush=True)
+        reg.salva()
+    finally:
+        oss.chiudi()
+    import statistics as st
+    tempi = [x["t_finestra_s"] for x in righe]
+    riepilogo = {
+        "sessione": sessione, "episodi": n, "casi_per_episodio": len(casi),
+        "completati": len(righe), "ripetuti": sum(x["ripetizione"] for x in righe),
+        "esiti_identici_al_primo": sum(x["esiti_identici"] for x in righe),
+        "client_bloccati_dopo": sum(bool(x["bloccato_dopo"]) for x in righe),
+        "t_finestra_s": [min(tempi), st.median(tempi), max(tempi)],
+        "picco_MiB": [round(f(x["picco"] for x in righe) / 2**20, 2) for f in (min, st.median, max)],
+        "s_avvio_pronto": [f(x["s_avvio_pronto"] for x in righe) for f in (min, st.median, max)],
+        "cpu_pre_pronto_ms": [f(x["cpu_pre_pronto_us"] for x in righe) / 1000 for f in (min, st.median, max)],
+        "diario": reg.diario,
+    }
+    scrivi_esito("episodi_prova.json", riepilogo)
+    print(json.dumps(riepilogo, indent=2, ensure_ascii=False))
+    ok = riepilogo["completati"] == n and riepilogo["esiti_identici_al_primo"] == n
+    return 0 if ok else 1
+
+
+def _utf8(b):
+    try:
+        b.decode("utf-8")
+        return True
+    except UnicodeDecodeError:
+        return False
+
+
 # ------------------------------------------------------------------ principale
 
-COMANDI = {"osservatore-prova": osservatore_prova, "controlli": controlli}
+COMANDI = {"osservatore-prova": osservatore_prova, "controlli": controlli, "episodi-prova": episodi_prova}
 
 
 def main():
     parser = argparse.ArgumentParser(prog="supervisore.py")
     parser.add_argument("comando", choices=sorted(COMANDI))
-    args, _resto = parser.parse_known_args()
+    parser.add_argument("resto", nargs="*")
+    args = parser.parse_args()
     sys.exit(COMANDI[args.comando](args))
 
 

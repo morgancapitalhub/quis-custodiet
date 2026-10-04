@@ -1,0 +1,54 @@
+{
+  "comando": "python v5/supervisore.py episodi-prova 100",
+  "sessione": "202610041507541864a0",
+  "episodi": 100,
+  "casi_per_episodio": 305,
+  "completati": 100,
+  "ripetuti": 0,
+  "esiti_identici_al_primo": 100,
+  "client_bloccati_dopo": 0,
+  "t_finestra_s": [
+    0.0314801,
+    0.045050450000000006,
+    0.1111723
+  ],
+  "picco_MiB": [
+    11.32,
+    11.43,
+    11.8
+  ],
+  "s_avvio_pronto": [
+    0.7771,
+    0.9452499999999999,
+    1.5484
+  ],
+  "cpu_pre_pronto_ms": [
+    190.725,
+    319.0195,
+    471.638
+  ],
+  "diario": [
+    {
+      "evento": "fermati",
+      "container": [
+        "sqz_demo_landing",
+        "sqz_demo_api",
+        "sqz_demo_grafana",
+        "sqz_demo_postgres",
+        "sqz_demo_prometheus"
+      ],
+      "ora": "2026-10-04T13:08:12.501130+00:00"
+    },
+    {
+      "evento": "riavviati",
+      "esiti": {
+        "sqz_demo_landing": true,
+        "sqz_demo_api": true,
+        "sqz_demo_grafana": true,
+        "sqz_demo_postgres": true,
+        "sqz_demo_prometheus": true
+      },
+      "ora": "2026-10-04T13:11:50.275111+00:00"
+    }
+  ]
+}
