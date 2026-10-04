@@ -18,10 +18,10 @@ Questo file si aggiorna a ogni commit, così un'interruzione riprende dal passo 
 | 7b | decisioni Q1–Q4 registrate | e63dd02 | `REQUISITI_AGGIUNTI.md`, piano revisione 4 |
 | 7c | fatto (regola decisa: C1) | 8155bf2 | codifica compatta ottimizzata; `patch-worker 30` → 1,096, IC95 [1,073; 1,120] (`fase2/RAPPORTO_CRITERIO4.md`); test 56/56 |
 | 7d | decisioni C1–C4 registrate | 290498c | `REQUISITI_AGGIUNTI.md`, piano revisione 5 |
-| 7e | codice fatto; misure in corso | ee3e498 | confine (letterali non finiti) e GRAFO_NODI 4/4; `patch-worker` a blocchi e `calibra-dispersione` in esecuzione |
-| 8–11 | codice scritto, non ancora eseguito nel container | (questo commit) | `test_mutatore` 8/8, `test_statistica` 4/4, `test_flusso` 4/4 sull'host |
+| 7e | fatto; **criterio 4 non raggiunto a 120 coppie: si riferisce** | (questo commit) | `patch-worker`: limite dichiarato 1,116 (IC95 [1,0906; 1,1159]); `calibra-dispersione 5 40`: valori congelati in `config.py`; `fase2/RAPPORTO_CRITERIO4_DISPERSIONI.md` |
+| 8–11 | codice scritto, non ancora eseguito nel container | 8bed4ba | `test_mutatore` 8/8, `test_statistica` 4/4, `test_flusso` 4/4 sull'host |
 
-**Prossimo passo:** a misure finite: congelare TOLLERANZA_MEMORIA ed ECCEDENZA_PRONTO in `config.py`; poi `mutatore --verifica` (8a), `mutatore --tempo` (8b), `oracolo --due-volte` (9), `collaudo` (10), rapporto (12).
+**Prossimo passo:** decisione di Morgan su `fase2/RAPPORTO_CRITERIO4_DISPERSIONI.md` (criterio 4 a 1,116; tolleranza di memoria al 497% di M). Poi: `mutatore --verifica` (8a), `mutatore --tempo` (8b), `oracolo --due-volte` (9), `collaudo` (10), rapporto (12).
 
 Nota (7e): Docker Desktop si è chiuso alle 16:41 (ora locale) senza intervento di questa sessione; riavviato alle 23:16, versione invariata 4.93.0 (240920). Una coppia di `patch-worker` (n. 17, rapporto 0,869) coincide con un test pesante sull'host (`test_statistica`, 15 s di CPU): possibile disturbo, da riportare.
 
