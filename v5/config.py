@@ -59,6 +59,7 @@ BLOCCHI_PATCH_WORKER = (30, 60, 120)   # Morgan C1: regola d'arresto dichiarata 
 
 # ------------------------------------------------------------- carico DEV definitivo (passo 7)
 CARICO_DEV = (300, 120)           # documenti × sezioni: ~5 s per episodio dell'originale
+K_VARIANTI = 20                   # varianti per fixture valida nel FINALE fixture (piano)
 
 # ------------------------------------------------------------- dispersioni congelate (Morgan C4)
 # Posizione per sessione = mediana dell'originale; dispersione calibrata UNA volta su più sessioni

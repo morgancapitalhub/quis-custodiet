@@ -6,8 +6,10 @@ Comandi (fase2/PIANO_FASE2.md): osservatore-prova, controlli, calibra, quota, mu
 oracolo, collaudo, nullo, valuta, corsa. Ognuno registra la propria riga di comando.
 """
 import argparse
+import hashlib
 import json
 import secrets
+import subprocess
 import sys
 import time
 import uuid
@@ -476,11 +478,274 @@ def calibra_dispersione(args):
     return 0
 
 
+# ------------------------------------------------------------------ mutatore (passi 8a, 8b)
+
+def mutatore_cmd(args):
+    """python v5/supervisore.py mutatore --verifica        verifiche (i) e (ii), semi di prova
+       python v5/supervisore.py mutatore --tempo           verifica (iii), equivalenza del tempo (D9)"""
+    if "--tempo" in args.resto:
+        return mutatore_tempo(args)
+    from v5 import varianti
+    from v5.registro import Registro
+    sessione = nuova_sessione()
+    reg = Registro(sessione)
+    oss = ambiente.Osservatore(sessione)
+    t0 = time.monotonic()
+    try:
+        reg.imposta(controlli=ambiente.controlli(sessione, oss))
+        imm = ambiente.immagine_pacchetto(carichi.pacchetto_originale())
+        _, rapporto = varianti.genera_e_verifica(reg, sessione, oss, imm, "verifica8a", config.K_VARIANTI)
+        reg.salva()
+    finally:
+        oss.chiudi()
+    rapporto = {"sessione": sessione, "durata_s": round(time.monotonic() - t0), **rapporto}
+    scrivi_esito("mutatore_verifica.json", rapporto)
+    print(json.dumps(rapporto, indent=2, ensure_ascii=False))
+    ok = not rapporto["fixture_con_meno_di_k"] and not rapporto["pubbliche_valide_non_lette"]
+    return 0 if ok else 1
+
+
+def mutatore_tempo(args):
+    """Verifica (iii) (brief; Morgan D9): il tempo di parsing dell'originale su fixture trasformate e
+    pubbliche è EQUIVALENTE entro ±3%: IC95 del rapporto (trasformate/pubbliche) tutto in [0,97; 1,03].
+
+    Misura principale: tempo dentro l'API dell'originale (worker strumentato, codice fidato); la
+    finestra esterna si riporta come riscontro. Episodio "pubbliche": ogni fixture valida ripetuta tante
+    volte quante sono le sue varianti accettate (ripetizione ammessa SOLO qui, sull'originale);
+    episodio "trasformate": le varianti, tutte distinte. Varianti: semi di verifica ("verifica8a").
+    Regola d'arresto dichiarata prima: 8, 16, 32, 64, 128 coppie; passa appena l'IC95 è dentro
+    [0,97; 1,03]; a 128 senza riuscirci → si riferisce.
+    """
+    import random
+    from v5 import statistica, valutazione, varianti
+    sessione = nuova_sessione()
+    controlli_intermedi, r_int, r_est = [], [], []
+    esito = "riferire"
+    imm = ambiente.immagine_pacchetto(carichi.pacchetto_originale())
+    with valutazione.Sessione(sessione, [imm], carichi.carico_dev(*config.CARICO_DEV, seme_ordine="riscaldamento")[:20]) as s:
+        acc, _ = varianti.genera_e_verifica(s.reg, s.sessione, s.oss, imm, "verifica8a", config.K_VARIANTI,
+                                            non_valide=False)
+        pubbliche = {varianti.nome(p): p.read_bytes() for p in carichi.fixture_valide()}
+        trasf = [(0, v) for vv in acc["valide"].values() for v in vv]
+        pubb = [(0, pubbliche[n]) for n, vv in acc["valide"].items() for _ in vv]
+        for k in range(max(BLOCCHI_iii)):
+            rnd = random.Random(f"iii:{k}")
+            a, b = trasf[:], pubb[:]
+            rnd.shuffle(a); rnd.shuffle(b)
+            ordine = [("t", a), ("p", b)] if k % 2 == 0 else [("p", b), ("t", a)]
+            t = {}
+            for nome, casi in ordine:
+                r, _ = episodio_strumentato(s, imm, casi, f"iii{nome}{k}")
+                t[nome] = r
+            r_int.append(t["t"]["t_api"] / t["p"]["t_api"])
+            r_est.append(t["t"]["t_finestra"] / t["p"]["t_finestra"])
+            print(f"coppia {k}: interno {r_int[-1]:.4f}, esterno {r_est[-1]:.4f}", flush=True)
+            if len(r_int) in BLOCCHI_iii:
+                g, (lo, hi) = statistica.ic_rapporto(r_int)
+                ge, (loe, hie) = statistica.ic_rapporto(r_est)
+                c = {"coppie": len(r_int), "interno": {"media_geometrica": round(g, 4), "IC95": [round(lo, 4), round(hi, 4)]},
+                     "esterno": {"media_geometrica": round(ge, 4), "IC95": [round(loe, 4), round(hie, 4)]}}
+                controlli_intermedi.append(c)
+                print(json.dumps(c), flush=True)
+                if lo >= 0.97 and hi <= 1.03:
+                    esito = "passa"
+                    break
+    dati = {"sessione": sessione, "esito": esito, "intervallo_di_equivalenza": [0.97, 1.03], "blocchi": BLOCCHI_iii,
+            "varianti": len(trasf), "controlli_intermedi": controlli_intermedi,
+            "nota": "controlli intermedi sulla stessa serie: l'errore di primo tipo complessivo supera il 5% nominale",
+            "rapporti_interni": [round(x, 4) for x in r_int], "rapporti_esterni": [round(x, 4) for x in r_est],
+            "diario": s.reg.diario}
+    scrivi_esito("mutatore_tempo.json", dati)
+    print(json.dumps({k: v for k, v in dati.items() if k not in ("diario", "rapporti_interni", "rapporti_esterni")},
+                     indent=2, ensure_ascii=False))
+    return 0 if esito == "passa" else 1
+
+
+BLOCCHI_iii = (8, 16, 32, 64, 128)
+
+
+def episodio_strumentato(s, imm, casi, etichetta):
+    """Episodio dell'originale con il worker strumentato: tempo dentro l'API e finestra esterna (s)."""
+    from v5 import episodio
+    r, frame = episodio.con_ripetizione(s.reg, s.sessione, etichetta, imm, casi, s.oss, "originale",
+                                        comando=config.COMANDO_WORKER_STRUMENTATO, frame_finale=True,
+                                        timeout_completamento=600)
+    return {"t_api": json.loads(r["frame_finale"])["t_api_ns"] / 1e9, "t_finestra": r["t_finestra_ns"] / 1e9}, frame
+
+
+# ------------------------------------------------------------------ oracolo (passo 9)
+
+GPG = r"C:\Program Files\Git\usr\bin\gpg.exe"
+
+
+def oracolo_cmd(args):
+    """python v5/supervisore.py oracolo --due-volte
+
+    Costruisce oracolo e manifest due volte (la seconda in una cartella di prova, con gli stessi semi)
+    e confronta i manifest byte per byte. Poi verifica i limiti del confine contro i massimi osservati
+    e prepara segreti.tar con la prova della procedura di cifratura (passphrase usa e getta).
+    """
+    import shutil
+    from v5 import oracolo
+    from v5.registro import Registro
+    sessione = nuova_sessione()
+    reg = Registro(sessione)
+    oss = ambiente.Osservatore(sessione)
+    prova = config.LAVORO / "oracolo_prova"
+    t0 = time.monotonic()
+    try:
+        reg.imposta(controlli=ambiente.controlli(sessione, oss))
+        imm = ambiente.immagine_pacchetto(carichi.pacchetto_originale())
+        semi = oracolo.semi_segreti(config.SEGRETI)
+        man_a, massimi = oracolo.costruisci(reg, sessione, oss, imm, config.SEGRETI, config.LAVORO / "oracolo")
+        if prova.exists():
+            shutil.rmtree(prova)
+        (prova / "segreti").mkdir(parents=True)
+        (prova / "segreti" / "semi.json").write_text(json.dumps(semi, indent=2), encoding="utf-8")
+        man_b, _ = oracolo.costruisci(reg, sessione, oss, imm, prova / "segreti", prova / "dev")
+        reg.salva()
+    finally:
+        oss.chiudi()
+        if prova.exists():
+            shutil.rmtree(prova)            # la seconda copia dei documenti segreti non resta su disco
+    identici = man_a == man_b
+    (config.RADICE / "v5" / "oracle_manifest.json").write_bytes(man_a)
+    limiti = {
+        "byte_frame": {"massimo_osservato": massimi["byte_frame"], "limite": config.LIMITE_FRAME,
+                       "regola": "limite ≥ 4 × massimo", "rispettata": config.LIMITE_FRAME >= 4 * massimi["byte_frame"]},
+        "nodi": {"massimo_osservato": massimi["nodi"], "limite": config.LIMITE_NODI,
+                 "regola": "limite ≥ 4 × massimo", "rispettata": config.LIMITE_NODI >= 4 * massimi["nodi"]},
+        "profondita_json": {"massimo_osservato": massimi["profondita_json"], "limite": config.PROFONDITA_JSON,
+                            "regola": "codifica piatta (P3): profondità fissata dal formato, massimo 6",
+                            "rispettata": massimi["profondita_json"] <= 6 < config.PROFONDITA_JSON},
+    }
+    copia = prepara_copia_segreti()
+    dati = {"sessione": sessione, "durata_s": round(time.monotonic() - t0), "manifest_identici": identici,
+            "impronta_manifest": hashlib.sha256(man_a).hexdigest(), "limiti_del_confine": limiti, "copia_segreti": copia}
+    scrivi_esito("oracolo.json", dati)
+    print(json.dumps(dati, indent=2, ensure_ascii=False))
+    return 0 if identici and all(v["rispettata"] for v in limiti.values()) and copia["prova_ripristino"] else 1
+
+
+def prepara_copia_segreti():
+    """D3: segreti.tar + SHA-256; prova della procedura gpg con una passphrase usa e getta, poi cancellata.
+    La cifratura vera (con la passphrase di Morgan) e la conservazione fuori dal PC le fa Morgan."""
+    import shutil
+    tar = config.RADICE / "segreti.tar"
+    subprocess.run(["tar", "-cf", str(tar), "-C", str(config.RADICE), "segreti"], check=True, timeout=300)
+    sha_tar = hashlib.sha256(tar.read_bytes()).hexdigest()
+    prova = config.LAVORO / "gpg_prova"
+    if prova.exists():
+        shutil.rmtree(prova)
+    prova.mkdir(parents=True)
+    passphrase = secrets.token_hex(16)
+    base = [GPG, "--homedir", str(prova), "--batch", "--yes", "--pinentry-mode", "loopback", "--passphrase", passphrase]
+    try:
+        subprocess.run(base + ["--symmetric", "--cipher-algo", "AES256", "--s2k-digest-algo", "SHA512",
+                               "--s2k-count", "65011712", "-o", str(prova / "prova.gpg"), str(tar)],
+                       check=True, timeout=300, capture_output=True)
+        subprocess.run(base + ["-o", str(prova / "prova.tar"), "-d", str(prova / "prova.gpg")],
+                       check=True, timeout=300, capture_output=True)
+        ok = hashlib.sha256((prova / "prova.tar").read_bytes()).hexdigest() == sha_tar
+    finally:
+        shutil.rmtree(prova, ignore_errors=True)
+    return {"segreti_tar": "segreti.tar (in .gitignore)", "sha256_segreti_tar": sha_tar, "prova_ripristino": ok,
+            "gpg": GPG}
+
+
+# ------------------------------------------------------------------ collaudo e cancello (passo 10)
+
+def cancello(s, imm, n, carico="dev"):
+    """Confronti nulli originale contro originale: ogni allarme è falso (v4 righe 248-262)."""
+    from v5 import statistica, valutazione
+    allarmi, rifiuti, dettagli = 0, 0, []
+    for k in range(n):
+        r = valutazione.valuta(s, imm, imm, carico, etichetta=f"nullo{k}")
+        if r["esito"] != "valido":
+            rifiuti += 1                    # l'originale respinto contro sé stesso: da riferire (C4)
+        else:
+            allarmi += r["piu_veloce"] or r["piu_lento"]
+        dettagli.append({"esito": r["esito"], "accelerazione": r.get("accelerazione"), "t": r.get("t")})
+        print(f"nullo {k}: {valutazione.classifica(r)} {r.get('accelerazione')}", flush=True)
+    passa, lo, hi = statistica.verdetto_nullo(allarmi, n)
+    return {"confronti": n, "falsi_allarmi": allarmi, "rifiuti_dell_originale": rifiuti, "IC95": [lo, hi],
+            "passa": passa and rifiuti == 0, "dettagli": dettagli}
+
+
+def collaudo(args):
+    """Passo 10: varianti oneste (esiti dichiarati prima, v5/valutazione.py) + cancello corto.
+
+    python v5/supervisore.py collaudo [nulli]      (predefinito 5; i 40 dell'accettazione sono in fase 4)
+    """
+    from v5 import valutazione
+    n_nulli = int(args.resto[0]) if args.resto else 5
+    imm = ambiente.immagine_pacchetto(carichi.pacchetto_originale())
+    varianti = {nome: valutazione.immagine_variante(nome) for nome in valutazione.VARIANTI}
+    sessione = nuova_sessione()
+    righe, esiti = [], []
+    casi_riscaldamento = carichi.carico_dev(*config.CARICO_DEV, seme_ordine="riscaldamento")[:20]
+    with valutazione.Sessione(sessione, [imm, *varianti.values()], casi_riscaldamento) as s:
+        for nome, imm_v in varianti.items():
+            atteso = valutazione.VARIANTI[nome][1]
+            r = valutazione.valuta(s, imm, imm_v, "dev", etichetta=nome.lower())
+            osservato = valutazione.classifica(r)
+            esiti.append(osservato == atteso)
+            righe.append({"variante": nome, "atteso": atteso, "osservato": osservato,
+                          "accelerazione": r.get("accelerazione"), "t": r.get("t"),
+                          "picco_candidato": r.get("picco_candidato"), "soglia_picco": r.get("soglia_picco"),
+                          "ok": osservato == atteso})
+            print(json.dumps(righe[-1], ensure_ascii=False), flush=True)
+        nulli = cancello(s, imm, n_nulli)
+    dati = {"sessione": sessione, "varianti": righe, "superate": f"{sum(esiti)}/{len(esiti)}",
+            "cancello_corto": nulli, "diario": s.reg.diario}
+    scrivi_esito("collaudo.json", dati)
+    print(json.dumps({k: v for k, v in dati.items() if k != "diario"}, indent=2, ensure_ascii=False))
+    return 0 if all(esiti) else 1
+
+
+def nullo(args):
+    """python v5/supervisore.py nullo [n]     cancello sul rumore (40 per l'accettazione, criterio 3)"""
+    from v5 import valutazione
+    n = int(args.resto[0]) if args.resto else 40
+    imm = ambiente.immagine_pacchetto(carichi.pacchetto_originale())
+    sessione = nuova_sessione()
+    with valutazione.Sessione(sessione, [imm], carichi.carico_dev(*config.CARICO_DEV, seme_ordine="riscaldamento")[:20]) as s:
+        esito = cancello(s, imm, n)
+    scrivi_esito(f"nullo_{n}.json", {"sessione": sessione, **esito})
+    print(json.dumps({k: v for k, v in esito.items() if k != "dettagli"}, indent=2))
+    return 0 if esito["passa"] else 1
+
+
+# ------------------------------------------------------------------ corsa pagata (solo dopo l'accettazione)
+
+def corsa(args):
+    """python v5/supervisore.py corsa       SOLO dopo il criterio d'accettazione e il congelamento (fase 5).
+    Richiede ANTHROPIC_API_KEY nel processo del supervisore; i controlli verificano che non arrivi al candidato."""
+    import os
+    from v5 import modello, valutazione
+    if not os.environ.get("ANTHROPIC_API_KEY"):
+        sys.exit("Serve ANTHROPIC_API_KEY. A costo zero: collaudo, nullo, controlli.")
+    import anthropic
+    client = anthropic.Anthropic()
+    imm = ambiente.immagine_pacchetto(carichi.pacchetto_originale())
+    sessione = nuova_sessione()
+    with valutazione.Sessione(sessione, [imm], carichi.carico_dev(*config.CARICO_DEV, seme_ordine="riscaldamento")[:20],
+                              modalita="corsa") as s:
+        esito = modello.corsa(client, s, imm, cancello)
+    uscita = config.RADICE / "risultati_v5"
+    uscita.mkdir(exist_ok=True)
+    (uscita / f"corsa_{sessione}.json").write_text(json.dumps(esito, indent=2, ensure_ascii=False), encoding="utf-8")
+    print(json.dumps({k: v for k, v in esito.items() if k != "righe"}, indent=2, ensure_ascii=False))
+    return 0
+
+
 # ------------------------------------------------------------------ principale
 
 COMANDI = {"osservatore-prova": osservatore_prova, "controlli": controlli, "episodi-prova": episodi_prova,
            "calibra": calibra, "quota": quota, "patch-worker": patch_worker,
-           "calibra-dispersione": calibra_dispersione}
+           "calibra-dispersione": calibra_dispersione,
+           "mutatore": mutatore_cmd, "oracolo": oracolo_cmd,
+           "collaudo": collaudo, "nullo": nullo, "corsa": corsa}
 
 
 def main():

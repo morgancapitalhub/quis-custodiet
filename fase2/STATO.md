@@ -17,10 +17,13 @@ Questo file si aggiorna a ogni commit, così un'interruzione riprende dal passo 
 | 7a | fatto | 137b1a9, 7abe55c | quota ufficiale 0,755–0,776 < 0,90; allungare non basta (`fase2/RAPPORTO_QUOTA.md`) |
 | 7b | decisioni Q1–Q4 registrate | e63dd02 | `REQUISITI_AGGIUNTI.md`, piano revisione 4 |
 | 7c | fatto (regola decisa: C1) | 8155bf2 | codifica compatta ottimizzata; `patch-worker 30` → 1,096, IC95 [1,073; 1,120] (`fase2/RAPPORTO_CRITERIO4.md`); test 56/56 |
-| 7d | decisioni C1–C4 registrate | (questo commit) | `REQUISITI_AGGIUNTI.md`, piano revisione 5 |
-| 7e | da fare | | |
+| 7d | decisioni C1–C4 registrate | 290498c | `REQUISITI_AGGIUNTI.md`, piano revisione 5 |
+| 7e | codice fatto; misure in corso | ee3e498 | confine (letterali non finiti) e GRAFO_NODI 4/4; `patch-worker` a blocchi e `calibra-dispersione` in esecuzione |
+| 8–11 | codice scritto, non ancora eseguito nel container | (questo commit) | `test_mutatore` 8/8, `test_statistica` 4/4, `test_flusso` 4/4 sull'host |
 
-**Prossimo passo:** 7e — confine: rifiuto dei letterali non finiti, test sul nuovo formato, controllo positivo di GRAFO_NODI; `patch-worker` a blocchi 30/60/120; `calibra-dispersione` e valori congelati in `config.py`. Poi 8a.
+**Prossimo passo:** a misure finite: congelare TOLLERANZA_MEMORIA ed ECCEDENZA_PRONTO in `config.py`; poi `mutatore --verifica` (8a), `mutatore --tempo` (8b), `oracolo --due-volte` (9), `collaudo` (10), rapporto (12).
+
+Nota (7e): Docker Desktop si è chiuso alle 16:41 (ora locale) senza intervento di questa sessione; riavviato alle 23:16, versione invariata 4.93.0 (240920). Una coppia di `patch-worker` (n. 17, rapporto 0,869) coincide con un test pesante sull'host (`test_statistica`, 15 s di CPU): possibile disturbo, da riportare.
 
 Note del passo 6 (da riportare nel rapporto, `fase2/esiti/calibrazione.json`, carico provvisorio 200 × 120 sezioni):
 - picco a vuoto 4,58–5,40 MiB (mediana 5,09); intervallo [4,09; 6,09] MiB; il controllo passa al primo riscaldamento.

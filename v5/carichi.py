@@ -121,10 +121,16 @@ def episodio(casi, seme_ordine):
     return casi
 
 
+def insieme_di_casi(prefisso, n_doc, sezioni, extra=()):
+    """L'insieme FISSO dei casi di un carico (l'oracolo li copre tutti): sintetici con i semi del
+    carico, casi dell'API, flusso profondo, più eventuali extra (fixture e non validi mutati)."""
+    return (casi_sintetici(prefisso, n_doc, sezioni) + casi_api(prefisso) + flusso_profondo(prefisso)
+            + list(extra))
+
+
 def carico_dev(n_doc, sezioni, seme_ordine=0, extra=()):
-    """Carico DEV: sintetici con semi DEV + casi dell'API + flusso profondo (+ non validi mutati, passo 8)."""
-    return episodio(casi_sintetici("dev", n_doc, sezioni) + casi_api(f"dev:{seme_ordine}")
-                    + flusso_profondo(f"dev:{seme_ordine}") + list(extra), seme_ordine)
+    """Carico DEV in un ordine: stesso insieme di casi in ogni episodio, ordine mescolato per coppia."""
+    return episodio(insieme_di_casi("dev", n_doc, sezioni, extra), seme_ordine)
 
 
 PACCHETTI = config.LAVORO / "pacchetti"
