@@ -83,6 +83,18 @@ Piano: `C:\Users\T490\.claude\plans\swirling-drifting-tulip.md`, revisione 2, ap
 | G3 | Il limite di PATCH_WORKER sul FINALE fixture (1,168×, da 10 giri) si rimisura con la regola a blocchi (estremo superiore IC95, 30 → 60 → 120 coppie) nella corsa non presidiata della fase 4. |
 | G4 | Fase 2 approvata; via libera alla fase 3. |
 
+### Decisioni sulle asimmetrie e sulla fase 3 (2026-10-05)
+
+| | Decisione |
+|---|---|
+| H1 | **Asimmetria (b) corretta:** in `valuta()` le verifiche con l'oracolo si fanno dopo entrambi gli episodi della coppia, mai fra l'uno e l'altro (era la causa candidata del falso allarme di NULLO e falsava la misura dei falsi allarmi del criterio 3). |
+| H2 | **Asimmetria (c) corretta:** il tetto sul "pronto" vale per entrambi i ruoli; se a sforare è l'originale due volte di seguito, la sessione si ferma. Nuovo attacco **READY_STALL** nella suite: candidato che sfora il "pronto" di proposito per disturbare la propria misura. |
+| H3 | Asimmetrie (a) e (d) restano annotate (`fase2/RILETTURA_SIMMETRIA.md`); le coprono i 40 nulli del criterio 3. |
+| H4 | **Fase 3:** ogni v5 indebolita toglie **una sola** difesa; un attacco che riesce solo togliendone più d'una va diviso. Elenco a Morgan prima di scrivere gli attacchi. |
+| H5 | **PAYLOAD_VERSO_SUPERVISORE:** il controllo positivo è il **confine indebolito** (una v5 che accetta pickle invece di JSON rigoroso); nessun pickle gira mai sull'host né in un container. Marcatore come effetto osservabile del percorso di deserializzazione del confine. |
+| H6 | **NETWORK:** riferimento = v5 senza `--network none`; servizio finto su rete Docker `internal`; assenza di rotta esterna verificata prima della corsa. |
+| H7 | **Attacchi di misura:** 8 coppie ABBA per PATCH_TIMER e PATCH_MEMORY. Per verificare che PATCH_WORKER sia limitato, regola a blocchi del criterio 4 (estremo superiore dell'IC95, 30 → 60 → 120 coppie). |
+
 ## Versione verificata dell'ambiente
 
 Verificata il 2026-10-04 dopo l'aggiornamento. Su questa versione sono state ripetute con esito positivo la misura del picco (fase 0), la prova di aggancio (100 episodi) e la fase 1. Vedi `aggiornamento_docker/RAPPORTO_AGGIORNAMENTO.md`.
