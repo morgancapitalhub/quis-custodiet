@@ -9,8 +9,8 @@
       },
       "fixture": 515,
       "flusso_profondo": 7,
-      "impronta_casi": "e4949c3d81a82a3ad577c47a555dc21d05a2ce94da7c5fe15bb0edebf030ecf0",
-      "impronta_oracolo": "49597f0aea23e959e55510996511c657864421c911b2f32c5189e208d190b233",
+      "impronta_casi": "ef54028692402890cdad7a0e9eb2c48a2e75c2988319a93e1b1a0cb5e99e15f5",
+      "impronta_oracolo": "e1daa4608e466ac34eafc72a2ec35d6cc2595867a1432d4bcb1f658a9ac1fb78",
       "non_validi": 525,
       "per_op": {
         "0": 751,
@@ -36,18 +36,18 @@
     },
     "finale_fixture": {
       "api": 9,
-      "casi": 4915,
+      "casi": 4916,
       "duplicati_eliminati": {
-        "interni": 1,
+        "interni": 0,
         "uguali_al_dev": 30
       },
-      "fixture": 4899,
+      "fixture": 4900,
       "flusso_profondo": 7,
-      "impronta_casi": "5f9f4a8d162d95ab1274117fee015cefc779f0bd72d55ca818d542c1649a1fc7",
-      "impronta_oracolo": "a85141417429e01be2e1d86962d9a0c12457d381b30fd86c8648d128e8292dab",
+      "impronta_casi": "3fe86a8646f01c6ae63eb53a2677264d9a1f9b0a49c84aea70ccf48596caccde",
+      "impronta_oracolo": "cd14b31087d73bcdbc30dbdc0f1221d4d8b8ac372af993aa3407c556eb49b7a0",
       "non_validi": 496,
       "per_op": {
-        "0": 4906,
+        "0": 4907,
         "3": 2,
         "4": 2,
         "5": 1,
@@ -63,7 +63,7 @@
         "tomli._parser.TOMLDecodeError": 486
       },
       "sintetici": 0,
-      "validi": 4419
+      "validi": 4420
     },
     "finale_sintetico": {
       "api": 9,
@@ -100,8 +100,8 @@
   },
   "commit_tomli": "5a77b12a7a9f052ce5a20c335d2825658f6aea52",
   "immagine_python": "python@sha256:b1b81d67b8df73bf6067191790c233ef9e598b863fc1ccf447956138ca466d99",
-  "impronta_oracolo": "f2d1fafd62d0f83395787f7c7c0001a8e93efe0bf6b23057f0972307fca1e2b7",
-  "impronta_protocollo": "1f05f65045e773c0b9eefc29e5094c9e66ff9a0b1bcde7974fa899cf38c657a1",
+  "impronta_oracolo": "c1b60e983d6e72e0856851957b6e0026fe2a3c2561e3fef599273ac4e3fa8ec5",
+  "impronta_protocollo": "5f97e3a82e77e20fb6fc30652268db8296709ef5f29e8ea0fd4b504c93e9f3e3",
   "impronta_semi": "fa0d035a739d118cc9511e6c6da3956d112e73b392647d740695881e5e1679e1",
   "mutatore": {
     "dev": {
@@ -180,7 +180,7 @@
         "statistiche diverse (ii)": 0,
         "uguale alla pubblica o ripetuta": 395
       },
-      "scostamento_lunghezza_max": 0.0714,
+      "scostamento_lunghezza_max": 0.0769,
       "valide_non_mutabili": [
         "valid/_external/toml-test/valid/comment/nonascii.toml",
         "valid/_external/toml-test/valid/empty-crlf.toml",

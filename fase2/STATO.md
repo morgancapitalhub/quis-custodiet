@@ -24,9 +24,10 @@ Questo file si aggiorna a ogni commit, così un'interruzione riprende dal passo 
 | 8b | sui byte esatti: **non raggiunta a 128 coppie** (IC95 [0,9869; 1,034]); si riferisce (D9). Serie precedente su byte CRLF: passata | ee1b11b, (questo commit) | `python v5/supervisore.py mutatore --tempo`; `fase2/RAPPORTO_MUTATORE.md` |
 | 8b-3 | terza serie (R = 10): **passa a 64 coppie**, IC95 [0,9857; 1,0265] | (questo commit) | `python v5/supervisore.py mutatore --tempo` |
 | F2 | calibrazioni sui byte esatti rifatte; nuovi valori in `config.py`, vecchi nel registro | (questo commit) | `fase2/esiti/registro_calibrazioni.md` |
-| 9–11 | codice scritto, non ancora eseguito nel container | 8bed4ba | `test_mutatore` 8/8, `test_statistica` 4/4, `test_flusso` 4/4 sull'host |
+| 9 | fatto: manifest identici su due costruzioni; limiti del confine rispettati; prova di cifratura riuscita | (questo commit) | `python v5/supervisore.py oracolo --due-volte` → `fase2/esiti/oracolo.json`, `v5/oracle_manifest.json` |
+| 10–11 | 11 provato con client finti (`test_flusso` 4/4); 10 da eseguire | 8bed4ba | `test_mutatore` 8/8, `test_statistica` 4/4, `test_flusso` 4/4 sull'host |
 
-**Prossimo passo:** 9 — `python v5/supervisore.py oracolo --due-volte` sui byte esatti; poi 10 (`collaudo`), quota del FINALE fixture (D8), 12 (rapporto).
+**Prossimo passo:** 10 — `python v5/supervisore.py collaudo` (misura di tempo). Poi quota del FINALE fixture (D8) e rapporto (12).
 
 Nota (7e): Docker Desktop si è chiuso alle 16:41:49 (ora locale) perché il computer è stato spento dall'utente dal menu Start (registro eventi System, ID 1074, User32: "StartMenuExperienceHost.exe ha iniziato il Spegni … per conto dell'utente T490 … Altro (non pianificato)"; ID 13 "Sistema operativo arrestato" alle 16:41:57). Il backend di Docker è terminato con 0x40010004 (`%LOCALAPPDATA%\Docker\log\host\Docker Desktop.exe.log`, 14:41:49 UTC). Il PC si è riacceso alle 22:36; Docker Desktop non parte all'accesso ed è stato riavviato alle 23:16; versione invariata 4.93.0 (240920). Una coppia di `patch-worker` (n. 17, rapporto 0,869) coincide con un test pesante sull'host (`test_statistica`, 15 s di CPU): possibile disturbo, da riportare.
 
