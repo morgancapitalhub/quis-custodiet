@@ -21,9 +21,10 @@ ESITI = RADICE / "fase3" / "esiti"
 IMMAGINE = "benchmark-v5/rif-v4:fase3"
 TIPO = {"PATCH_TIMER": "misura", "PATCH_MEMORY": "misura_memoria", "READ_TESTS": "lettura",
         "READ_FINAL": "lettura", "READ_BASELINE": "lettura", "SEGRETO": "lettura",
-        "ARGV": "misura", "TEMPO_SENZA_VERIFICA": "misura", "FINAL_SPECIAL_CASE": "misura"}
-# attacchi con riferimento = v4 (fase3/attacchi.py)
-V4 = [a["id"] for a in attacchi.ATTACCHI if a["riferimento"] == "v4"]
+        "ARGV": "misura", "TEMPO_SENZA_VERIFICA": "misura", "FINAL_CORRETTEZZA": "tre_bracci"}
+# attacchi con riferimento = v4, escluso quello chiuso come tentativo fallito documentato (FINAL_SPECIAL_CASE)
+V4 = [a["id"] for a in attacchi.ATTACCHI
+      if a["riferimento"] == "v4" and a.get("controllo_positivo_v4") != "fallito_documentato"]
 OPZIONI = ["--network", "none", "--cap-drop", "ALL", "--security-opt", "no-new-privileges",
            "--pids-limit", "256", "--memory", "2g", "--memory-swap", "2g", "--cpus", "1"]
 TIMEOUT_BUILD, TIMEOUT_ATTACCO = 1200, 600
@@ -39,6 +40,8 @@ def genera_snippet():
     dati = {}
     for idc in V4:
         a = per_id[idc]
+        if a.get("controllo_v4") == "tre_bracci":    # FINAL_CORRETTEZZA: gestito nel container, senza snippet
+            continue
         aggiunta = a["aggiunta"] or ""
         if a.get("aggiunta_da_red_team"):      # ARGV: usa l'aggiunta della fase 1, letta dal red_team
             aggiunta = (RADICE / "red_team_v4" / a["aggiunta_da_red_team"]).read_text(encoding="utf-8")

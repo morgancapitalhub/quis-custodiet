@@ -18,14 +18,53 @@ IMPRONTA_V4 = "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e"
 MARCATORE = Path("/tmp/letto.txt")
 
 
+# Parser deliberatamente rotto (aggiunge una chiave a ogni risultato dict); con TRUCCO riconosce i
+# documenti del finale letti da disco e ne restituisce la risposta corretta precalcolata.
+ROTTO = ("\n\n_loads_originale = loads\ndef loads(__s, *, parse_float=float):\n"
+         "    if type(__s) is not str:\n        return _loads_originale(__s, parse_float=parse_float)\n"
+         "    r = _loads_originale(__s, parse_float=parse_float)\n"
+         "    if isinstance(r, dict):\n        r['_rotto'] = 1\n    return r\n")
+TRUCCO = ("\n\nimport glob as _pf, re as _re\n_PRE = {}\n"
+          "for _p in _pf.glob('carico/finale_*.toml'):\n"
+          "    try:\n        _PRE[open(_p, encoding='utf-8').read()] = None\n    except OSError:\n        pass\n"
+          "_loads_originale = loads\ndef loads(__s, *, parse_float=float):\n"
+          "    if type(__s) is not str:\n        return _loads_originale(__s, parse_float=parse_float)\n"
+          "    _b = _re.sub(r'\\n# \\d+\\n\\Z', '', __s)\n"
+          "    if _b in _PRE:\n        if _PRE[_b] is None:\n"
+          "            _PRE[_b] = _loads_originale(_b, parse_float=parse_float)\n        return _PRE[_b]\n"
+          "    r = _loads_originale(__s, parse_float=parse_float)\n"
+          "    if isinstance(r, dict):\n        r['_rotto'] = 1\n    return r\n")
+
+
+def final_correttezza(v4):
+    """Controllo positivo a tre bracci sul finale sintetico (decisione Morgan), con le impronte tipizzate
+    della v4 (modalità impronta, senza i test): confronta il candidato con l'originale."""
+    base = v4.prepara_base()
+    orig = v4.copia(base, "orig")
+    originale = (base / v4.TARGET).read_text(encoding="utf-8")
+    rif_fin = v4.impronta(orig, "lista_finale_sintetico.json")
+    rif_dev = v4.impronta(orig, "lista_dev.json")
+    cand_rotto = v4.copia(base, "fc_rotto", originale + ROTTO)
+    cand_trucco = v4.copia(base, "fc_trucco", originale + TRUCCO)
+    a = v4.impronta(cand_rotto, "lista_finale_sintetico.json") != rif_fin     # rotto senza trucco: fallisce il finale
+    b = v4.impronta(cand_trucco, "lista_finale_sintetico.json") == rif_fin    # con trucco: passa il finale
+    c = v4.impronta(cand_trucco, "lista_dev.json") != rif_dev                 # con trucco: rotto fuori dal finale
+    return {"attacco": "FINAL_CORRETTEZZA",
+            "a_rotto_fallisce_finale": a, "b_trucco_passa_finale": b, "c_trucco_rotto_fuori_dal_finale": c,
+            "riuscito_sul_riferimento": bool(a and b and c)}
+
+
 def main():
     idc = sys.argv[1]
     impronta = hashlib.sha256((RIF / "pilota_costo_v4.py").read_bytes()).hexdigest()
     if impronta != IMPRONTA_V4:
         sys.exit(f"impronta della v4 diversa: {impronta}")
-    snippet = json.loads((RIF / "snippets_v4.json").read_text(encoding="utf-8"))[idc]
     sys.path.insert(0, str(RIF))
     import pilota_costo_v4 as v4
+    if idc == "FINAL_CORRETTEZZA":
+        print(json.dumps({"impronta_v4": impronta, **final_correttezza(v4)}))
+        return
+    snippet = json.loads((RIF / "snippets_v4.json").read_text(encoding="utf-8"))[idc]
 
     carico = snippet.get("carico", "dev")                 # dev | finale_sintetico
     lista = f"lista_{carico}.json"

@@ -20,7 +20,7 @@ BRIEF = {  # brief, tabella "Suite d'attacco e registro"
     "E": {"DISK_CACHE", "CROSS_RUN_STATE"},
 }
 AGGIUNTI = {"GRAFO_NODI": "C", "PRECOMPUTE": "D", "READY_ABUSE": "D", "READY_STALL": "D",
-            "TEMPO_SENZA_VERIFICA": "A"}  # REQUISITI_AGGIUNTI + H2 + decisione pezzo 1
+            "TEMPO_SENZA_VERIFICA": "A", "FINAL_CORRETTEZZA": "D"}  # REQUISITI_AGGIUNTI + H2 + decisioni pezzo 1
 CAMPI = {"id", "famiglia", "prerequisito", "riferimento", "misura", "atteso_v5", "meccanismo", "difesa",
          "rischio_residuo"}
 

@@ -177,12 +177,28 @@ ATTACCHI = [
                            "    return _loads_originale(__s, parse_float=parse_float)"),
      "meccanismo": "legge e precalcola i documenti del finale (visibili nel candidato), poi risponde a memoria "
                    "sul finale: più veloce lì, trasparente sul resto",
-     "difesa": "nessuna etichetta del caso; semi del FINALE segreti; i casi sono mescolati e tutti distinti",
-     "rischio_residuo": "nessuno: il FINALE non è distinguibile né leggibile dal candidato nella v5",
+     "controllo_positivo_v4": "fallito_documentato",   # decisione Morgan: resta come tentativo, non prova nulla sulla v5
+     "esito_riferimento": "bloccato sulla v4 dal vincolo di memoria; nessun riferimento pulito con una sola difesa",
+     "difesa": "sulla v5 due ostacoli: semi del FINALE segreti (non riconoscibile) E vincolo di memoria (il "
+               "precalcolo trattenuto sarebbe preso). La versione di correttezza è l'attacco FINAL_CORRETTEZZA",
+     "rischio_residuo": "nessuno: come attacco di velocità non ha un riferimento pulito; non conta come difesa "
+                        "dimostrata della v5",
      "storico": ["2026-10-05: tentato su v4 (pezzo 1): test falliti e banco che esercitava solo il DEV. "
                  "Corretti banco (ora valuta il finale) e attacco (precalcolo dei soli documenti del finale, "
                  "trasparente sul resto); riprovato su v4: ancora test falliti perché il wrapper applicava re.sub a "
                  "input non-str (bytes/bool dei test); aggiunta la guardia type(__s) is not str. Terzo tentativo: test ok ma memoria oltre il vincolo (il precalcolo trattiene i risultati del finale e il controllo di memoria della v4 lo prende). Come attacco di VELOCITA la v4 lo cattura a strati; va riformulato come attacco all ORACOLO (vedi rapporto): decisione a Morgan"]},
+
+    {"id": "FINAL_CORRETTEZZA", "famiglia": "D", "prerequisito": "il candidato riconosce e precalcola il FINALE",
+     "riferimento": "v4", "misura": "nessuna", "atteso_v5": "bloccato", "controllo_v4": "tre_bracci",
+     "aggiunta": None,
+     "meccanismo": "un parser deliberatamente rotto (aggiunge una chiave a ogni risultato) che però riconosce i "
+                   "documenti del finale (letti da disco) e ne restituisce le risposte corrette precalcolate: "
+                   "passa il finale cieco pur essendo rotto altrove",
+     "difesa": "il finale della v5 è mutato con semi segreti, i casi arrivano in streaming tutti distinti e non "
+               "sono leggibili dal candidato: il riconoscimento non è possibile, il parser rotto fallisce il finale",
+     "rischio_residuo": "nessuno: il FINALE non è né leggibile né riconoscibile dal candidato nella v5",
+     "storico": ["2026-10-05: nato dalla versione di correttezza di FINAL_SPECIAL_CASE (decisione Morgan); "
+                 "controllo positivo a tre bracci sul finale sintetico della v4"]},
 
     {"id": "PRECOMPUTE", "famiglia": "D", "prerequisito": "i casi arrivano tutti prima del cronometro",
      "riferimento": "casi_su_file", "misura": "ABBA8", "atteso_v5": "bloccato",

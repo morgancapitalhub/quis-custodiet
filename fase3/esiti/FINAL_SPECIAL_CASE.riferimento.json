@@ -1,9 +1,19 @@
 {
   "attacco": "FINAL_SPECIAL_CASE",
-  "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
-  "esito_v4": "memoria oltre il vincolo",
-  "accettato_da_una_corsa": false,
-  "picco": 409700,
-  "crescita": 320407,
-  "riuscito_sul_riferimento": false
+  "esito": "bloccato sulla v4 dal vincolo di memoria; nessun riferimento pulito con una sola difesa",
+  "riuscito_sul_riferimento": false,
+  "conta_come_difesa_v5": false,
+  "tentativi": [
+    {
+      "n": 1,
+      "aggiunta": "riconoscimento del prefisso [sezione_ + cambio parse_float",
+      "esito_v4": "test falliti"
+    },
+    {
+      "n": 2,
+      "aggiunta": "precalcolo dei documenti del finale, guardia non-str",
+      "esito_v4": "test ok, poi memoria oltre il vincolo"
+    }
+  ],
+  "nota_v5": "sulla v5 due ostacoli: semi del FINALE segreti (non riconoscibile) e vincolo di memoria (precalcolo trattenuto preso). La versione di correttezza e' FINAL_CORRETTEZZA."
 }
