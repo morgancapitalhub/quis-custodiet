@@ -19,12 +19,15 @@ Questo file si aggiorna a ogni commit, così un'interruzione riprende dal passo 
 | 7c | fatto (regola decisa: C1) | 8155bf2 | codifica compatta ottimizzata; `patch-worker 30` → 1,096, IC95 [1,073; 1,120] (`fase2/RAPPORTO_CRITERIO4.md`); test 56/56 |
 | 7d | decisioni C1–C4 registrate | 290498c | `REQUISITI_AGGIUNTI.md`, piano revisione 5 |
 | 7e | fatto; criterio 4 **non superato** a 120 coppie, deviazione accettata (E1) | 8a8d85e | `patch-worker`: limite dichiarato 1,116 (IC95 [1,0906; 1,1159]); `calibra-dispersione 5 40`: valori congelati in `config.py`; `fase2/RAPPORTO_CRITERIO4_DISPERSIONI.md` |
-| 7f | decisioni E1–E3; tolleranza di memoria ricalcolata (E2): 0,131 MiB, margine 41,6% di M | (questo commit) | `python v5/supervisore.py calibra-dispersione --da-sessioni` |
-| 8–11 | codice scritto, non ancora eseguito nel container | 8bed4ba | `test_mutatore` 8/8, `test_statistica` 4/4, `test_flusso` 4/4 sull'host |
+| 7f | decisioni E1–E3; tolleranza di memoria ricalcolata (E2): 0,131 MiB, margine 41,6% di M | 6a2f899 | `python v5/supervisore.py calibra-dispersione --da-sessioni` |
+| 8a | (i) e (ii): 0 scarti; 4398/4560 varianti; **12 fixture valide poco o per nulla mutabili: decisione richiesta** | (questo commit) | `python v5/supervisore.py mutatore --verifica`; `fase2/RAPPORTO_MUTATORE_8a.md` |
+| 8b–11 | codice scritto, non ancora eseguito nel container | 8bed4ba | `test_mutatore` 8/8, `test_statistica` 4/4, `test_flusso` 4/4 sull'host |
 
-**Prossimo passo:** 8a — `python v5/supervisore.py mutatore --verifica`; poi 8b, 9, 10, 12.
+**Prossimo passo:** decisione di Morgan su `fase2/RAPPORTO_MUTATORE_8a.md` (fixture valide non mutabili). Poi 8b (`mutatore --tempo`), 9 (`oracolo --due-volte`), 10 (`collaudo`), 12.
 
 Nota (7e): Docker Desktop si è chiuso alle 16:41:49 (ora locale) perché il computer è stato spento dall'utente dal menu Start (registro eventi System, ID 1074, User32: "StartMenuExperienceHost.exe ha iniziato il Spegni … per conto dell'utente T490 … Altro (non pianificato)"; ID 13 "Sistema operativo arrestato" alle 16:41:57). Il backend di Docker è terminato con 0x40010004 (`%LOCALAPPDATA%\Docker\log\host\Docker Desktop.exe.log`, 14:41:49 UTC). Il PC si è riacceso alle 22:36; Docker Desktop non parte all'accesso ed è stato riavviato alle 23:16; versione invariata 4.93.0 (240920). Una coppia di `patch-worker` (n. 17, rapporto 0,869) coincide con un test pesante sull'host (`test_statistica`, 15 s di CPU): possibile disturbo, da riportare.
+
+Nota (8a, regola 8 di CLAUDE.md): il 2026-10-05 alle 00:32:56 il computer è stato di nuovo spento dall'utente dal menu Start (System, ID 1074, User32, "Altro (non pianificato)"; ID 13 alle 00:33:06); backend di Docker terminato con 0x40010004 (22:32:57 UTC). Stessa causa anche il 2026-10-04 alle 13:22:37. Riacceso alle 08:31; Docker Desktop non parte all'accesso; riavviato da questa sessione alle 08:45 prima di riprendere 8a.
 
 Note del passo 6 (da riportare nel rapporto, `fase2/esiti/calibrazione.json`, carico provvisorio 200 × 120 sezioni):
 - picco a vuoto 4,58–5,40 MiB (mediana 5,09); intervallo [4,09; 6,09] MiB; il controllo passa al primo riscaldamento.
