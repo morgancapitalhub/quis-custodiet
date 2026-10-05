@@ -1,0 +1,44 @@
+{
+  "confronti_nulli": [
+    {
+      "confronto": "nullo",
+      "es_s": 0.0373,
+      "accelerazione_minima_distinguibile": 1.0183,
+      "accelerazione_osservata": 0.9771
+    },
+    {
+      "confronto": "nullo0",
+      "es_s": 0.0271,
+      "accelerazione_minima_distinguibile": 1.0134,
+      "accelerazione_osservata": 1.0007
+    },
+    {
+      "confronto": "nullo1",
+      "es_s": 0.0365,
+      "accelerazione_minima_distinguibile": 1.0182,
+      "accelerazione_osservata": 1.0118
+    },
+    {
+      "confronto": "nullo2",
+      "es_s": 0.4679,
+      "accelerazione_minima_distinguibile": 1.2091,
+      "accelerazione_osservata": 0.9226
+    },
+    {
+      "confronto": "nullo3",
+      "es_s": 0.079,
+      "accelerazione_minima_distinguibile": 1.0391,
+      "accelerazione_osservata": 1.0167
+    },
+    {
+      "confronto": "nullo4",
+      "es_s": 0.021,
+      "accelerazione_minima_distinguibile": 1.0103,
+      "accelerazione_osservata": 0.9923
+    }
+  ],
+  "accelerazione_minima_distinguibile_mediana": 1.0183,
+  "accelerazione_minima_distinguibile_max": 1.2091,
+  "limite_patch_worker_dev": 1.1124,
+  "limite_ready_abuse": 0.0235
+}

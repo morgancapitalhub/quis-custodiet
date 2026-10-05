@@ -1,0 +1,96 @@
+{
+  "comando": "python v5/supervisore.py quota-fixture",
+  "sessione": "202610051142242df5fd",
+  "carico": "ff",
+  "giri": 10,
+  "casi": 4916,
+  "byte": 625150,
+  "T_orig_s": {
+    "min": 0.8763118,
+    "mediana": 0.9666095,
+    "max": 1.0998374,
+    "mad": 0.048554100000000044,
+    "n": 10
+  },
+  "T_nullo_s": {
+    "min": 0.0410103,
+    "mediana": 0.05392345,
+    "max": 0.0628685,
+    "mad": 0.00635235,
+    "n": 10
+  },
+  "T_strumentato_s": {
+    "min": 0.9201349,
+    "mediana": 0.9952284499999999,
+    "max": 1.159092,
+    "mad": 0.03791040000000001,
+    "n": 10
+  },
+  "quota_esterna": 0.9442,
+  "quota_interna": 0.5562,
+  "quota_interna_min_max": [
+    0.549,
+    0.5593
+  ],
+  "scomposizione_della_finestra (strumentato, mediane)": {
+    "dentro_API": 0.5562,
+    "codifica_nodi_e_JSON": 0.2442,
+    "fuori_dal_worker (lettura, trasporto, scrittura)": 0.2006
+  },
+  "T_pavimento_s": {
+    "min": 0.7697844,
+    "mediana": 0.82736985,
+    "max": 1.0118577,
+    "mad": 0.020305149999999994,
+    "n": 10
+  },
+  "quota_min_esterna_interna": 0.5562,
+  "1_su_quota (formula del brief)": 1.798,
+  "limite_realistico_patch_worker (criterio 4, Q2)": 1.1683,
+  "soglia": 1.11,
+  "superata": false,
+  "conteggi_del_carico": {
+    "casi": 4916,
+    "validi": 4420,
+    "non_validi": 496,
+    "varianti_per_fixture_valida": {
+      "19": 2,
+      "20": 218,
+      "9": 1
+    },
+    "documenti_pubblici": {
+      "valide_non_mutabili": 7,
+      "non_valide_non_mutabili": 16,
+      "non_valide_non_utf8": 11,
+      "nota": "i pubblici uguali a casi del DEV sono eliminati dal FINALE (decisione 8a)"
+    },
+    "duplicati_eliminati": {
+      "interni": 0,
+      "uguali_al_dev": 30
+    }
+  },
+  "diario": [
+    {
+      "evento": "fermati",
+      "container": [
+        "sqz_demo_landing",
+        "sqz_demo_api",
+        "sqz_demo_grafana",
+        "sqz_demo_postgres",
+        "sqz_demo_prometheus"
+      ],
+      "ora": "2026-10-05T09:42:42.556329+00:00"
+    },
+    {
+      "evento": "riavviati",
+      "esiti": {
+        "sqz_demo_landing": true,
+        "sqz_demo_api": true,
+        "sqz_demo_grafana": true,
+        "sqz_demo_postgres": true,
+        "sqz_demo_prometheus": true
+      },
+      "ora": "2026-10-05T09:44:30.186667+00:00"
+    }
+  ]
+}

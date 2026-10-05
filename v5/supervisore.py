@@ -774,13 +774,49 @@ def corsa(args):
     return 0
 
 
+# ------------------------------------------------------------------ quota del FINALE fixture (D8)
+
+def quota_fixture(args):
+    """D8: quota di parsing e limite di PATCH_WORKER sul carico finale_fixture congelato, riportati
+    separati, con i conteggi del carico (varianti per fixture, documenti pubblici, duplicati eliminati).
+
+    python v5/supervisore.py quota-fixture
+    """
+    from v5 import oracolo, valutazione
+    casi, _ = oracolo.carica("finale_fixture")
+    ordinati = carichi.episodio(casi, seme_ordine="quota-fixture")
+    imm = ambiente.immagine_pacchetto(carichi.pacchetto_originale())
+    manifest = json.loads((config.RADICE / "v5" / "oracle_manifest.json").read_text(encoding="utf-8"))
+    sessione = nuova_sessione()
+    with valutazione.Sessione(sessione, [imm], carichi.carico_dev(*config.CARICO_DEV, seme_ordine="riscaldamento")[:20]) as s:
+        esito = misura_quota(s.reg, s.sessione, s.oss, imm, ordinati, etichetta="ff")
+    for k in ("_picchi_orig", "_cpu_orig", "_t_orig"):
+        esito.pop(k, None)
+    mut = manifest["mutatore"]["finale_fixture"]
+    car = manifest["carichi"]["finale_fixture"]
+    dati = {"sessione": sessione, **esito,
+            "conteggi_del_carico": {
+                "casi": car["casi"], "validi": car["validi"], "non_validi": car["non_validi"],
+                "varianti_per_fixture_valida": mut["varianti_per_fixture"],
+                "documenti_pubblici": {"valide_non_mutabili": len(mut["valide_non_mutabili"]),
+                                       "non_valide_non_mutabili": len(mut["non_valide_non_mutate"]),
+                                       "non_valide_non_utf8": mut["non_valide_non_utf8_su_op2"],
+                                       "nota": "i pubblici uguali a casi del DEV sono eliminati dal FINALE (decisione 8a)"},
+                "duplicati_eliminati": car["duplicati_eliminati"]},
+            "diario": s.reg.diario}
+    scrivi_esito("quota_finale_fixture.json", dati)
+    print(json.dumps({k: v for k, v in dati.items() if k != "diario"}, indent=2, ensure_ascii=False))
+    return 0
+
+
 # ------------------------------------------------------------------ principale
 
 COMANDI = {"osservatore-prova": osservatore_prova, "controlli": controlli, "episodi-prova": episodi_prova,
            "calibra": calibra, "quota": quota, "patch-worker": patch_worker,
            "calibra-dispersione": calibra_dispersione,
            "mutatore": mutatore_cmd, "oracolo": oracolo_cmd,
-           "collaudo": collaudo, "nullo": nullo, "corsa": corsa}
+           "collaudo": collaudo, "nullo": nullo, "corsa": corsa,
+           "quota-fixture": quota_fixture}
 
 
 def main():

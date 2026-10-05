@@ -1,9 +1,9 @@
 {
   "comando": "python v5/supervisore.py oracolo --due-volte",
-  "sessione": "202610051105264e9585",
-  "durata_s": 208,
+  "sessione": "20261005114703d1e35d",
+  "durata_s": 184,
   "manifest_identici": true,
-  "impronta_manifest": "d931973177434711562eb71cc1ae91fe2a41d90d4e5cc791d26fbb30deaabc8b",
+  "impronta_manifest": "3d9d6cfb2191a04075f5c7b702e310b89a7e9bd399b2c35c001a55e715089375",
   "limiti_del_confine": {
     "byte_frame": {
       "massimo_osservato": 37389,
@@ -26,7 +26,7 @@
   },
   "copia_segreti": {
     "segreti_tar": "segreti.tar (in .gitignore)",
-    "sha256_segreti_tar": "0843e5253519e727c52397ac37d88a2d04cfa39acdffcea9e766851765d8912b",
+    "sha256_segreti_tar": "c9435c14cdeab8b8178e7ae5fbfd61149521e1cf3fe22291ba2543820b11d8b6",
     "prova_ripristino": true,
     "gpg": "C:\\Program Files\\Git\\usr\\bin\\gpg.exe"
   }

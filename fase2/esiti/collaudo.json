@@ -1,0 +1,128 @@
+{
+  "comando": "python v5/supervisore.py collaudo 5",
+  "sessione": "20261005111126b6c4d1",
+  "varianti": [
+    {
+      "variante": "NULLO",
+      "atteso": "valido, né più veloce né più lento",
+      "osservato": "valido ma più lento",
+      "accelerazione": 0.9771241621651986,
+      "t": -2.9554140688028805,
+      "picco_candidato": 12718080.0,
+      "soglia_picco": 12821094.4,
+      "ok": false
+    },
+    {
+      "variante": "LENTO",
+      "atteso": "valido ma più lento",
+      "osservato": "valido ma più lento",
+      "accelerazione": 0.9329786851950823,
+      "t": -2.649357860046072,
+      "picco_candidato": 12736512.0,
+      "soglia_picco": 12832460.8,
+      "ok": true
+    },
+    {
+      "variante": "CACHE",
+      "atteso": "memoria oltre il vincolo",
+      "osservato": "memoria oltre il vincolo",
+      "accelerazione": null,
+      "t": null,
+      "picco_candidato": 76396544.0,
+      "soglia_picco": 12815872.0,
+      "ok": true
+    },
+    {
+      "variante": "SBAGLIATO",
+      "atteso": "risultato diverso su carico nascosto",
+      "osservato": "risultato diverso su carico nascosto",
+      "accelerazione": null,
+      "t": null,
+      "picco_candidato": null,
+      "soglia_picco": null,
+      "ok": true
+    },
+    {
+      "variante": "TIPO",
+      "atteso": "risultato diverso su carico nascosto",
+      "osservato": "risultato diverso su carico nascosto",
+      "accelerazione": null,
+      "t": null,
+      "picco_candidato": null,
+      "soglia_picco": null,
+      "ok": true
+    },
+    {
+      "variante": "IGNORA_PARSE_FLOAT",
+      "atteso": "risultato diverso su carico nascosto",
+      "osservato": "risultato diverso su carico nascosto",
+      "accelerazione": null,
+      "t": null,
+      "picco_candidato": null,
+      "soglia_picco": null,
+      "ok": true
+    }
+  ],
+  "superate": "5/6",
+  "cancello_corto": {
+    "confronti": 5,
+    "falsi_allarmi": 0,
+    "rifiuti_dell_originale": 0,
+    "IC95": [
+      0.0,
+      0.43449149475208104
+    ],
+    "passa": true,
+    "dettagli": [
+      {
+        "esito": "valido",
+        "accelerazione": 1.0007289800075643,
+        "t": 0.1288551008894796
+      },
+      {
+        "esito": "valido",
+        "accelerazione": 1.0117915250298737,
+        "t": 1.5291043255183054
+      },
+      {
+        "esito": "valido",
+        "accelerazione": 0.9225513752171954,
+        "t": -0.8760907501322546
+      },
+      {
+        "esito": "valido",
+        "accelerazione": 1.0166678724505003,
+        "t": 1.0080505802172963
+      },
+      {
+        "esito": "valido",
+        "accelerazione": 0.9922504833673224,
+        "t": -1.7738035321407313
+      }
+    ]
+  },
+  "diario": [
+    {
+      "evento": "fermati",
+      "container": [
+        "sqz_demo_landing",
+        "sqz_demo_api",
+        "sqz_demo_grafana",
+        "sqz_demo_postgres",
+        "sqz_demo_prometheus"
+      ],
+      "ora": "2026-10-05T09:11:45.255482+00:00"
+    },
+    {
+      "evento": "riavviati",
+      "esiti": {
+        "sqz_demo_landing": true,
+        "sqz_demo_api": true,
+        "sqz_demo_grafana": true,
+        "sqz_demo_postgres": true,
+        "sqz_demo_prometheus": true
+      },
+      "ora": "2026-10-05T09:37:31.573729+00:00"
+    }
+  ]
+}

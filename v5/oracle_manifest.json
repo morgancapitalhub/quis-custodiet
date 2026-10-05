@@ -101,7 +101,7 @@
   "commit_tomli": "5a77b12a7a9f052ce5a20c335d2825658f6aea52",
   "immagine_python": "python@sha256:b1b81d67b8df73bf6067191790c233ef9e598b863fc1ccf447956138ca466d99",
   "impronta_oracolo": "c1b60e983d6e72e0856851957b6e0026fe2a3c2561e3fef599273ac4e3fa8ec5",
-  "impronta_protocollo": "5f97e3a82e77e20fb6fc30652268db8296709ef5f29e8ea0fd4b504c93e9f3e3",
+  "impronta_protocollo": "ace50f5e6110db4ce5ed511bdf4ec7c320305077cdd1d43a14b7add46d17a04a",
   "impronta_semi": "fa0d035a739d118cc9511e6c6da3956d112e73b392647d740695881e5e1679e1",
   "mutatore": {
     "dev": {
