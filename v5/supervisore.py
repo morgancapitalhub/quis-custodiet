@@ -553,8 +553,11 @@ def mutatore_tempo(args):
         acc, _ = varianti.genera_e_verifica(s.reg, s.sessione, s.oss, imm, "verifica8a", config.K_VARIANTI,
                                             non_valide=False)
         pubbliche = {varianti.nome(p): p.read_bytes() for p in carichi.fixture_valide()}
-        trasf = [(0, v) for vv in acc["valide"].values() for v in vv]
-        pubb = [(0, pubbliche[n]) for n, vv in acc["valide"].items() for _ in vv]
+        trasf = [(0, v) for vv in acc["valide"].values() for v in vv] * R_iii      # F1: R ripetizioni per episodio
+        pubb = [(0, pubbliche[n]) for n, vv in acc["valide"].items() for _ in vv] * R_iii
+        rapporti_lunghezza = [len(v) / max(1, len(pubbliche[n])) for n, vv in acc["valide"].items() for v in vv]
+        lunghezze = {"rapporto_medio_variante_su_pubblica": round(sum(rapporti_lunghezza) / len(rapporti_lunghezza), 5),
+                     "rapporto_byte_totali": round(sum(len(c) for _, c in trasf) / sum(len(c) for _, c in pubb), 5)}
         for k in range(max(BLOCCHI_iii)):
             rnd = random.Random(f"iii:{k}")
             a, b = trasf[:], pubb[:]
@@ -577,8 +580,10 @@ def mutatore_tempo(args):
                 if lo >= 0.97 and hi <= 1.03:
                     esito = "passa"
                     break
-    dati = {"sessione": sessione, "esito": esito, "intervallo_di_equivalenza": [0.97, 1.03], "blocchi": BLOCCHI_iii,
-            "varianti": len(trasf), "controlli_intermedi": controlli_intermedi,
+    dati = {"sessione": sessione, "esito": esito if esito == "passa" else "NON SUPERATO (F1: esito definitivo)",
+            "intervallo_di_equivalenza": [0.97, 1.03], "blocchi": BLOCCHI_iii, "ripetizioni_per_episodio": R_iii,
+            "casi_per_episodio": len(trasf), "lunghezze (solo contesto)": lunghezze,
+            "controlli_intermedi": controlli_intermedi,
             "nota": "controlli intermedi sulla stessa serie: l'errore di primo tipo complessivo supera il 5% nominale",
             "rapporti_interni": [round(x, 4) for x in r_int], "rapporti_esterni": [round(x, 4) for x in r_est],
             "diario": s.reg.diario}
@@ -589,6 +594,7 @@ def mutatore_tempo(args):
 
 
 BLOCCHI_iii = (8, 16, 32, 64, 128)
+R_iii = 10                     # F1: ripetizioni dell'insieme per episodio, solo nella verifica (iii)
 
 
 def episodio_strumentato(s, imm, casi, etichetta):

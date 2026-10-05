@@ -1,0 +1,84 @@
+{
+  "comando": "python v5/supervisore.py calibra",
+  "sessione": "202610041523494c5510",
+  "carico": {
+    "n_doc": 200,
+    "sezioni": 120,
+    "casi": 216,
+    "byte": 5050758
+  },
+  "picco_primo_container_MiB": 5.141,
+  "picco_vuoto_MiB": {
+    "min": 4.578,
+    "mediana": 5.086,
+    "max": 5.398,
+    "mad": 0.123,
+    "n": 20
+  },
+  "intervallo_picco_vuoto_byte": [
+    4284416,
+    6381568
+  ],
+  "picco_import_MiB": {
+    "min": 11.395,
+    "mediana": 11.436,
+    "max": 11.746,
+    "mad": 0.031,
+    "n": 10
+  },
+  "picco_originale_MiB": {
+    "min": 12.18,
+    "mediana": 12.188,
+    "max": 12.195,
+    "mad": 0.004,
+    "n": 10
+  },
+  "risoluzione_memoria": {
+    "margine_ammesso_MiB": 1.609,
+    "di_cui_5_percento_MiB": 0.609,
+    "memoria_del_parser_MiB (P_orig - P_import)": 0.752,
+    "margine_relativo_sulla_memoria_del_parser": 2.14,
+    "dispersione_P_orig_MiB (max-min)": 0.016
+  },
+  "cpu_pre_pronto_ms": {
+    "min": 203.3,
+    "mediana": 236.0,
+    "max": 332.4,
+    "mad": 17.7,
+    "n": 20
+  },
+  "tetto_cpu_pre_pronto_ms": 324.4,
+  "eccedenza_ammessa_ms": 88.5,
+  "finestra_originale_s": {
+    "min": 3.2525663,
+    "mediana": 3.3230509,
+    "max": 3.6013853,
+    "mad": 0.05794005000000024,
+    "n": 10
+  },
+  "limite_guadagno_ready_abuse": 0.0266,
+  "diario": [
+    {
+      "evento": "fermati",
+      "container": [
+        "sqz_demo_landing",
+        "sqz_demo_api",
+        "sqz_demo_grafana",
+        "sqz_demo_postgres",
+        "sqz_demo_prometheus"
+      ],
+      "ora": "2026-10-04T13:24:03.713712+00:00"
+    },
+    {
+      "evento": "riavviati",
+      "esiti": {
+        "sqz_demo_landing": true,
+        "sqz_demo_api": true,
+        "sqz_demo_grafana": true,
+        "sqz_demo_postgres": true,
+        "sqz_demo_prometheus": true
+      },
+      "ora": "2026-10-04T13:25:49.721468+00:00"
+    }
+  ]
+}
