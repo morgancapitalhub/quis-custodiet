@@ -20,10 +20,10 @@ Questo file si aggiorna a ogni commit, così un'interruzione riprende dal passo 
 | 7d | decisioni C1–C4 registrate | 290498c | `REQUISITI_AGGIUNTI.md`, piano revisione 5 |
 | 7e | fatto; criterio 4 **non superato** a 120 coppie, deviazione accettata (E1) | 8a8d85e | `patch-worker`: limite dichiarato 1,116 (IC95 [1,0906; 1,1159]); `calibra-dispersione 5 40`: valori congelati in `config.py`; `fase2/RAPPORTO_CRITERIO4_DISPERSIONI.md` |
 | 7f | decisioni E1–E3; tolleranza di memoria ricalcolata (E2): 0,131 MiB, margine 41,6% di M | 6a2f899 | `python v5/supervisore.py calibra-dispersione --da-sessioni` |
-| 8a | (i) e (ii): 0 scarti; 4398/4560 varianti; **12 fixture valide poco o per nulla mutabili: decisione richiesta** | (questo commit) | `python v5/supervisore.py mutatore --verifica`; `fase2/RAPPORTO_MUTATORE_8a.md` |
+| 8a | fatto (decisione: opzione 1) | 6a782aa, (questo commit) | (i) e (ii): 0 scarti; secondo giro fino a 10K candidate: 218 fixture × 20, 2 × 19, 1 × 9; 7 non mutabili pubbliche e contate; unicità byte per byte nei carichi | `python v5/supervisore.py mutatore --verifica`; `fase2/RAPPORTO_MUTATORE_8a.md` |
 | 8b–11 | codice scritto, non ancora eseguito nel container | 8bed4ba | `test_mutatore` 8/8, `test_statistica` 4/4, `test_flusso` 4/4 sull'host |
 
-**Prossimo passo:** decisione di Morgan su `fase2/RAPPORTO_MUTATORE_8a.md` (fixture valide non mutabili). Poi 8b (`mutatore --tempo`), 9 (`oracolo --due-volte`), 10 (`collaudo`), 12.
+**Prossimo passo:** 8b — `python v5/supervisore.py mutatore --tempo` (misura di tempo: nessun lavoro pesante sull'host). Poi 9, 10, 11, 12.
 
 Nota (7e): Docker Desktop si è chiuso alle 16:41:49 (ora locale) perché il computer è stato spento dall'utente dal menu Start (registro eventi System, ID 1074, User32: "StartMenuExperienceHost.exe ha iniziato il Spegni … per conto dell'utente T490 … Altro (non pianificato)"; ID 13 "Sistema operativo arrestato" alle 16:41:57). Il backend di Docker è terminato con 0x40010004 (`%LOCALAPPDATA%\Docker\log\host\Docker Desktop.exe.log`, 14:41:49 UTC). Il PC si è riacceso alle 22:36; Docker Desktop non parte all'accesso ed è stato riavviato alle 23:16; versione invariata 4.93.0 (240920). Una coppia di `patch-worker` (n. 17, rapporto 0,869) coincide con un test pesante sull'host (`test_statistica`, 15 s di CPU): possibile disturbo, da riportare.
 

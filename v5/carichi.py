@@ -115,7 +115,7 @@ def casi_sintetici(prefisso, n_doc, sezioni):
 def episodio(casi, seme_ordine):
     """Lista finale (op, byte) di un episodio: mescolata con il seme, verificata tutta distinta."""
     casi = [(op, c.encode("utf-8") if isinstance(c, str) else c) for op, c in casi]
-    if len(set(casi)) != len(casi):
+    if len({c for _, c in casi}) != len(casi):                 # distinti BYTE PER BYTE, qualunque op (8a)
         raise ValueError("casi ripetuti nell'episodio")
     random.Random(f"ordine:{seme_ordine}").shuffle(casi)
     return casi

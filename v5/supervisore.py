@@ -526,7 +526,9 @@ def mutatore_cmd(args):
     rapporto = {"sessione": sessione, "durata_s": round(time.monotonic() - t0), **rapporto}
     scrivi_esito("mutatore_verifica.json", rapporto)
     print(json.dumps(rapporto, indent=2, ensure_ascii=False))
-    ok = not rapporto["fixture_con_meno_di_k"] and not rapporto["pubbliche_valide_non_lette"]
+    sc = rapporto["scarti_valide"]
+    ok = (not rapporto["pubbliche_valide_non_lette"] and sc["illeggibile (i)"] == 0          # decisione 8a:
+          and sc["statistiche diverse (ii)"] == 0 and sc["lunghezza oltre ±10% (ii)"] == 0)   # meno di K è ammesso
     return 0 if ok else 1
 
 

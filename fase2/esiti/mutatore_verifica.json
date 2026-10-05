@@ -1,10 +1,10 @@
 {
   "comando": "python v5/supervisore.py mutatore --verifica",
-  "sessione": "202610050847053674f1",
-  "durata_s": 38,
+  "sessione": "202610050854224435e5",
+  "durata_s": 35,
   "valide_pubbliche": 228,
   "k": 20,
-  "candidate_valide": 9120,
+  "candidate_valide": 4814,
   "scarti_valide": {
     "illeggibile (i)": 0,
     "statistiche diverse (ii)": 0,
@@ -13,53 +13,26 @@
   },
   "fixture_con_meno_di_k": [
     [
-      "valid/_external/toml-test/valid/comment/nonascii.toml",
-      0
-    ],
-    [
-      "valid/_external/toml-test/valid/empty-crlf.toml",
-      0
-    ],
-    [
-      "valid/_external/toml-test/valid/empty-lf.toml",
-      0
-    ],
-    [
-      "valid/_external/toml-test/valid/empty-nothing.toml",
-      0
-    ],
-    [
-      "valid/_external/toml-test/valid/empty-space.toml",
-      0
-    ],
-    [
-      "valid/_external/toml-test/valid/empty-tab.toml",
-      0
-    ],
-    [
-      "valid/_external/toml-test/valid/key/empty-03.toml",
-      0
-    ],
-    [
       "valid/_external/toml-test/valid/key/numeric-01.toml",
-      15
+      19
     ],
     [
       "valid/_external/toml-test/valid/key/numeric-06.toml",
-      18
+      19
     ],
     [
       "valid/_external/toml-test/valid/key/zero.toml",
       9
-    ],
-    [
-      "valid/_external/toml-test/valid/table/array-empty.toml",
-      19
-    ],
-    [
-      "valid/_external/toml-test/valid/table/empty.toml",
-      17
     ]
+  ],
+  "valide_non_mutabili": [
+    "valid/_external/toml-test/valid/comment/nonascii.toml",
+    "valid/_external/toml-test/valid/empty-crlf.toml",
+    "valid/_external/toml-test/valid/empty-lf.toml",
+    "valid/_external/toml-test/valid/empty-nothing.toml",
+    "valid/_external/toml-test/valid/empty-space.toml",
+    "valid/_external/toml-test/valid/empty-tab.toml",
+    "valid/_external/toml-test/valid/key/empty-03.toml"
   ],
   "scostamento_lunghezza_max": 0.0714,
   "non_valide_pubbliche": 516,
@@ -84,5 +57,10 @@
   ],
   "non_valide_non_utf8_su_op2": 11,
   "pubbliche_valide_non_lette": [],
-  "varianti_valide_accettate": 4398
+  "varianti_valide_accettate": 4407,
+  "varianti_per_fixture": {
+    "9": 1,
+    "19": 2,
+    "20": 218
+  }
 }

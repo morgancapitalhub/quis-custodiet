@@ -43,13 +43,23 @@ def esegui_originale(reg, sessione, oss, imm, casi, etichetta):
     return risposte
 
 
+CANDIDATE_MAX = 10                    # Morgan (8a, opzione 1): per le fixture poco mutabili si cerca fino a 10K candidate
+
+
 def genera_e_verifica(reg, sessione, oss, imm, prefisso, k_valide, valide=True, non_valide=True):
-    """Restituisce (accettate, rapporto). accettate = {"valide": {nome: [testi]}, "non_valide": {nome: (op, byte)}}."""
+    """Restituisce (accettate, rapporto). accettate = {"valide": {nome: [testi]}, "non_valide": {nome: (op, byte)}}.
+
+    Valide: si prendono le varianti DISTINTE che superano (i) e (ii), fino a K, prima fra 2K candidate e,
+    per le fixture che non arrivano a K, fra altre candidate fino a 10K. Una fixture senza alcuna
+    variante possibile entra UNA volta, pubblica, ed è elencata in "valide_non_mutabili" (decisione 8a).
+    """
     carichi.verifica_tomli()
     pubbliche_v = {nome(p): p.read_bytes() for p in carichi.fixture_valide()} if valide else {}
     pubbliche_n = {nome(p): p.read_bytes() for p in carichi.fixture_non_valide()} if non_valide else {}
-    candidate_v = {n: [mutatore.muta(b.decode("utf-8"), f"{prefisso}:v:{n}:{j}", "completo").encode("utf-8")
-                       for j in range(2 * k_valide)] for n, b in pubbliche_v.items()}
+
+    def candidate(n, b, da, a):
+        return [mutatore.muta(b.decode("utf-8"), f"{prefisso}:v:{n}:{j}", "completo").encode("utf-8") for j in range(da, a)]
+    candidate_v = {n: candidate(n, b, 0, 2 * k_valide) for n, b in pubbliche_v.items()}
     candidate_n = {n: ([mutatore.muta(b.decode("utf-8"), f"{prefisso}:n:{n}:{j}", "senza_valori").encode("utf-8")
                         for j in range(TENTATIVI_NON_VALIDE)] if _utf8(b) else [])
                    for n, b in pubbliche_n.items()}
@@ -59,22 +69,18 @@ def genera_e_verifica(reg, sessione, oss, imm, prefisso, k_valide, valide=True, 
     risposte = esegui_originale(reg, sessione, oss, imm, casi, f"mut_{prefisso[:8]}_")
 
     accettate = {"valide": {}, "non_valide": {}}
-    rapporto = {"valide_pubbliche": len(pubbliche_v), "k": k_valide, "candidate_valide": 2 * k_valide * len(pubbliche_v),
+    rapporto = {"valide_pubbliche": len(pubbliche_v), "k": k_valide, "candidate_valide": 0,
                 "scarti_valide": {"illeggibile (i)": 0, "statistiche diverse (ii)": 0, "lunghezza oltre ±10% (ii)": 0,
                                   "uguale alla pubblica o ripetuta": 0},
-                "fixture_con_meno_di_k": [], "scostamento_lunghezza_max": 0.0,
+                "fixture_con_meno_di_k": [], "valide_non_mutabili": [], "scostamento_lunghezza_max": 0.0,
                 "non_valide_pubbliche": len(pubbliche_n), "non_valide_mutate": 0, "non_valide_non_mutate": [],
                 "non_valide_non_utf8_su_op2": 0, "pubbliche_valide_non_lette": []}
-    for n, pubblica in pubbliche_v.items():
-        rp = risposte[(0, pubblica)]
-        if "v" not in rp:
-            rapporto["pubbliche_valide_non_lette"].append(n)
-            continue
-        stat = mutatore.statistiche(rp["v"])
-        scelte, viste = [], {pubblica}
-        for c in candidate_v[n]:
+
+    def scegli(n, pubblica, stat, cand, scelte, viste):
+        for c in cand:
             if len(scelte) == k_valide:
                 break
+            rapporto["candidate_valide"] += 1
             rc = risposte[(0, c)]
             if c in viste:
                 rapporto["scarti_valide"]["uguale alla pubblica o ripetuta"] += 1
@@ -89,9 +95,35 @@ def genera_e_verifica(reg, sessione, oss, imm, prefisso, k_valide, valide=True, 
                 viste.add(c)
                 rapporto["scostamento_lunghezza_max"] = max(rapporto["scostamento_lunghezza_max"],
                                                             round(abs(len(c) / max(1, len(pubblica)) - 1), 4))
-        accettate["valide"][n] = scelte
-        if len(scelte) < k_valide:
-            rapporto["fixture_con_meno_di_k"].append((n, len(scelte)))
+
+    stato = {}
+    for n, pubblica in pubbliche_v.items():
+        rp = risposte[(0, pubblica)]
+        if "v" not in rp:
+            rapporto["pubbliche_valide_non_lette"].append(n)
+            continue
+        stato[n] = (mutatore.statistiche(rp["v"]), [], {pubblica})
+        scegli(n, pubblica, stato[n][0], candidate_v[n], stato[n][1], stato[n][2])
+    # secondo giro, solo per le fixture sotto K: altre candidate DISTINTE fino a 10K
+    corte = [n for n in stato if len(stato[n][1]) < k_valide]
+    extra = {}
+    for n in corte:
+        viste = set(candidate_v[n]) | {pubbliche_v[n]}
+        extra[n] = [c for c in dict.fromkeys(candidate(n, pubbliche_v[n], 2 * k_valide, CANDIDATE_MAX * k_valide))
+                    if c not in viste]
+    if any(extra.values()):
+        risposte.update(esegui_originale(reg, sessione, oss, imm, [(0, c) for cc in extra.values() for c in cc],
+                                         f"mut2_{prefisso[:7]}_"))
+    for n in corte:
+        scegli(n, pubbliche_v[n], stato[n][0], extra[n], stato[n][1], stato[n][2])
+    for n, (_, scelte, _) in stato.items():
+        if not scelte:
+            accettate["valide"][n] = [pubbliche_v[n]]          # non mutabile: una volta, pubblica, contata
+            rapporto["valide_non_mutabili"].append(n)
+        else:
+            accettate["valide"][n] = scelte
+            if len(scelte) < k_valide:
+                rapporto["fixture_con_meno_di_k"].append((n, len(scelte)))
     for n, pubblica in pubbliche_n.items():
         if not _utf8(pubblica):
             accettate["non_valide"][n] = (2, pubblica)
@@ -105,5 +137,8 @@ def genera_e_verifica(reg, sessione, oss, imm, prefisso, k_valide, valide=True, 
         else:
             accettate["non_valide"][n] = (0, scelta)
             rapporto["non_valide_mutate"] += 1
-    rapporto["varianti_valide_accettate"] = sum(len(v) for v in accettate["valide"].values())
+    rapporto["varianti_valide_accettate"] = sum(len(v) for n, v in accettate["valide"].items()
+                                                if n not in rapporto["valide_non_mutabili"])
+    conteggi = [len(v) for n, v in accettate["valide"].items() if n not in rapporto["valide_non_mutabili"]]
+    rapporto["varianti_per_fixture"] = {str(k): conteggi.count(k) for k in sorted(set(conteggi))}
     return accettate, rapporto

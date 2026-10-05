@@ -54,30 +54,39 @@ def insiemi(reg, sessione, oss, imm, semi):
     pref_fs, pref_ff = f"fs:{semi['finale_sintetico']}", f"ff:{semi['finale_fixture']}"
     acc_ff, rap_ff = varianti.genera_e_verifica(reg, sessione, oss, imm, pref_ff, config.K_VARIANTI)
 
-    def con_origine(prefisso, n, extra_fixture):
-        casi = {}
-        for op, c in carichi.casi_sintetici(prefisso, n, sezioni):
-            casi[(op, c.encode("utf-8"))] = "sintetico"
-        for op, c in carichi.casi_api(prefisso):
-            casi[(op, c.encode("utf-8"))] = "api"
-        for op, c in carichi.flusso_profondo(prefisso):
-            casi[(op, c.encode("utf-8"))] = "profondo"
-        for caso in extra_fixture:
-            casi[caso] = "fixture"
-        return casi
+    def con_origine(prefisso, n, extra_fixture, escludi=frozenset()):
+        """Casi del carico con la loro origine. Decisione 8a: unicità BYTE PER BYTE (qualunque op) dentro
+        il carico e rispetto a `escludi` (il carico DEV); i duplicati si eliminano e si contano."""
+        casi, visti, duplicati = {}, set(), {"interni": 0, "uguali_al_dev": 0}
+        sorgenti = ([((op, c.encode("utf-8")), "sintetico") for op, c in carichi.casi_sintetici(prefisso, n, sezioni)]
+                    + [((op, c.encode("utf-8")), "api") for op, c in carichi.casi_api(prefisso)]
+                    + [((op, c.encode("utf-8")), "profondo") for op, c in carichi.flusso_profondo(prefisso)]
+                    + [(caso, "fixture") for caso in extra_fixture])
+        for caso, origine in sorgenti:
+            if caso[1] in escludi:
+                duplicati["uguali_al_dev"] += 1
+            elif caso[1] in visti:
+                duplicati["interni"] += 1
+            else:
+                visti.add(caso[1])
+                casi[caso] = origine
+        return casi, duplicati
     fixture_dev = list(acc_dev["non_valide"].values())
     fixture_ff = [(0, v) for vv in acc_ff["valide"].values() for v in vv] + list(acc_ff["non_valide"].values())
-    return ({"dev": con_origine("dev", n_doc, fixture_dev),
-             "finale_sintetico": con_origine(pref_fs, n_doc, []),
-             "finale_fixture": con_origine(pref_ff, 0, fixture_ff)},
-            {"dev": rap_dev, "finale_fixture": rap_ff})
+    dev, dup_dev = con_origine("dev", n_doc, fixture_dev)
+    byte_dev = frozenset(c for _, c in dev)
+    fs, dup_fs = con_origine(pref_fs, n_doc, [], byte_dev)
+    ff, dup_ff = con_origine(pref_ff, 0, fixture_ff, byte_dev)
+    return ({"dev": dev, "finale_sintetico": fs, "finale_fixture": ff},
+            {"dev": rap_dev, "finale_fixture": rap_ff},
+            {"dev": dup_dev, "finale_sintetico": dup_fs, "finale_fixture": dup_ff})
 
 
 def costruisci(reg, sessione, oss, imm, cartella_segreti, cartella_dev):
     """Costruisce oracolo e manifest; scrive documenti e oracolo nelle cartelle date. Restituisce
     (manifest come byte, massimi osservati per la verifica dei limiti del confine)."""
     semi = semi_segreti(cartella_segreti)
-    tutti, rapporti_mutatore = insiemi(reg, sessione, oss, imm, semi)
+    tutti, rapporti_mutatore, duplicati = insiemi(reg, sessione, oss, imm, semi)
     manifest = {"impronta_protocollo": impronta_protocollo(), "commit_tomli": config.TOMLI_COMMIT,
                 "immagine_python": config.IMMAGINE_PYTHON, "carichi": {},
                 "impronta_semi": _sha(json.dumps(semi, sort_keys=True).encode())}
@@ -117,12 +126,14 @@ def costruisci(reg, sessione, oss, imm, cartella_segreti, cartella_dev):
             "fixture": per_origine.get("fixture", 0), "sintetici": per_origine.get("sintetico", 0),
             "api": per_origine.get("api", 0), "flusso_profondo": per_origine.get("profondo", 0),
             "per_op": dict(sorted(per_op.items())), "per_tipo_di_eccezione": dict(sorted(per_ecc.items())),
+            "duplicati_eliminati": duplicati[nome],
             "impronta_casi": _sha(documenti), "impronta_oracolo": _sha(oracolo)}
     manifest["impronta_oracolo"] = _sha("".join(impronte_oracoli).encode())
     manifest["mutatore"] = {
         nome: {k: r[k] for k in ("non_valide_mutate", "non_valide_non_mutate", "non_valide_non_utf8_su_op2",
-                                 "varianti_valide_accettate", "fixture_con_meno_di_k", "scarti_valide",
-                                 "scostamento_lunghezza_max", "pubbliche_valide_non_lette")}
+                                 "varianti_valide_accettate", "valide_non_mutabili", "fixture_con_meno_di_k",
+                                 "varianti_per_fixture", "scarti_valide", "scostamento_lunghezza_max",
+                                 "pubbliche_valide_non_lette")}
         for nome, r in rapporti_mutatore.items()}
     return json.dumps(manifest, indent=2, ensure_ascii=False, sort_keys=True).encode("utf-8"), massimi
 
