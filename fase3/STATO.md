@@ -2,9 +2,7 @@
 
 Piano: `fase3/PIANO_FASE3.md`. Indebolite: `fase3/INDEBOLITE.md` (H4). Migrazione: `fase3/MIGRAZIONE.md`.
 
-**Vincolo in corso (2026-10-05):** possibile migrazione su server Linux (Hetzner). Finché l'ambiente
-non è deciso: solo codice e test che girano sull'host, senza Docker; nessun controllo positivo,
-nessuna misura (si producono nell'ambiente finale).
+**Ambiente scelto (2026-10-05):** server Hetzner CX23 (vCPU condivise). Preparazione pronta, **nulla ancora eseguito sul server**. Codice parametrizzato per profilo (`V5_AMBIENTE`, default `pc_windows`). Il PC continua a funzionare.
 
 | Parte | Stato | Verifica |
 |---|---|---|
@@ -15,5 +13,11 @@ nessuna misura (si producono nell'ambiente finale).
 | `fase3/MIGRAZIONE.md` | fatto | — |
 | Controlli positivi e misure (registro_attacchi.csv) | **da fare nell'ambiente finale** | — |
 
-**Prossimo passo:** decisione di Morgan sull'ambiente (PC o server). Poi, nell'ambiente scelto:
-controlli positivi, misure (PATCH_WORKER a blocchi, ABBA8), `registro_attacchi.csv`, rapporto della fase 3.
+**Migrazione preparata:**
+- `fase3/server/prepara.sh`: Docker Engine fissato (29.8.1), utente non root nel gruppo docker, firewall solo SSH, python/git, nessuna chiave. **Da rileggere prima di lanciarlo.**
+- `v5/config.py`: profili `pc_windows` (default) e `server_hetzner` (valori DA_LEGGERE in fase 0); `percorso_cgroup` per driver (M6); `GPG`, `CONTAINER_DA_FERMARE` per profilo (M4, M9); `VERIFICA_PLATFORM` (M1).
+- `v5/ambiente.py`: osservatore con percorso cgroup dal driver; `steal_time()` da /proc/stat; prefissi dei container da fermare da config.
+- `v5/supervisore.py prova-rumore`: condizione di migrazione (dev.std log rapporto ≤ 0,0576), steal time come contesto.
+- `fase3/server/ORDINE.md`: portabilità dell'oracolo → prova del rumore → (se passa) fase 0, controllo positivo, calibrazioni.
+
+**Prossimo passo:** quando il repository privato è pronto, caricare il codice (nessun remote ora; `segreti/` resta fuori da git). Poi, sul server, la sequenza di `fase3/server/ORDINE.md`.

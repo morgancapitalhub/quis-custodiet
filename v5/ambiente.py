@@ -76,15 +76,20 @@ class Osservatore:
     config.FILE_OSSERVABILI. Mai montato né raggiungibile dal candidato.
     """
 
-    def __init__(self, sessione):
+    def __init__(self, sessione, driver_cgroup=None):
         self.nome = f"v5_osservatore_{sessione}"
+        # M6: il percorso del cgroup dipende dal driver di Docker (cgroupfs su Docker Desktop,
+        # spesso systemd su Linux). Si legge dal motore, non si suppone.
+        self.driver = driver_cgroup or docker("info", "--format", "{{.CgroupDriver}}",
+                                              controlla=True).stdout.strip()
         docker("run", "-d", "--name", self.nome, "--label", f"benchmark-v5.sessione={sessione}",
                *config.OPZIONI_OSSERVATORE, config.IMMAGINE_OSSERVATORE, "sleep", "86400", controlla=True)
 
     def leggi(self, id_container, file):
         if not ID_CONTAINER.match(id_container) or file not in config.FILE_OSSERVABILI:
             raise ValueError("lettura non ammessa")
-        p = docker("exec", self.nome, "cat", f"/cg/docker/{id_container}/{file}", timeout=config.TIMEOUT_OSSERVATORE)
+        percorso = config.percorso_cgroup(self.driver, id_container)
+        p = docker("exec", self.nome, "cat", f"/cg/{percorso}/{file}", timeout=config.TIMEOUT_OSSERVATORE)
         if p.returncode != 0:
             raise DockerErrore(f"osservatore: {file} di {id_container[:12]}: {p.stderr.strip()[:200]}")
         return p.stdout
@@ -146,6 +151,25 @@ def contenitori_attivi():
     return [tuple((r.split("\t") + [""])[:2]) for r in p.stdout.splitlines() if r.strip()]
 
 
+def _da_fermare(nome):
+    """M9: i container che le misure di tempo fermano e riavviano (per profilo). Vuoto sul server."""
+    return any(nome.startswith(p) for p in config.CONTAINER_DA_FERMARE)
+
+
+def steal_time():
+    """Percentuale di CPU "rubata" dall'hypervisor (vCPU condivise), da /proc/stat. Contesto, non
+    criterio (fase3/MIGRAZIONE.md). None dove /proc/stat non esiste (Windows)."""
+    try:
+        with open("/proc/stat") as f:
+            campi = f.readline().split()
+    except OSError:
+        return None
+    numeri = [int(x) for x in campi[1:]]
+    totale = sum(numeri)
+    rubato = numeri[7] if len(numeri) > 7 else 0        # 8° campo: steal
+    return {"totale": totale, "rubato": rubato}
+
+
 def controlli(sessione, osservatore, modalita="costruzione"):
     """Riverifica i fatti dell'ambiente (REQUISITI_AGGIUNTI.md, requisiti 1 e 4). Esito: dict.
 
@@ -167,7 +191,10 @@ def controlli(sessione, osservatore, modalita="costruzione"):
     # 2. versioni (uguaglianza esatta)
     v = docker("version", "--format", "{{.Server.Platform.Name}}|{{.Server.Version}}|{{.Client.Version}}|"
                "{{.Server.APIVersion}}", controlla=True).stdout.strip().split("|")
-    richiedi("docker_desktop", v[0], config.DOCKER_DESKTOP)
+    if config.VERIFICA_PLATFORM:                       # M1: solo su Docker Desktop
+        richiedi("docker_desktop", v[0], config.DOCKER_DESKTOP)
+    else:
+        esiti["platform"] = v[0]                       # su Engine si registra, non si vincola
     richiedi("motore", v[1], config.DOCKER_ENGINE)
     richiedi("client", v[2], config.DOCKER_ENGINE)
     richiedi("api", v[3], config.DOCKER_API)
@@ -175,8 +202,8 @@ def controlli(sessione, osservatore, modalita="costruzione"):
                controlla=True).stdout.strip().split("|")
     richiedi("kernel", i[0], config.KERNEL_VM)
     richiedi("cgroup", (i[1], i[2]), (config.CGROUP_VERSIONE, config.CGROUP_DRIVER))
-    # 3. container estranei (D6): ammessi solo sqz_demo_* e quelli di questa sessione
-    estranei = [n for n, s in contenitori_attivi() if not n.startswith("sqz_demo_") and s != sessione]
+    # 3. container estranei (D6): ammessi solo quelli da fermare (per profilo) e quelli di questa sessione
+    estranei = [n for n, s in contenitori_attivi() if not _da_fermare(n) and s != sessione]
     richiedi("container_estranei", estranei, [])
     base = immagine_base()
     # 4. ambiente del candidato: nomi esattamente quelli ammessi
@@ -227,11 +254,11 @@ class MisureDiTempo:
         import datetime
         try:
             attivi = contenitori_attivi()
-            estranei = [n for n, s in attivi if not n.startswith("sqz_demo_") and s != self.sessione]
+            estranei = [n for n, s in attivi if not _da_fermare(n) and s != self.sessione]
             if estranei:
                 raise ControlloFallito(f"container estranei attivi: {estranei}")
             for nome, _ in attivi:
-                if nome.startswith("sqz_demo_"):
+                if _da_fermare(nome):
                     docker("stop", nome, controlla=True)
                     self.fermati.append(nome)
             self.diario.append({"evento": "fermati", "container": self.fermati,

@@ -2,7 +2,9 @@
 
 Motivo: il PC non può restare acceso per ore (fase 2: tre arresti per spegnimento dell'utente). Si valuta di spostare la v5 su un server Linux con Docker Engine nativo.
 
-**Decisione non ancora presa.** Finché l'ambiente non è deciso: si scrive solo codice e test che girano sull'host senza Docker; i controlli positivi e le misure si producono nell'ambiente finale. Questo documento dice cosa cambia e cosa va rifatto.
+**Ambiente scelto:** server Hetzner CX23 (vCPU condivise). Preparazione del server: `fase3/server/prepara.sh` (Docker Engine fissato, utente non root, firewall solo SSH). Ordine sul server: `fase3/server/ORDINE.md`. Parametrizzazione del codice per profilo: `V5_AMBIENTE` in `v5/config.py` (default `pc_windows`).
+
+**Decisione di migrare non ancora presa:** dipende dalla prova del rumore (sezione 4). Finché l'ambiente non è deciso: si scrive solo codice e test che girano sull'host senza Docker; i controlli positivi e le misure si producono nell'ambiente finale. Questo documento dice cosa cambia e cosa va rifatto.
 
 ## 1. Cosa nel codice è specifico di Windows o di Docker Desktop
 

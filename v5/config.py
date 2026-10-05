@@ -4,6 +4,7 @@ Origini: "brief" = BRIEF_v5_per_Claude_Code.md 1.2; "v4" = pilota_costo_v4.py (r
 "Morgan Dn" = decisione registrata in REQUISITI_AGGIUNTI.md; "proposta" = valore proposto
 nel piano della fase 2 (fase2/PIANO_FASE2.md) e approvato con il piano.
 """
+import os
 from pathlib import Path
 
 RADICE = Path(__file__).resolve().parent.parent
@@ -15,13 +16,52 @@ TOMLI_REPO = "https://github.com/hukkin/tomli.git"                  # v4 riga 47
 TOMLI_COMMIT = "5a77b12a7a9f052ce5a20c335d2825658f6aea52"            # v4 riga 48
 FIXTURE_VALIDE_ATTESE = 228                                          # v4 riga 50, brief
 
-# ------------------------------------------------------------- ambiente verificato
-# REQUISITI_AGGIUNTI.md, "Versione verificata dell'ambiente": il supervisore rifiuta di partire altrimenti.
-DOCKER_DESKTOP = "Docker Desktop 4.93.0 (240920)"
-DOCKER_ENGINE = "29.8.1"
-DOCKER_API = "1.56"
-KERNEL_VM = "6.6.87.2-microsoft-standard-WSL2"
-CGROUP_VERSIONE, CGROUP_DRIVER = "2", "cgroupfs"
+# ------------------------------------------------------------- profili d'ambiente (fase3/MIGRAZIONE.md, M1-M12)
+# Il PC resta il default; il server si attiva con V5_AMBIENTE=server_hetzner. I valori "DA_LEGGERE"
+# si riempiono sul server durante la fase 0 (controlli), con il comando che li ha prodotti.
+DA_LEGGERE = "DA_LEGGERE_SUL_SERVER"
+PROFILI = {
+    "pc_windows": {
+        # REQUISITI_AGGIUNTI.md, "Versione verificata dell'ambiente"
+        "verifica_platform": True, "platform": "Docker Desktop 4.93.0 (240920)",
+        "engine": "29.8.1", "api": "1.56", "kernel": "6.6.87.2-microsoft-standard-WSL2",
+        "cgroup_versione": "2", "cgroup_driver": "cgroupfs",
+        "ambiente_ammesso": ["GPG_KEY", "HOME", "HOSTNAME", "LANG", "PATH", "PYTHON_SHA256", "PYTHON_VERSION"],
+        "gpg": r"C:\Program Files\Git\usr\bin\gpg.exe",            # M4: gpg di Git per Windows
+        "container_da_fermare": ("sqz_demo_",),                    # M9: RIGA B
+    },
+    "server_hetzner": {
+        # Hetzner CX23. verifica_platform=False (M1): su Engine si verifica engine/api/kernel, non la
+        # stringa di Docker Desktop. I valori DA_LEGGERE li fissa la fase 0 sul server.
+        "verifica_platform": False, "platform": None,
+        "engine": DA_LEGGERE, "api": DA_LEGGERE, "kernel": DA_LEGGERE,
+        "cgroup_versione": "2", "cgroup_driver": DA_LEGGERE,       # M6: cgroupfs o systemd
+        "ambiente_ammesso": DA_LEGGERE,                             # M8: da riosservare (stessa immagine base)
+        "gpg": "gpg",                                              # M4: gpg di sistema
+        "container_da_fermare": (),                                # M9: server dedicato, nessun altro container
+    },
+}
+AMBIENTE = os.environ.get("V5_AMBIENTE", "pc_windows")
+if AMBIENTE not in PROFILI:
+    raise SystemExit(f"V5_AMBIENTE sconosciuto: {AMBIENTE}; scegli fra {sorted(PROFILI)}")
+_P = PROFILI[AMBIENTE]
+
+VERIFICA_PLATFORM = _P["verifica_platform"]
+DOCKER_DESKTOP = _P["platform"]
+DOCKER_ENGINE = _P["engine"]
+DOCKER_API = _P["api"]
+KERNEL_VM = _P["kernel"]
+CGROUP_VERSIONE, CGROUP_DRIVER = _P["cgroup_versione"], _P["cgroup_driver"]
+GPG = _P["gpg"]
+CONTAINER_DA_FERMARE = _P["container_da_fermare"]
+
+
+def percorso_cgroup(driver, id_container):
+    """M6: percorso del cgroup di un container dentro l'osservatore, secondo il driver di Docker.
+    cgroupfs (Docker Desktop): docker/<id>. systemd (tipico su Linux): system.slice/docker-<id>.scope."""
+    if driver == "systemd":
+        return f"system.slice/docker-{id_container}.scope"
+    return f"docker/{id_container}"
 
 # ------------------------------------------------------------- timeout delle chiamate a Docker (proposta)
 TIMEOUT_DOCKER = 60          # s, generico
@@ -43,7 +83,8 @@ OPZIONI_CONTAINER = [                    # brief, "Opzioni minime" (senza -v: Mo
 # Nomi delle variabili d'ambiente nel container misurato: devono essere ESATTAMENTE questi
 # (osservati il 2026-10-04 sull'immagine del pacchetto originale; vengono dall'immagine base Python
 # e da Docker). Nessuna viene dall'host. Verificato a ogni esecuzione dai controlli preliminari.
-AMBIENTE_AMMESSO = ["GPG_KEY", "HOME", "HOSTNAME", "LANG", "PATH", "PYTHON_SHA256", "PYTHON_VERSION"]
+# Per profilo (M8): sul server si riosservano, stessa immagine base → dovrebbero coincidere.
+AMBIENTE_AMMESSO = _P["ambiente_ammesso"]
 OPZIONI_OSSERVATORE = [                  # v5/OSSERVATORE.md
     "--network", "none", "--read-only", "--cap-drop", "ALL", "--security-opt", "no-new-privileges",
     "--user", "65534:65534", "--pids-limit", "16", "--memory", "32m",

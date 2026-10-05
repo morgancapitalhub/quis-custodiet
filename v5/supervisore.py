@@ -350,6 +350,64 @@ def quota(args):
     return 0 if esito["superata"] else 1
 
 
+# ------------------------------------------------------------------ prova del rumore (migrazione)
+
+RUMORE_PC = 0.0576               # dev.std del log rapporto sul PC (patch-worker, 120 coppie, byte esatti)
+
+
+def prova_rumore(args):
+    """Condizione per migrare (fase3/MIGRAZIONE.md, sezione 4), dichiarata prima: si migra solo se la
+    deviazione standard del logaritmo del rapporto per coppia sul server NON supera quella del PC (0,0576).
+
+    Stesso setup di patch-worker: 120 coppie ABBA worker/pavimento sull'originale, carico DEV, MA senza
+    arresto anticipato (servono tutte le 120 coppie per confrontare il rumore). Durante la corsa si
+    campiona lo steal time della CPU (/proc/stat) come CONTESTO, non come criterio.
+
+    python v5/supervisore.py prova-rumore
+    """
+    import math
+    import statistics as st
+    from v5 import episodio
+    from v5.registro import Registro
+    sessione = nuova_sessione()
+    reg = Registro(sessione)
+    oss = ambiente.Osservatore(sessione)
+    rapporti = []
+    steal0 = ambiente.steal_time()
+    try:
+        reg.imposta(controlli=ambiente.controlli(sessione, oss))
+        imm = ambiente.immagine_pacchetto(carichi.pacchetto_originale())
+        casi = carichi.carico_dev(*config.CARICO_DEV, seme_ordine=1)
+        with ambiente.MisureDiTempo(sessione, reg.diario):
+            episodio.controlla_picco_a_vuoto(reg, sessione, [imm], oss, casi[:20])
+            for k in range(120):
+                ordine = [("w", config.COMANDO_WORKER), ("p", config.COMANDO_WORKER_PAVIMENTO)]
+                if k % 2:
+                    ordine.reverse()
+                t = {}
+                for nome, comando in ordine:
+                    r, _ = episodio.con_ripetizione(reg, sessione, f"rum{nome}{k}", imm, casi, oss, "originale",
+                                                    comando=comando, timeout_completamento=600)
+                    t[nome] = r["t_finestra_ns"] / 1e9
+                rapporti.append(t["w"] / t["p"])
+                print(f"coppia {k}: rapporto {rapporti[-1]:.4f}", flush=True)
+        reg.salva()
+    finally:
+        oss.chiudi()
+    steal1 = ambiente.steal_time()
+    dev_std = st.stdev([math.log(x) for x in rapporti])
+    steal_pct = None
+    if steal0 and steal1 and steal1["totale"] > steal0["totale"]:
+        steal_pct = round(100 * (steal1["rubato"] - steal0["rubato"]) / (steal1["totale"] - steal0["totale"]), 3)
+    dati = {"sessione": sessione, "ambiente": config.AMBIENTE, "coppie": len(rapporti),
+            "dev_std_log_rapporto": round(dev_std, 4), "soglia_pc": RUMORE_PC,
+            "condizione_migrazione": "si migra" if dev_std <= RUMORE_PC else "NON si migra (più rumoroso del PC)",
+            "steal_time_pct (contesto)": steal_pct, "rapporti": [round(x, 4) for x in rapporti], "diario": reg.diario}
+    scrivi_esito("prova_rumore.json", dati)
+    print(json.dumps({k: v for k, v in dati.items() if k not in ("rapporti", "diario")}, indent=2, ensure_ascii=False))
+    return 0 if dev_std <= RUMORE_PC else 1
+
+
 # ------------------------------------------------------------------ patch-worker (criterio 4, Q2)
 
 def patch_worker(args):
@@ -608,7 +666,7 @@ def episodio_strumentato(s, imm, casi, etichetta):
 
 # ------------------------------------------------------------------ oracolo (passo 9)
 
-GPG = r"C:\Program Files\Git\usr\bin\gpg.exe"
+GPG = config.GPG                 # per profilo (M4): gpg di Git su Windows, gpg di sistema su Linux
 
 
 def oracolo_cmd(args):
@@ -816,7 +874,7 @@ COMANDI = {"osservatore-prova": osservatore_prova, "controlli": controlli, "epis
            "calibra-dispersione": calibra_dispersione,
            "mutatore": mutatore_cmd, "oracolo": oracolo_cmd,
            "collaudo": collaudo, "nullo": nullo, "corsa": corsa,
-           "quota-fixture": quota_fixture}
+           "quota-fixture": quota_fixture, "prova-rumore": prova_rumore}
 
 
 def main():
