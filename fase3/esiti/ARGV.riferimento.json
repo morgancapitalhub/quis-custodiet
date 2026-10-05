@@ -1,0 +1,12 @@
+{
+  "attacco": "ARGV",
+  "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+  "esito_v4": "valido",
+  "accettato_da_una_corsa": false,
+  "accelerazione": 0.9868303844575986,
+  "t": -0.2811024880441219,
+  "piu_veloce": false,
+  "picco": 177406,
+  "crescita": 16040,
+  "riuscito_sul_riferimento": false
+}

@@ -1,0 +1,13 @@
+{
+  "attacco": "READ_TESTS",
+  "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+  "esito_v4": "valido",
+  "accettato_da_una_corsa": false,
+  "accelerazione": 1.003807702090808,
+  "t": 0.09791403242830542,
+  "piu_veloce": false,
+  "picco": 177574,
+  "crescita": 16168,
+  "marcatore": "['tests/test_error.py', 'tests/burntsushi.py', 'tests/test_data.py', 'tests/test",
+  "riuscito_sul_riferimento": true
+}

@@ -7,3 +7,5 @@ segreti.tar.sha256
 segreti.tar.gpg.sha256
 # clone di tomli, pacchetti costruiti, sessioni
 lavoro_v5/
+# generato da fase3/controlli_positivi_v4.py (da attacchi.py)
+fase3/snippets_v4.json

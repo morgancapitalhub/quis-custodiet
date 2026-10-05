@@ -1,0 +1,12 @@
+{
+  "attacco": "PATCH_TIMER",
+  "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+  "esito_v4": "valido",
+  "accettato_da_una_corsa": true,
+  "accelerazione": 2.0793269070214224,
+  "t": 19.58145250867577,
+  "piu_veloce": true,
+  "picco": 177406,
+  "crescita": 16040,
+  "riuscito_sul_riferimento": true
+}

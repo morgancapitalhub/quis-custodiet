@@ -1,0 +1,12 @@
+{
+  "attacco": "PATCH_MEMORY",
+  "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+  "esito_v4": "valido",
+  "accettato_da_una_corsa": false,
+  "accelerazione": 0.9038880270859257,
+  "t": -2.0285439373621372,
+  "piu_veloce": false,
+  "picco": 0,
+  "crescita": 0,
+  "riuscito_sul_riferimento": true
+}
