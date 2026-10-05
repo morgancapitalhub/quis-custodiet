@@ -20,7 +20,10 @@ def prepara_tomli():
     """Clona tomli (se manca) e porta la copia di lavoro al commit fissato. Restituisce il percorso."""
     config.LAVORO.mkdir(parents=True, exist_ok=True)
     if not (TOMLI / ".git").exists():
-        p = _git("clone", "--quiet", config.TOMLI_REPO, str(TOMLI))
+        # core.autocrlf=false: Git per Windows (configurazione di sistema) convertirebbe LF in CRLF e i
+        # byte non sarebbero quelli del commit (successo fino al 2026-10-05; vedi fase2/STATO.md)
+        p = _git("-c", "core.autocrlf=false", "clone", "--quiet", "--config", "core.autocrlf=false",
+                 config.TOMLI_REPO, str(TOMLI))
         if p.returncode != 0:
             raise RuntimeError(f"clone di tomli fallito: {p.stderr.strip()}")
     p = _git("-c", "advice.detachedHead=false", "checkout", "--quiet", config.TOMLI_COMMIT, cwd=TOMLI)
@@ -38,6 +41,16 @@ def verifica_tomli():
     sporco = _git("status", "--porcelain", cwd=TOMLI).stdout.strip()
     if sporco:
         raise RuntimeError(f"copia di lavoro di tomli modificata:\n{sporco[:500]}")
+    # byte per byte: ogni file tracciato su disco ha l'impronta del suo blob nel commit (senza filtri)
+    indice = {}
+    for riga in _git("ls-files", "-s", cwd=TOMLI).stdout.splitlines():
+        meta, percorso = riga.split("\t", 1)
+        indice[percorso] = meta.split()[1]
+    calcolate = subprocess.run(["git", "hash-object", "--no-filters", "--stdin-paths"], cwd=TOMLI,
+                               input="\n".join(indice), capture_output=True, text=True, timeout=600).stdout.split()
+    diversi = [q for q, h in zip(indice, calcolate) if indice[q] != h]
+    if len(calcolate) != len(indice) or diversi:
+        raise RuntimeError(f"{len(diversi)} file di tomli diversi byte per byte dal commit, p.es. {diversi[:3]}")
     n = len(fixture_valide())
     if n != config.FIXTURE_VALIDE_ATTESE:
         raise RuntimeError(f"attese {config.FIXTURE_VALIDE_ATTESE} fixture valide, trovate {n}")

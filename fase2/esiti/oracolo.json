@@ -1,0 +1,33 @@
+{
+  "comando": "python v5/supervisore.py oracolo --due-volte",
+  "sessione": "20261005091455bbb66e",
+  "durata_s": 190,
+  "manifest_identici": true,
+  "impronta_manifest": "6fd18d20a42f5deee953ffdaf9579eb292a27ccf305eb3e60827bd9e3958d97a",
+  "limiti_del_confine": {
+    "byte_frame": {
+      "massimo_osservato": 37389,
+      "limite": 2097152,
+      "regola": "limite ≥ 4 × massimo",
+      "rispettata": true
+    },
+    "nodi": {
+      "massimo_osservato": 999,
+      "limite": 200000,
+      "regola": "limite ≥ 4 × massimo",
+      "rispettata": true
+    },
+    "profondita_json": {
+      "massimo_osservato": 6,
+      "limite": 8,
+      "regola": "codifica piatta (P3): profondità fissata dal formato, massimo 6",
+      "rispettata": true
+    }
+  },
+  "copia_segreti": {
+    "segreti_tar": "segreti.tar (in .gitignore)",
+    "sha256_segreti_tar": "7f15e2dff2b43bb45d7748c1dc25dc676ee81bdb1eaa24de5ba320feef437f51",
+    "prova_ripristino": true,
+    "gpg": "C:\\Program Files\\Git\\usr\\bin\\gpg.exe"
+  }
+}

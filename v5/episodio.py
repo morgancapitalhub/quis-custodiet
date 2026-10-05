@@ -15,6 +15,7 @@ Le risposte restano byte grezzi: la decodifica JSON e il confronto con l'oracolo
 fuori dalla finestra cronometrata (`valuta_risposte`).
 """
 import json
+import re
 import struct
 import threading
 import time
@@ -128,7 +129,8 @@ class _LettoreStderr(threading.Thread):
 def esegui(sessione, n, immagine, casi, osservatore, ruolo, comando=config.COMANDO_WORKER,
            timeout_completamento=120.0, frame_finale=False):
     """Un episodio. `casi` = lista di (op, byte). Restituisce (registro, frame grezzi delle risposte)."""
-    nome = f"v5_ep_{sessione}_{n}_{ambiente.secrets_hex()}"
+    # nomi dei container: solo [a-zA-Z0-9_.-] (un'etichetta con ":" farebbe fallire docker run)
+    nome = re.sub(r"[^a-zA-Z0-9_.-]", "_", f"v5_ep_{sessione}_{n}_{ambiente.secrets_hex()}")
     attesi = len(casi)
     r = {"sessione": sessione, "n": n, "ruolo": ruolo, "immagine": immagine, "comando": comando[-1],
          "casi": len(casi), "completato": False, "motivo": None, "violazione": None,

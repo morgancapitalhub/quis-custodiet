@@ -666,13 +666,15 @@ def prepara_copia_segreti():
         shutil.rmtree(prova)
     prova.mkdir(parents=True)
     passphrase = secrets.token_hex(16)
-    base = [GPG, "--homedir", str(prova), "--batch", "--yes", "--pinentry-mode", "loopback", "--passphrase", passphrase]
+    # la gpg di Git (MSYS) non accetta percorsi Windows assoluti: percorsi relativi dalla radice
+    rel = "lavoro_v5/gpg_prova"
+    base = [GPG, "--homedir", rel, "--batch", "--yes", "--pinentry-mode", "loopback", "--passphrase", passphrase]
     try:
         subprocess.run(base + ["--symmetric", "--cipher-algo", "AES256", "--s2k-digest-algo", "SHA512",
-                               "--s2k-count", "65011712", "-o", str(prova / "prova.gpg"), str(tar)],
-                       check=True, timeout=300, capture_output=True)
-        subprocess.run(base + ["-o", str(prova / "prova.tar"), "-d", str(prova / "prova.gpg")],
-                       check=True, timeout=300, capture_output=True)
+                               "--s2k-count", "65011712", "-o", f"{rel}/prova.gpg", "segreti.tar"],
+                       check=True, timeout=300, capture_output=True, cwd=config.RADICE)
+        subprocess.run(base + ["-o", f"{rel}/prova.tar", "-d", f"{rel}/prova.gpg"],
+                       check=True, timeout=300, capture_output=True, cwd=config.RADICE)
         ok = hashlib.sha256((prova / "prova.tar").read_bytes()).hexdigest() == sha_tar
     finally:
         shutil.rmtree(prova, ignore_errors=True)
@@ -776,6 +778,7 @@ COMANDI = {"osservatore-prova": osservatore_prova, "controlli": controlli, "epis
 
 
 def main():
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")   # la console di Windows è cp1252
     parser = argparse.ArgumentParser(prog="supervisore.py")
     parser.add_argument("comando", choices=sorted(COMANDI))
     parser.add_argument("resto", nargs="*")

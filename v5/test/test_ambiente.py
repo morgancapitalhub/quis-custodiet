@@ -32,7 +32,7 @@ class TestDocker(unittest.TestCase):
 class TestUnicoPuntoDAccesso(unittest.TestCase):
     def test_nessun_docker_fuori_da_ambiente(self):
         """Solo ambiente.py può lanciare il comando docker."""
-        sospetti = re.compile(r"""["']docker["']""")
+        sospetti = re.compile(r"""["']docker["']\s*,""")          # "docker" come primo argomento di un comando
         for f in (config.RADICE / "v5").rglob("*.py"):
             if f.name == "ambiente.py" or "test" in f.parts:
                 continue

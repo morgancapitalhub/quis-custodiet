@@ -1,0 +1,201 @@
+{
+  "carichi": {
+    "dev": {
+      "api": 9,
+      "casi": 831,
+      "duplicati_eliminati": {
+        "interni": 1,
+        "uguali_al_dev": 0
+      },
+      "fixture": 515,
+      "flusso_profondo": 7,
+      "impronta_casi": "e4949c3d81a82a3ad577c47a555dc21d05a2ce94da7c5fe15bb0edebf030ecf0",
+      "impronta_oracolo": "49597f0aea23e959e55510996511c657864421c911b2f32c5189e208d190b233",
+      "non_validi": 525,
+      "per_op": {
+        "0": 751,
+        "1": 30,
+        "2": 41,
+        "3": 2,
+        "4": 2,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 1,
+        "9": 1
+      },
+      "per_tipo_di_eccezione": {
+        "builtins.RecursionError": 3,
+        "builtins.TypeError": 4,
+        "builtins.UnicodeDecodeError": 11,
+        "builtins.ValueError": 3,
+        "tomli._parser.TOMLDecodeError": 504
+      },
+      "sintetici": 300,
+      "validi": 306
+    },
+    "finale_fixture": {
+      "api": 9,
+      "casi": 4915,
+      "duplicati_eliminati": {
+        "interni": 1,
+        "uguali_al_dev": 30
+      },
+      "fixture": 4899,
+      "flusso_profondo": 7,
+      "impronta_casi": "5f9f4a8d162d95ab1274117fee015cefc779f0bd72d55ca818d542c1649a1fc7",
+      "impronta_oracolo": "a85141417429e01be2e1d86962d9a0c12457d381b30fd86c8648d128e8292dab",
+      "non_validi": 496,
+      "per_op": {
+        "0": 4906,
+        "3": 2,
+        "4": 2,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 1,
+        "9": 1
+      },
+      "per_tipo_di_eccezione": {
+        "builtins.RecursionError": 3,
+        "builtins.TypeError": 4,
+        "builtins.ValueError": 3,
+        "tomli._parser.TOMLDecodeError": 486
+      },
+      "sintetici": 0,
+      "validi": 4419
+    },
+    "finale_sintetico": {
+      "api": 9,
+      "casi": 316,
+      "duplicati_eliminati": {
+        "interni": 0,
+        "uguali_al_dev": 0
+      },
+      "fixture": 0,
+      "flusso_profondo": 7,
+      "impronta_casi": "c7e34b1e9f4276c0bf9e27980787c2830f93bc0f6d7bc01b3ceed75de76c261c",
+      "impronta_oracolo": "ea2a77f3738c64bf0bd3da3e75da5d7a83976f75e6da879aaadd479d72c9d9b1",
+      "non_validi": 10,
+      "per_op": {
+        "0": 247,
+        "1": 30,
+        "2": 30,
+        "3": 2,
+        "4": 2,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 1,
+        "9": 1
+      },
+      "per_tipo_di_eccezione": {
+        "builtins.RecursionError": 3,
+        "builtins.TypeError": 4,
+        "builtins.ValueError": 3
+      },
+      "sintetici": 300,
+      "validi": 306
+    }
+  },
+  "commit_tomli": "5a77b12a7a9f052ce5a20c335d2825658f6aea52",
+  "immagine_python": "python@sha256:b1b81d67b8df73bf6067191790c233ef9e598b863fc1ccf447956138ca466d99",
+  "impronta_oracolo": "f2d1fafd62d0f83395787f7c7c0001a8e93efe0bf6b23057f0972307fca1e2b7",
+  "impronta_protocollo": "1f05f65045e773c0b9eefc29e5094c9e66ff9a0b1bcde7974fa899cf38c657a1",
+  "impronta_semi": "fa0d035a739d118cc9511e6c6da3956d112e73b392647d740695881e5e1679e1",
+  "mutatore": {
+    "dev": {
+      "fixture_con_meno_di_k": [],
+      "non_valide_mutate": 489,
+      "non_valide_non_mutate": [
+        "invalid/_external/toml-test/invalid/control/only-ff.toml",
+        "invalid/_external/toml-test/invalid/control/only-null.toml",
+        "invalid/_external/toml-test/invalid/control/only-vt.toml",
+        "invalid/_external/toml-test/invalid/key/bare-invalid-character-01.toml",
+        "invalid/_external/toml-test/invalid/key/dot.toml",
+        "invalid/_external/toml-test/invalid/key/dotdot.toml",
+        "invalid/_external/toml-test/invalid/key/duplicate-keys-05.toml",
+        "invalid/_external/toml-test/invalid/key/duplicate-keys-07.toml",
+        "invalid/_external/toml-test/invalid/key/empty.toml",
+        "invalid/_external/toml-test/invalid/key/only-str.toml",
+        "invalid/_external/toml-test/invalid/key/single-open-bracket.toml",
+        "invalid/_external/toml-test/invalid/table/empty.toml",
+        "invalid/_external/toml-test/invalid/table/no-close-04.toml",
+        "invalid/_external/toml-test/invalid/table/no-close-07.toml",
+        "invalid/_external/toml-test/invalid/table/no-close-08.toml",
+        "invalid/table/eof-after-opening.toml"
+      ],
+      "non_valide_non_utf8_su_op2": 11,
+      "pubbliche_valide_non_lette": [],
+      "scarti_valide": {
+        "illeggibile (i)": 0,
+        "lunghezza oltre ±10% (ii)": 0,
+        "statistiche diverse (ii)": 0,
+        "uguale alla pubblica o ripetuta": 0
+      },
+      "scostamento_lunghezza_max": 0.0,
+      "valide_non_mutabili": [],
+      "varianti_per_fixture": {},
+      "varianti_valide_accettate": 0
+    },
+    "finale_fixture": {
+      "fixture_con_meno_di_k": [
+        [
+          "valid/_external/toml-test/valid/key/numeric-01.toml",
+          19
+        ],
+        [
+          "valid/_external/toml-test/valid/key/numeric-06.toml",
+          19
+        ],
+        [
+          "valid/_external/toml-test/valid/key/zero.toml",
+          9
+        ]
+      ],
+      "non_valide_mutate": 489,
+      "non_valide_non_mutate": [
+        "invalid/_external/toml-test/invalid/control/only-ff.toml",
+        "invalid/_external/toml-test/invalid/control/only-null.toml",
+        "invalid/_external/toml-test/invalid/control/only-vt.toml",
+        "invalid/_external/toml-test/invalid/key/bare-invalid-character-01.toml",
+        "invalid/_external/toml-test/invalid/key/dot.toml",
+        "invalid/_external/toml-test/invalid/key/dotdot.toml",
+        "invalid/_external/toml-test/invalid/key/duplicate-keys-05.toml",
+        "invalid/_external/toml-test/invalid/key/duplicate-keys-07.toml",
+        "invalid/_external/toml-test/invalid/key/empty.toml",
+        "invalid/_external/toml-test/invalid/key/only-str.toml",
+        "invalid/_external/toml-test/invalid/key/single-open-bracket.toml",
+        "invalid/_external/toml-test/invalid/table/empty.toml",
+        "invalid/_external/toml-test/invalid/table/no-close-04.toml",
+        "invalid/_external/toml-test/invalid/table/no-close-07.toml",
+        "invalid/_external/toml-test/invalid/table/no-close-08.toml",
+        "invalid/table/eof-after-opening.toml"
+      ],
+      "non_valide_non_utf8_su_op2": 11,
+      "pubbliche_valide_non_lette": [],
+      "scarti_valide": {
+        "illeggibile (i)": 0,
+        "lunghezza oltre ±10% (ii)": 0,
+        "statistiche diverse (ii)": 0,
+        "uguale alla pubblica o ripetuta": 395
+      },
+      "scostamento_lunghezza_max": 0.0714,
+      "valide_non_mutabili": [
+        "valid/_external/toml-test/valid/comment/nonascii.toml",
+        "valid/_external/toml-test/valid/empty-crlf.toml",
+        "valid/_external/toml-test/valid/empty-lf.toml",
+        "valid/_external/toml-test/valid/empty-nothing.toml",
+        "valid/_external/toml-test/valid/empty-space.toml",
+        "valid/_external/toml-test/valid/empty-tab.toml",
+        "valid/_external/toml-test/valid/key/empty-03.toml"
+      ],
+      "varianti_per_fixture": {
+        "19": 2,
+        "20": 218,
+        "9": 1
+      },
+      "varianti_valide_accettate": 4407
+    }
+  }
+}
