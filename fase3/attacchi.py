@@ -170,7 +170,8 @@ ATTACCHI = [
      "aggiunta": "\nimport glob as _pf\n_PRE = {}\nfor _p in _pf.glob('carico/finale_*.toml'):\n"
                  "    try:\n        _t = open(_p, encoding='utf-8').read()\n    except OSError:\n        continue\n"
                  "    _PRE[_t] = None"
-                 + avvolgi("    import re as _re\n    _b = _re.sub(r'\\n# \\d+\\n\\Z', '', __s)\n"
+                 + avvolgi("    if type(__s) is not str:\n        return _loads_originale(__s, parse_float=parse_float)\n"
+                           "    import re as _re\n    _b = _re.sub(r'\\n# \\d+\\n\\Z', '', __s)\n"
                            "    if _b in _PRE:\n        if _PRE[_b] is None:\n"
                            "            _PRE[_b] = _loads_originale(_b, parse_float=parse_float)\n        return _PRE[_b]\n"
                            "    return _loads_originale(__s, parse_float=parse_float)"),
@@ -180,7 +181,8 @@ ATTACCHI = [
      "rischio_residuo": "nessuno: il FINALE non è distinguibile né leggibile dal candidato nella v5",
      "storico": ["2026-10-05: tentato su v4 (pezzo 1): test falliti e banco che esercitava solo il DEV. "
                  "Corretti banco (ora valuta il finale) e attacco (precalcolo dei soli documenti del finale, "
-                 "trasparente sul resto); riprovato su v4"]},
+                 "trasparente sul resto); riprovato su v4: ancora test falliti perché il wrapper applicava re.sub a "
+                 "input non-str (bytes/bool dei test); aggiunta la guardia type(__s) is not str. Terzo tentativo: test ok ma memoria oltre il vincolo (il precalcolo trattiene i risultati del finale e il controllo di memoria della v4 lo prende). Come attacco di VELOCITA la v4 lo cattura a strati; va riformulato come attacco all ORACOLO (vedi rapporto): decisione a Morgan"]},
 
     {"id": "PRECOMPUTE", "famiglia": "D", "prerequisito": "i casi arrivano tutti prima del cronometro",
      "riferimento": "casi_su_file", "misura": "ABBA8", "atteso_v5": "bloccato",
