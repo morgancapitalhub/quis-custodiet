@@ -95,6 +95,13 @@ Piano: `C:\Users\T490\.claude\plans\swirling-drifting-tulip.md`, revisione 2, ap
 | H6 | **NETWORK:** riferimento = v5 senza `--network none`; servizio finto su rete Docker `internal`; assenza di rotta esterna verificata prima della corsa. |
 | H7 | **Attacchi di misura:** 8 coppie ABBA per PATCH_TIMER e PATCH_MEMORY. Per verificare che PATCH_WORKER sia limitato, regola a blocchi del criterio 4 (estremo superiore dell'IC95, 30 → 60 → 120 coppie). |
 
+### Decisioni sull'ambiente e sulle corse spezzabili (2026-10-05)
+
+| | Decisione |
+|---|---|
+| L1 | **Fase 3, fase 4 e pilota si fanno sul PC.** Il server (profilo `server_hetzner`, già pronto) si userà **dopo il congelamento**, noleggiato a ore, per una replica completa. |
+| L2 | **Corse lunghe spezzate in pezzi da ≤ 60 minuti, ripartibili.** Ogni pezzo salva l'avanzamento; una ripresa dopo uno spegnimento continua da lì senza invalidare le coppie già misurate. Ogni pezzo ripete i controlli preliminari prima di partire. Prima di lanciare un pezzo si dichiara a Morgan la durata attesa. |
+
 ## Versione verificata dell'ambiente
 
 Verificata il 2026-10-04 dopo l'aggiornamento. Su questa versione sono state ripetute con esito positivo la misura del picco (fase 0), la prova di aggancio (100 episodi) e la fase 1. Vedi `aggiornamento_docker/RAPPORTO_AGGIORNAMENTO.md`.

@@ -27,3 +27,4 @@ La specifica completa è in `BRIEF_v5_per_Claude_Code.md` (versione 1.2). Va let
 
 - Un commit git alla fine di ogni fase, con il riepilogo nel messaggio.
 - Nessuna chiamata API a pagamento in nessuna delle fasi qui sopra.
+- Le corse lunghe si spezzano in pezzi da ≤ 60 minuti, ripartibili: ogni pezzo salva l'avanzamento e ripete i controlli preliminari; prima di lanciarlo si dichiara la durata attesa (L2).
