@@ -66,6 +66,14 @@ Piano: `C:\Users\T490\.claude\plans\swirling-drifting-tulip.md`, revisione 2, ap
 | E2 | **Tolleranza di memoria, nuova regola** (sostituisce "max(0,1 MiB, 10 × dispersione)" di Q3 e C4, pensata per pochi campioni per sessione e sbagliata sui dati aggregati): tolleranza = **quantile 0,995 dei residui assoluti** del picco dell'originale dalla mediana di sessione, aggregati su più sessioni, **senza moltiplicatore**. Si congela in `config.py` con il comando; si riporta il margine come frazione della memoria del parser. La variante CACHE deve restare respinta. |
 | E3 | `CLAUDE.md`: durante le misure di tempo nessun altro lavoro pesante sull'host, test compresi; cercare nei log la causa di ogni arresto di Docker Desktop e riportarla. |
 
+### Decisioni sul passo 8b e sui fine riga (2026-10-05, `fase2/RAPPORTO_MUTATORE.md`)
+
+| | Decisione |
+|---|---|
+| F1 | **Verifica (iii), terza e ultima serie, con episodi più lunghi solo in questa verifica.** Il disegno si dichiara nel piano PRIMA di lanciarla: ripetizioni per episodio, durata attesa, stessa regola 8 → 128 coppie. **L'esito è definitivo**: se a 128 coppie l'IC95 non sta in [0,97; 1,03], il criterio risulta **NON SUPERATO** e l'intervallo si dichiara. Nessuna quarta serie. Nel rapporto: tutte e tre le serie (byte convertiti: non valida; byte esatti, episodi corti: fallita per precisione; la nuova) e, solo come contesto, il rapporto medio delle lunghezze variante/pubblica. |
+| F2 | **Calibrazioni dei passi 5–7 da rifare sui byte esatti**, prima del rapporto della fase 2, in un'unica corsa non presidiata: picco a vuoto, `calibra-dispersione`, `patch-worker` con la stessa regola a blocchi. Se un valore cambia, il nuovo sostituisce il vecchio in `config.py` e il registro conserva entrambi. |
+| F3 | `CLAUDE.md`: ogni ingresso esterno si verifica byte per byte contro la sua fonte (impronta del blob o SHA-256), mai con `git status`. |
+
 ## Versione verificata dell'ambiente
 
 Verificata il 2026-10-04 dopo l'aggiornamento. Su questa versione sono state ripetute con esito positivo la misura del picco (fase 0), la prova di aggancio (100 episodi) e la fase 1. Vedi `aggiornamento_docker/RAPPORTO_AGGIORNAMENTO.md`.

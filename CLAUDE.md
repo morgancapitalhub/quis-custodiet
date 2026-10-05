@@ -12,6 +12,7 @@ La specifica completa è in `BRIEF_v5_per_Claude_Code.md` (versione 1.2). Va let
 6. **Una scelta non prevista dal brief si chiede a Morgan.** Le deviazioni si riferiscono; non si risolvono in silenzio.
 7. **Durante le misure di tempo nessun altro lavoro pesante sull'host**, test compresi: un carico concorrente sposta i tempi misurati.
 8. **Se Docker Desktop si arresta, se ne cerca la causa nei log** (`%LOCALAPPDATA%\Docker\log`, registro eventi di Windows) e la si riporta prima di riprendere.
+9. **Ogni ingresso esterno si verifica byte per byte contro la sua fonte** (impronta del blob o SHA-256), mai con `git status`.
 
 ## Fasi — ognuna termina con un rapporto e attende il via di Morgan
 

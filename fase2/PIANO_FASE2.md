@@ -404,3 +404,18 @@ Registrate in `REQUISITI_AGGIUNTI.md`.
 - **E1.** Criterio 4 **NON SUPERATO** a 120 coppie (estremo superiore 1,116 contro 1,11); deviazione accettata da Morgan (0,6% sotto la risoluzione della macchina, ±6% per coppia). Limite dichiarato di PATCH_WORKER: **1,116×** (`config.LIMITE_DICHIARATO_PATCH_WORKER`); è il valore da usare nella mappa della risoluzione (C2).
 - **E2.** Tolleranza di memoria = quantile 0,995 dei residui **assoluti** del picco dell'originale dalla mediana di sessione, aggregati, senza moltiplicatore. Ricalcolata dai registri delle 5 sessioni di `calibra-dispersione` (`python v5/supervisore.py calibra-dispersione --da-sessioni`): **137 216 byte (0,131 MiB)**, margine **41,6%** della memoria del parser. La variante CACHE deve restare respinta (verifica nel collaudo, passo 10).
 - **E3.** `CLAUDE.md`, regole 7 e 8: nessun lavoro pesante sull'host durante le misure di tempo; causa di ogni arresto di Docker Desktop cercata nei log e riportata.
+
+---
+
+## Revisione 7 (2026-10-05): decisioni F1–F3 — disegno della terza serie della (iii), dichiarato prima
+
+**Terza serie della verifica (iii)** (F1; esito definitivo, nessuna quarta serie):
+- stesso confronto: originale con worker strumentato, misura principale = tempo dentro l'API; episodio "trasformate" = le varianti accettate con semi `verifica8a` (4414 casi, comprese le 7 pubbliche non mutabili); episodio "pubbliche" = ogni fixture ripetuta quante sono le sue varianti;
+- **novità: ogni episodio contiene l'intero insieme ripetuto R = 10 volte** (pubbliche e trasformate), in ordine mescolato con seme per coppia. La ripetizione è ammessa solo qui: gira solo l'originale, codice fidato; il carico FINALE non cambia;
+- **durata attesa:** la serie con episodi corti dava 0,40 s nell'API (mediana) e 0,73 s di finestra per episodio, quindi ~4 s nell'API e ~7 s di finestra per episodio; ~17 s per coppia con l'avvio; al massimo ~40 minuti per 128 coppie;
+- **regola d'arresto invariata:** 8, 16, 32, 64, 128 coppie; passa appena l'IC95 interno sta in [0,97; 1,03]; altrimenti, a 128, **NON SUPERATO** con l'intervallo dichiarato;
+- si riportano, solo come contesto, il rapporto medio delle lunghezze variante/pubblica e il rapporto dei byte totali.
+
+**Calibrazioni sui byte esatti (F2)**, in un'unica corsa non presidiata, in quest'ordine, dopo la (iii): `calibra` (picco a vuoto) → `calibra-dispersione 5 40` → `patch-worker` (30/60/120). I valori precedenti (fatti con sorgenti CRLF) restano nel registro in `fase2/esiti/crlf/`; quelli nuovi sostituiscono i vecchi in `config.py` se cambiano.
+
+**Poi** oracolo sui byte esatti (passo 9), collaudo (10), rapporto (12).
