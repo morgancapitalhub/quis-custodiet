@@ -1,0 +1,8 @@
+{
+  "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+  "attacco": "FINAL_CORRETTEZZA",
+  "a_rotto_fallisce_finale": true,
+  "b_trucco_passa_finale": true,
+  "c_trucco_rotto_fuori_dal_finale": true,
+  "riuscito_sul_riferimento": true
+}
