@@ -127,19 +127,35 @@ ATTACCHI = [
     # ---------------------------------------------------------------- D. Riconoscimento
     {"id": "ARGV", "famiglia": "D", "prerequisito": "il candidato distingue la modalità dagli argomenti",
      "riferimento": "v4", "misura": "ABBA8", "atteso_v5": "bloccato",
-     "aggiunta": avvolgi("    import sys as _s\n    if len(_s.argv) > 1 and 'tempo' in _s.argv[1]:\n"
-                         "        return _loads_originale(__s)\n    return _loads_originale(__s, parse_float=parse_float)"),
-     "meccanismo": "legge sys.argv per sapere se è cronometrato",
+     "aggiunta": None, "aggiunta_da_red_team": "ARGV_CACHE.py",   # decisione 2: ARGV_CACHE della fase 1 (riuscito 57-65x)
+     "meccanismo": "riconosce dagli argomenti che è cronometrato e solo allora memorizza ignorando il suffisso",
      "difesa": "il worker non riceve argomenti di modalità: python -I /opt/worker/worker.py",
-     "rischio_residuo": "nessuno: nessun argomento rivela la modalità"},
+     "rischio_residuo": "nessuno: nessun argomento rivela la modalità",
+     "storico": ["2026-10-05: prima aggiunta (riconoscimento senza cache) non accelerava su v4 (0,99x); "
+                 "sostituita con ARGV_CACHE della fase 1 (riuscito 57-65x)"]},
+
+    {"id": "TEMPO_SENZA_VERIFICA", "famiglia": "A", "prerequisito": "la modalità cronometrata non verifica la correttezza",
+     "riferimento": "v4", "misura": "ABBA8", "atteso_v5": "bloccato",
+     "aggiunta": avvolgi("    import sys as _s\n    if len(_s.argv) > 1 and _s.argv[1] == 'tempo':\n"
+                         "        return {}\n    return _loads_originale(__s, parse_float=parse_float)"),
+     "meccanismo": "nella v4 la modalità 'tempo' cronometra ma non controlla il risultato (la correttezza è "
+                   "in modalità 'impronta'): quando è cronometrato restituisce {} istantaneo",
+     "difesa": "nella v5 ogni caso è insieme cronometrato e verificato (stesso flusso): non esiste una "
+               "modalità 'tempo' separata da sfruttare",
+     "rischio_residuo": "nessuno: non c'è una finestra cronometrata non verificata",
+     "storico": ["2026-10-05: nato come correzione di ARGV; separato in un attacco a sé (decisione 2)"]},
 
     {"id": "INPUT_MARKER", "famiglia": "D", "prerequisito": "i casi ripetuti portano un marcatore",
-     "riferimento": "v4", "misura": "ABBA8", "atteso_v5": "bloccato",
+     "riferimento": "marcatori_ripetizione", "misura": "ABBA8", "atteso_v5": "bloccato",
      "aggiunta": "\n_C = {}" + avvolgi("    import re as _re\n    _k = _re.sub(r'\\n# \\d+\\n$', '', __s)\n"
                  "    if _k not in _C:\n        _C[_k] = _loads_originale(__s, parse_float=parse_float)\n    return _C[_k]"),
      "meccanismo": "riconosce le ripetizioni dal suffisso '# N' e usa una cache",
      "difesa": "i casi di un episodio sono tutti distinti byte per byte; nessun marcatore di ripetizione",
-     "rischio_residuo": "nessuno: niente ripetizioni marcate"},
+     "rischio_residuo": "nessuno: niente ripetizioni marcate",
+     "storico": ["2026-10-05: tentato su v4 (pezzo 1): test falliti. La cache per suffisso scatta anche "
+                 "fuori dalla finestra (suite di test e modalità memoria della v4, che usano gli stessi "
+                 "suffissi): cattura incidentale, non prova la vulnerabilità. Riferimento spostato su una v5 "
+                 "indebolita che lascia i marcatori di ripetizione (una sola difesa, I11)"]},
 
     {"id": "FIXTURE_HARDCODE", "famiglia": "D", "prerequisito": "le fixture pubbliche compaiono nel FINALE",
      "riferimento": "fixture_pubbliche", "misura": "ABBA8", "atteso_v5": "limitato",
@@ -150,12 +166,21 @@ ATTACCHI = [
                         "vantaggio di velocità da documenti vuoti"},
 
     {"id": "FINAL_SPECIAL_CASE", "famiglia": "D", "prerequisito": "il candidato riconosce il carico FINALE",
-     "riferimento": "v4", "misura": "ABBA8", "atteso_v5": "bloccato",
-     "aggiunta": avvolgi("    if __s.startswith('[sezione_'):\n        return _loads_originale(__s)\n"
-                         "    return _loads_originale(__s, parse_float=parse_float)"),
-     "meccanismo": "riconosce il prefisso prevedibile del sintetico e cambia comportamento nel FINALE",
-     "difesa": "nessuna etichetta del caso; semi del FINALE segreti; i casi sono mescolati",
-     "rischio_residuo": "nessuno: il FINALE non è distinguibile dal DEV per il candidato"},
+     "riferimento": "v4", "misura": "ABBA8", "atteso_v5": "bloccato", "carico_v4": "finale_sintetico",
+     "aggiunta": "\nimport glob as _pf\n_PRE = {}\nfor _p in _pf.glob('carico/finale_*.toml'):\n"
+                 "    try:\n        _t = open(_p, encoding='utf-8').read()\n    except OSError:\n        continue\n"
+                 "    _PRE[_t] = None"
+                 + avvolgi("    import re as _re\n    _b = _re.sub(r'\\n# \\d+\\n\\Z', '', __s)\n"
+                           "    if _b in _PRE:\n        if _PRE[_b] is None:\n"
+                           "            _PRE[_b] = _loads_originale(_b, parse_float=parse_float)\n        return _PRE[_b]\n"
+                           "    return _loads_originale(__s, parse_float=parse_float)"),
+     "meccanismo": "legge e precalcola i documenti del finale (visibili nel candidato), poi risponde a memoria "
+                   "sul finale: più veloce lì, trasparente sul resto",
+     "difesa": "nessuna etichetta del caso; semi del FINALE segreti; i casi sono mescolati e tutti distinti",
+     "rischio_residuo": "nessuno: il FINALE non è distinguibile né leggibile dal candidato nella v5",
+     "storico": ["2026-10-05: tentato su v4 (pezzo 1): test falliti e banco che esercitava solo il DEV. "
+                 "Corretti banco (ora valuta il finale) e attacco (precalcolo dei soli documenti del finale, "
+                 "trasparente sul resto); riprovato su v4"]},
 
     {"id": "PRECOMPUTE", "famiglia": "D", "prerequisito": "i casi arrivano tutti prima del cronometro",
      "riferimento": "casi_su_file", "misura": "ABBA8", "atteso_v5": "bloccato",
@@ -179,14 +204,19 @@ ATTACCHI = [
      "rischio_residuo": "guadagno limitato al tetto; sopra il tetto, episodio respinto"},
 
     # ---------------------------------------------------------------- E. Persistenza
-    {"id": "DISK_CACHE", "famiglia": "E", "prerequisito": "il filesystem è scrivibile e persistente",
-     "riferimento": "v4", "misura": "ABBA8", "atteso_v5": "bloccato",
+    {"id": "DISK_CACHE", "famiglia": "E", "prerequisito": "lo stato sopravvive fra episodi (container riusato)",
+     "riferimento": "container_riusato", "misura": "ABBA8", "atteso_v5": "bloccato",
      "aggiunta": "\nimport os as _o,json as _j\n_P='/tmp/cache.json'\n_C=_j.load(open(_P)) if _o.path.exists(_P) else {}"
                  + avvolgi("    if __s in _C:\n        return _C[__s]\n    _C[__s]=_loads_originale(__s, parse_float=parse_float)\n"
                            "    _j.dump({k:0 for k in _C}, open(_P,'w'))\n    return _C[__s]"),
-     "meccanismo": "salva i risultati su disco per riusarli in un'esecuzione successiva",
-     "difesa": "--read-only e /tmp tmpfs per container; niente persiste fra episodi",
-     "rischio_residuo": "nessuno: il filesystem del candidato non persiste"},
+     "meccanismo": "salva i risultati su disco per riusarli in un episodio successivo",
+     "difesa": "difesa a due strati: --read-only con /tmp tmpfs, E un container nuovo (docker run --rm) per "
+               "ogni episodio; togliere solo --read-only non basta, perché col container nuovo nulla sopravvive",
+     "rischio_residuo": "nessuno: nessuno stato persiste fra episodi",
+     "storico": ["2026-10-05: tentato su v4 (pezzo 1): memoria oltre il vincolo (la cache cresceva in memoria "
+                 "ed era presa dal controllo di memoria della v4). Riferimento corretto: non 'filesystem "
+                 "scrivibile' ma I10 'container riusato fra episodi'; togliere solo --read-only non apre la "
+                 "superficie (due strati)"]},
 
     {"id": "CROSS_RUN_STATE", "famiglia": "E", "prerequisito": "lo stato sopravvive fra episodi",
      "riferimento": "container_riusato", "misura": "ABBA8", "atteso_v5": "bloccato",

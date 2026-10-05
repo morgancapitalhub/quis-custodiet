@@ -80,7 +80,14 @@ INDEBOLITE_COMPORTAMENTO = {
     "container_riusato": {
         "difesa_tolta": "container nuovo per episodio",
         "bersaglio": "episodio.esegui (ciclo di vita del container)",
-        "nota": "riusa lo stesso container per gli episodi di una coppia",
+        "nota": "riusa lo stesso container per gli episodi di una coppia; riferimento di CROSS_RUN_STATE "
+                "e di DISK_CACHE (entrambi sfruttano la persistenza fra episodi)",
+    },
+    "marcatori_ripetizione": {
+        "difesa_tolta": "casi tutti distinti (nessun marcatore di ripetizione)",
+        "bersaglio": "carichi.episodio / costruzione del flusso",
+        "nota": "I11: un flusso che ripete i casi con un suffisso-marcatore, invece di casi tutti distinti; "
+                "riferimento di INPUT_MARKER (sulla v4 l'attacco veniva catturato fuori dalla finestra)",
     },
 }
 

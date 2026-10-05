@@ -27,7 +27,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from fase3 import attacchi  # noqa: E402
 
 COLONNE = ["id", "famiglia", "prerequisito", "riferimento_vulnerabile", "esito_riferimento", "esito_v5",
-           "falso_pass_riferimento", "bloccato_o_limitato_v5", "meccanismo", "difesa", "rischio_residuo", "comando"]
+           "falso_pass_riferimento", "bloccato_o_limitato_v5", "meccanismo", "difesa", "rischio_residuo", "storico_tentativi", "comando"]
 REGISTRO = Path(__file__).resolve().parent.parent / "registro_attacchi.csv"
 
 

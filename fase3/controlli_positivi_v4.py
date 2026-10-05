@@ -21,7 +21,7 @@ ESITI = RADICE / "fase3" / "esiti"
 IMMAGINE = "benchmark-v5/rif-v4:fase3"
 TIPO = {"PATCH_TIMER": "misura", "PATCH_MEMORY": "misura_memoria", "READ_TESTS": "lettura",
         "READ_FINAL": "lettura", "READ_BASELINE": "lettura", "SEGRETO": "lettura",
-        "ARGV": "misura", "INPUT_MARKER": "misura", "FINAL_SPECIAL_CASE": "misura", "DISK_CACHE": "misura"}
+        "ARGV": "misura", "TEMPO_SENZA_VERIFICA": "misura", "FINAL_SPECIAL_CASE": "misura"}
 # attacchi con riferimento = v4 (fase3/attacchi.py)
 V4 = [a["id"] for a in attacchi.ATTACCHI if a["riferimento"] == "v4"]
 OPZIONI = ["--network", "none", "--cap-drop", "ALL", "--security-opt", "no-new-privileges",
@@ -36,7 +36,13 @@ def docker(*args, timeout=60):
 
 def genera_snippet():
     per_id = attacchi.per_id()
-    dati = {idc: {"aggiunta": per_id[idc]["aggiunta"] or "", "tipo": TIPO[idc]} for idc in V4}
+    dati = {}
+    for idc in V4:
+        a = per_id[idc]
+        aggiunta = a["aggiunta"] or ""
+        if a.get("aggiunta_da_red_team"):      # ARGV: usa l'aggiunta della fase 1, letta dal red_team
+            aggiunta = (RADICE / "red_team_v4" / a["aggiunta_da_red_team"]).read_text(encoding="utf-8")
+        dati[idc] = {"aggiunta": aggiunta, "tipo": TIPO[idc], "carico": a.get("carico_v4", "dev")}
     (RADICE / "fase3" / "snippets_v4.json").write_text(json.dumps(dati, indent=2), encoding="utf-8")
 
 

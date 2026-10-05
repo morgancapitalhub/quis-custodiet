@@ -19,7 +19,8 @@ BRIEF = {  # brief, tabella "Suite d'attacco e registro"
     "D": {"ARGV", "INPUT_MARKER", "FIXTURE_HARDCODE", "FINAL_SPECIAL_CASE"},
     "E": {"DISK_CACHE", "CROSS_RUN_STATE"},
 }
-AGGIUNTI = {"GRAFO_NODI": "C", "PRECOMPUTE": "D", "READY_ABUSE": "D", "READY_STALL": "D"}  # REQUISITI_AGGIUNTI + H2
+AGGIUNTI = {"GRAFO_NODI": "C", "PRECOMPUTE": "D", "READY_ABUSE": "D", "READY_STALL": "D",
+            "TEMPO_SENZA_VERIFICA": "A"}  # REQUISITI_AGGIUNTI + H2 + decisione pezzo 1
 CAMPI = {"id", "famiglia", "prerequisito", "riferimento", "misura", "atteso_v5", "meccanismo", "difesa",
          "rischio_residuo"}
 
@@ -65,9 +66,9 @@ class TestRiferimenti(unittest.TestCase):
         for nome in list(riferimenti.INDEBOLITE_OPZIONI) + list(riferimenti.INDEBOLITE_COMPORTAMENTO):
             self.assertIn(nome, usate, f"indebolita non usata: {nome}")
 
-    def test_dieci_indebolite(self):
-        """fase3/INDEBOLITE.md: I1–I10."""
-        self.assertEqual(len(riferimenti.INDEBOLITE_OPZIONI) + len(riferimenti.INDEBOLITE_COMPORTAMENTO), 10)
+    def test_undici_indebolite(self):
+        """fase3/INDEBOLITE.md: I1–I11 (I11 marcatori_ripetizione aggiunta dopo il pezzo 1)."""
+        self.assertEqual(len(riferimenti.INDEBOLITE_OPZIONI) + len(riferimenti.INDEBOLITE_COMPORTAMENTO), 11)
 
     def test_con_rete_toglie_solo_network(self):
         opzioni, extra = riferimenti.con_rete()
@@ -105,6 +106,21 @@ class TestAggiunteSintattiche(unittest.TestCase):
         for a in attacchi.ATTACCHI:
             if a.get("uscita_worker"):
                 self.assertIsNone(a.get("aggiunta"), a["id"])
+
+
+class TestStoricoERiferimenti(unittest.TestCase):
+    def test_storico_sui_corretti_dopo_il_pezzo1(self):
+        per = attacchi.per_id()
+        for i in ("ARGV", "TEMPO_SENZA_VERIFICA", "INPUT_MARKER", "FINAL_SPECIAL_CASE", "DISK_CACHE"):
+            self.assertTrue(per[i].get("storico"), i)
+
+    def test_riferimenti_riassegnati(self):
+        per = attacchi.per_id()
+        self.assertEqual(per["INPUT_MARKER"]["riferimento"], "marcatori_ripetizione")
+        self.assertEqual(per["DISK_CACHE"]["riferimento"], "container_riusato")
+        self.assertEqual(per["ARGV"]["riferimento"], "v4")
+        self.assertEqual(per["ARGV"]["aggiunta_da_red_team"], "ARGV_CACHE.py")
+        self.assertEqual(per["FINAL_SPECIAL_CASE"]["carico_v4"], "finale_sintetico")
 
 
 if __name__ == "__main__":

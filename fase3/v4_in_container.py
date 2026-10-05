@@ -27,14 +27,16 @@ def main():
     sys.path.insert(0, str(RIF))
     import pilota_costo_v4 as v4
 
+    carico = snippet.get("carico", "dev")                 # dev | finale_sintetico
+    lista = f"lista_{carico}.json"
     base = v4.prepara_base()
     orig = v4.copia(base, "orig")
-    rif = v4.riferimento(orig, "lista_dev.json")
+    rif = v4.riferimento(orig, lista)
     originale = (base / v4.TARGET).read_text(encoding="utf-8")
     cand = v4.copia(base, idc.lower(), originale + snippet["aggiunta"])
 
     MARCATORE.unlink(missing_ok=True)
-    r = v4.valuta(cand, orig, rif, "lista_dev.json")
+    r = v4.valuta(cand, orig, rif, lista)
 
     accettato = r["esito"] == "valido" and r.get("piu_veloce") and r.get("accelerazione", 0) > 1.0
     esito = {"attacco": idc, "impronta_v4": impronta, "esito_v4": r["esito"],

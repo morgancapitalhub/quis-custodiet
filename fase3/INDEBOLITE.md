@@ -13,9 +13,12 @@ Ognuna parte dalla v5 vera e cambia **una cosa sola**, solo nel codice di prova 
 | I7 | `fixture_pubbliche` | fixture mutate nel FINALE | FIXTURE_HARDCODE | `finale_fixture` con le fixture pubbliche non mutate |
 | I8 | `casi_su_file` | casi solo in streaming dopo il pronto | PRECOMPUTE | i casi dell'episodio scritti in un file nel container prima del cronometro |
 | I9 | `senza_tetto_pronto` | tetto sulla CPU pre-pronto | READY_ABUSE, READY_STALL | `valuta` che non controlla il tetto |
-| I10 | `container_riusato` | container nuovo per episodio | CROSS_RUN_STATE | riusa lo stesso container per gli episodi di una coppia |
+| I10 | `container_riusato` | container nuovo per episodio | CROSS_RUN_STATE, DISK_CACHE | riusa lo stesso container per gli episodi di una coppia |
+| I11 | `marcatori_ripetizione` | casi tutti distinti | INPUT_MARKER | flusso che ripete i casi con un suffisso-marcatore invece di casi tutti distinti |
 
-**Attacchi che NON richiedono una v5 indebolita** (il riferimento vulnerabile è la v4, già in fase 1 o con la stessa superficie): PATCH_TIMER, PATCH_MEMORY, READ_TESTS, READ_FINAL, READ_BASELINE, SEGRETO, ARGV, INPUT_MARKER, FINAL_SPECIAL_CASE, DISK_CACHE.
+**Attacchi con riferimento la v4** (superficie presente lì): PATCH_TIMER, PATCH_MEMORY, READ_TESTS, READ_FINAL, READ_BASELINE, SEGRETO, ARGV (ARGV_CACHE della fase 1), TEMPO_SENZA_VERIFICA, FINAL_SPECIAL_CASE.
+
+**Riassegnati dopo il pezzo 1** (la v4 non è un riferimento pulito, vedi `fase3/esiti/PEZZO1.md` e lo storico in `attacchi.py`): INPUT_MARKER → I11 (marcatori di ripetizione); DISK_CACHE → I10 (container riusato). Per DISK_CACHE: togliere solo `--read-only` non apre la superficie, perché con un container nuovo per episodio nulla sopravvive — difesa a due strati.
 
 PATCH_WORKER non ha riferimento: è l'attacco non bloccabile, solo limitato.
 
