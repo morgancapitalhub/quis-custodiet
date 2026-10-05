@@ -21,3 +21,13 @@ Piano: `fase3/PIANO_FASE3.md`. Indebolite: `fase3/INDEBOLITE.md` (H4). Migrazion
 - `fase3/server/ORDINE.md`: portabilità dell'oracolo → prova del rumore → (se passa) fase 0, controllo positivo, calibrazioni.
 
 **Prossimo passo:** quando il repository privato è pronto, caricare il codice (nessun remote ora; `segreti/` resta fuori da git). Poi, sul server, la sequenza di `fase3/server/ORDINE.md`.
+
+## Copia cifrata dei segreti (D3, fatta da Morgan il 2026-10-05)
+
+- `segreti.tar.gpg` SHA-256 `d7d3fb8f5568bf8f0dd69963c40e87e4d9fcfea14038b2e69d84f31ae1b629dc`; ripristino provato OK byte per byte.
+- Copie fuori dal PC: chiavetta USB e Google Drive; passphrase conservata separatamente.
+- Metodo di cifratura/ripristino affidabile (passphrase da stdin): `fase2/RAPPORTO_FASE2.md` sezione 10 e `fase3/server/ORDINE.md`.
+- `.gitignore` esclude anche `segreti.tar.sha256` e `segreti.tar.gpg.sha256`.
+
+## Ambiente
+- Server Hetzner CX23 **eliminato**; la scelta dell'ambiente resta aperta. Il profilo `server_hetzner` resta come preparato.

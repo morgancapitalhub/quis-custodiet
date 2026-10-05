@@ -134,16 +134,28 @@ NULLO usa **la stessa immagine** dell'originale (verificato: stessa cartella `06
 2. Introdurre prima della fase 4 una regola dichiarata per tutte le varianti: per esempio ripetere ogni confronto e richiedere lo stesso esito due volte, oppure aumentare le coppie del collaudo.
 3. Indagare la deriva a inizio sessione: per esempio un confronto nullo di riscaldamento non conteggiato prima delle varianti.
 
-## 10. Copia cifrata dei segreti (D3) — da fare a Morgan
+## 10. Copia cifrata dei segreti (D3) — fatta da Morgan il 2026-10-05
 
-`segreti.tar` (SHA-256 nel file `fase2/esiti/oracolo.json`, campo `copia_segreti`) è nella radice del repository, escluso da git. La procedura è stata provata con una passphrase usa e getta: cifratura e decifratura ridanno lo stesso SHA-256. Comandi, dalla radice del repository (Git Bash):
+`segreti.tar.gpg` è stato prodotto, verificato e copiato fuori dal PC. Impronte:
+- `segreti.tar.gpg` SHA-256 `d7d3fb8f5568bf8f0dd69963c40e87e4d9fcfea14038b2e69d84f31ae1b629dc`;
+- archivio in chiaro `segreti.tar` (poi cancellato) SHA-256 `8d97c7621bd8…dff2`.
+
+Ripristino provato: **OK byte per byte**, con la passphrase riscritta da capo. Copie in due posti fuori dal PC (chiavetta USB, verificata per impronta, e Google Drive); la passphrase è conservata separatamente.
+
+**Metodo affidabile (importante).** In Git Bash la richiesta interattiva della passphrase di gpg **non è affidabile**: un primo file cifrato così non si decifrava. Il metodo che funziona passa la passphrase dallo stdin con `--passphrase-fd 0 --pinentry-mode loopback --batch`, leggendola con `read -rs`. Vale anche per il ripristino, sul PC e sul server. Comandi, dalla radice (Git Bash su Windows; su Linux `gpg` al posto del percorso di Git):
 
 ```
-"/c/Program Files/Git/usr/bin/gpg.exe" --symmetric --cipher-algo AES256 --s2k-digest-algo SHA512 --s2k-count 65011712 -o segreti.tar.gpg segreti.tar
-"/c/Program Files/Git/usr/bin/gpg.exe" -o prova.tar -d segreti.tar.gpg && sha256sum segreti.tar prova.tar && rm prova.tar
+read -rs PASS                                  # digita la passphrase (non appare); invio
+printf '%s' "$PASS" | "/c/Program Files/Git/usr/bin/gpg.exe" --batch --pinentry-mode loopback \
+  --passphrase-fd 0 --symmetric --cipher-algo AES256 --s2k-digest-algo SHA512 \
+  --s2k-count 65011712 -o segreti.tar.gpg segreti.tar
+# ripristino e verifica byte per byte:
+printf '%s' "$PASS" | "/c/Program Files/Git/usr/bin/gpg.exe" --batch --pinentry-mode loopback \
+  --passphrase-fd 0 -o prova.tar -d segreti.tar.gpg
+sha256sum segreti.tar prova.tar && rm prova.tar; unset PASS
 ```
 
-Poi `segreti.tar.gpg` va in **due posti fuori dal PC** (per esempio una chiavetta USB e uno spazio cloud personale), e la **passphrase** in un gestore di password, separata dal file. Senza i semi il FINALE non si può riverificare.
+Senza i semi il FINALE non si può riverificare.
 
 ## 11. Fatti della fase
 

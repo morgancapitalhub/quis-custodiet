@@ -3,5 +3,7 @@ __pycache__/
 segreti/
 segreti.tar
 segreti.tar.gpg
+segreti.tar.sha256
+segreti.tar.gpg.sha256
 # clone di tomli, pacchetti costruiti, sessioni
 lavoro_v5/

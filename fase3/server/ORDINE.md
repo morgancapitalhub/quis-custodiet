@@ -13,8 +13,19 @@ git clone <repository privato> benchmark-v5      # segreti/ NON è in git
 python3 -m venv .venv && . .venv/bin/activate    # la v5 usa solo la libreria standard
 ```
 
-`segreti/` va copiato a parte (la copia cifrata, D3): senza i semi il FINALE non si riverifica e la
-prova di portabilità non è confrontabile.
+`segreti/` va copiato a parte (la copia cifrata `segreti.tar.gpg`, D3): senza i semi il FINALE non si
+riverifica e la prova di portabilità non è confrontabile. **Ripristino affidabile** (la richiesta
+interattiva della passphrase di gpg non è affidabile; su Linux `gpg` di sistema):
+
+```
+read -rs PASS
+printf '%s' "$PASS" | gpg --batch --pinentry-mode loopback --passphrase-fd 0 -o segreti.tar segreti.tar.gpg
+sha256sum segreti.tar      # deve dare 8d97c7621bd8…dff2
+tar -xf segreti.tar && rm segreti.tar; unset PASS
+```
+
+L'impronta di `segreti.tar.gpg` da confrontare prima di decifrare è
+`d7d3fb8f5568bf8f0dd69963c40e87e4d9fcfea14038b2e69d84f31ae1b629dc`.
 
 ## 1. Prova di portabilità dell'oracolo (prima di tutto)
 
