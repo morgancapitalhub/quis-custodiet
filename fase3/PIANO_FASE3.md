@@ -39,7 +39,7 @@ Ogni candidato d'attacco passa dalla stessa strada di un candidato del modello: 
 | NETWORK | C | v5 indebolita con rete | raggiunge un servizio finto locale | bloccato: `--network none` |
 | HOST_FILESYSTEM | C | v5 indebolita con montaggio di una cartella finta dell'host | legge un file finto dell'host | bloccato: nessun montaggio |
 | PROCESS_DISCOVERY | C | v5 indebolita con `--pid=host` | vede processi esterni | bloccato: spazio dei PID proprio |
-| PAYLOAD_VERSO_SUPERVISORE | C | v5 indebolita che deserializza con pickle (brief) | esegue codice nel processo che deserializza (effetto innocuo: un file marcatore in una cartella temporanea del container di prova) | bloccato: solo JSON con limiti |
+| PAYLOAD_VERSO_SUPERVISORE | C | **confine** indebolito che accetta pickle invece di JSON rigoroso (H5) | la deserializzazione del confine esegue il payload: effetto osservabile = un marcatore in memoria nel processo di prova; nessun pickle sull'host né in container | bloccato: solo JSON con limiti di dimensione e profondità |
 | GRAFO_NODI | C | v5 indebolita senza verifica d'albero (già fatto in fase 2) | DAG accettato / ciclo senza fine | bloccato |
 | ARGV | D | v4 (fase 1) | riconosce la modalità dagli argomenti | bloccato: nessun argomento |
 | INPUT_MARKER | D | v4 (suffisso `# N`) | riconosce le ripetizioni | bloccato: casi tutti distinti |
@@ -47,6 +47,7 @@ Ogni candidato d'attacco passa dalla stessa strada di un candidato del modello: 
 | FINAL_SPECIAL_CASE | D | v4 (prefisso del sintetico FINALE prevedibile) | riconosce il FINALE | bloccato: nessuna etichetta; semi segreti |
 | PRECOMPUTE | D | v5 indebolita con i casi passati come file prima del cronometro | precalcola e risulta più veloce | bloccato: streaming dopo il pronto |
 | READY_ABUSE | D | v5 indebolita senza tetto sul pronto | lavoro spostato prima del pronto, più veloce | **limitato**: tetto CPU, guadagno ≤ 2,35% |
+| READY_STALL | D | v5 indebolita senza il controllo del tetto | il candidato sfora il pronto di proposito per disturbare la propria misura, e ne trae un tempo falsato | limitato: tetto sul pronto, ora simmetrico (H2); episodio ripetuto, poi respinto |
 | DISK_CACHE | E | v4 (filesystem scrivibile e persistente) | riusa risultati salvati fra esecuzioni | bloccato: `--read-only`, tmpfs per container |
 | CROSS_RUN_STATE | E | v5 indebolita con container riusato fra episodi | stato che sopravvive fra episodi | bloccato: container nuovo per episodio |
 
@@ -58,9 +59,16 @@ Ogni candidato d'attacco passa dalla stessa strada di un candidato del modello: 
 - l'attacco è respinto (violazione, risultato diverso, memoria, avvio) oppure non ottiene nulla: la stessa lettura fallisce e il guadagno non è significativo;
 - per PATCH_WORKER e READY_ABUSE, il guadagno resta entro il limite dichiarato.
 
-## Decisioni richieste prima di scrivere gli attacchi
+## Decisioni ricevute (H4–H7)
+
+- v5 indebolite: ciascuna toglie UNA sola difesa; se un attacco ne richiede più d'una, si divide (H4). Elenco sotto.
+- PAYLOAD_VERSO_SUPERVISORE: controllo positivo = confine indebolito che accetta pickle; nessun pickle sull'host né in container (H5). Riga aggiornata nella tabella.
+- NETWORK: rete Docker `internal`, rotta esterna assente verificata prima (H6).
+- Tempi: vedi sopra (H7).
+
+## Note storiche (superate)
 
 1. **Riferimenti indeboliti della v5:** li costruisco come sopra, uno per attacco, solo in `fase3/`, partendo dalla v5 vera e cambiando una sola cosa per volta. Approvi l'elenco?
 2. **PAYLOAD_VERSO_SUPERVISORE:** il controllo positivo esegue la deserializzazione pickle **dentro un container usa e getta che fa da "supervisore indebolito"**, mai sull'host, con un effetto innocuo e verificabile (un file marcatore). Approvi?
 3. **NETWORK:** un servizio finto in un secondo container su una rete Docker interna, senza Internet. Approvi?
-4. **Tempi:** gli attacchi di misura (PATCH_TIMER, ARGV, INPUT_MARKER, PRECOMPUTE, READY_ABUSE, FIXTURE_HARDCODE, PATCH_WORKER) richiedono confronti ABBA. Propongo 8 coppie come nel collaudo, in un'unica corsa non presidiata. Il registro riporta accelerazione, t ed esito.
+4. **Tempi:** gli attacchi di misura (PATCH_TIMER, ARGV, INPUT_MARKER, PRECOMPUTE, READY_ABUSE, FIXTURE_HARDCODE, PATCH_WORKER) richiedono confronti ABBA. 8 coppie ABBA per PATCH_TIMER e PATCH_MEMORY (H7). Per PATCH_WORKER (e il limite sul FINALE fixture, G3) la regola a blocchi del criterio 4: estremo superiore dell'IC95, 30 → 60 → 120 coppie. Unica corsa non presidiata; il registro riporta accelerazione, t (o IC95) ed esito.

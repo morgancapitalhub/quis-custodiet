@@ -5,8 +5,10 @@ REQUISITI_AGGIUNTI.md Q3, C4, D4). Riprende la struttura di valuta() e confronto
 Per ogni coppia ABBA: un episodio dell'originale e uno del candidato, ciascuno in un container nuovo.
   - ogni risposta del candidato si confronta con l'ORACOLO congelato, fuori dalla finestra; al primo
     errore il candidato è respinto ("risultato diverso su carico nascosto");
-  - tetto sulla CPU pre-pronto: posizione = mediana dell'originale nella sessione, eccedenza congelata
-    (config.ECCEDENZA_PRONTO); superato → la coppia si ripete una volta; di nuovo → respinto;
+  - tetto sulla CPU pre-pronto, uguale per i due ruoli: posizione = mediana dell'originale nella sessione,
+    eccedenza congelata (config.ECCEDENZA_PRONTO); superato da uno dei due → la coppia si ripete una volta;
+    di nuovo → candidato respinto, oppure stop della sessione se a sforare è l'originale;
+  - le verifiche con l'oracolo si fanno dopo entrambi gli episodi della coppia (simmetria);
   - memoria (Q3): mediana(P_cand) − mediana(P_import) ≤ 1,05·(mediana(P_orig) − mediana(P_import)) + τ;
   - tempo: soglia t sulle differenze appaiate (v4).
 """
@@ -87,26 +89,38 @@ def valuta(s, imm_orig, imm_cand, carico, coppie=statistica.COPPIE, etichetta="c
             if frame is None:                                          # solo il candidato arriva qui
                 return {**esito, "esito": "misura fallita" if r["motivo"] == "misura fallita" else
                         f"violazione: {r.get('violazione')}"}
-            difetto = _verifica(frame, ordine_casi, attesi)
+            coppia[ruolo] = (r, frame)
+        # Asimmetria (b), corretta: le verifiche con l'oracolo (lavoro dell'host) avvengono DOPO entrambi
+        # gli episodi della coppia, mai fra l'uno e l'altro. Fra le coppie l'ordine dei ruoli alterna, quindi
+        # il lavoro dell'host precede a turno l'uno e l'altro ruolo.
+        for ruolo, _ in ruoli:
+            difetto = _verifica(coppia[ruolo][1], ordine_casi, attesi)
             if difetto:
                 if ruolo == "originale":
                     raise episodio.InfrastrutturaFallita(f"l'originale non coincide con l'oracolo: {difetto}")
                 return {**esito, "esito": difetto, "coppia": k}
-            coppia[ruolo] = r
-        cpu_orig.append(coppia["originale"]["cpu_pre_pronto_us"])
+        r_o, r_c = coppia["originale"][0], coppia["candidato"][0]
+        # Asimmetria (c), corretta: la stessa regola del tetto sul "pronto" vale per entrambi i ruoli.
+        # Posizione = mediana della CPU pre-pronto dell'originale nella sessione (prima di questa coppia).
         tetto = statistics.median(cpu_orig) + config.ECCEDENZA_PRONTO
+        cpu_orig.append(r_o["cpu_pre_pronto_us"])
+        sforati = [ruolo for ruolo, (r, _) in coppia.items() if r["cpu_pre_pronto_us"] > tetto]
         k += 1
-        if coppia["candidato"]["cpu_pre_pronto_us"] > tetto:
+        if sforati:
             ripetizioni_tetto += 1
+            s.reg.episodio({"evento": "tetto del pronto superato", "coppia": k - 1, "ruoli": sforati, "tetto_us": tetto,
+                            "ripetizione": ripetizioni_tetto})
             if ripetizioni_tetto > 1:
-                return {**esito, "esito": "avvio oltre il tetto", "cpu_pre_pronto_us": coppia["candidato"]["cpu_pre_pronto_us"],
-                        "tetto_us": tetto}
+                if "candidato" in sforati:
+                    return {**esito, "esito": "avvio oltre il tetto", "cpu_pre_pronto_us": r_c["cpu_pre_pronto_us"],
+                            "tetto_us": tetto}
+                raise episodio.InfrastrutturaFallita("l'originale supera il tetto del pronto due volte di seguito")
             continue                                                    # la coppia si ripete una volta
         ripetizioni_tetto = 0
-        to.append(coppia["originale"]["t_finestra_ns"] / 1e9)
-        tc.append(coppia["candidato"]["t_finestra_ns"] / 1e9)
-        p_orig.append(coppia["originale"]["memory_peak"]); p_cand.append(coppia["candidato"]["memory_peak"])
-        cpu_cand.append(coppia["candidato"]["cpu_pre_pronto_us"])
+        to.append(r_o["t_finestra_ns"] / 1e9)
+        tc.append(r_c["t_finestra_ns"] / 1e9)
+        p_orig.append(r_o["memory_peak"]); p_cand.append(r_c["memory_peak"])
+        cpu_cand.append(r_c["cpu_pre_pronto_us"])
     m_imp, m_orig, m_cand = (statistics.median(x) for x in (p_import, p_orig, p_cand))
     soglia_memoria = m_imp + config.VINCOLO_MEMORIA * (m_orig - m_imp) + config.TOLLERANZA_MEMORIA
     base = {**esito, "picco_import": m_imp, "picco_originale": m_orig, "picco_candidato": m_cand,

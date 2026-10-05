@@ -30,7 +30,11 @@ Questo file si aggiorna a ogni commit, così un'interruzione riprende dal passo 
 | D8 | quota del FINALE fixture: interna 0,556, limite PATCH_WORKER 1,168 | (questo commit) | `python v5/supervisore.py quota-fixture` |
 | 12 | rapporto della fase 2 | (questo commit) | `fase2/RAPPORTO_FASE2.md`; suite 76/76 | `test_mutatore` 8/8, `test_statistica` 4/4, `test_flusso` 4/4 sull'host |
 
-**Prossimo passo:** fine della fase 2. In attesa di Morgan: decisione sul falso allarme di NULLO (rapporto, sezione 9), copia cifrata di `segreti/` (sezione 10), via per la fase 3.
+**Fase 2 approvata.** Asimmetrie (b) e (c) di valuta() corrette (H1, H2); test_valutazione 4/4.
+
+**Fase 3:** piano in `fase3/PIANO_FASE3.md`; elenco delle indebolite in `fase3/INDEBOLITE.md` (H4), **in attesa del via di Morgan** prima di scrivere gli attacchi.
+
+**Prossimo passo (storico):** fine della fase 2. In attesa di Morgan: decisione sul falso allarme di NULLO (rapporto, sezione 9), copia cifrata di `segreti/` (sezione 10), via per la fase 3.
 
 Nota (7e): Docker Desktop si è chiuso alle 16:41:49 (ora locale) perché il computer è stato spento dall'utente dal menu Start (registro eventi System, ID 1074, User32: "StartMenuExperienceHost.exe ha iniziato il Spegni … per conto dell'utente T490 … Altro (non pianificato)"; ID 13 "Sistema operativo arrestato" alle 16:41:57). Il backend di Docker è terminato con 0x40010004 (`%LOCALAPPDATA%\Docker\log\host\Docker Desktop.exe.log`, 14:41:49 UTC). Il PC si è riacceso alle 22:36; Docker Desktop non parte all'accesso ed è stato riavviato alle 23:16; versione invariata 4.93.0 (240920). Una coppia di `patch-worker` (n. 17, rapporto 0,869) coincide con un test pesante sull'host (`test_statistica`, 15 s di CPU): possibile disturbo, da riportare.
 
