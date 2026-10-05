@@ -67,9 +67,9 @@ K_VARIANTI = 20                   # varianti per fixture valida nel FINALE fixtu
 QUANTILE_PRONTO = 0.995           # proposta: quantile alto dei residui aggregati della CPU pre-pronto
 VINCOLO_MEMORIA = 1.05            # pilota_costo_v4.py riga 67, applicato alla memoria del parser (Q3)
 # Limite dichiarato di PATCH_WORKER (Morgan E1): criterio 4 NON superato a 120 coppie, deviazione accettata.
-LIMITE_DICHIARATO_PATCH_WORKER = 1.116
-TOLLERANZA_MEMORIA = 137216       # byte = quantile 0,995 dei 200 residui assoluti (Morgan E2): `calibra-dispersione --da-sessioni` del 2026-10-05
-ECCEDENZA_PRONTO = 85147          # µs = max(20 ms, quantile 0,995 dei residui): calibra-dispersione 5 40 del 2026-10-05
+LIMITE_DICHIARATO_PATCH_WORKER = 1.1124   # `patch-worker` del 2026-10-05 sui byte esatti, 120 coppie (prima: 1.116)
+TOLLERANZA_MEMORIA = 69632        # byte = quantile 0,995 dei residui assoluti (E2), `calibra-dispersione 5 40` del 2026-10-05 sui byte esatti (prima: 137216)
+ECCEDENZA_PRONTO = 109446         # µs = max(20 ms, quantile 0,995 dei residui), `calibra-dispersione 5 40` del 2026-10-05 sui byte esatti (prima: 85147)
 
 # ------------------------------------------------------------- statistica
 # t di Student bilaterale al 95% per gradi di libertà = coppie - 1. Da pilota_costo_v4.py riga 65,
@@ -88,4 +88,4 @@ LIMITE_STDERR = 64 * 1024             # byte di stderr conservati, solo per diag
 # ------------------------------------------------------------- picco a vuoto (piano: mediana ± 1 MiB, max 8 MiB)
 # Calibrato il 2026-10-04 con `python v5/supervisore.py calibra` (fase2/esiti/calibrazione.json):
 # 20 sonde dopo il riscaldamento, mediana 5,086 MiB → [mediana − 1 MiB, mediana + 1 MiB].
-PICCO_VUOTO_INTERVALLO = (4284416, 6381568)
+PICCO_VUOTO_INTERVALLO = (4272128, 6369280)   # byte esatti, `calibra` del 2026-10-05 (prima, sorgenti CRLF: 4284416, 6381568)

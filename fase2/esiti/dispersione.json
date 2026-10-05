@@ -1,69 +1,69 @@
 {
-  "comando": "python v5/supervisore.py calibra-dispersione --da-sessioni",
-  "origine": "ricalcolo dai registri delle sessioni (20261004234057fd1945, 20261004234539572675, 2026100423502782fce2, 20261004235515692f9b, 202610050000019dfef5)",
+  "comando": "python v5/supervisore.py calibra-dispersione 5 40",
+  "origine": "nuove sessioni",
   "sessioni": 5,
   "episodi": 200,
   "per_sessione": [
     {
-      "sessione": "20261004234057fd1945",
-      "P_import_MiB": 11.6602,
-      "P_orig_mediana_MiB": 12.0176,
-      "M_MiB": 0.3574,
+      "sessione": "20261005101319242f65",
+      "P_import_MiB": 11.5508,
+      "P_orig_mediana_MiB": 12.0,
+      "M_MiB": 0.4492,
+      "P_orig_max_meno_min_MiB": 0.0312,
+      "cpu_pre_pronto_mediana_ms": 262.5,
+      "T_orig_mediana_s": 4.781
+    },
+    {
+      "sessione": "202610051018380a06db",
+      "P_import_MiB": 11.668,
+      "P_orig_mediana_MiB": 12.0039,
+      "M_MiB": 0.3359,
+      "P_orig_max_meno_min_MiB": 0.0781,
+      "cpu_pre_pronto_mediana_ms": 249.4,
+      "T_orig_mediana_s": 4.664
+    },
+    {
+      "sessione": "20261005102329c74670",
+      "P_import_MiB": 11.6914,
+      "P_orig_mediana_MiB": 12.0,
+      "M_MiB": 0.3086,
       "P_orig_max_meno_min_MiB": 0.1484,
-      "cpu_pre_pronto_mediana_ms": 322.4,
-      "T_orig_mediana_s": 4.199
+      "cpu_pre_pronto_mediana_ms": 241.8,
+      "T_orig_mediana_s": 4.395
     },
     {
-      "sessione": "20261004234539572675",
-      "P_import_MiB": 11.7031,
-      "P_orig_mediana_MiB": 12.0156,
-      "M_MiB": 0.3125,
-      "P_orig_max_meno_min_MiB": 0.0703,
-      "cpu_pre_pronto_mediana_ms": 320.7,
-      "T_orig_mediana_s": 4.263
+      "sessione": "202610051028057525e3",
+      "P_import_MiB": 11.5938,
+      "P_orig_mediana_MiB": 12.0078,
+      "M_MiB": 0.4141,
+      "P_orig_max_meno_min_MiB": 0.0391,
+      "cpu_pre_pronto_mediana_ms": 230.3,
+      "T_orig_mediana_s": 4.469
     },
     {
-      "sessione": "2026100423502782fce2",
-      "P_import_MiB": 11.6758,
-      "P_orig_mediana_MiB": 12.0234,
+      "sessione": "20261005103245bf6ae8",
+      "P_import_MiB": 11.6523,
+      "P_orig_mediana_MiB": 12.0,
       "M_MiB": 0.3477,
-      "P_orig_max_meno_min_MiB": 0.1094,
-      "cpu_pre_pronto_mediana_ms": 312.0,
-      "T_orig_mediana_s": 4.273
-    },
-    {
-      "sessione": "20261004235515692f9b",
-      "P_import_MiB": 11.6523,
-      "P_orig_mediana_MiB": 12.0195,
-      "M_MiB": 0.3672,
-      "P_orig_max_meno_min_MiB": 0.1719,
-      "cpu_pre_pronto_mediana_ms": 328.9,
-      "T_orig_mediana_s": 4.243
-    },
-    {
-      "sessione": "202610050000019dfef5",
-      "P_import_MiB": 11.6523,
-      "P_orig_mediana_MiB": 12.0176,
-      "M_MiB": 0.3652,
-      "P_orig_max_meno_min_MiB": 0.0469,
-      "cpu_pre_pronto_mediana_ms": 289.5,
-      "T_orig_mediana_s": 4.34
+      "P_orig_max_meno_min_MiB": 0.0391,
+      "cpu_pre_pronto_mediana_ms": 251.1,
+      "T_orig_mediana_s": 4.754
     }
   ],
   "memoria": {
     "regola": "E2: quantile 0,995 dei residui assoluti, senza moltiplicatore",
-    "tolleranza_byte": 137216,
-    "tolleranza_MiB": 0.1309,
-    "max_residuo_assoluto_MiB": 0.1523,
-    "memoria_del_parser_M_MiB (mediana)": 0.3574,
-    "margine_MiB (0,05·M + tolleranza)": 0.1487,
-    "margine_su_M": 0.4161
+    "tolleranza_byte": 69632,
+    "tolleranza_MiB": 0.0664,
+    "max_residuo_assoluto_MiB": 0.1367,
+    "memoria_del_parser_M_MiB (mediana)": 0.3477,
+    "margine_MiB (0,05·M + tolleranza)": 0.0838,
+    "margine_su_M": 0.241
   },
   "pronto": {
     "regola": "C4: max(20 ms, quantile 0,995 dei residui)",
-    "quantile_residui_us": 85147.0,
-    "max_residui_us": 89182.0,
-    "eccedenza_ammessa_us": 85147,
-    "limite_guadagno_ready_abuse": 0.02
+    "quantile_residui_us": 109446.5,
+    "max_residui_us": 180024.0,
+    "eccedenza_ammessa_us": 109446,
+    "limite_guadagno_ready_abuse": 0.0235
   }
 }
