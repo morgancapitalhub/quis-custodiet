@@ -1,7 +1,7 @@
 {
   "comando": "python v5/supervisore.py mutatore --verifica",
-  "sessione": "202610050854224435e5",
-  "durata_s": 35,
+  "sessione": "2026100509232200f026",
+  "durata_s": 46,
   "valide_pubbliche": 228,
   "k": 20,
   "candidate_valide": 4814,
@@ -34,7 +34,7 @@
     "valid/_external/toml-test/valid/empty-tab.toml",
     "valid/_external/toml-test/valid/key/empty-03.toml"
   ],
-  "scostamento_lunghezza_max": 0.0714,
+  "scostamento_lunghezza_max": 0.0769,
   "non_valide_pubbliche": 516,
   "non_valide_mutate": 489,
   "non_valide_non_mutate": [

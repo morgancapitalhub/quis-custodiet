@@ -1,5 +1,7 @@
 # Rapporto del mutatore delle fixture (fase 2, passi 8a e 8b)
 
+> **Aggiornamento del 2026-10-05: le misure qui sotto, sezioni (i)–(iii), sono state fatte su fixture con fine riga convertiti da Git (CRLF) e vanno sostituite da quelle della sezione "Ripetizione sui byte esatti del commit", in fondo.**
+
 Brief, "FINALE fixture": tre verifiche obbligatorie. Decisioni: D5, D9, P4, 8a (opzione 1), `REQUISITI_AGGIUNTI.md`.
 Codice: `v5/mutatore.py`, `v5/varianti.py`; comandi in `v5/supervisore.py`.
 
@@ -59,3 +61,32 @@ Esito in `fase2/esiti/mutatore_tempo.json`.
 - I rapporti per coppia vanno da 0,72 a 1,31, perché gli episodi di fixture sono brevi e il tempo di parsing di ciascuno è piccolo.
 - Cinque controlli intermedi sulla stessa serie alzano l'errore di primo tipo complessivo sopra il 5% nominale (dichiarato, come previsto da D9).
 - Le varianti di questa verifica usano i semi di prova. Il FINALE usa lo stesso mutatore con semi segreti, e le sue varianti superano (i) e (ii) al momento della costruzione dell'oracolo (passo 9). La (iii) è una proprietà del mutatore, misurata qui.
+
+## Ripetizione sui byte esatti del commit (dopo la correzione di `core.autocrlf`)
+
+Il clone di tomli usato prima aveva 936 file con fine riga convertiti (vedi `fase2/STATO.md`). Le verifiche sono state rifatte sui byte esatti del commit (`carichi.verifica_tomli` ora confronta ogni file con il suo blob).
+
+**(i) e (ii)** — `python v5/supervisore.py mutatore --verifica`: 0 illeggibili, 0 statistiche diverse, 0 fuori da ±10% (massimo **7,69%**). 4407 varianti: 218 fixture × 20, 2 × 19, 1 × 9; 7 valide non mutabili; non valide: 489 mutate, 16 non mutabili, 11 non UTF-8 su op 2. **Superate.**
+
+**(iii)** — `python v5/supervisore.py mutatore --tempo` → `fase2/esiti/mutatore_tempo.json`:
+
+| Coppie | Interno: media geom. | IC95 | Esterno: media geom. | IC95 |
+|---|---|---|---|---|
+| 8 | 0,9976 | [0,8853; 1,1241] | 0,9998 | [0,8847; 1,1299] |
+| 16 | 1,0082 | [0,9469; 1,0736] | 1,0091 | [0,9465; 1,0757] |
+| 32 | 1,0225 | [0,9824; 1,0643] | 1,0227 | [0,9815; 1,0655] |
+| 64 | 1,0175 | [0,9853; 1,0508] | 1,0183 | [0,9852; 1,0526] |
+| **128** | **1,0102** | **[0,9869; 1,0340]** | 1,0108 | [0,9871; 1,0350] |
+
+**Esito: NON raggiunta a 128 coppie** (estremo superiore 1,034 > 1,03). Per la regola D9 **si riferisce**.
+
+**Perché è così rumorosa:**
+- Gli episodi sono brevi: tempo nell'API 0,31–0,84 s (mediana 0,40 s), finestra 0,56–1,56 s (mediana 0,73 s). Le 4414 fixture sono piccole.
+- Su tempi così brevi il rumore della macchina pesa molto: rapporti per coppia da 0,68 a 1,52, contro 0,72–1,31 nella serie precedente.
+- 256 episodi, 0 ripetizioni, 0 client bloccati.
+- La stima centrale (1,010) è vicina a 1. Il problema è la precisione, non uno spostamento evidente.
+
+**Opzioni:**
+1. **Episodi più lunghi** *(raccomandata)*: nella (iii), e solo lì, ogni episodio ripete l'intero insieme R volte (per esempio R = 10, circa 4 s nell'API), sia le pubbliche sia le **trasformate**. La ripetizione delle varianti è ammessa perché gira solo l'originale, codice fidato, e il carico del FINALE non cambia. È una nuova serie con la stessa regola d'arresto, 8–128 coppie, dichiarata prima.
+2. **Più coppie** oltre 128 (256, 512) con gli episodi attuali. Un'estensione della regola D9, a costo di molto tempo.
+3. Accettare il risultato a 128 coppie come limite dichiarato (equivalenza entro [0,987; 1,034]).
