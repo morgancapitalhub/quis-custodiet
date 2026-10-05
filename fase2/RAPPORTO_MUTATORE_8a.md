@@ -39,7 +39,7 @@ Il brief chiede fixture trasformate "così che il contenuto esatto non coincida 
 
 **Opzioni:**
 1. **Estendere la regola già approvata per le non valide** *(raccomandata)*: per ogni fixture valida si prendono tutte le varianti distinte trovate, fino a K, cercandole fra più candidate (per esempio 10K). Le fixture senza alcuna variante possibile entrano **una volta, pubbliche, contate nel manifest** come "non mutabili". Sono documenti vuoti o quasi: riconoscerli e rispondere a memoria dà la stessa risposta del parser, e il guadagno di tempo è trascurabile.
-2. Stesso approccio, ma le 7 fixture non mutabili **si escludono** dal FINALE fixture, contate. Copertura del documento vuoto persa nel FINALE (resta nel DEV? no: il DEV non contiene fixture valide).
+2. Stesso approccio, ma le 7 fixture non mutabili **si escludono** dal FINALE fixture, contate. Si perde la copertura del documento vuoto, perché il carico DEV non contiene fixture valide.
 3. Accettare meno varianti senza cercarne di più (le 5 fixture parziali restano a 9–19).
 
 Gli altri risultati del passo 8a non dipendono da questa scelta. Dipende invece da lei il carico `finale_fixture` dell'oracolo (passo 9).
