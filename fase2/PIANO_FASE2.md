@@ -396,3 +396,11 @@ Registrate in `REQUISITI_AGGIUNTI.md`.
 - in ogni sessione di valutazione: posizione = mediane dell'originale della sessione; soglie = posizione + valori congelati.
 
 **Carico DEV definitivo:** 300 documenti × 120 sezioni (~5 s per episodio dell'originale).
+
+---
+
+## Revisione 6 (2026-10-05): decisioni E1–E3
+
+- **E1.** Criterio 4 **NON SUPERATO** a 120 coppie (estremo superiore 1,116 contro 1,11); deviazione accettata da Morgan (0,6% sotto la risoluzione della macchina, ±6% per coppia). Limite dichiarato di PATCH_WORKER: **1,116×** (`config.LIMITE_DICHIARATO_PATCH_WORKER`); è il valore da usare nella mappa della risoluzione (C2).
+- **E2.** Tolleranza di memoria = quantile 0,995 dei residui **assoluti** del picco dell'originale dalla mediana di sessione, aggregati, senza moltiplicatore. Ricalcolata dai registri delle 5 sessioni di `calibra-dispersione` (`python v5/supervisore.py calibra-dispersione --da-sessioni`): **137 216 byte (0,131 MiB)**, margine **41,6%** della memoria del parser. La variante CACHE deve restare respinta (verifica nel collaudo, passo 10).
+- **E3.** `CLAUDE.md`, regole 7 e 8: nessun lavoro pesante sull'host durante le misure di tempo; causa di ogni arresto di Docker Desktop cercata nei log e riportata.

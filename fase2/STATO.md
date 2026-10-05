@@ -1,6 +1,6 @@
 # Stato della fase 2
 
-Piano: `fase2/PIANO_FASE2.md` (revisione 2 approvata; revisioni 3–5 con le decisioni P1–P4, Q1–Q4, C1–C4 del 2026-10-04).
+Piano: `fase2/PIANO_FASE2.md` (revisione 2 approvata; revisioni 3–6 con le decisioni P1–P4, Q1–Q4, C1–C4, E1–E3).
 Questo file si aggiorna a ogni commit, così un'interruzione riprende dal passo indicato.
 
 | Passo | Stato | Commit | Verifica |
@@ -18,12 +18,13 @@ Questo file si aggiorna a ogni commit, così un'interruzione riprende dal passo 
 | 7b | decisioni Q1–Q4 registrate | e63dd02 | `REQUISITI_AGGIUNTI.md`, piano revisione 4 |
 | 7c | fatto (regola decisa: C1) | 8155bf2 | codifica compatta ottimizzata; `patch-worker 30` → 1,096, IC95 [1,073; 1,120] (`fase2/RAPPORTO_CRITERIO4.md`); test 56/56 |
 | 7d | decisioni C1–C4 registrate | 290498c | `REQUISITI_AGGIUNTI.md`, piano revisione 5 |
-| 7e | fatto; **criterio 4 non raggiunto a 120 coppie: si riferisce** | (questo commit) | `patch-worker`: limite dichiarato 1,116 (IC95 [1,0906; 1,1159]); `calibra-dispersione 5 40`: valori congelati in `config.py`; `fase2/RAPPORTO_CRITERIO4_DISPERSIONI.md` |
+| 7e | fatto; criterio 4 **non superato** a 120 coppie, deviazione accettata (E1) | 8a8d85e | `patch-worker`: limite dichiarato 1,116 (IC95 [1,0906; 1,1159]); `calibra-dispersione 5 40`: valori congelati in `config.py`; `fase2/RAPPORTO_CRITERIO4_DISPERSIONI.md` |
+| 7f | decisioni E1–E3; tolleranza di memoria ricalcolata (E2): 0,131 MiB, margine 41,6% di M | (questo commit) | `python v5/supervisore.py calibra-dispersione --da-sessioni` |
 | 8–11 | codice scritto, non ancora eseguito nel container | 8bed4ba | `test_mutatore` 8/8, `test_statistica` 4/4, `test_flusso` 4/4 sull'host |
 
-**Prossimo passo:** decisione di Morgan su `fase2/RAPPORTO_CRITERIO4_DISPERSIONI.md` (criterio 4 a 1,116; tolleranza di memoria al 497% di M). Poi: `mutatore --verifica` (8a), `mutatore --tempo` (8b), `oracolo --due-volte` (9), `collaudo` (10), rapporto (12).
+**Prossimo passo:** 8a — `python v5/supervisore.py mutatore --verifica`; poi 8b, 9, 10, 12.
 
-Nota (7e): Docker Desktop si è chiuso alle 16:41 (ora locale) senza intervento di questa sessione; riavviato alle 23:16, versione invariata 4.93.0 (240920). Una coppia di `patch-worker` (n. 17, rapporto 0,869) coincide con un test pesante sull'host (`test_statistica`, 15 s di CPU): possibile disturbo, da riportare.
+Nota (7e): Docker Desktop si è chiuso alle 16:41:49 (ora locale) perché il computer è stato spento dall'utente dal menu Start (registro eventi System, ID 1074, User32: "StartMenuExperienceHost.exe ha iniziato il Spegni … per conto dell'utente T490 … Altro (non pianificato)"; ID 13 "Sistema operativo arrestato" alle 16:41:57). Il backend di Docker è terminato con 0x40010004 (`%LOCALAPPDATA%\Docker\log\host\Docker Desktop.exe.log`, 14:41:49 UTC). Il PC si è riacceso alle 22:36; Docker Desktop non parte all'accesso ed è stato riavviato alle 23:16; versione invariata 4.93.0 (240920). Una coppia di `patch-worker` (n. 17, rapporto 0,869) coincide con un test pesante sull'host (`test_statistica`, 15 s di CPU): possibile disturbo, da riportare.
 
 Note del passo 6 (da riportare nel rapporto, `fase2/esiti/calibrazione.json`, carico provvisorio 200 × 120 sezioni):
 - picco a vuoto 4,58–5,40 MiB (mediana 5,09); intervallo [4,09; 6,09] MiB; il controllo passa al primo riscaldamento.

@@ -66,7 +66,9 @@ K_VARIANTI = 20                   # varianti per fixture valida nel FINALE fixtu
 # aggregate con `python v5/supervisore.py calibra-dispersione` (fase2/esiti/dispersione.json).
 QUANTILE_PRONTO = 0.995           # proposta: quantile alto dei residui aggregati della CPU pre-pronto
 VINCOLO_MEMORIA = 1.05            # pilota_costo_v4.py riga 67, applicato alla memoria del parser (Q3)
-TOLLERANZA_MEMORIA = 1843200      # byte = max(0,1 MiB, 10 × 184 320): calibra-dispersione 5 40 del 2026-10-05
+# Limite dichiarato di PATCH_WORKER (Morgan E1): criterio 4 NON superato a 120 coppie, deviazione accettata.
+LIMITE_DICHIARATO_PATCH_WORKER = 1.116
+TOLLERANZA_MEMORIA = 137216       # byte = quantile 0,995 dei 200 residui assoluti (Morgan E2): `calibra-dispersione --da-sessioni` del 2026-10-05
 ECCEDENZA_PRONTO = 85147          # µs = max(20 ms, quantile 0,995 dei residui): calibra-dispersione 5 40 del 2026-10-05
 
 # ------------------------------------------------------------- statistica

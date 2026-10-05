@@ -58,6 +58,14 @@ Piano: `C:\Users\T490\.claude\plans\swirling-drifting-tulip.md`, revisione 2, ap
 | C3 | **Formato ottimizzato** (scalari nativi JSON, tabelle come oggetti, contenitori semplici passati interi): approvato come ottimizzazione dichiarata. Si rifanno sul nuovo formato i test del confine e il controllo positivo di GRAFO_NODI. **In più:** il confine rifiuta ogni letterale numerico che si decodifica in un valore non finito (es. `1e400`), così ogni valore ha una sola codifica. |
 | C4 | **Dispersioni per memoria e "pronto".** La posizione resta per sessione (mediana dell'originale); la **dispersione si calibra una volta su più sessioni aggregate** e si congela in `config.py` con il comando che l'ha prodotta. Per il "pronto" si usa un **quantile alto della distribuzione aggregata** invece di 5 × MAD. Verifica in fase 4: **zero rifiuti dell'originale** sui confronti nulli. |
 
+### Decisioni sul criterio 4 a 120 coppie e sulla tolleranza di memoria (2026-10-05, `fase2/RAPPORTO_CRITERIO4_DISPERSIONI.md`)
+
+| | Decisione |
+|---|---|
+| E1 | **Criterio 4: NON SUPERATO a 120 coppie** (estremo superiore dell'IC95 1,116 contro 1,11). **Deviazione accettata da Morgan**, motivo: 0,6% è sotto la risoluzione della macchina (±6% per coppia). **Limite dichiarato di PATCH_WORKER: 1,116×.** Così risulta nel registro e nei rapporti. Scartato il cambio del carico (adatterebbe la misura al criterio); non necessaria altra ottimizzazione del codificatore. |
+| E2 | **Tolleranza di memoria, nuova regola** (sostituisce "max(0,1 MiB, 10 × dispersione)" di Q3 e C4, pensata per pochi campioni per sessione e sbagliata sui dati aggregati): tolleranza = **quantile 0,995 dei residui assoluti** del picco dell'originale dalla mediana di sessione, aggregati su più sessioni, **senza moltiplicatore**. Si congela in `config.py` con il comando; si riporta il margine come frazione della memoria del parser. La variante CACHE deve restare respinta. |
+| E3 | `CLAUDE.md`: durante le misure di tempo nessun altro lavoro pesante sull'host, test compresi; cercare nei log la causa di ogni arresto di Docker Desktop e riportarla. |
+
 ## Versione verificata dell'ambiente
 
 Verificata il 2026-10-04 dopo l'aggiornamento. Su questa versione sono state ripetute con esito positivo la misura del picco (fase 0), la prova di aggancio (100 episodi) e la fase 1. Vedi `aggiornamento_docker/RAPPORTO_AGGIORNAMENTO.md`.

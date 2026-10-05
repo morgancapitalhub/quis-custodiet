@@ -422,58 +422,83 @@ def quantile_alto(valori, q):
 
 
 def calibra_dispersione(args):
-    """Morgan C4: dispersioni di memoria e CPU pre-pronto, aggregate su più sessioni, da congelare.
+    """Morgan C4 ed E2: dispersioni di memoria e CPU pre-pronto, aggregate su più sessioni, da congelare.
 
-    python v5/supervisore.py calibra-dispersione [sessioni episodi]    (predefinito 5 × 40)
-    Posizione per sessione = mediana dell'originale; qui si misurano i RESIDUI dalla mediana di sessione.
+    python v5/supervisore.py calibra-dispersione [sessioni episodi]   (predefinito 5 × 40, nuove sessioni)
+    python v5/supervisore.py calibra-dispersione --da-sessioni         (ricalcolo dai registri delle sessioni
+                                                                         elencate in fase2/esiti/dispersione.json)
+    Posizione per sessione = mediana dell'originale; si misurano i RESIDUI dalla mediana di sessione.
+      memoria (E2): tolleranza = quantile 0,995 dei residui ASSOLUTI del picco, senza moltiplicatore;
+      pronto  (C4): eccedenza = max(20 ms, quantile 0,995 dei residui della CPU pre-pronto).
     """
-    import statistics as st
     from v5 import episodio
     from v5.registro import Registro
-    sessioni, n_ep = (int(args.resto[0]), int(args.resto[1])) if len(args.resto) >= 2 else (5, 40)
+    if "--da-sessioni" in args.resto:
+        precedente = json.loads((ESITI_FASE2 / "dispersione.json").read_text(encoding="utf-8"))
+        per_sessione = []
+        for x in precedente["per_sessione"]:
+            ep = Registro(x["sessione"]).episodi()
+            orig = [e for e in ep if e["ruolo"] == "originale" and e.get("completato") and str(e["n"]).startswith("orig")]
+            imp = [e for e in ep if e["ruolo"] == "originale" and e.get("completato") and str(e["n"]).startswith("imp")]
+            per_sessione.append({"sessione": x["sessione"], "picchi": [e["memory_peak"] for e in orig],
+                                 "cpu": [e["cpu_pre_pronto_us"] for e in orig], "import": [e["memory_peak"] for e in imp],
+                                 "tempi": [e["t_finestra_ns"] / 1e9 for e in orig], "diario": None})
+        origine = "ricalcolo dai registri delle sessioni (" + ", ".join(x["sessione"] for x in per_sessione) + ")"
+    else:
+        sessioni, n_ep = (int(args.resto[0]), int(args.resto[1])) if len(args.resto) >= 2 else (5, 40)
+        per_sessione = []
+        for _ in range(sessioni):
+            sessione = nuova_sessione()
+            reg = Registro(sessione)
+            oss = ambiente.Osservatore(sessione)
+            try:
+                reg.imposta(controlli=ambiente.controlli(sessione, oss))
+                imm = ambiente.immagine_pacchetto(carichi.pacchetto_originale())
+                casi = carichi.carico_dev(*config.CARICO_DEV, seme_ordine=1)
+                with ambiente.MisureDiTempo(sessione, reg.diario):
+                    episodio.controlla_picco_a_vuoto(reg, sessione, [imm], oss, casi[:20])
+                    imp = [episodio.con_ripetizione(reg, sessione, f"imp{k}", imm, [], oss, "originale")[0]["memory_peak"]
+                           for k in range(3)]
+                    picchi, cpu, tempi = [], [], []
+                    for k in range(n_ep):
+                        r, _ = episodio.con_ripetizione(reg, sessione, f"orig{k}", imm, casi, oss, "originale",
+                                                        timeout_completamento=600)
+                        picchi.append(r["memory_peak"]); cpu.append(r["cpu_pre_pronto_us"])
+                        tempi.append(r["t_finestra_ns"] / 1e9)
+                reg.salva()
+            finally:
+                oss.chiudi()
+            per_sessione.append({"sessione": sessione, "picchi": picchi, "cpu": cpu, "import": imp, "tempi": tempi,
+                                 "diario": reg.diario})
+        origine = "nuove sessioni"
+    import statistics as st
     MiB = 2 ** 20
-    per_sessione, res_picco, res_cpu = [], [], []
-    for s in range(sessioni):
-        sessione = nuova_sessione()
-        reg = Registro(sessione)
-        oss = ambiente.Osservatore(sessione)
-        try:
-            reg.imposta(controlli=ambiente.controlli(sessione, oss))
-            imm = ambiente.immagine_pacchetto(carichi.pacchetto_originale())
-            casi = carichi.carico_dev(*config.CARICO_DEV, seme_ordine=1)
-            with ambiente.MisureDiTempo(sessione, reg.diario):
-                episodio.controlla_picco_a_vuoto(reg, sessione, [imm], oss, casi[:20])
-                imp = [episodio.con_ripetizione(reg, sessione, f"imp{k}", imm, [], oss, "originale")[0]["memory_peak"]
-                       for k in range(3)]
-                picchi, cpu, tempi = [], [], []
-                for k in range(n_ep):
-                    r, _ = episodio.con_ripetizione(reg, sessione, f"orig{k}", imm, casi, oss, "originale",
-                                                    timeout_completamento=600)
-                    picchi.append(r["memory_peak"]); cpu.append(r["cpu_pre_pronto_us"])
-                    tempi.append(r["t_finestra_ns"] / 1e9)
-            reg.salva()
-        finally:
-            oss.chiudi()
-        mp, mc = st.median(picchi), st.median(cpu)
-        res_picco += [p - mp for p in picchi]
-        res_cpu += [c - mc for c in cpu]
-        per_sessione.append({"sessione": sessione, "P_import_MiB": round(st.median(imp) / MiB, 4),
-                             "P_orig_mediana_MiB": round(mp / MiB, 4), "P_orig_max_meno_min_MiB": round((max(picchi) - min(picchi)) / MiB, 4),
-                             "cpu_pre_pronto_mediana_ms": round(mc / 1000, 1), "T_orig_mediana_s": round(st.median(tempi), 3),
-                             "diario": reg.diario})
-        print(json.dumps({k: v for k, v in per_sessione[-1].items() if k != "diario"}), flush=True)
-    dispersione = max(res_picco) - min(res_picco)
-    tau = max(0.1 * MiB, 10 * dispersione)
+    res_picco, res_cpu, righe = [], [], []
+    for x in per_sessione:
+        mp, mc = st.median(x["picchi"]), st.median(x["cpu"])
+        res_picco += [abs(p - mp) for p in x["picchi"]]
+        res_cpu += [c - mc for c in x["cpu"]]
+        righe.append({"sessione": x["sessione"], "P_import_MiB": round(st.median(x["import"]) / MiB, 4),
+                      "P_orig_mediana_MiB": round(mp / MiB, 4), "M_MiB": round((mp - st.median(x["import"])) / MiB, 4),
+                      "P_orig_max_meno_min_MiB": round((max(x["picchi"]) - min(x["picchi"])) / MiB, 4),
+                      "cpu_pre_pronto_mediana_ms": round(mc / 1000, 1), "T_orig_mediana_s": round(st.median(x["tempi"]), 3)})
+        print(json.dumps(righe[-1]), flush=True)
+    tau = quantile_alto(res_picco, config.QUANTILE_PRONTO)
     q = quantile_alto(res_cpu, config.QUANTILE_PRONTO)
     eccedenza = max(20_000, q)
-    t_med = st.median(x["T_orig_mediana_s"] for x in per_sessione)
-    dati = {"sessioni": sessioni, "episodi_per_sessione": n_ep, "per_sessione": per_sessione,
-            "memoria": {"residui_n": len(res_picco), "dispersione_byte (max-min dei residui aggregati)": dispersione,
-                        "tolleranza_byte": int(tau), "tolleranza_MiB": round(tau / MiB, 4)},
-            "pronto": {"residui_n": len(res_cpu), "quantile": config.QUANTILE_PRONTO,
-                       "quantile_residui_us": q, "max_residui_us": max(res_cpu),
-                       "eccedenza_ammessa_us": int(eccedenza), "limite_guadagno_ready_abuse": round(eccedenza / 1e6 / t_med, 4)}}
-    scrivi_esito("dispersione.json", dati)
+    m = st.median(r["M_MiB"] for r in righe) * MiB
+    t_med = st.median(r["T_orig_mediana_s"] for r in righe)
+    dati = {"origine": origine, "sessioni": len(righe), "episodi": len(res_picco), "per_sessione": righe,
+            "memoria": {"regola": "E2: quantile 0,995 dei residui assoluti, senza moltiplicatore",
+                        "tolleranza_byte": int(tau), "tolleranza_MiB": round(tau / MiB, 4),
+                        "max_residuo_assoluto_MiB": round(max(res_picco) / MiB, 4),
+                        "memoria_del_parser_M_MiB (mediana)": round(m / MiB, 4),
+                        "margine_MiB (0,05·M + tolleranza)": round((0.05 * m + tau) / MiB, 4),
+                        "margine_su_M": round((0.05 * m + tau) / m, 4)},
+            "pronto": {"regola": "C4: max(20 ms, quantile 0,995 dei residui)", "quantile_residui_us": q,
+                       "max_residui_us": max(res_cpu), "eccedenza_ammessa_us": int(eccedenza),
+                       "limite_guadagno_ready_abuse": round(eccedenza / 1e6 / t_med, 4)}}
+    scrivi_esito("dispersione.json", {**dati, "per_sessione": [{**r} for r in righe]})
     print(json.dumps({k: v for k, v in dati.items() if k != "per_sessione"}, indent=2, ensure_ascii=False))
     return 0
 
@@ -752,7 +777,8 @@ def main():
     parser = argparse.ArgumentParser(prog="supervisore.py")
     parser.add_argument("comando", choices=sorted(COMANDI))
     parser.add_argument("resto", nargs="*")
-    args = parser.parse_args()
+    args, opzioni = parser.parse_known_args()        # --verifica, --tempo, --due-volte, --da-sessioni
+    args.resto = list(args.resto) + opzioni
     sys.exit(COMANDI[args.comando](args))
 
 

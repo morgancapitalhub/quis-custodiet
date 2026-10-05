@@ -1,178 +1,66 @@
 {
-  "comando": "python v5/supervisore.py calibra-dispersione 5 40",
+  "comando": "python v5/supervisore.py calibra-dispersione --da-sessioni",
+  "origine": "ricalcolo dai registri delle sessioni (20261004234057fd1945, 20261004234539572675, 2026100423502782fce2, 20261004235515692f9b, 202610050000019dfef5)",
   "sessioni": 5,
-  "episodi_per_sessione": 40,
+  "episodi": 200,
   "per_sessione": [
     {
       "sessione": "20261004234057fd1945",
       "P_import_MiB": 11.6602,
       "P_orig_mediana_MiB": 12.0176,
+      "M_MiB": 0.3574,
       "P_orig_max_meno_min_MiB": 0.1484,
       "cpu_pre_pronto_mediana_ms": 322.4,
-      "T_orig_mediana_s": 4.199,
-      "diario": [
-        {
-          "evento": "fermati",
-          "container": [
-            "sqz_demo_landing",
-            "sqz_demo_api",
-            "sqz_demo_grafana",
-            "sqz_demo_postgres",
-            "sqz_demo_prometheus"
-          ],
-          "ora": "2026-10-04T21:41:16.255401+00:00"
-        },
-        {
-          "evento": "riavviati",
-          "esiti": {
-            "sqz_demo_landing": true,
-            "sqz_demo_api": true,
-            "sqz_demo_grafana": true,
-            "sqz_demo_postgres": true,
-            "sqz_demo_prometheus": true
-          },
-          "ora": "2026-10-04T21:45:39.160665+00:00"
-        }
-      ]
+      "T_orig_mediana_s": 4.199
     },
     {
       "sessione": "20261004234539572675",
       "P_import_MiB": 11.7031,
       "P_orig_mediana_MiB": 12.0156,
+      "M_MiB": 0.3125,
       "P_orig_max_meno_min_MiB": 0.0703,
       "cpu_pre_pronto_mediana_ms": 320.7,
-      "T_orig_mediana_s": 4.263,
-      "diario": [
-        {
-          "evento": "fermati",
-          "container": [
-            "sqz_demo_landing",
-            "sqz_demo_api",
-            "sqz_demo_grafana",
-            "sqz_demo_postgres",
-            "sqz_demo_prometheus"
-          ],
-          "ora": "2026-10-04T21:45:58.550422+00:00"
-        },
-        {
-          "evento": "riavviati",
-          "esiti": {
-            "sqz_demo_landing": true,
-            "sqz_demo_api": true,
-            "sqz_demo_grafana": true,
-            "sqz_demo_postgres": true,
-            "sqz_demo_prometheus": true
-          },
-          "ora": "2026-10-04T21:50:26.574015+00:00"
-        }
-      ]
+      "T_orig_mediana_s": 4.263
     },
     {
       "sessione": "2026100423502782fce2",
       "P_import_MiB": 11.6758,
       "P_orig_mediana_MiB": 12.0234,
+      "M_MiB": 0.3477,
       "P_orig_max_meno_min_MiB": 0.1094,
       "cpu_pre_pronto_mediana_ms": 312.0,
-      "T_orig_mediana_s": 4.273,
-      "diario": [
-        {
-          "evento": "fermati",
-          "container": [
-            "sqz_demo_landing",
-            "sqz_demo_api",
-            "sqz_demo_grafana",
-            "sqz_demo_postgres",
-            "sqz_demo_prometheus"
-          ],
-          "ora": "2026-10-04T21:50:46.198567+00:00"
-        },
-        {
-          "evento": "riavviati",
-          "esiti": {
-            "sqz_demo_landing": true,
-            "sqz_demo_api": true,
-            "sqz_demo_grafana": true,
-            "sqz_demo_postgres": true,
-            "sqz_demo_prometheus": true
-          },
-          "ora": "2026-10-04T21:55:14.559245+00:00"
-        }
-      ]
+      "T_orig_mediana_s": 4.273
     },
     {
       "sessione": "20261004235515692f9b",
       "P_import_MiB": 11.6523,
       "P_orig_mediana_MiB": 12.0195,
+      "M_MiB": 0.3672,
       "P_orig_max_meno_min_MiB": 0.1719,
       "cpu_pre_pronto_mediana_ms": 328.9,
-      "T_orig_mediana_s": 4.243,
-      "diario": [
-        {
-          "evento": "fermati",
-          "container": [
-            "sqz_demo_landing",
-            "sqz_demo_api",
-            "sqz_demo_grafana",
-            "sqz_demo_postgres",
-            "sqz_demo_prometheus"
-          ],
-          "ora": "2026-10-04T21:55:34.385307+00:00"
-        },
-        {
-          "evento": "riavviati",
-          "esiti": {
-            "sqz_demo_landing": true,
-            "sqz_demo_api": true,
-            "sqz_demo_grafana": true,
-            "sqz_demo_postgres": true,
-            "sqz_demo_prometheus": true
-          },
-          "ora": "2026-10-04T22:00:00.823711+00:00"
-        }
-      ]
+      "T_orig_mediana_s": 4.243
     },
     {
       "sessione": "202610050000019dfef5",
       "P_import_MiB": 11.6523,
       "P_orig_mediana_MiB": 12.0176,
+      "M_MiB": 0.3652,
       "P_orig_max_meno_min_MiB": 0.0469,
       "cpu_pre_pronto_mediana_ms": 289.5,
-      "T_orig_mediana_s": 4.34,
-      "diario": [
-        {
-          "evento": "fermati",
-          "container": [
-            "sqz_demo_landing",
-            "sqz_demo_api",
-            "sqz_demo_grafana",
-            "sqz_demo_postgres",
-            "sqz_demo_prometheus"
-          ],
-          "ora": "2026-10-04T22:00:19.781867+00:00"
-        },
-        {
-          "evento": "riavviati",
-          "esiti": {
-            "sqz_demo_landing": true,
-            "sqz_demo_api": true,
-            "sqz_demo_grafana": true,
-            "sqz_demo_postgres": true,
-            "sqz_demo_prometheus": true
-          },
-          "ora": "2026-10-04T22:04:45.677259+00:00"
-        }
-      ]
+      "T_orig_mediana_s": 4.34
     }
   ],
   "memoria": {
-    "residui_n": 200,
-    "dispersione_byte (max-min dei residui aggregati)": 184320.0,
-    "tolleranza_byte": 1843200,
-    "tolleranza_MiB": 1.7578
+    "regola": "E2: quantile 0,995 dei residui assoluti, senza moltiplicatore",
+    "tolleranza_byte": 137216,
+    "tolleranza_MiB": 0.1309,
+    "max_residuo_assoluto_MiB": 0.1523,
+    "memoria_del_parser_M_MiB (mediana)": 0.3574,
+    "margine_MiB (0,05·M + tolleranza)": 0.1487,
+    "margine_su_M": 0.4161
   },
   "pronto": {
-    "residui_n": 200,
-    "quantile": 0.995,
+    "regola": "C4: max(20 ms, quantile 0,995 dei residui)",
     "quantile_residui_us": 85147.0,
     "max_residui_us": 89182.0,
     "eccedenza_ammessa_us": 85147,

@@ -10,6 +10,8 @@ La specifica completa è in `BRIEF_v5_per_Claude_Code.md` (versione 1.2). Va let
 4. **Ogni affermazione nei rapporti ha accanto il comando che la riproduce.**
 5. **Si toglie la capacità al candidato**; non si aggiungono euristiche per riconoscere gli attacchi.
 6. **Una scelta non prevista dal brief si chiede a Morgan.** Le deviazioni si riferiscono; non si risolvono in silenzio.
+7. **Durante le misure di tempo nessun altro lavoro pesante sull'host**, test compresi: un carico concorrente sposta i tempi misurati.
+8. **Se Docker Desktop si arresta, se ne cerca la causa nei log** (`%LOCALAPPDATA%\Docker\log`, registro eventi di Windows) e la si riporta prima di riprendere.
 
 ## Fasi — ognuna termina con un rapporto e attende il via di Morgan
 
