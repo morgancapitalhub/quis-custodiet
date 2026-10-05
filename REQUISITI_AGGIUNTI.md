@@ -74,6 +74,15 @@ Piano: `C:\Users\T490\.claude\plans\swirling-drifting-tulip.md`, revisione 2, ap
 | F2 | **Calibrazioni dei passi 5–7 da rifare sui byte esatti**, prima del rapporto della fase 2, in un'unica corsa non presidiata: picco a vuoto, `calibra-dispersione`, `patch-worker` con la stessa regola a blocchi. Se un valore cambia, il nuovo sostituisce il vecchio in `config.py` e il registro conserva entrambi. |
 | F3 | `CLAUDE.md`: ogni ingresso esterno si verifica byte per byte contro la sua fonte (impronta del blob o SHA-256), mai con `git status`. |
 
+### Decisioni sulla fine della fase 2 (2026-10-05, `fase2/RAPPORTO_FASE2.md`)
+
+| | Decisione |
+|---|---|
+| G1 | **Collaudo registrato 5/6**, non ripetuto. Il criterio "6/6" per NULLO era mal posto: per costruzione il confronto ha il 5% di falsi allarmi; il tasso lo misurano i 40 nulli del criterio 3. Prima della fase 4: rilettura di `valuta()` per asimmetrie fra i ruoli (solo codice, `fase2/RILETTURA_SIMMETRIA.md`). **In fase 4, dichiarato prima: test di simmetria sui 40 nulli**: l'IC95 della media dei logaritmi delle accelerazioni deve contenere 0. |
+| G2 | La soglia di 1,02× della mappa della risoluzione è provvisoria (6 nulli): si ricalcola dai 40 nulli della fase 4. |
+| G3 | Il limite di PATCH_WORKER sul FINALE fixture (1,168×, da 10 giri) si rimisura con la regola a blocchi (estremo superiore IC95, 30 → 60 → 120 coppie) nella corsa non presidiata della fase 4. |
+| G4 | Fase 2 approvata; via libera alla fase 3. |
+
 ## Versione verificata dell'ambiente
 
 Verificata il 2026-10-04 dopo l'aggiornamento. Su questa versione sono state ripetute con esito positivo la misura del picco (fase 0), la prova di aggancio (100 episodi) e la fase 1. Vedi `aggiornamento_docker/RAPPORTO_AGGIORNAMENTO.md`.

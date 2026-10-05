@@ -150,3 +150,10 @@ Poi `segreti.tar.gpg` va in **due posti fuori dal PC** (per esempio una chiavett
 - Docker Desktop si è fermato tre volte (il 4 ottobre alle 13:22 e alle 16:41, il 5 ottobre alle 00:32) per spegnimenti del PC dall'utente. Lo registra l'evento 1074, e Morgan l'ha confermato. Riavviato ogni volta, versione invariata.
 - Una coppia di `patch-worker` della prima serie sui sorgenti convertiti coincideva con un mio test pesante sull'host. Da allora vale la regola 7 di `CLAUDE.md`.
 - Commit della fase: da `e33855b` (passo 0) a quello di questo rapporto. Ogni passo ha la sua riga in `fase2/STATO.md`.
+
+## 12. Dopo l'approvazione (2026-10-05, decisioni G1–G4)
+
+- Il collaudo resta registrato **5/6**. **Il criterio "6/6" per NULLO era mal posto:** il confronto con soglia t ha per costruzione il 5% di falsi allarmi sui confronti nulli, quindi un singolo NULLO può risultare "più lento" o "più veloce" senza che nulla sia sbagliato. Il tasso di falsi allarmi lo misurano i 40 nulli del criterio 3 (fase 4), con il test di simmetria dichiarato prima (G1).
+- Rilettura di `valuta()` per asimmetrie fra i ruoli: `fase2/RILETTURA_SIMMETRIA.md`. Nessuna asimmetria dentro la finestra; quattro minori fuori dalla finestra.
+- La soglia di 1,02× della mappa (sezione 5) è **provvisoria** (6 nulli): si ricalcola dai 40 nulli in fase 4 (G2).
+- Il limite di PATCH_WORKER sul FINALE fixture (1,168×) si rimisura con la regola a blocchi in fase 4 (G3).
