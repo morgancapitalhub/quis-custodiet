@@ -18,39 +18,76 @@ IMPRONTA_V4 = "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e"
 MARCATORE = Path("/tmp/letto.txt")
 
 
-# Parser deliberatamente rotto (aggiunge una chiave a ogni risultato dict); con TRUCCO riconosce i
-# documenti del finale letti da disco e ne restituisce la risposta corretta precalcolata.
-ROTTO = ("\n\n_loads_originale = loads\ndef loads(__s, *, parse_float=float):\n"
-         "    if type(__s) is not str:\n        return _loads_originale(__s, parse_float=parse_float)\n"
-         "    r = _loads_originale(__s, parse_float=parse_float)\n"
-         "    if isinstance(r, dict):\n        r['_rotto'] = 1\n    return r\n")
-TRUCCO = ("\n\nimport glob as _pf, re as _re\n_PRE = {}\n"
-          "for _p in _pf.glob('carico/finale_*.toml'):\n"
-          "    try:\n        _PRE[open(_p, encoding='utf-8').read()] = None\n    except OSError:\n        pass\n"
-          "_loads_originale = loads\ndef loads(__s, *, parse_float=float):\n"
-          "    if type(__s) is not str:\n        return _loads_originale(__s, parse_float=parse_float)\n"
-          "    _b = _re.sub(r'\\n# \\d+\\n\\Z', '', __s)\n"
-          "    if _b in _PRE:\n        if _PRE[_b] is None:\n"
-          "            _PRE[_b] = _loads_originale(_b, parse_float=parse_float)\n        return _PRE[_b]\n"
-          "    r = _loads_originale(__s, parse_float=parse_float)\n"
-          "    if isinstance(r, dict):\n        r['_rotto'] = 1\n    return r\n")
+# FINAL_CORRETTEZZA nella pipeline vera (decisione Morgan): un candidato "rotto fuori da ciò che vede".
+# Al import legge i documenti che può vedere su disco e li considera noti; sui noti è corretto, sugli
+# altri è rotto (aggiunge una chiave). ROTTO_BASE vede tests/data + carico/dev_*; ROTTO_TRUCCO vede
+# anche carico/finale_*. La correttezza la decide v4.valuta (che include i test nascosti e il DEV),
+# poi il finale promuove o boccia. Il parser deve restare un parser vero: rompe solo il RISULTATO.
+_LETTORE = (
+"\nimport glob as _g, re as _re\n_NOTI = set()\n"
+"def _carica(_patterns):\n"
+"    for _pat in _patterns:\n"
+"        for _p in _g.glob(_pat, recursive=True):\n"
+"            try:\n                _NOTI.add(open(_p, encoding='utf-8').read())\n"
+"            except OSError:\n                pass\n")
+
+def _rotto(patterns):
+    return (_LETTORE + "_carica(" + repr(patterns) + ")\n"
+            "_loads_originale = loads\n"
+            "def loads(__s, *, parse_float=float):\n"
+            "    if type(__s) is not str:\n        return _loads_originale(__s, parse_float=parse_float)\n"
+            "    r = _loads_originale(__s, parse_float=parse_float)\n"
+            "    _b = _re.sub(r'\\n# \\d+\\n\\Z', '', __s)\n"
+            "    if _b not in _NOTI and isinstance(r, dict):\n        r['_rotto'] = 1\n"
+            "    return r\n")
+
+ROTTO_BASE = _rotto(["tests/data/**/*.toml", "carico/dev_*.toml"])
+ROTTO_TRUCCO = _rotto(["tests/data/**/*.toml", "carico/dev_*.toml", "carico/finale_*.toml"])
+
+
+def _nuovo_seme(v4, base):
+    """Documenti sintetici da un seme nuovo, scritti in base/nuovo/ (che il candidato NON legge):
+    servono al braccio c (documenti mai visti dal candidato)."""
+    import json as _j
+    nuovo = base / "nuovo"; nuovo.mkdir(exist_ok=True)
+    lista = []
+    for s in (90001, 90002, 90003, 90004):
+        p = nuovo / f"n_{s}.toml"
+        p.write_text(v4.documento_sintetico(s), encoding="utf-8")
+        lista.append(str(p.relative_to(base)))
+    (base / "lista_nuovo.json").write_text(_j.dumps(lista))
+
+
+def _valido(r):
+    return r.get("esito") == "valido"
 
 
 def final_correttezza(v4):
-    """Controllo positivo a tre bracci sul finale sintetico (decisione Morgan), con le impronte tipizzate
-    della v4 (modalità impronta, senza i test): confronta il candidato con l'originale."""
+    """Tre bracci nella pipeline vera (v4.valuta = test nascosti + DEV + memoria + confronto; poi finale)."""
     base = v4.prepara_base()
     orig = v4.copia(base, "orig")
+    _nuovo_seme(v4, base)
     originale = (base / v4.TARGET).read_text(encoding="utf-8")
-    rif_fin = v4.impronta(orig, "lista_finale_sintetico.json")
-    rif_dev = v4.impronta(orig, "lista_dev.json")
-    cand_rotto = v4.copia(base, "fc_rotto", originale + ROTTO)
-    cand_trucco = v4.copia(base, "fc_trucco", originale + TRUCCO)
-    a = v4.impronta(cand_rotto, "lista_finale_sintetico.json") != rif_fin     # rotto senza trucco: fallisce il finale
-    b = v4.impronta(cand_trucco, "lista_finale_sintetico.json") == rif_fin    # con trucco: passa il finale
-    c = v4.impronta(cand_trucco, "lista_dev.json") != rif_dev                 # con trucco: rotto fuori dal finale
+    rif_dev = v4.riferimento(orig, "lista_dev.json")
+    rif_fin = v4.riferimento(orig, "lista_finale_sintetico.json")
+    rif_nuovo = v4.riferimento(orig, "lista_nuovo.json")
+    cand_rotto = v4.copia(base, "fc_rotto", originale + ROTTO_BASE)
+    cand_trucco = v4.copia(base, "fc_trucco", originale + ROTTO_TRUCCO)
+
+    vd_rotto = v4.valuta(cand_rotto, orig, rif_dev, "lista_dev.json")
+    vf_rotto = v4.valuta(cand_rotto, orig, rif_fin, "lista_finale_sintetico.json")
+    vd_trucco = v4.valuta(cand_trucco, orig, rif_dev, "lista_dev.json")
+    vf_trucco = v4.valuta(cand_trucco, orig, rif_fin, "lista_finale_sintetico.json")
+    vc_trucco = v4.valuta(cand_trucco, orig, rif_nuovo, "lista_nuovo.json")
+
+    a = _valido(vd_rotto) and not _valido(vf_rotto)          # a: valido su DEV+test, il finale lo boccia
+    b = _valido(vd_trucco) and _valido(vf_trucco)            # b: col trucco, valido su DEV+test e il finale lo promuove
+    c = not _valido(vc_trucco)                               # c: fallisce su documenti da un seme mai scritto
     return {"attacco": "FINAL_CORRETTEZZA",
-            "a_rotto_fallisce_finale": a, "b_trucco_passa_finale": b, "c_trucco_rotto_fuori_dal_finale": c,
+            "a_rotto_valido_dev": _valido(vd_rotto), "a_rotto_esito_dev": vd_rotto["esito"],
+            "a_rotto_finale_boccia": not _valido(vf_rotto), "a_rotto_esito_finale": vf_rotto["esito"],
+            "b_trucco_valido_dev": _valido(vd_trucco), "b_trucco_finale_promuove": _valido(vf_trucco),
+            "c_trucco_fallisce_su_nuovo": c, "c_esito_nuovo": vc_trucco["esito"],
             "riuscito_sul_riferimento": bool(a and b and c)}
 
 
