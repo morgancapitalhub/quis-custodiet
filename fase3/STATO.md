@@ -5,9 +5,12 @@
 Progetto: pilota di benchmark v5 (sandbox). Leggere **prima** `CLAUDE.md` (10 regole non negoziabili) e
 `BRIEF_v5_per_Claude_Code.md` 1.2. Le decisioni prese dopo il brief sono in `REQUISITI_AGGIUNTI.md`
 (blocchi D, P, Q, C, E, F, G, H, L, M). Fasi 0, 1, 2 concluse e approvate. **Siamo nella fase 3**
-(suite d'attacco + `registro_attacchi.csv`). Ambiente: PC Windows, Docker Desktop 4.93.0; le corse
-lunghe si spezzano in pezzi ≤ 60 min, ripartibili (L2). Repository privato su GitHub fermo a `789a524`
-(NON caricare senza i tre controlli di sicurezza già descritti; `segreti/` resta fuori).
+(suite d'attacco + `registro_attacchi.csv`). Ambiente: PC Windows con Docker Desktop 4.93.0; le corse
+lunghe si spezzano in pezzi ≤ 60 min, ripartibili (L2). Il server Hetzner CX23 è stato **eliminato**; il
+profilo `server_hetzner` resta pronto per una replica **dopo il congelamento**, su un server noleggiato a
+ore (L1). Repository privato su GitHub (remote `origin`): lì c'è `789a524`; i commit locali successivi
+**non sono caricati**. Si carica solo dopo i tre controlli di sicurezza (non sono scritti nel repository:
+chiederli a Morgan prima del push). `segreti/` resta fuori da git.
 
 ## File da leggere, in ordine
 
@@ -20,9 +23,10 @@ lunghe si spezzano in pezzi ≤ 60 min, ripartibili (L2). Repository privato su 
 
 ## Fatto finora in fase 3
 
-- **Controlli positivi contro la v4: 9/9 riusciti** (`python fase3/controlli_positivi_v4.py`):
+- **Controlli positivi contro la v4: 8 riusciti** (`python fase3/controlli_positivi_v4.py`):
   PATCH_TIMER, PATCH_MEMORY, READ_TESTS, READ_FINAL, READ_BASELINE, SEGRETO, ARGV (= ARGV_CACHE della
-  fase 1), TEMPO_SENZA_VERIFICA, FINAL_CORRETTEZZA (3 bracci con v4.impronta — poi superato: vedi sotto).
+  fase 1), TEMPO_SENZA_VERIFICA. FINAL_CORRETTEZZA nella pipeline vera della v4 **non riesce**
+  ("test falliti", `riuscito_sul_riferimento: false`): spostato su I12, vedi sotto.
   Esiti in `fase3/esiti/*.riferimento.json`.
 - **FINAL_SPECIAL_CASE**: chiuso come tentativo fallito documentato (bloccato dalla v4; nessun
   riferimento pulito). Non conta come difesa della v5.
@@ -83,9 +87,13 @@ mai nella v5 vera. Segreto sempre finto. Al termine: scrivere `registro_attacchi
 - PATCH_WORKER: non bloccabile, solo limitato; il limite sul FINALE fixture va rimisurato a blocchi in
   fase 4 (G3). Soglia 1,02× della mappa di risoluzione provvisoria, da rifare sui 40 nulli in fase 4 (G2).
 - Test di simmetria sui 40 nulli in fase 4 (G1). Collaudo registrato 5/6 (NULLO falso allarme, atteso).
-- Migrazione su server pronta ma non usata (L1): si userà dopo il congelamento.
+- Server Hetzner eliminato; profilo `server_hetzner` pronto per la replica dopo il congelamento, su un
+  server noleggiato a ore (L1).
+- Copia cifrata dei segreti (D3): `segreti.tar.gpg`, SHA-256 `d7d3fb8f…b629dc`, copie su USB e Google
+  Drive (fatta da Morgan il 2026-10-05). `segreti/predicato_finale.json` è rigenerabile dai semi, quindi
+  non richiede di rifarla (regola 10).
 
 ## Verifiche rapide (host, senza Docker)
 
 `python -m unittest v5.test.test_fase3 v5.test.test_valutazione v5.test.test_confine v5.test.test_statistica v5.test.test_mutatore v5.test.test_flusso` → tutti OK.
-`fase3/esiti/predicato_finale.json` deve esistere in `segreti/` (rigenerabile); se manca: `python fase3/trova_costrutto.py --predicato`.
+`segreti/predicato_finale.json` deve esistere (fuori da git, mai in `fase3/esiti/`; rigenerabile); se manca: `python fase3/trova_costrutto.py --predicato`.
