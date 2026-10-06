@@ -59,12 +59,29 @@ del finale fixture ≈ 2,4 s (`quota-fixture`).
 
 | Corsa | Contenuto | Durata attesa |
 |---|---|---|
-| nulli, pezzo 1 | 20 nulli × 19 episodi + preparazione della sessione | ≈ 45 min |
-| nulli, pezzo 2 | 20 nulli | ≈ 45 min |
+| nulli, pezzo 1 | 20 nulli × 19 episodi + preparazione della sessione | ≈ 45 min (stima; osservato: 12 nulli in 53,4 min) |
+| nulli, pezzi 2–4 | stima corretta dal pezzo 1: ≈ 4,4 min per nullo | ≈ 55 + 55 + 20 min |
 | G3, un pezzo | ≤ 120 coppie × 2 episodi + preparazione | ≈ 12 min (≈ 4 min se si ferma a 30) |
 
 Ripetizioni per il tetto del pronto allungano i pezzi; il controllo sul tempo ferma il pezzo prima dei 55 min.
 Durante le misure nessun altro lavoro pesante sull'host (regola 7).
+
+## Classificazione C4 (Morgan, 2026-10-06, dopo il pezzo 1), dichiarata
+
+- **Evento C4:** qualunque sforamento del tetto del pronto da parte dell'originale, in qualunque ruolo (nel nullo la
+  stessa immagine gioca entrambi i ruoli). Una **pronuncia** (secondo sforamento di fila) è il protocollo che giudica
+  l'originale: è un **rifiuto dell'originale**, non un arresto tecnico. Ruolo di candidato → voce "avvio oltre il
+  tetto"; ruolo d'originale → `valuta` interrompe il nullo (InfrastrutturaFallita nella v5): con le regole di oggi
+  il nullo si rifà, e l'interruzione conta come rifiuto.
+- **Arresto tecnico:** solo guasti dell'ambiente (Docker, PC, timeout).
+- Classificazione nell'orchestratore (`fase4/fase4.py`: `sforamenti_c4`, `riclassifica_eventi`), letta dal registro
+  di sessione; **nessuna modifica a `v5/*.py`**, `impronta_protocollo` invariata.
+- L'evento del pezzo 1 (nullo 10) registrato come arresto tecnico è riclassificato C4, con la storia conservata.
+  **C4 (zero rifiuti dell'originale) risulta NON superato.**
+- **Il tetto non cambia:** si finiscono i 40 nulli con le regole di oggi, si contano gli eventi C4, il tetto si
+  discute nel rapporto della fase 4.
+- **Ipotesi da annotare, non verificata ora:** gli sforamenti arrivano a grappoli (PC e Docker appena avviati);
+  la regola "riprova una volta" presuppone un'indipendenza fra tentativi che non c'è.
 
 ## Decisioni di Morgan (2026-10-06)
 

@@ -14,6 +14,7 @@ Nessuna modifica alla v5: si usano valutazione.valuta, episodio.con_ripetizione,
 import argparse
 import json
 import os
+import re
 import sys
 import time
 from pathlib import Path
@@ -23,6 +24,8 @@ sys.path.insert(0, str(RADICE))
 
 from fase4 import analisi  # noqa: E402
 from v5 import ambiente, carichi, config, episodio, oracolo, statistica, valutazione  # noqa: E402
+
+SESSIONI = config.LAVORO / "sessioni"
 
 ESITI = RADICE / "fase4" / "esiti"
 AV_NULLI = ESITI / "nulli_40.avanzamento.json"
@@ -62,6 +65,48 @@ def riga_nullo(k, sessione, r):
     return {"k": k, "sessione": sessione, **{c: r[c] for c in chiavi if c in r}}
 
 
+# Messaggio con cui valutazione.valuta (v5, invariata) si pronuncia contro l'originale nel ruolo d'originale
+# (tetto del pronto superato due volte di seguito). test_fase4 verifica che compaia in v5/valutazione.py.
+MSG_TETTO_ORIGINALE = "l'originale supera il tetto del pronto due volte di seguito"
+NULLO_DI = re.compile(r"^f4nullo(\d+)_")
+
+
+def sforamenti_c4(av, sessione):
+    """Ogni sforamento del tetto del pronto registrato dal protocollo nella sessione (episodi.jsonl, evento
+    "tetto del pronto superato"): nel nullo entrambi i ruoli sono l'originale, quindi ogni sforamento è un
+    evento C4. Il nullo si ricava dall'ultimo episodio etichettato che lo precede. Una volta per sessione."""
+    scansionate = av.dati.setdefault("sessioni_scansionate_c4", [])
+    if sessione in scansionate:
+        return
+    nullo = None
+    f = SESSIONI / sessione / "episodi.jsonl"       # lettura diretta: Registro() riscriverebbe sessione.json
+    for e in ([json.loads(r) for r in f.read_text(encoding="utf-8").splitlines()] if f.exists() else []):
+        m = NULLO_DI.match(str(e.get("n", "")))
+        if m:
+            nullo = int(m.group(1))
+        if e.get("evento") == "tetto del pronto superato":
+            av.dati["eventi"].append({
+                "evento": "C4", "tipo": "sforamento del tetto del pronto (originale)", "sessione": sessione,
+                "nullo": nullo, "ora": e.get("ora"), "coppia": e.get("coppia"), "ruoli": e.get("ruoli"),
+                "tetto_us": e.get("tetto_us"), "ripetizione": e.get("ripetizione"),
+                "pronuncia": (e.get("ripetizione") or 0) > 1})
+    scansionate.append(sessione)
+    av.salva()
+
+
+def riclassifica_eventi(av):
+    """Morgan, 2026-10-06: l'evento del pezzo 1 registrato come arresto tecnico con la causa del tetto è un
+    evento C4. Si riclassifica conservando la storia; poi si scansionano le sessioni dei pezzi già fatti."""
+    for ev in av.dati["eventi"]:
+        if ev["evento"] == "arresto tecnico" and ev.get("causa") == MSG_TETTO_ORIGINALE:
+            ev.update({"evento": "C4", "tipo": "tetto del pronto superato dall'originale (ruolo originale, due volte "
+                       "di seguito)", "riclassificato": "2026-10-06, Morgan: era registrato come arresto tecnico"})
+    av.salva()
+    for p in av.dati["pezzi"]:
+        for sessione in p.get("sessioni", []):
+            sforamenti_c4(av, sessione)
+
+
 def nulli(per_pezzo, minuti):
     av = analisi.Avanzamento(AV_NULLI, INTESTAZIONE_NULLI)
     fatti = len(av.voci)
@@ -76,9 +121,12 @@ def nulli(per_pezzo, minuti):
     def resta():
         return (len(av.voci) < INTESTAZIONE_NULLI["confronti"] and fatti_qui < per_pezzo
                 and _resta_tempo(t0, minuti, STIMA_NULLO_S))
-    # Morgan, decisione 2 della fase 4: un arresto tecnico (InfrastrutturaFallita) non è un rifiuto
-    # dell'originale; il nullo si scarta e si rifà in una Sessione nuova (controlli preliminari ripetuti).
+    # Morgan, fase 4 decisione 2: un arresto tecnico (l'ambiente viene meno: Docker, PC, timeout) non è
+    # un rifiuto dell'originale; il nullo si scarta e si rifà in una Sessione nuova (controlli ripetuti).
     # Ogni arresto si registra con la causa; oltre ARRESTI_MASSIMI nella corsa ci si ferma e si riferisce.
+    # Morgan, 2026-10-06: ogni sforamento del tetto del pronto da parte dell'originale, in qualunque ruolo,
+    # è un evento C4 (non un arresto tecnico); con le regole di oggi il nullo interrotto si rifà.
+    riclassifica_eventi(av)
     while resta():
         preliminari()
         imm = imm or ambiente.immagine_pacchetto(carichi.pacchetto_originale())
@@ -94,14 +142,21 @@ def nulli(per_pezzo, minuti):
                     # nessuna lettura dei risultati prima dei 40 (piano, sezione 1): solo l'avanzamento
                     print(f"nullo {k} registrato", flush=True)
         except episodio.InfrastrutturaFallita as e:
-            av.aggiungi("eventi", {"evento": "arresto tecnico", "sessione": sessione, "nullo": len(av.voci),
-                                   "causa": str(e)[:500]})
-            arresti = sum(ev["evento"] == "arresto tecnico" for ev in av.dati["eventi"])
-            print(f"arresto tecnico {arresti} durante il nullo {len(av.voci)} (scartato, si rifà): {e}", flush=True)
-            if arresti > ARRESTI_MASSIMI:
-                print(f"STOP: {arresti} arresti tecnici nella corsa (> {ARRESTI_MASSIMI}): riferire a Morgan", flush=True)
-                esito = ESCI_INFRASTRUTTURA
-                break
+            if str(e) == MSG_TETTO_ORIGINALE:
+                av.aggiungi("eventi", {"evento": "C4", "tipo": "tetto del pronto superato dall'originale (ruolo originale, "
+                                       "due volte di seguito)", "sessione": sessione, "nullo": len(av.voci)})
+                print(f"evento C4 durante il nullo {len(av.voci)} (nullo interrotto, si rifà)", flush=True)
+            else:
+                av.aggiungi("eventi", {"evento": "arresto tecnico", "sessione": sessione, "nullo": len(av.voci),
+                                       "causa": str(e)[:500]})
+                arresti = sum(ev["evento"] == "arresto tecnico" for ev in av.dati["eventi"])
+                print(f"arresto tecnico {arresti} durante il nullo {len(av.voci)} (scartato, si rifà): {e}", flush=True)
+                if arresti > ARRESTI_MASSIMI:
+                    print(f"STOP: {arresti} arresti tecnici nella corsa (> {ARRESTI_MASSIMI}): riferire a Morgan", flush=True)
+                    esito = ESCI_INFRASTRUTTURA
+                    break
+        finally:
+            sforamenti_c4(av, sessione)
     av.aggiungi("pezzi", {"sessioni": sessioni, "nulli": fatti_qui, "minuti": round((time.monotonic() - t0) / 60, 1)})
     if esito == ESCI_RESTA and len(av.voci) >= INTESTAZIONE_NULLI["confronti"]:
         esito = ESCI_CONCLUSO
@@ -164,7 +219,7 @@ def analizza():
         out["arresti_tecnici"] = [ev for ev in d["eventi"] if ev["evento"] == "arresto tecnico"]
         # Numero deciso prima (40): i verdetti si calcolano SOLO a 40 raggiunti; nessuna lettura prima.
         if len(righe) == INTESTAZIONE_NULLI["confronti"]:
-            out["criterio3"] = analisi.criterio3(righe)
+            out["criterio3"] = analisi.criterio3(righe, d["eventi"])
             out["G1_simmetria"] = analisi.simmetria(righe)       # riportato anche se il criterio 3 fallisce
             out["G2_risoluzione"] = analisi.risoluzione(righe)
         else:

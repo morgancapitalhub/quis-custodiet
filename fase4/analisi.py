@@ -34,16 +34,28 @@ def t_critico(gdl):
 
 # ------------------------------------------------------------------ criterio 3
 
-def criterio3(righe):
-    """righe = esiti dei confronti nulli (dict con 'esito', e per i validi 'piu_veloce', 'piu_lento')."""
+def criterio3(righe, eventi=()):
+    """righe = esiti dei confronti nulli (dict con 'esito', e per i validi 'piu_veloce', 'piu_lento').
+    eventi = eventi dell'avanzamento; contano gli sforamenti del tetto del pronto (evento C4, Morgan
+    2026-10-06). Una pronuncia (secondo sforamento di fila) col solo ruolo d'originale interrompe il nullo
+    senza voce: è un rifiuto dell'originale in più. Con il ruolo di candidato è già una voce "avvio oltre il
+    tetto", contata fra i rifiuti: non si conta due volte."""
     validi = [r for r in righe if r["esito"] == "valido"]
     rifiuti = [r for r in righe if r["esito"] != "valido"]
+    sforamenti = [e for e in eventi if e.get("evento") == "C4" and str(e.get("tipo", "")).startswith("sforamento")]
+    pronunce = [e for e in sforamenti if e.get("pronuncia")]
+    pronunce_ruolo_originale = [e for e in pronunce if "candidato" not in (e.get("ruoli") or [])]
     allarmi = sum(bool(r["piu_veloce"] or r["piu_lento"]) for r in validi)
     passa_wilson, lo, hi = statistica.verdetto_nullo(allarmi, len(righe)) if righe else (False, None, None)
+    n_rifiuti = len(rifiuti) + len(pronunce_ruolo_originale)
+    c4 = {"rifiuti_dell_originale": n_rifiuti, "nei_nulli_registrati": len(rifiuti),
+          "nulli_interrotti_dal_tetto_ruolo_originale": len(pronunce_ruolo_originale),
+          "motivi_dei_rifiuti": sorted({r["esito"] for r in rifiuti}),
+          "eventi_c4_sforamenti_del_tetto": len(sforamenti), "di_cui_pronunce": len(pronunce),
+          "passa": n_rifiuti == 0}
     return {"confronti": len(righe), "falsi_allarmi": allarmi, "IC95_wilson": [lo, hi],
-            "soglia": statistica.SOGLIA_NULLO, "rifiuti_dell_originale": len(rifiuti),
-            "motivi_dei_rifiuti": sorted({r["esito"] for r in rifiuti}),
-            "passa": bool(passa_wilson and not rifiuti and len(righe) >= statistica.NULLI_ACCETTAZIONE)}
+            "soglia": statistica.SOGLIA_NULLO, "C4": c4, "rifiuti_dell_originale": n_rifiuti,
+            "passa": bool(passa_wilson and c4["passa"] and len(righe) >= statistica.NULLI_ACCETTAZIONE)}
 
 
 # ------------------------------------------------------------------ G1

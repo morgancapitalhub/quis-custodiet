@@ -1,0 +1,542 @@
+{
+  "intestazione": {
+    "criterio": 3,
+    "confronti": 40,
+    "coppie": 8,
+    "carico": "dev",
+    "falso_allarme": "piu_veloce o piu_lento"
+  },
+  "voci": [
+    {
+      "k": 0,
+      "sessione": "f420261006230143862064",
+      "esito": "valido",
+      "accelerazione": 0.9746013220268173,
+      "piu_veloce": false,
+      "piu_lento": false,
+      "t": -1.032829051282733,
+      "m": -0.12030511249999987,
+      "es": 0.11648114695320166,
+      "tempi_originale": [
+        4.6704129,
+        4.4698631,
+        4.6416822,
+        4.7322296,
+        4.5063875,
+        4.6801331,
+        4.5709803,
+        4.6592167
+      ],
+      "tempi_candidato": [
+        4.5338877,
+        4.6886737,
+        4.5112011,
+        5.3150345,
+        4.4001711,
+        5.3313142,
+        4.583841,
+        4.529223
+      ],
+      "picco_candidato": 12752896.0,
+      "soglia_picco": 12836044.8,
+      "cpu_pre_pronto_cand_us": 227985.5
+    },
+    {
+      "k": 1,
+      "sessione": "f420261006230143862064",
+      "esito": "valido",
+      "accelerazione": 1.045079549774057,
+      "piu_veloce": false,
+      "piu_lento": false,
+      "t": 0.9106715322526102,
+      "m": 0.18839377499999982,
+      "es": 0.2068734646113232,
+      "tempi_originale": [
+        4.3291827,
+        4.4026418,
+        4.2780015,
+        4.4498624,
+        4.8872348,
+        4.5120206,
+        3.6403413,
+        4.4409896
+      ],
+      "tempi_candidato": [
+        4.3294153,
+        4.2458404,
+        4.4647044,
+        4.2977854,
+        4.8413363,
+        3.460732,
+        4.3475611,
+        3.4457496
+      ],
+      "picco_candidato": 12746752.0,
+      "soglia_picco": 12842188.8,
+      "cpu_pre_pronto_cand_us": 235838.0
+    },
+    {
+      "k": 2,
+      "sessione": "f420261006230143862064",
+      "esito": "valido",
+      "accelerazione": 1.0280384154273472,
+      "piu_veloce": false,
+      "piu_lento": false,
+      "t": 0.3556219533675674,
+      "m": 0.11071229999999987,
+      "es": 0.31132020661719023,
+      "tempi_originale": [
+        4.1530432,
+        4.3610456,
+        3.559196,
+        4.3936822,
+        3.4630581,
+        4.3428403,
+        3.5850574,
+        4.6165222
+      ],
+      "tempi_candidato": [
+        4.3383846,
+        3.3734262,
+        4.3580563,
+        3.6268515,
+        4.387437,
+        3.5631752,
+        4.40193,
+        3.5394858
+      ],
+      "picco_candidato": 12709888.0,
+      "soglia_picco": 12838092.8,
+      "cpu_pre_pronto_cand_us": 240846.0
+    },
+    {
+      "k": 3,
+      "sessione": "f420261006230143862064",
+      "esito": "valido",
+      "accelerazione": 0.9955074985930392,
+      "piu_veloce": false,
+      "piu_lento": false,
+      "t": -0.12818240444314044,
+      "m": -0.01895556249999991,
+      "es": 0.14787959847022747,
+      "tempi_originale": [
+        4.1929513,
+        4.295052,
+        3.6029762,
+        4.354754,
+        4.0516422,
+        4.3796679,
+        4.325858,
+        4.4004795
+      ],
+      "tempi_candidato": [
+        4.3362567,
+        4.1006268,
+        4.3534575,
+        3.6264939,
+        4.3154985,
+        4.3986408,
+        4.2611199,
+        4.3629315
+      ],
+      "picco_candidato": 12730368.0,
+      "soglia_picco": 12839116.8,
+      "cpu_pre_pronto_cand_us": 210960.0
+    },
+    {
+      "k": 4,
+      "sessione": "f420261006230143862064",
+      "esito": "valido",
+      "accelerazione": 1.0157872802416126,
+      "piu_veloce": false,
+      "piu_lento": false,
+      "t": 1.093127787588984,
+      "m": 0.07020298749999998,
+      "es": 0.06422212324767679,
+      "tempi_originale": [
+        4.3877811,
+        4.90318,
+        4.3780264,
+        4.2922606,
+        4.7752512,
+        4.373127,
+        4.6578043,
+        4.3686489
+      ],
+      "tempi_candidato": [
+        4.3242229,
+        4.9681351,
+        4.3320113,
+        4.4268873,
+        4.3729477,
+        4.3941771,
+        4.3758932,
+        4.380181
+      ],
+      "picco_candidato": 12738560.0,
+      "soglia_picco": 12823449.6,
+      "cpu_pre_pronto_cand_us": 227640.0
+    },
+    {
+      "k": 5,
+      "sessione": "f420261006230143862064",
+      "esito": "valido",
+      "accelerazione": 0.990141727113906,
+      "piu_veloce": false,
+      "piu_lento": false,
+      "t": -1.0298666298560069,
+      "m": -0.04352431249999977,
+      "es": 0.04226208640830048,
+      "tempi_originale": [
+        4.3415353,
+        4.4467624,
+        4.3720852,
+        4.3620728,
+        4.4048176,
+        4.2617981,
+        4.4372771,
+        4.3454876
+      ],
+      "tempi_candidato": [
+        4.4985188,
+        4.2741741,
+        4.5602323,
+        4.4029573,
+        4.4028808,
+        4.3778101,
+        4.3769212,
+        4.426536
+      ],
+      "picco_candidato": 12748800.0,
+      "soglia_picco": 12824985.6,
+      "cpu_pre_pronto_cand_us": 233775.0
+    },
+    {
+      "k": 6,
+      "sessione": "f420261006230143862064",
+      "esito": "valido",
+      "accelerazione": 1.004684217616611,
+      "piu_veloce": false,
+      "piu_lento": false,
+      "t": 0.42188297031962657,
+      "m": 0.020497162499999888,
+      "es": 0.048584948770202425,
+      "tempi_originale": [
+        4.2624438,
+        4.5010302,
+        4.3143624,
+        4.4272238,
+        4.3962806,
+        4.346984,
+        4.4261767,
+        4.4958127
+      ],
+      "tempi_candidato": [
+        4.4420807,
+        4.2642985,
+        4.4026386,
+        4.3736841,
+        4.317534,
+        4.4645852,
+        4.3244947,
+        4.4170211
+      ],
+      "picco_candidato": 12728320.0,
+      "soglia_picco": 12850688.0,
+      "cpu_pre_pronto_cand_us": 218022.0
+    },
+    {
+      "k": 7,
+      "sessione": "f420261006230143862064",
+      "esito": "valido",
+      "accelerazione": 0.988624697984158,
+      "piu_veloce": false,
+      "piu_lento": false,
+      "t": -1.9864912611073577,
+      "m": -0.050158225,
+      "es": 0.025249658018651235,
+      "tempi_originale": [
+        4.3546859,
+        4.3990186,
+        4.3264271,
+        4.3610935,
+        4.4386774,
+        4.3458165,
+        4.3909507,
+        4.2572422
+      ],
+      "tempi_candidato": [
+        4.4033935,
+        4.3669731,
+        4.4304454,
+        4.387622,
+        4.5376529,
+        4.444229,
+        4.3197373,
+        4.3851245
+      ],
+      "picco_candidato": 12746752.0,
+      "soglia_picco": 12856524.8,
+      "cpu_pre_pronto_cand_us": 236143.5
+    },
+    {
+      "k": 8,
+      "sessione": "f420261006230143862064",
+      "esito": "valido",
+      "accelerazione": 0.9826916148421142,
+      "piu_veloce": false,
+      "piu_lento": false,
+      "t": -0.5133387687874701,
+      "m": -0.08135717500000006,
+      "es": 0.158486325106848,
+      "tempi_originale": [
+        4.2495499,
+        4.4376753,
+        4.5563196,
+        5.4895066,
+        4.6714948,
+        4.5906533,
+        4.4605188,
+        4.4970132
+      ],
+      "tempi_candidato": [
+        4.3600062,
+        4.4047663,
+        4.664025,
+        5.0203818,
+        5.7488359,
+        4.4488604,
+        4.5901549,
+        4.3665584
+      ],
+      "picco_candidato": 12742656.0,
+      "soglia_picco": 12838912.0,
+      "cpu_pre_pronto_cand_us": 238744.5
+    },
+    {
+      "k": 9,
+      "sessione": "f420261006230143862064",
+      "esito": "avvio oltre il tetto"
+    },
+    {
+      "k": 10,
+      "sessione": "f420261006233916fd6cf2",
+      "esito": "valido",
+      "accelerazione": 0.9629866894030197,
+      "piu_veloce": false,
+      "piu_lento": false,
+      "t": -1.3693246014336031,
+      "m": -0.48674178749999986,
+      "es": 0.3554612156901362,
+      "tempi_originale": [
+        15.8506808,
+        16.697192,
+        18.3280361,
+        18.3331584,
+        17.8913975,
+        5.5222876,
+        4.2195328,
+        4.4674015
+      ],
+      "tempi_candidato": [
+        17.0582559,
+        17.3114958,
+        20.0818647,
+        18.3106159,
+        19.4353661,
+        4.2480623,
+        4.4116491,
+        4.3463112
+      ],
+      "picco_candidato": 12730368.0,
+      "soglia_picco": 12832256.0,
+      "cpu_pre_pronto_cand_us": 767437.5
+    },
+    {
+      "k": 11,
+      "sessione": "f420261006233916fd6cf2",
+      "esito": "valido",
+      "accelerazione": 1.0040024725951513,
+      "piu_veloce": false,
+      "piu_lento": false,
+      "t": 0.1689092297950934,
+      "m": 0.01707302500000013,
+      "es": 0.10107810580103706,
+      "tempi_originale": [
+        4.0302567,
+        4.7177566,
+        4.209701,
+        3.9556197,
+        4.3180641,
+        4.4320664,
+        4.2120538,
+        4.3860216
+      ],
+      "tempi_candidato": [
+        4.3199026,
+        4.2458464,
+        4.3626277,
+        4.234005,
+        4.340645,
+        4.0899478,
+        4.3327168,
+        4.1992644
+      ],
+      "picco_candidato": 12726272.0,
+      "soglia_picco": 12857036.8,
+      "cpu_pre_pronto_cand_us": 303280.5
+    }
+  ],
+  "pezzi": [
+    {
+      "sessioni": [
+        "f420261006230143862064",
+        "f420261006233916fd6cf2"
+      ],
+      "nulli": 12,
+      "minuti": 53.4
+    }
+  ],
+  "eventi": [
+    {
+      "evento": "C4",
+      "sessione": "f420261006230143862064",
+      "nullo": 10,
+      "causa": "l'originale supera il tetto del pronto due volte di seguito",
+      "tipo": "tetto del pronto superato dall'originale (ruolo originale, due volte di seguito)",
+      "riclassificato": "2026-10-06, Morgan: era registrato come arresto tecnico"
+    },
+    {
+      "evento": "C4",
+      "tipo": "sforamento del tetto del pronto (originale)",
+      "sessione": "f420261006230143862064",
+      "nullo": 8,
+      "ora": "2026-10-06T21:26:06.415+00:00",
+      "coppia": 4,
+      "ruoli": [
+        "candidato"
+      ],
+      "tetto_us": 345679,
+      "ripetizione": 1,
+      "pronuncia": false
+    },
+    {
+      "evento": "C4",
+      "tipo": "sforamento del tetto del pronto (originale)",
+      "sessione": "f420261006230143862064",
+      "nullo": 9,
+      "ora": "2026-10-06T21:28:29.465+00:00",
+      "coppia": 1,
+      "ruoli": [
+        "candidato"
+      ],
+      "tetto_us": 357523.0,
+      "ripetizione": 1,
+      "pronuncia": false
+    },
+    {
+      "evento": "C4",
+      "tipo": "sforamento del tetto del pronto (originale)",
+      "sessione": "f420261006230143862064",
+      "nullo": 9,
+      "ora": "2026-10-06T21:30:23.423+00:00",
+      "coppia": 4,
+      "ruoli": [
+        "originale"
+      ],
+      "tetto_us": 385792,
+      "ripetizione": 1,
+      "pronuncia": false
+    },
+    {
+      "evento": "C4",
+      "tipo": "sforamento del tetto del pronto (originale)",
+      "sessione": "f420261006230143862064",
+      "nullo": 9,
+      "ora": "2026-10-06T21:32:23.661+00:00",
+      "coppia": 5,
+      "ruoli": [
+        "candidato",
+        "originale"
+      ],
+      "tetto_us": 392629.0,
+      "ripetizione": 2,
+      "pronuncia": true
+    },
+    {
+      "evento": "C4",
+      "tipo": "sforamento del tetto del pronto (originale)",
+      "sessione": "f420261006230143862064",
+      "nullo": 10,
+      "ora": "2026-10-06T21:37:42.788+00:00",
+      "coppia": 6,
+      "ruoli": [
+        "originale",
+        "candidato"
+      ],
+      "tetto_us": 733614,
+      "ripetizione": 1,
+      "pronuncia": false
+    },
+    {
+      "evento": "C4",
+      "tipo": "sforamento del tetto del pronto (originale)",
+      "sessione": "f420261006230143862064",
+      "nullo": 10,
+      "ora": "2026-10-06T21:38:55.200+00:00",
+      "coppia": 7,
+      "ruoli": [
+        "originale"
+      ],
+      "tetto_us": 741009.0,
+      "ripetizione": 2,
+      "pronuncia": true
+    },
+    {
+      "evento": "C4",
+      "tipo": "sforamento del tetto del pronto (originale)",
+      "sessione": "f420261006233916fd6cf2",
+      "nullo": 10,
+      "ora": "2026-10-06T21:42:03.807+00:00",
+      "coppia": 0,
+      "ruoli": [
+        "originale"
+      ],
+      "tetto_us": 906818,
+      "ripetizione": 1,
+      "pronuncia": false
+    },
+    {
+      "evento": "C4",
+      "tipo": "sforamento del tetto del pronto (originale)",
+      "sessione": "f420261006233916fd6cf2",
+      "nullo": 10,
+      "ora": "2026-10-06T21:48:42.107+00:00",
+      "coppia": 5,
+      "ruoli": [
+        "originale"
+      ],
+      "tetto_us": 912159.5,
+      "ripetizione": 1,
+      "pronuncia": false
+    },
+    {
+      "evento": "C4",
+      "tipo": "sforamento del tetto del pronto (originale)",
+      "sessione": "f420261006233916fd6cf2",
+      "nullo": 10,
+      "ora": "2026-10-06T21:51:22.801+00:00",
+      "coppia": 7,
+      "ruoli": [
+        "candidato"
+      ],
+      "tetto_us": 912159.5,
+      "ripetizione": 1,
+      "pronuncia": false
+    }
+  ],
+  "sessioni_scansionate_c4": [
+    "f420261006230143862064",
+    "f420261006233916fd6cf2"
+  ]
+}

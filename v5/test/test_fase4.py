@@ -41,6 +41,55 @@ class TestCriterio3(unittest.TestCase):
         self.assertFalse(analisi.criterio3([nullo()] * 39)["passa"])
 
 
+class TestC4(unittest.TestCase):
+    def sfor(self, ruoli, rip):
+        return {"evento": "C4", "tipo": "sforamento del tetto del pronto (originale)", "ruoli": ruoli,
+                "ripetizione": rip, "pronuncia": rip > 1}
+
+    def test_messaggio_presente_nella_v5(self):
+        sorgente = (config.RADICE / "v5" / "valutazione.py").read_text(encoding="utf-8")
+        self.assertIn(f'"{fase4.MSG_TETTO_ORIGINALE}"', sorgente)
+
+    def test_pronuncia_ruolo_originale_e_un_rifiuto(self):
+        eventi = [self.sfor(["originale", "candidato"], 1), self.sfor(["originale"], 2)]
+        r = analisi.criterio3([nullo()] * 40, eventi)
+        self.assertEqual(r["rifiuti_dell_originale"], 1)
+        self.assertEqual(r["C4"]["eventi_c4_sforamenti_del_tetto"], 2)
+        self.assertFalse(r["C4"]["passa"])
+        self.assertFalse(r["passa"])
+
+    def test_pronuncia_ruolo_candidato_non_contata_due_volte(self):
+        eventi = [self.sfor(["candidato"], 1), self.sfor(["candidato", "originale"], 2)]
+        r = analisi.criterio3([nullo(esito="avvio oltre il tetto")] + [nullo()] * 39, eventi)
+        self.assertEqual(r["rifiuti_dell_originale"], 1)
+
+    def test_sforamento_singolo_e_evento_non_rifiuto(self):
+        r = analisi.criterio3([nullo()] * 40, [self.sfor(["originale"], 1)])
+        self.assertEqual((r["rifiuti_dell_originale"], r["C4"]["eventi_c4_sforamenti_del_tetto"]), (0, 1))
+        self.assertTrue(r["C4"]["passa"])
+
+    def test_scansione_e_riclassificazione(self):
+        with tempfile.TemporaryDirectory() as d:
+            ses = Path(d) / "S1"
+            ses.mkdir()
+            righe = [{"n": "f4nullo3_orig5"}, {"evento": "tetto del pronto superato", "coppia": 5, "ruoli": ["originale"],
+                                                "tetto_us": 1, "ripetizione": 1, "ora": "x"},
+                     {"n": "f4nullo4_imp0"}, {"evento": "tetto del pronto superato", "coppia": 7, "ruoli": ["originale"],
+                                              "tetto_us": 2, "ripetizione": 2, "ora": "y"}]
+            (ses / "episodi.jsonl").write_text("\n".join(json.dumps(r) for r in righe), encoding="utf-8")
+            av = analisi.Avanzamento(Path(d) / "av.json", {"x": 1})
+            av.dati["eventi"].append({"evento": "arresto tecnico", "causa": fase4.MSG_TETTO_ORIGINALE, "nullo": 4})
+            av.dati["pezzi"].append({"sessioni": ["S1"]})
+            with mock.patch.object(fase4, "SESSIONI", Path(d)):
+                fase4.riclassifica_eventi(av)
+                fase4.riclassifica_eventi(av)                        # una volta sola per sessione
+            ev = av.dati["eventi"]
+            self.assertEqual(ev[0]["evento"], "C4")
+            self.assertIn("riclassificato", ev[0])
+            self.assertEqual([(e["nullo"], e["pronuncia"]) for e in ev[1:]], [(3, False), (4, True)])
+            self.assertFalse(any(e["evento"] == "arresto tecnico" for e in ev))
+
+
 class TestSimmetria(unittest.TestCase):
     def test_t_39(self):
         self.assertAlmostEqual(analisi.t_critico(39), 2.0227, delta=0.0015)
@@ -180,6 +229,20 @@ class TestOrchestrazioneNulli(unittest.TestCase):
         self.assertIn("causa", d["eventi"][0])
         self.assertEqual(len(d["pezzi"][0]["sessioni"]), 2)                       # Sessione nuova dopo l'arresto
         self.assertNotEqual(d["voci"][2]["sessione"], d["voci"][1]["sessione"])
+
+    def test_tetto_dell_originale_e_c4_non_arresto(self):
+        prove = [3]
+
+        def valuta(*a, **k):
+            if prove and len(self.chiamate) == prove[0]:
+                prove.pop()
+                raise episodio.InfrastrutturaFallita(fase4.MSG_TETTO_ORIGINALE)
+            return self.valuta(*a, **k)
+        with mock.patch.object(fase4.valutazione, "valuta", valuta):
+            self.assertEqual(fase4.nulli(per_pezzo=5, minuti=55), fase4.ESCI_RESTA)
+        d = json.loads(self.av.read_text())
+        self.assertEqual(len(d["voci"]), 5)                                        # nullo 3 rifatto
+        self.assertEqual([(e["evento"], e["nullo"]) for e in d["eventi"]], [("C4", 3)])
 
     def test_oltre_tre_arresti_si_ferma(self):
         def valuta(*a, **k):
