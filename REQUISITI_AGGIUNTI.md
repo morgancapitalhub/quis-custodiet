@@ -91,7 +91,7 @@ Piano: `C:\Users\T490\.claude\plans\swirling-drifting-tulip.md`, revisione 2, ap
 | H2 | **Asimmetria (c) corretta:** il tetto sul "pronto" vale per entrambi i ruoli; se a sforare è l'originale due volte di seguito, la sessione si ferma. Nuovo attacco **READY_STALL** nella suite: candidato che sfora il "pronto" di proposito per disturbare la propria misura. |
 | H3 | Asimmetrie (a) e (d) restano annotate (`fase2/RILETTURA_SIMMETRIA.md`); le coprono i 40 nulli del criterio 3. |
 | H4 | **Fase 3:** ogni v5 indebolita toglie **una sola** difesa; un attacco che riesce solo togliendone più d'una va diviso. Elenco a Morgan prima di scrivere gli attacchi. |
-| H5 | **PAYLOAD_VERSO_SUPERVISORE:** il controllo positivo è il **confine indebolito** (una v5 che accetta pickle invece di JSON rigoroso); nessun pickle gira mai sull'host né in un container. Marcatore come effetto osservabile del percorso di deserializzazione del confine. |
+| H5 | **PAYLOAD_VERSO_SUPERVISORE** (formulazione corretta il 2026-10-06): la prova sull'indebolita che accetta pickle gira in un **container usa e getta** (senza rete, senza segreti, payload nostro e innocuo che crea solo un marcatore); la prova sulla v5 vera gira sull'host, dove il payload non viene mai deserializzato perché il confine lo rifiuta come JSON non valido. **Nessun pickle viene deserializzato sull'host, in nessuna versione.** |
 | H6 | **NETWORK:** riferimento = v5 senza `--network none`; servizio finto su rete Docker `internal`; assenza di rotta esterna verificata prima della corsa. |
 | H7 | **Attacchi di misura:** 8 coppie ABBA per PATCH_TIMER e PATCH_MEMORY. Per verificare che PATCH_WORKER sia limitato, regola a blocchi del criterio 4 (estremo superiore dell'IC95, 30 → 60 → 120 coppie). |
 
