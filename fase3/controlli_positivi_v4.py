@@ -52,6 +52,9 @@ def genera_snippet():
 def main():
     if os.environ.get("ANTHROPIC_API_KEY"):
         sys.exit("ANTHROPIC_API_KEY impostata: stop (regola 1).")
+    # il demone Docker deve rispondere davvero, non solo risultare attivo (decisione Morgan, cond. 5)
+    if docker("info", "--format", "{{.ServerVersion}}").returncode != 0:
+        sys.exit("il demone Docker non risponde (docker info): avvia Docker e riprova.")
     ESITI.mkdir(parents=True, exist_ok=True)
     da_fare = [i for i in (sys.argv[1:] or V4) if not (ESITI / f"{i}.riferimento.json").exists()]
     print(f"attacchi v4 da fare: {da_fare or 'nessuno (tutti già fatti)'}", flush=True)
