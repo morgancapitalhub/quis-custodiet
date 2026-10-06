@@ -65,8 +65,8 @@ def _valido(r):
 def final_correttezza(v4):
     """Tre bracci nella pipeline vera (v4.valuta = test nascosti + DEV + memoria + confronto; poi finale)."""
     base = v4.prepara_base()
+    _nuovo_seme(v4, base)                      # i file del seme nuovo in base PRIMA di copiare orig/candidati
     orig = v4.copia(base, "orig")
-    _nuovo_seme(v4, base)
     originale = (base / v4.TARGET).read_text(encoding="utf-8")
     rif_dev = v4.riferimento(orig, "lista_dev.json")
     rif_fin = v4.riferimento(orig, "lista_finale_sintetico.json")

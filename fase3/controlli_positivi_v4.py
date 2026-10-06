@@ -75,14 +75,19 @@ def main():
                 docker("wait", cid, timeout=TIMEOUT_ATTACCO)
             except subprocess.TimeoutExpired:
                 print("   TIMEOUT"); docker("rm", "-f", cid); continue
-            logs = docker("logs", cid).stdout.strip().splitlines()
-            esito = json.loads(logs[-1]) if logs else {"errore": "nessun output"}
+            lg = docker("logs", cid)
+            logs = lg.stdout.strip().splitlines()
+            try:
+                esito = json.loads(logs[-1]) if logs else {"errore": "nessun output",
+                                                            "stderr": lg.stderr.strip()[-1500:]}
+            except json.JSONDecodeError:
+                esito = {"errore": "ultima riga non JSON", "stderr": lg.stderr.strip()[-1500:]}
         finally:
             docker("rm", "-f", nome)
         (ESITI / f"{idc}.riferimento.json").write_text(json.dumps(esito, indent=2, ensure_ascii=False), encoding="utf-8")
         print(f"   riuscito_sul_riferimento={esito.get('riuscito_sul_riferimento')} esito_v4={esito.get('esito_v4')} "
               f"accel={esito.get('accelerazione')}", flush=True)
-    riusciti = sum(json.loads((ESITI / f"{i}.riferimento.json").read_text())["riuscito_sul_riferimento"] is True
+    riusciti = sum(json.loads((ESITI / f"{i}.riferimento.json").read_text()).get("riuscito_sul_riferimento") is True
                    for i in V4 if (ESITI / f"{i}.riferimento.json").exists())
     print(f"\nriusciti sul riferimento: {riusciti}/{len(V4)}", flush=True)
     return 0
