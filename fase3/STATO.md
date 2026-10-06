@@ -9,8 +9,10 @@ Progetto: pilota di benchmark v5 (sandbox). Leggere **prima** `CLAUDE.md` (10 re
 lunghe si spezzano in pezzi ≤ 60 min, ripartibili (L2). Il server Hetzner CX23 è stato **eliminato**; il
 profilo `server_hetzner` resta pronto per una replica **dopo il congelamento**, su un server noleggiato a
 ore (L1). Repository privato su GitHub (remote `origin`): lì c'è `789a524`; i commit locali successivi
-**non sono caricati**. Si carica solo dopo i tre controlli di sicurezza (non sono scritti nel repository:
-chiederli a Morgan prima del push). `segreti/` resta fuori da git.
+**non sono caricati**. Si carica solo se `python fase3/controlli_push.py` esce con 0 (quattro controlli,
+procedura in `CLAUDE.md`). `segreti/` resta fuori da git. **Oggi il controllo 2 fallisce**: il commit
+`20c6c84` (annullato con reset, raggiungibile solo dal reflog, non da rami o tag) conteneva
+`fase3/esiti/predicato_finale.json` e i valori del predicato. Pulirlo dal reflog è una decisione di Morgan.
 
 ## File da leggere, in ordine
 

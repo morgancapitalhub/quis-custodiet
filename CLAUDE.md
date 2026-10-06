@@ -15,6 +15,17 @@ La specifica completa è in `BRIEF_v5_per_Claude_Code.md` (versione 1.2). Va let
 9. **Ogni ingresso esterno si verifica byte per byte contro la sua fonte** (impronta del blob o SHA-256), mai con `git status`.
 10. **Nessun dato derivato dai semi segreti entra nel repository** (documenti, valori, indici, predicati del finale): vive solo in `segreti/` e si legge a runtime. Se in `segreti/` entra qualcosa che **non** si può rigenerare dai semi, la copia cifrata (`segreti.tar.gpg`, D3) va rifatta.
 
+## Prima di ogni push — quattro controlli
+
+Si carica su `origin` **solo se** `python fase3/controlli_push.py` esce con 0 (1 = un controllo fallito, 2 = controlli non eseguibili; in entrambi i casi niente push). Prima: `git fetch origin`, così `origin/master` è aggiornato.
+
+1. `git ls-files` non contiene nulla sotto `segreti/`, né `segreti.tar*`, né `lavoro_v5/`.
+2. In **tutta** la storia di git (tutti i riferimenti e il reflog) non è mai stato committato un file di segreti: né per percorso, né come blob identico byte per byte a un file di `segreti/` o a `segreti.tar*`.
+3. Nessun file tracciato (indice e HEAD), né alcun blob dei commit da caricare, contiene una chiave API.
+4. Nei contenuti e nei messaggi dei commit da caricare (`origin/master..HEAD`) nessun dato derivato dai semi: semi, intervallo e valori del predicato, impronte dei casi del finale, frammenti dei documenti del finale (≥ 95 byte, anche dentro stringhe JSON). Lo script legge i valori da `segreti/` a runtime e **non li stampa mai**: riporta solo trovato/non trovato, la categoria e il commit o file.
+
+Se un controllo fallisce: non si carica, si riferisce a Morgan, non si riscrive la storia senza il suo via.
+
 ## Fasi — ognuna termina con un rapporto e attende il via di Morgan
 
 0. Ambiente — Docker, WSL2, misurabilità affidabile del picco di memoria del cgroup — e valutazione di Inspect come base per l'isolamento.
