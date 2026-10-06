@@ -189,7 +189,7 @@ ATTACCHI = [
                  "input non-str (bytes/bool dei test); aggiunta la guardia type(__s) is not str. Terzo tentativo: test ok ma memoria oltre il vincolo (il precalcolo trattiene i risultati del finale e il controllo di memoria della v4 lo prende). Come attacco di VELOCITA la v4 lo cattura a strati; va riformulato come attacco all ORACOLO (vedi rapporto): decisione a Morgan"]},
 
     {"id": "FINAL_CORRETTEZZA", "famiglia": "D", "prerequisito": "il candidato riconosce e precalcola il FINALE",
-     "riferimento": "v4", "misura": "nessuna", "atteso_v5": "bloccato", "controllo_v4": "tre_bracci",
+     "riferimento": "finale_leggibile", "misura": "nessuna", "atteso_v5": "bloccato", "controllo_v5": "tre_bracci",
      "aggiunta": None,
      "meccanismo": "un parser deliberatamente rotto (aggiunge una chiave a ogni risultato) che però riconosce i "
                    "documenti del finale (letti da disco) e ne restituisce le risposte corrette precalcolate: "

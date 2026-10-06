@@ -92,5 +92,78 @@ def main():
     print(f"SOLO nel DEV (assenti dal finale): {solo_dev}")
 
 
-if __name__ == "__main__":
+if __name__ == "__main__" and "--predicato" not in sys.argv:
     main()
+
+
+# ---------------------------------------------------------------- predicato sui VALORI (condizione 1, opzione 2)
+def interi_di(testo):
+    import datetime
+    out = []
+    try:
+        v = tomllib.loads(testo)
+    except Exception:
+        return out
+
+    pila = [v]
+    while pila:
+        x = pila.pop()
+        t = type(x)
+        if t is bool:
+            continue
+        if t is int:
+            out.append(x)
+        elif t is dict:
+            pila.extend(x.values())
+        elif t is list:
+            pila.extend(x)
+    return out
+
+
+def trova_predicato_interi():
+    """Un intervallo di interi [A,B] con >=1 valore nel finale sintetico e 0 nel DEV (tutto il carico DEV)."""
+    semi = json.loads((config.SEGRETI / "semi.json").read_text(encoding="utf-8"))
+    n_doc, sezioni = config.CARICO_DEV
+    # DEV completo (sintetici + api + flusso); finale sintetico completo
+    dev = carichi.carico_dev(n_doc, sezioni, seme_ordine=1)
+    pref = f"fs:{semi['finale_sintetico']}"
+    fin = (carichi.casi_sintetici(pref, n_doc, sezioni) + carichi.casi_api(pref) + carichi.flusso_profondo(pref))
+    dev_int = set()
+    for op, b in dev:
+        if op in (0, 1, 2):
+            dev_int.update(interi_di(b.decode("utf-8", "replace") if isinstance(b, (bytes, bytearray)) else b))
+    fin_int = []
+    for op, c in fin:
+        if op in (0, 1, 2):
+            fin_int.extend(interi_di(c))
+    # candidati: valori del finale assenti dal DEV, con magnitudine grande (op int: +-10^6) per un intervallo pulito
+    assenti = sorted({x for x in fin_int if x not in dev_int and abs(x) > 1000})
+    if not assenti:
+        print("nessun intero del finale assente dal DEV sopra 1000"); return None
+    # scegli il valore con il margine piu ampio dal piu vicino intero del DEV
+    dev_ord = sorted(dev_int)
+    import bisect
+    def margine(v):
+        i = bisect.bisect_left(dev_ord, v)
+        giu = v - dev_ord[i-1] if i > 0 else 10**9
+        su = dev_ord[i] - v if i < len(dev_ord) else 10**9
+        return min(giu, su)
+    v = max(assenti, key=margine)
+    m = margine(v)
+    lo, hi = v - m // 2, v + m // 2
+    dev_nell_intervallo = [x for x in dev_int if lo <= x <= hi]
+    fin_nell_intervallo = [x for x in fin_int if lo <= x <= hi]
+    print(f"valore scelto {v}; intervallo [{lo}, {hi}]; margine dal piu vicino intero DEV = {m}")
+    print(f"interi del DEV nell'intervallo: {len(dev_nell_intervallo)} (deve essere 0)")
+    print(f"interi del finale nell'intervallo: {sorted(set(fin_nell_intervallo))}")
+    return {"predicato": f"un intero nel risultato nell'intervallo [{lo}, {hi}]",
+            "lo": lo, "hi": hi, "valore_finale": v, "margine": m,
+            "dev_nell_intervallo": len(dev_nell_intervallo), "finale_nell_intervallo": sorted(set(fin_nell_intervallo))}
+
+
+if __name__ == "__main__" and "--predicato" in sys.argv:
+    import json as _j
+    r = trova_predicato_interi()
+    config.SEGRETI.mkdir(exist_ok=True)
+    (config.SEGRETI / "predicato_finale.json").write_text(_j.dumps(r, indent=2), encoding="utf-8")  # derivato dai semi: fuori da git (regola 10)
+    print("scritto in segreti/predicato_finale.json")

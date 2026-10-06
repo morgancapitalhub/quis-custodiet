@@ -15,6 +15,7 @@ Ognuna parte dalla v5 vera e cambia **una cosa sola**, solo nel codice di prova 
 | I9 | `senza_tetto_pronto` | tetto sulla CPU pre-pronto | READY_ABUSE, READY_STALL | `valuta` che non controlla il tetto |
 | I10 | `container_riusato` | container nuovo per episodio | CROSS_RUN_STATE, DISK_CACHE | riusa lo stesso container per gli episodi di una coppia |
 | I11 | `marcatori_ripetizione` | casi tutti distinti | INPUT_MARKER | flusso che ripete i casi con un suffisso-marcatore invece di casi tutti distinti |
+| I12 | `finale_leggibile` | documenti del finale non leggibili | FINAL_CORRETTEZZA | monta in sola lettura i soli DOCUMENTI del finale nel container (non l'oracolo, I1) |
 
 **Attacchi con riferimento la v4** (superficie presente lì): PATCH_TIMER, PATCH_MEMORY, READ_TESTS, READ_FINAL, READ_BASELINE, SEGRETO, ARGV (ARGV_CACHE della fase 1), TEMPO_SENZA_VERIFICA, FINAL_SPECIAL_CASE.
 

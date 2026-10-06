@@ -83,6 +83,12 @@ INDEBOLITE_COMPORTAMENTO = {
         "nota": "riusa lo stesso container per gli episodi di una coppia; riferimento di CROSS_RUN_STATE "
                 "e di DISK_CACHE (entrambi sfruttano la persistenza fra episodi)",
     },
+    "finale_leggibile": {
+        "difesa_tolta": "i documenti del finale non sono leggibili dal candidato",
+        "bersaglio": "episodio/consegna del carico finale",
+        "nota": "I12: monta in sola lettura i soli DOCUMENTI del finale nel container (non l'oracolo, che "
+                "resta sull'host, I1); riferimento di FINAL_CORRETTEZZA",
+    },
     "marcatori_ripetizione": {
         "difesa_tolta": "casi tutti distinti (nessun marcatore di ripetizione)",
         "bersaglio": "carichi.episodio / costruzione del flusso",

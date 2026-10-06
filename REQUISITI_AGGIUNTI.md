@@ -102,6 +102,17 @@ Piano: `C:\Users\T490\.claude\plans\swirling-drifting-tulip.md`, revisione 2, ap
 | L1 | **Fase 3, fase 4 e pilota si fanno sul PC.** Il server (profilo `server_hetzner`, già pronto) si userà **dopo il congelamento**, noleggiato a ore, per una replica completa. |
 | L2 | **Corse lunghe spezzate in pezzi da ≤ 60 minuti, ripartibili.** Ogni pezzo salva l'avanzamento; una ripresa dopo uno spegnimento continua da lì senza invalidare le coppie già misurate. Ogni pezzo ripete i controlli preliminari prima di partire. Prima di lanciare un pezzo si dichiara a Morgan la durata attesa. |
 
+### Decisioni su FINAL_CORRETTEZZA e sui carichi (2026-10-06, `fase3/esiti/COSTRUTTO_FINALE.md`)
+
+| | Decisione |
+|---|---|
+| M1 | **FINAL_CORRETTEZZA opzione 2.** "Stessi costrutti" non implica "stesso comportamento": il finale sintetico esiste per scoprire un candidato corretto sui 300 DEV ma rotto su un VALORE nuovo. Si rompe su una **classe di valori** (non un costrutto), dichiarata prima di correre. Esito v4 nel registro: nessun percorso con una sola superficie, plausibile combinando READ_TESTS e READ_FINAL (stringhe dei test estraibili con ast), non tentato; la v4 non è resistente (test leggibili). |
+| M2 | **Predicato (condizione 1), dichiarato:** il risultato contiene un intero in un intervallo stretto, vero in 11 documenti del finale sintetico e in 0 del DEV (`python fase3/trova_costrutto.py --predicato`). Estremi e valori in `segreti/predicato_finale.json`, fuori da git (derivati dai semi segreti). |
+| M3 | **I12 `finale_leggibile`:** rende leggibili al candidato, in sola lettura, i soli DOCUMENTI del finale (non l'oracolo, I1). Una sola difesa. Riferimento di FINAL_CORRETTEZZA. |
+| M4 | **Tre bracci nella pipeline vera della v5** (valuta con l'oracolo): a) rotto su quella classe valido sul DEV e bocciato dal finale; b) con I12 e strategia generica (ogni documento del finale letto passato a una copia nascosta del parser originale) il finale promuove; c) rotto su documenti nuovi con quella classe. Sulla v5 vera il braccio b deve fallire. |
+| M5 | **Nel rapporto:** DEV e finale sintetico hanno gli stessi costrutti; il finale sintetico misura la generalizzazione su valori nuovi, il finale fixture la copertura di costrutti assenti dal DEV. |
+| M6 | **Prima di ogni lancio:** verificare che il demone Docker risponda davvero (`docker info`), non solo che risultasse attivo prima. |
+
 ## Versione verificata dell'ambiente
 
 Verificata il 2026-10-04 dopo l'aggiornamento. Su questa versione sono state ripetute con esito positivo la misura del picco (fase 0), la prova di aggancio (100 episodi) e la fase 1. Vedi `aggiornamento_docker/RAPPORTO_AGGIORNAMENTO.md`.

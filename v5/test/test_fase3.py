@@ -66,9 +66,9 @@ class TestRiferimenti(unittest.TestCase):
         for nome in list(riferimenti.INDEBOLITE_OPZIONI) + list(riferimenti.INDEBOLITE_COMPORTAMENTO):
             self.assertIn(nome, usate, f"indebolita non usata: {nome}")
 
-    def test_undici_indebolite(self):
-        """fase3/INDEBOLITE.md: I1–I11 (I11 marcatori_ripetizione aggiunta dopo il pezzo 1)."""
-        self.assertEqual(len(riferimenti.INDEBOLITE_OPZIONI) + len(riferimenti.INDEBOLITE_COMPORTAMENTO), 11)
+    def test_dodici_indebolite(self):
+        """fase3/INDEBOLITE.md: I1–I12 (I11 marcatori_ripetizione, I12 finale_leggibile)."""
+        self.assertEqual(len(riferimenti.INDEBOLITE_OPZIONI) + len(riferimenti.INDEBOLITE_COMPORTAMENTO), 12)
 
     def test_con_rete_toglie_solo_network(self):
         opzioni, extra = riferimenti.con_rete()
