@@ -34,6 +34,7 @@ INTESTAZIONE_PW_FF = {"decisione": "G3", "carico": "finale_fixture", "seme_ordin
 STIMA_NULLO_S = 125        # 19 episodi DEV × ~6,4 s (patch-worker della fase 2: 240 episodi in 25,6 min)
 STIMA_COPPIA_FF_S = 5      # 2 episodi del finale fixture × ~2,4 s (quota-fixture della fase 2)
 ESCI_CONCLUSO, ESCI_RESTA, ESCI_INFRASTRUTTURA = 0, 10, 3
+ARRESTI_MASSIMI = 3        # Morgan, fase 4 decisione 2: oltre 3 arresti tecnici in una corsa ci si ferma
 
 
 def preliminari():
@@ -67,27 +68,41 @@ def nulli(per_pezzo, minuti):
     if fatti >= INTESTAZIONE_NULLI["confronti"]:
         print(f"40 nulli già completi ({AV_NULLI.name})")
         return ESCI_CONCLUSO
-    preliminari()
-    imm = ambiente.immagine_pacchetto(carichi.pacchetto_originale())
-    sessione = _nuova_sessione()
-    t0, fatti_qui = time.monotonic(), 0
-    print(f"pezzo {len(av.dati['pezzi']) + 1}: nulli già fatti {fatti}, sessione {sessione}", flush=True)
+    imm = None
+    t0, fatti_qui, sessioni = time.monotonic(), 0, []
+    print(f"pezzo {len(av.dati['pezzi']) + 1}: nulli già registrati {fatti}", flush=True)
     esito = ESCI_RESTA
-    try:
-        with valutazione.Sessione(sessione, [imm], _riscaldamento()) as s:
-            while len(av.voci) < INTESTAZIONE_NULLI["confronti"] and fatti_qui < per_pezzo \
-                    and _resta_tempo(t0, minuti, STIMA_NULLO_S):
-                k = len(av.voci)
-                r = valutazione.valuta(s, imm, imm, "dev", etichetta=f"f4nullo{k}")
-                av.aggiungi("voci", riga_nullo(k, sessione, r))
-                fatti_qui += 1
-                print(f"nullo {k}: {valutazione.classifica(r)} {r.get('accelerazione')}", flush=True)
-    except episodio.InfrastrutturaFallita as e:
-        av.aggiungi("eventi", {"evento": "infrastruttura", "sessione": sessione, "nullo": len(av.voci),
-                               "errore": str(e)[:500]})
-        print(f"STOP (infrastruttura): {e}", flush=True)
-        esito = ESCI_INFRASTRUTTURA
-    av.aggiungi("pezzi", {"sessione": sessione, "nulli": fatti_qui, "minuti": round((time.monotonic() - t0) / 60, 1)})
+
+    def resta():
+        return (len(av.voci) < INTESTAZIONE_NULLI["confronti"] and fatti_qui < per_pezzo
+                and _resta_tempo(t0, minuti, STIMA_NULLO_S))
+    # Morgan, decisione 2 della fase 4: un arresto tecnico (InfrastrutturaFallita) non è un rifiuto
+    # dell'originale; il nullo si scarta e si rifà in una Sessione nuova (controlli preliminari ripetuti).
+    # Ogni arresto si registra con la causa; oltre ARRESTI_MASSIMI nella corsa ci si ferma e si riferisce.
+    while resta():
+        preliminari()
+        imm = imm or ambiente.immagine_pacchetto(carichi.pacchetto_originale())
+        sessione = _nuova_sessione()
+        sessioni.append(sessione)
+        try:
+            with valutazione.Sessione(sessione, [imm], _riscaldamento()) as s:
+                while resta():
+                    k = len(av.voci)
+                    r = valutazione.valuta(s, imm, imm, "dev", etichetta=f"f4nullo{k}")
+                    av.aggiungi("voci", riga_nullo(k, sessione, r))
+                    fatti_qui += 1
+                    # nessuna lettura dei risultati prima dei 40 (piano, sezione 1): solo l'avanzamento
+                    print(f"nullo {k} registrato", flush=True)
+        except episodio.InfrastrutturaFallita as e:
+            av.aggiungi("eventi", {"evento": "arresto tecnico", "sessione": sessione, "nullo": len(av.voci),
+                                   "causa": str(e)[:500]})
+            arresti = sum(ev["evento"] == "arresto tecnico" for ev in av.dati["eventi"])
+            print(f"arresto tecnico {arresti} durante il nullo {len(av.voci)} (scartato, si rifà): {e}", flush=True)
+            if arresti > ARRESTI_MASSIMI:
+                print(f"STOP: {arresti} arresti tecnici nella corsa (> {ARRESTI_MASSIMI}): riferire a Morgan", flush=True)
+                esito = ESCI_INFRASTRUTTURA
+                break
+    av.aggiungi("pezzi", {"sessioni": sessioni, "nulli": fatti_qui, "minuti": round((time.monotonic() - t0) / 60, 1)})
     if esito == ESCI_RESTA and len(av.voci) >= INTESTAZIONE_NULLI["confronti"]:
         esito = ESCI_CONCLUSO
     return esito
@@ -143,11 +158,17 @@ def patch_worker_ff(minuti):
 def analizza():
     out = {"comando": "python fase4/fase4.py analisi"}
     if AV_NULLI.exists():
-        righe = analisi.Avanzamento(AV_NULLI, INTESTAZIONE_NULLI).voci
-        out["criterio3"] = analisi.criterio3(righe)
-        out["G1_simmetria"] = analisi.simmetria(righe)
-        out["G2_risoluzione"] = analisi.risoluzione(righe)
-        out["nulli_completi"] = len(righe) >= INTESTAZIONE_NULLI["confronti"]
+        d = analisi.Avanzamento(AV_NULLI, INTESTAZIONE_NULLI).dati
+        righe = d["voci"]
+        out["nulli_registrati"] = len(righe)
+        out["arresti_tecnici"] = [ev for ev in d["eventi"] if ev["evento"] == "arresto tecnico"]
+        # Numero deciso prima (40): i verdetti si calcolano SOLO a 40 raggiunti; nessuna lettura prima.
+        if len(righe) == INTESTAZIONE_NULLI["confronti"]:
+            out["criterio3"] = analisi.criterio3(righe)
+            out["G1_simmetria"] = analisi.simmetria(righe)       # riportato anche se il criterio 3 fallisce
+            out["G2_risoluzione"] = analisi.risoluzione(righe)
+        else:
+            out["nulli"] = f"verdetti non calcolati: {len(righe)}/40 (si leggono solo a 40 raggiunti)"
     if AV_PW_FF.exists():
         d = analisi.Avanzamento(AV_PW_FF, INTESTAZIONE_PW_FF).dati
         out["G3_patch_worker_ff"] = {"concluso": bool(d.get("concluso")), "coppie": len(d["voci"]),

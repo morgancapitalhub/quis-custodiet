@@ -16,13 +16,19 @@ cambierebbe `impronta_protocollo` e quindi `oracle_manifest.json` (criterio 6).
 - **Zero rifiuti dell'originale (C4):** nel nullo l'originale occupa anche il ruolo del candidato; ogni esito diverso da
   "valido" (memoria oltre il vincolo, avvio oltre il tetto, risultato diverso, misura fallita) è un rifiuto
   dell'originale e si conta con il suo motivo.
-- **InfrastrutturaFallita** (l'originale nel ruolo d'originale non completa o sfora due volte): il pezzo si ferma,
-  l'evento si registra, il nullo **non** si conta e non si ripete da solo → si riferisce (vedi punto aperto 2).
+- **Arresto tecnico** (InfrastrutturaFallita: l'ambiente viene meno, p.es. l'originale non completa due volte):
+  **non è un rifiuto dell'originale** (il rifiuto è un giudizio "non valido" a pipeline funzionante). Il nullo si
+  scarta e si rifà in una Sessione nuova, con i controlli preliminari ripetuti. Ogni arresto si registra con la causa;
+  **oltre 3 arresti nella corsa ci si ferma e si riferisce**.
+- **Numero deciso ora: 40.** I verdetti (criterio 3, G1, G2) si calcolano **solo a 40 raggiunti**; i pezzi da 20 sono
+  spezzettamento, non punti di decisione. **Nessuna lettura dei risultati prima dei 40**: durante i pezzi si stampa
+  solo "nullo k registrato", e `analisi` non calcola verdetti sotto i 40.
 
 ## 2. G1 — simmetria
 
 IC95 (t di Student, gdl = n − 1; t(39) = 2,0227 da `statistica.quantile_t`) della media di log(accelerazione) dei
-nulli validi: **deve contenere 0**.
+nulli validi: **deve contenere 0**. Si calcola e si riporta anche se il criterio 3 fallisce: la direzione
+dell'asimmetria aiuta a leggere un rifiuto.
 
 ## 3. G2 — soglia di risoluzione
 
@@ -60,10 +66,11 @@ del finale fixture ≈ 2,4 s (`quota-fixture`).
 Ripetizioni per il tetto del pronto allungano i pezzi; il controllo sul tempo ferma il pezzo prima dei 55 min.
 Durante le misure nessun altro lavoro pesante sull'host (regola 7).
 
-## Punti aperti per Morgan
+## Decisioni di Morgan (2026-10-06)
 
-1. **G2:** soglia = mediana (regola della fase 2) oppure una più prudente (quantile 0,95 o massimo)?
-2. **InfrastrutturaFallita durante un nullo:** proposta: non conta come nullo, si ferma e si riferisce; va contata
-   anche come rifiuto dell'originale ai fini di C4?
-3. **G1 sui soli nulli validi:** se c'è un rifiuto il criterio 3 fallisce comunque; confermi?
-4. **Ordine fisso in G3** (`pw-ff` per tutte le coppie, come il DEV in `patch-worker`): confermi?
+1. **G2:** mediana come soglia; quantile 0,95 e massimo come contesto, come in fase 2.
+2. **Arresto tecnico durante un nullo:** si scarta e si rifà; non è un rifiuto dell'originale. Ogni arresto registrato
+   con la causa; oltre 3 in una corsa, stop e riferire.
+3. **G1 sui soli nulli validi**, confermato; riportato anche se il criterio 3 fallisce.
+4. **Ordine fisso dei casi in G3**, confermato.
+5. **40 nulli decisi ora**; verdetti solo a 40; nessuna lettura prima.

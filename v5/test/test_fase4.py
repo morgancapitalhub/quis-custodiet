@@ -164,16 +164,46 @@ class TestOrchestrazioneNulli(unittest.TestCase):
         self.assertEqual(fase4.nulli(per_pezzo=20, minuti=1), fase4.ESCI_RESTA)   # 125 s stimati > 60 s
         self.assertEqual(self.chiamate, [])
 
-    def test_infrastruttura_ferma_e_non_conta(self):
+    def test_arresto_tecnico_si_scarta_e_si_rifa(self):
+        arresti = [2]                                   # il nullo 2 si arresta una volta, poi riesce
+
         def valuta(*a, **k):
-            if len(self.chiamate) == 2:
+            if arresti and len(self.chiamate) == arresti[0]:
+                arresti.pop()
                 raise episodio.InfrastrutturaFallita("l'originale non completa due volte")
             return self.valuta(*a, **k)
         with mock.patch.object(fase4.valutazione, "valuta", valuta):
+            self.assertEqual(fase4.nulli(per_pezzo=5, minuti=55), fase4.ESCI_RESTA)
+        d = json.loads(self.av.read_text())
+        self.assertEqual([v["k"] for v in d["voci"]], [0, 1, 2, 3, 4])           # il nullo 2 rifatto, non contato due volte
+        self.assertEqual([(e["evento"], e["nullo"]) for e in d["eventi"]], [("arresto tecnico", 2)])
+        self.assertIn("causa", d["eventi"][0])
+        self.assertEqual(len(d["pezzi"][0]["sessioni"]), 2)                       # Sessione nuova dopo l'arresto
+        self.assertNotEqual(d["voci"][2]["sessione"], d["voci"][1]["sessione"])
+
+    def test_oltre_tre_arresti_si_ferma(self):
+        def valuta(*a, **k):
+            raise episodio.InfrastrutturaFallita("demone lento")
+        with mock.patch.object(fase4.valutazione, "valuta", valuta):
             self.assertEqual(fase4.nulli(per_pezzo=20, minuti=55), fase4.ESCI_INFRASTRUTTURA)
         d = json.loads(self.av.read_text())
-        self.assertEqual(len(d["voci"]), 2)
-        self.assertEqual(d["eventi"][0]["nullo"], 2)
+        self.assertEqual(len(d["eventi"]), 4)
+        self.assertEqual(d["voci"], [])
+
+    def test_nessun_verdetto_prima_di_40(self):
+        fase4.nulli(per_pezzo=20, minuti=55)
+        with mock.patch.object(fase4, "ESITI", Path(self.dir.name)):
+            fase4.analizza()
+        out = json.loads((Path(self.dir.name) / "analisi.json").read_text(encoding="utf-8"))
+        self.assertEqual(out["nulli_registrati"], 20)
+        self.assertNotIn("criterio3", out)
+        self.assertNotIn("G1_simmetria", out)
+        fase4.nulli(per_pezzo=20, minuti=55)
+        with mock.patch.object(fase4, "ESITI", Path(self.dir.name)):
+            fase4.analizza()
+        out = json.loads((Path(self.dir.name) / "analisi.json").read_text(encoding="utf-8"))
+        self.assertIn("criterio3", out)
+        self.assertIn("G1_simmetria", out)
 
 
 class TestOrchestrazioneG3(unittest.TestCase):
