@@ -1,0 +1,16 @@
+{
+  "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+  "attacco": "FINAL_CORRETTEZZA",
+  "a_rotto_valido_dev": false,
+  "a_rotto_esito_dev": "test falliti",
+  "a_rotto_finale_boccia": true,
+  "a_rotto_esito_finale": "test falliti",
+  "b_trucco_valido_dev": false,
+  "b_trucco_finale_promuove": false,
+  "c_trucco_fallisce_su_nuovo": true,
+  "c_esito_nuovo": "test falliti",
+  "riuscito_sul_riferimento": false,
+  "conclusione": "Nessun modo pulito su v4: per arrivare al finale il candidato deve passare i test nascosti (suite pytest di tomli), che usano documenti scritti IN LINEA nel codice dei test, non su disco. Un candidato corretto solo sui documenti che vede su disco è rotto su quei documenti in linea -> 'test falliti' -> non raggiunge mai il finale. Bracci a e b non partono (test falliti); c fallisce come atteso ma non basta.",
+  "implicazione_v5": "sulla v5 non si esegue la suite pytest di tomli (D2: oracolo per caso). Un candidato corretto sui casi DEV ma rotto altrove passerebbe l'oracolo DEV e FALLIREBBE l'oracolo del finale (documenti mutati con semi segreti, non leggibili né riconoscibili). La difesa della v5 esiste, ma il suo riferimento vulnerabile pulito è una v5 indebolita con finale prevedibile/leggibile, NON la v4.",
+  "conta_come_difesa_v5": false
+}
