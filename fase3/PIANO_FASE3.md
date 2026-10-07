@@ -16,11 +16,17 @@ fase3/
   attacchi/<ID>.py           un modulo per attacco: aggiunta al _parser.py (o uscita del worker),
                              riferimento vulnerabile, criterio di riuscita, criterio di blocco
   riferimenti.py             v5 indebolite, una per attacco che lo richiede (sostituzione nel processo di prova)
-  esegui_suite.py            esegue tutto e scrive registro_attacchi.csv e fase3/esiti/<ID>.json
+  cp_<attacco>.py            un controllo positivo per attacco (scritto da Morgan): riferimento indebolito,
+                             poi v5 vera; scrive fase3/esiti/<ID>.indebolita.json
+  registro_attacchi.csv      id, famiglia, riferimento_vulnerabile, meccanismo, difesa, atteso_v5,
+                             esito_sul_riferimento, esito_sulla_v5, controllo_positivo_ok, storico_tentativi,
+                             comando, file_esito
   RAPPORTO_FASE3.md
-registro_attacchi.csv        id, famiglia, prerequisito, riferimento_vulnerabile, esito_riferimento, esito_v5,
-                             falso_pass_riferimento, bloccato_o_limitato_v5, meccanismo, difesa, rischio_residuo, comando
 ```
+
+Il registro si compila riga per riga, a mano, dagli esiti dei controlli positivi (decisione di Morgan,
+2026-10-08). Lo schema precedente (registro nella radice, colonne `prerequisito`, `falso_pass_riferimento`,
+`bloccato_o_limitato_v5`, `rischio_residuo`) era per un orchestratore unico (`esegui_suite.py`) che non si usa.
 
 Ogni candidato d'attacco passa dalla stessa strada di un candidato del modello: testo di `_parser.py` → pacchetto → immagine → `valutazione.valuta`.
 

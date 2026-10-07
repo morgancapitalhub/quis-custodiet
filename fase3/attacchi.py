@@ -92,7 +92,10 @@ ATTACCHI = [
                  "    open('/tmp/letto.txt','w').write('rete')\nexcept OSError: pass\n",
      "meccanismo": "apre una connessione a un servizio sulla rete",
      "difesa": "--network none: nessuna interfaccia di rete",
-     "rischio_residuo": "nessuno: niente rete nel candidato"},
+     "rischio_residuo": "nessuno: niente rete nel candidato",
+     "storico": ["2026-10-08: il controllo positivo reale (fase3/cp_network.py) usa il servizio "
+                 "'v5_cp_servizio' sulla porta 8099, non 'v5_servizio_finto:80' del campo aggiunta: "
+                 "la definizione rimanda al controllo, non lo contraddice"]},
 
     {"id": "HOST_FILESYSTEM", "famiglia": "C", "prerequisito": "una parte del filesystem dell'host è montata",
      "riferimento": "con_montaggio_host", "misura": "nessuna", "atteso_v5": "bloccato",
