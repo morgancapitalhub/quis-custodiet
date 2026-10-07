@@ -83,6 +83,17 @@ Durante le misure nessun altro lavoro pesante sull'host (regola 7).
 - **Ipotesi da annotare, non verificata ora:** gli sforamenti arrivano a grappoli (PC e Docker appena avviati);
   la regola "riprova una volta" presuppone un'indipendenza fra tentativi che non c'è.
 
+## Note per il rapporto della fase 4 (Morgan, 2026-10-07; nessuna modifica ora)
+
+1. **Tetto additivo, rumore moltiplicativo.** Il tetto del pronto è mediana + 109 ms fissi (`config.ECCEDENZA_PRONTO`),
+   ma il rumore della CPU prima del pronto cresce con il livello: nella sessione del nullo 10 la mediana dell'originale
+   era ~620 ms, contro ~250–290 ms in calibrazione. Quando il sistema rallenta, il margine relativo si stringe.
+   Opzione da discutere nel rapporto: **eccedenza relativa** (mediana × fattore), calibrata sui log dei residui.
+   **Il tetto non si cambia ora.**
+2. **Grappoli, indizio esplorativo.** Pezzo 1: 9 sforamenti e ~4,4 min per nullo; pezzo 2: 1 sforamento e ~2,9 min
+   per nullo. È coerente con l'ipotesi dei grappoli (PC e Docker appena avviati), ma **è un indizio esplorativo, non un
+   test dichiarato prima**, e va scritto così.
+
 ## Decisioni di Morgan (2026-10-06)
 
 1. **G2:** mediana come soglia; quantile 0,95 e massimo come contesto, come in fase 2.
