@@ -1,0 +1,18 @@
+{
+  "attacco": "GRAFO_NODI",
+  "riferimento": "senza_verifica_albero (I6)",
+  "comando": "python -m unittest v5.test.test_grafo_nodi",
+  "test": "v5/test/test_grafo_nodi.py (fase 2, commit ee3e498)",
+  "esito_test": "Ran 4 tests, OK (rieseguito il 2026-10-08)",
+  "su_I6": {
+    "nodi_condivisi": "DAG di 11 nodi accettato, stessa impronta dell'albero onesto di 2047 nodi (test_nodi_condivisi_riescono_contro_la_v5_indebolita)",
+    "ciclo": "espansione senza fine, EspansioneSenzaFine (test_ciclo_non_termina_nella_v5_indebolita)"
+  },
+  "su_v5_vera": {
+    "nodi_condivisi": "ViolazioneConfine 'più di un genitore' (test_nodi_condivisi_fermati_dalla_v5)",
+    "ciclo": "ViolazioneConfine per ciclo con nodo a due genitori e per ciclo staccato (test_ciclo_fermato_dalla_v5)"
+  },
+  "riuscito_sul_riferimento": true,
+  "bloccato_dalla_v5": true,
+  "controllo_positivo_ok": true
+}
