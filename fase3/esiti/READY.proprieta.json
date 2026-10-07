@@ -1,0 +1,28 @@
+{
+  "attacco": "READY_ABUSE, READY_STALL",
+  "riferimento": "pronto_non_addebitato (I9)",
+  "tipo_controllo": "funzione di valutazione vera + test di proprieta' (Morgan, 2026-10-08)",
+  "test_di_proprieta": {
+    "TestValuta.test_costo_e_finestra_piu_cpu_prima_del_pronto": "ok",
+    "TestValuta.test_lavoro_prima_del_pronto_si_paga": "ok",
+    "TestValuta.test_nessun_rifiuto_ne_ripetizione_per_il_pronto": "ok",
+    "TestValuta.test_nessun_tetto_nella_configurazione": "ok",
+    "TestOrdineEpisodio.test_cronometro_prima_della_cpu_e_niente_invii_prima": "ok",
+    "TestOrdineEpisodio.test_costo_usa_la_cpu_letta_dopo_il_cronometro": "ok"
+  },
+  "limite_pronto_s": 60.0,
+  "su_riferimento_sola_finestra": {
+    "esito": "valido",
+    "accelerazione": 1.25,
+    "piu_veloce": true
+  },
+  "su_v5_vera": {
+    "esito": "valido",
+    "accelerazione": 1.0,
+    "piu_veloce": false
+  },
+  "riuscito_sul_riferimento": true,
+  "bloccato_dalla_v5": true,
+  "controllo_positivo_ok": true,
+  "stato_nel_registro": "limitato: contabilita' dimostrata su episodi finti; guadagno sulla macchina reale non misurato (regola: 'bloccato' solo con la misura)"
+}
