@@ -1,0 +1,2250 @@
+{
+ "comando": "python fase3/oracolo_sostituto.py",
+ "decisione": "M7",
+ "seme": "sostituto-pubblico-1",
+ "sessione": "sost20261007152406f491c575",
+ "durata_s": 38,
+ "impronta_protocollo": "e796e3393360569ae8d58ee163b2b2a2196b7b41baef11c95508c104c5624f6b",
+ "due_costruzioni_identiche": true,
+ "casi": 316,
+ "validi": 306,
+ "non_validi": 10,
+ "per_op": {
+  "0": 247,
+  "1": 30,
+  "2": 30,
+  "3": 2,
+  "4": 2,
+  "5": 1,
+  "6": 1,
+  "7": 1,
+  "8": 1,
+  "9": 1
+ },
+ "per_tipo_di_eccezione": {
+  "builtins.RecursionError": 3,
+  "builtins.TypeError": 4,
+  "builtins.ValueError": 3
+ },
+ "impronta_casi": "f951402228d435e0f52c408cc90732621aa6722b3d8e153296259996eba57575",
+ "impronta_oracolo": "9bfd9a72fb5db2c08c96c4f63416ccdbc5082005e6239dacd37c986b4eb99db8",
+ "predicato": "un intero nel risultato nell'intervallo [268689, 268965]",
+ "documenti_col_predicato_sull_originale": 6,
+ "documenti_col_predicato_registrati": 6,
+ "predicato_confermato": true,
+ "copie_fuori_da_git": "lavoro_v5\\sostituto",
+ "oracolo": [
+  {
+   "caso_sha256": "03ffb55532ed99e87cff9efc92edfe4de410dd43f8345a277d69b404a8947e24",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "a721ed4c958d03d021a1c1108e684a45e1a3f18e0764a88a6292539f05138fb2",
+   "op": 0
+  },
+  {
+   "caso_sha256": "04dd624abbb88dba77f9990893c8b6fbca55e350861180d46fdd0e04ac584369",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "7c652f72bff9577411829ae46b580d407819e45991140cae883e8270372ad2cd",
+   "op": 0
+  },
+  {
+   "caso_sha256": "055862f2d8882872aa794163bb01a7e07ff4a53d4966acfe305552a5e2c1cf63",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "e6751e85f97004d673949d81b48123a8d5fcb2688f6111fd4144ba37ca0c63a2",
+   "op": 0
+  },
+  {
+   "caso_sha256": "0566e4b1afba52d0d2d5bf74356c3bf25e5f8fb2bf6292faa1289e32d4e9623e",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "96bcb4d8050474f582b10bc50d04c94cea03dda4d8514969bc960077598201c6",
+   "op": 0
+  },
+  {
+   "caso_sha256": "05798e219528bfc101852034558da229e3f0cadcfb9b6cbb86bd6af3fbdc5fe6",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "be242d4d79c3224ddeef26f71091212081af993a449979d6ad15aa9e4fc606e8",
+   "op": 0
+  },
+  {
+   "caso_sha256": "0637f0a9045508c452b3801bb567f369ba0382602735267bfca18f1b6543f2ab",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "9e5f079e5bf3ae03f530fe67c4439b499432782956cc211935afe1ec031cc53f",
+   "op": 0
+  },
+  {
+   "caso_sha256": "0682e1312c0a7defccd47f746a081951f2386b2f893cf0b4e4783c7cd5a875f0",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "99d04b055c8c34f011fbe15c4da00ab94686585df2019522455c7a49046cbfca",
+   "op": 0
+  },
+  {
+   "caso_sha256": "06db368e8cb55f993db481c904ca25619a16de8d9acde3c2c0ab97e910ef4ce9",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "80ee75d92c463dd3a5dd442855c628baf3059a5d847ddab4667145c2e0d1c63b",
+   "op": 0
+  },
+  {
+   "caso_sha256": "0722e28e65cc9496c82681db54be1485d2596e5aae7865c8836e9a4d11901b2f",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "f67e81711c977d61d33b297d728f47dfb20d8b0928d8bd3b28020534f450bea1",
+   "op": 0
+  },
+  {
+   "caso_sha256": "091e9437727a5bf92ed6f6037cd4bd8dbbff2d11acbd638368accc7b10e14f08",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "f636c9f5efa5ea153edf412ca9101be5a9be829a220fccd407ce31df0715eb1a",
+   "op": 0
+  },
+  {
+   "caso_sha256": "0adf7983351671734335ea848695bef4051ab077908c50caae2055e0f8cb4662",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "b1e93f9d2865d09d1c4dad73ca325c525c7130cc91be6eea7f9c22f7f18f2385",
+   "op": 0
+  },
+  {
+   "caso_sha256": "0ae1c3f1e00ce079e68c9c486024708a42ac6afdf5f7640977c16d06f992533f",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "941a9bd1fb1554e918d8aed220a803686c2a71af89ff0ef7ba44084bd581b19c",
+   "op": 0
+  },
+  {
+   "caso_sha256": "0ca1c709ea910c217780e6b8e0a0c6485133b424b2677bf8b8c22f33d908da68",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "a33a9a93c96ca2b5354d0338b2710b1244be778a640d6c16e464804c67196d54",
+   "op": 0
+  },
+  {
+   "caso_sha256": "0d94cca2c5051d9f28c4565f6f5d56c97ab621f17fd4be27dce062d9d54dfd6c",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "8c4d229aba96bd59f9f9e847e744ae6abf06d75ffdc97f73e1ccc7d3958666be",
+   "op": 0
+  },
+  {
+   "caso_sha256": "0e79530abfd91202331db3d5ad2517651308852559bfd1ad82d726454b223973",
+   "eccezione": "builtins.RecursionError",
+   "esito": "e",
+   "impronta": "f1e187ef058632155fe67f802ff7e58eb2c6fd2672a713144f86c80668822bfa",
+   "op": 0
+  },
+  {
+   "caso_sha256": "12351781e682220f87a0f328b774b7b5acaf06415051d5c3c3515cf5365b9bf7",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "251c286ba0d823bad60c8467877b1ffe39a5649932f6a05014e5fb518f55fda8",
+   "op": 0
+  },
+  {
+   "caso_sha256": "133a1e58b1162fcb7fc8e27a7567a4222e32628f4e342acb18932fd07ad4a1fb",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "d7d709866f7137f6b4ad09afc2c1d7efdb551f378581bae807cdd55c49833b83",
+   "op": 0
+  },
+  {
+   "caso_sha256": "147e04c7fa87637ba72410ffad44dc171612eda90a34b3a31153b8e2713cab78",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "f1fc907c0949a1528bc4fd6dece769e481605d98ad3f632673b8a6056ba36937",
+   "op": 0
+  },
+  {
+   "caso_sha256": "149b785608304e5b60c13ad72a3e60addf72f09ff36b9bc29f0d0afe2afafb96",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "4dc0422a649b12229cb55d5495292c392e4508414cbac17dffccb879498cc03b",
+   "op": 0
+  },
+  {
+   "caso_sha256": "14be23e1509c0800762dd5e6832e46eaafa4b8063f9cbeb7f7254bb4d69cdd67",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "2e5c1b8f5afeae4a3cac4b8304422650688eaa50fcb88cd11100b6448e61eec7",
+   "op": 0
+  },
+  {
+   "caso_sha256": "15e09a86e4baed300c74b547d39aae79530bc8b6b25fbc90aebecde8c0b9cb56",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "5ab1733124646985df21ff696b4b3f52aa05d9c5c71cd17f4d4513a49e7b2217",
+   "op": 0
+  },
+  {
+   "caso_sha256": "1609432e2cb1f0b1d7b98f0b81920f689722015797cb44f77ab7cb5074aceacb",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "98ace39ed4ea62b0180dd215b2fc1d29b07ec3e046a8fe95a8f7d892dea339ad",
+   "op": 0
+  },
+  {
+   "caso_sha256": "182dbd676d50fce86f4cfcf08c927233eef170443e78e6dee1c054d4e1e284b7",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "81581a3547e32006964dac8af54922b8eb49668213e82ce0fe79eb885bbe831b",
+   "op": 0
+  },
+  {
+   "caso_sha256": "18e3dda5265e2dc2c1fb391c3f5adc5a3ee06174f73e8038270a3fedb5914474",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "1c9a7703ebfd822871ad05821a8ea35be71e423ea3c98093ebb6a8a678c5780c",
+   "op": 0
+  },
+  {
+   "caso_sha256": "18e4c9fb3ebbd49501492c372fa696d466627241edc6569aacf95d2d3a5718e8",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "acac336c2efa9e6ec75550b6c782b02945cdc245b40733eebfc07ffc9b76b421",
+   "op": 0
+  },
+  {
+   "caso_sha256": "192411eaa58cd380b039cf26acc3a95ef3859a18d4410b7c681cbda40915a465",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "b90fc082e3c570fcad25793338accc4bf680a6bbaa0e47883e69d6796be6a7e4",
+   "op": 0
+  },
+  {
+   "caso_sha256": "1a084c89f514ab26aa4be4e85851f07122f5ea802a0f981d5983b0b1bc3481c5",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "189eb5e2768774d68dbc3285c70e03bb16134f95c1adaa112d7ab723011f2a49",
+   "op": 0
+  },
+  {
+   "caso_sha256": "1bd9b0ebe08aa7c289dd4fc224c627c303fd05e715fb01b4b1138930390929b8",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "cc1c405c8a04f7974c448bad52e78ff9083320064f28dcdf21054a1aeffd84f8",
+   "op": 0
+  },
+  {
+   "caso_sha256": "1d81aecf7c7cdfa8936434eea602e87a729a0da95b75b79e482b40c49ace5b8b",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "787b8d99e0b4f197a14e909ec7a04d4b45bafd509f16d1ed568916deacde94da",
+   "op": 0
+  },
+  {
+   "caso_sha256": "1e260ad6e26780611600578591951c6efe53c9bf7c798660c04fe4689b35f4dd",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "d862f34fe7fec94c2aa4eb21f4c973a9148d1b74912af00ae6b6b332b24b3723",
+   "op": 0
+  },
+  {
+   "caso_sha256": "1e4a1f639bafddd00d45d879931cc063056404ae06f118777971eb2c4fffa158",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "84655da34b94cb2018472a0cfc4d95cfd3d8424d3f6b9b7f3dd78075cf16e192",
+   "op": 0
+  },
+  {
+   "caso_sha256": "1e798d1120a8f08cd2f6955d30f5760feb7df8083c33c719058c47f32843cffe",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "0e4f9a1a63b668c70d6c21bd41f846f996e020a46dfccd2aaf5c796e5a873f7c",
+   "op": 0
+  },
+  {
+   "caso_sha256": "211c0718351ba50335bb60cbaa6945c79117b6414cd756af39f200f007d6c920",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "b3017500febbf46ed5c93d5ec8f4f37772e0e8dfc3cfb54f45a05acce1db0169",
+   "op": 0
+  },
+  {
+   "caso_sha256": "21506d098234bc63e05f504f7b513581d96b80f1694ea2fd91f91fed1c817095",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "36e0752073adc9b812703b6948404c3e2e0d39a5a7abab7db364c15095099318",
+   "op": 0
+  },
+  {
+   "caso_sha256": "235b51b20f71e14a7aef886e3281c71f49b3e2d718de29c4bbd11d6c896f5445",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "f7e103b52bcbdc38d1b7e84a7c18c21ac7ec0b6a93eaada6ca7ed45e34ca329f",
+   "op": 0
+  },
+  {
+   "caso_sha256": "248896f16dabcb0a900901572b0ecef8516ce30de740e9aaff5e58c79dfa6a0c",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "90f24ec3c01c247022197a36af32d8ecf89d39b0252eb3d6db0cbd7ca365c892",
+   "op": 0
+  },
+  {
+   "caso_sha256": "24be22373bd1b55ca1b3e910bc23a2b41c65105ee3161c418422c7f027254a59",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "7f2dad7f306dae63218d045cb0c57147283c9ee0cccd07dd3ba28ad45427b741",
+   "op": 0
+  },
+  {
+   "caso_sha256": "25ef85135e0c5e35bae14dcb428a2cfbbd1ecf1c49b3d0293311744140d85eb0",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "cf924dbad0d0340fd564a32dfae21253b08573360b096fbbd394143a3bc8af6e",
+   "op": 0
+  },
+  {
+   "caso_sha256": "25f750d335e55ced020ccb3d14511c20cbe6822c8bd846378b0bbc2a19b2e404",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "dd24290fd93058177ba5cafc11ac5a7427f72d2e6de50715094587ebbf353b71",
+   "op": 0
+  },
+  {
+   "caso_sha256": "2657df66082a601fab68ddccb6ef1c4f5f11ad3a2aa2a79d4c019f711838da4e",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "cbdeb81c5b8baf5804b7815b7c5395e3e62bc9e39896be00f7b05392dd3aeb12",
+   "op": 0
+  },
+  {
+   "caso_sha256": "269aaf17ef5497689a1a158633c2e7846a2d3352a818b2faa4879fa5987bad68",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "eecf93238d262fb4521651a339397fa05994df95dd5c0a78641e0048deb4aac0",
+   "op": 0
+  },
+  {
+   "caso_sha256": "26e2bc1ae9451bfdb9358eb1067a4807b6ee22a68c6bae973b707bdcfa037bfc",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "80ce18c46b96342d1324780d53a01ad630be763aabed11249e1c7b0256badfec",
+   "op": 0
+  },
+  {
+   "caso_sha256": "294d4779750994041b1834fea08a9a5d6a71270ce091bc7639532223ec100d23",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "5675cf7d874a54cc638083abf0e80498fa10ec5e2f2dafbca967e5a8ef7fe0e1",
+   "op": 0
+  },
+  {
+   "caso_sha256": "2bf9e44fd6f87460281d9c2b9dd8a0a2860b702644fe9c9351daa01d495635a8",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "1a1f9d485da2acc357a979457813c61f16d75d57952971775a4ee4738b037649",
+   "op": 0
+  },
+  {
+   "caso_sha256": "2c2d210e71cd7edddfa8c3c4730d64ef64fc2809018c4db125ee01b248d425c6",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "ddfe78ddeb43be85982056e6d81543cc87b53838d1925bc0bf36fd4d09830953",
+   "op": 0
+  },
+  {
+   "caso_sha256": "2c738d1a3d67b4afcc38d44c7c38cd517a385b711e6c729dce94bcd2889d1fe2",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "057dab9646a49cb278a2f1aa766064a47e96e87140abda7e2df16c3f926a1d84",
+   "op": 0
+  },
+  {
+   "caso_sha256": "2d16b5bfd3d0f862c196a898070ec718c3ae0b7078240b4502a0663c3f9c9483",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "0b3426e85f4e1247775b784df0db7d842d0fe8243ee6f94fd0a5150961e95973",
+   "op": 0
+  },
+  {
+   "caso_sha256": "30a122f30c709ccc4bc348605d4fb066d4dec7d968d166129556476b70718292",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "494bb6131a7bece23b1e78e22bb4eec1ca4370b1f8fcea5df132c85f3f31f25f",
+   "op": 0
+  },
+  {
+   "caso_sha256": "314398f1e5aced2a6dd9cebaca8f24fbe6dd6c7dd06b1684f58049653c50c143",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "fb17f25987c54ddb9af5bce6ffcb24cec9d4a0867032e1848f6a2647157018f6",
+   "op": 0
+  },
+  {
+   "caso_sha256": "317d065f609d67faddce2c347ce86545be69b7de4453f302e60a86125b590e7e",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "029658dbd31941749fc1377ac441e17918e7d9bd182d6ff51f88cb5a0fc52e69",
+   "op": 0
+  },
+  {
+   "caso_sha256": "321c0fab7d842d494a61458d79357d73f0872eede5d168463a94eb2fe80787c8",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "6240e4055d1105d67399f54a2b4c0ea10c42b98e75f2aba590966a70188ebf57",
+   "op": 0
+  },
+  {
+   "caso_sha256": "324af588d017bc8c385544a31f72493ca475a6476f6010c9fd575f21aacd5604",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "d3e8cdd3b7dd2541fc360deb3105f66ada0d531428b5ad5d689bce4af4ce76b1",
+   "op": 0
+  },
+  {
+   "caso_sha256": "32aaf991b150b61adbdc19e529ca6b6c72c4e12878f1dab7c81191f41ed79354",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "71315bd31fde367e9ae7ea6cb84cbf159c3421589912320cf5ce7dd00a5dad31",
+   "op": 0
+  },
+  {
+   "caso_sha256": "33a161a311af86c1e3130963060ef7873ee69b9d8fa343f408c919d6889d5269",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "3ce346372e688e9f781ffc30c40ddf6916263c041ac4de70d712dafd5f136eab",
+   "op": 0
+  },
+  {
+   "caso_sha256": "348d0f02d376efb92843675bd6bb04528157b64e2ead798952e8b9d2b46ac4f0",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "7c5c7c8c5fd5e10f7511bd4189f2912aac368dbb694350893081cb883af038d8",
+   "op": 0
+  },
+  {
+   "caso_sha256": "35385f3ef7532f31fb348894da96bc12e683052e52914c0f9b1126146db50e1f",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "16a2d162f3b9a67e9b40017e626afa022e6895da17fa563581e71c08dbe70287",
+   "op": 0
+  },
+  {
+   "caso_sha256": "35863c52e8d984dd3c36f5a01c6e664b98fc7ee1920b74c2a988e92570617116",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "9bff5e5cdfde7931032d1a27a7c8241828d44d9363c119994f08b1c2f459fffd",
+   "op": 0
+  },
+  {
+   "caso_sha256": "36bea2a9fa89b03fea79a35e3c43e627d57ca14bfb39191affff44c8770fb0bf",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "fbb2e51e99e0a9d5238d8fbc5c6c67f51c10f8b340cd36bd73ef09a914912f02",
+   "op": 0
+  },
+  {
+   "caso_sha256": "3718a2f9de556b12a54a91dd90bed11974ef8564a433e391f542b2cc1dd62cf0",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "e0e7a1f0c493d996db5272186d0038efa763d5e4757d6ad22192468f6429aad4",
+   "op": 0
+  },
+  {
+   "caso_sha256": "39564e9429ae1989975c7dfb140c3e00cdf4bf8ed7e3a319a4b5fcf382998d02",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "cc24155e096d381432b11c20f265ad72b030366985c8c0c3e9ceb0cf4b0782ec",
+   "op": 0
+  },
+  {
+   "caso_sha256": "3a8c1243c8639f6a7f80402d496501c035d40e19b4f8e7da8de71b220b5aad3e",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "446cc2afb1f7b7ab2420748cb3692ef9f2dc939a6f2a65a9eecf7edcb3004df3",
+   "op": 0
+  },
+  {
+   "caso_sha256": "3b4c0807d6c7b7e6c0a19aaaa8a479d744577da79ccaa2d411ab75b4fdfc5389",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "66c074bac784a2a5d44eb804c2df2cc6ba01fd855c4a11e02825c2b66f7afcf1",
+   "op": 0
+  },
+  {
+   "caso_sha256": "3ba9036b0f6daaced0dab108fd092704a308ee30a72414e8232c4140de2b9a99",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "35fa75f7b3292fd1e52c1fe9d4591ffd4a769be49d6ff9d8111f81e646fab1be",
+   "op": 0
+  },
+  {
+   "caso_sha256": "3bc9a3b8a8ade3fb87ce391104abead97c84a83451ba77c56ddecf8fdf0dd487",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "bf3aebe6e2900db64073d77eab05a61fcec231e03231a47781ad608988fe92a1",
+   "op": 0
+  },
+  {
+   "caso_sha256": "3c62a86032fe1384d07ad8a59da75ff962cf67ecbc0295a3c46d0cdb35e92f3e",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "9b461565cccbd7933107bd36090b0c2856f9def74c4e9bee31a7fb6959d2ba88",
+   "op": 0
+  },
+  {
+   "caso_sha256": "3eb68921df96e64d5043c1c6e4015f781eeb3d6e7e2ea6b7d9e4cd367905c7ce",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "237e7a0377899ae41c0761a87c03b403151a4075f79cbda38085177d50853304",
+   "op": 0
+  },
+  {
+   "caso_sha256": "4128d27ae16178def6a108a718f02f5f456bf788bcdcc9ea35b4da34205941ae",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "2f946cbe2f9f4316a4fb9567adcdf7b5c56afe44e0223eceb727b8e07c4e1b71",
+   "op": 0
+  },
+  {
+   "caso_sha256": "41ee28e8aa424da43d18471d0063e0efd92989146815d2bf55602fdc28b6240f",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "181d661a8b02c27872aaed9c0d9d0a643cd3f34544e26f34c8dc757b1ec7f868",
+   "op": 0
+  },
+  {
+   "caso_sha256": "429e9870cddedf80d36bc0dc226fde12d10ec68f95a765b34ecd4bb66987a484",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "41beec035f0b22a6917a73798ed38fe4475c3841446e5cba65eaeae8f85154d6",
+   "op": 0
+  },
+  {
+   "caso_sha256": "43a7b98cd1f8f71438c390468acd67e38663ca305f58f6419bc27f577fdf6a97",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "db2691dc15fbd7123e2d1bd75ccc34989cb16c666b45307c8823b20d1ee41f41",
+   "op": 0
+  },
+  {
+   "caso_sha256": "475325ecae1e9600d22f13e80120e287cbfec8fbdabc42b1d52d5e2a3621b1e9",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "f8e0cd04705d7fe06f82aa2fe658ef96b7716c661374c137f9271de9302438f0",
+   "op": 0
+  },
+  {
+   "caso_sha256": "49cdf1d7654a57a64e032920ae7f8f308d9a234ee3132bd03de956b1b2b2540a",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "3457ed1625de2299f829c213ede508ef92af17cd1f392241346bc0af4aa20ef2",
+   "op": 0
+  },
+  {
+   "caso_sha256": "4a4b286656987c5cde86b9a8cd94330c7d918e617c62b68a63c77f077972220e",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "61c02a6a3ba229da51b27560cf0c935133d5f6c7715e54c8ae4c29da1df5ddc7",
+   "op": 0
+  },
+  {
+   "caso_sha256": "4a6a9de67773829152d94edb7c0fdc5312df80c1500c246dd24c11c03c5d350e",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "07bbfc151f95f5cb57bf1f11f170d34c79b88a389041d600385e87120d76a880",
+   "op": 0
+  },
+  {
+   "caso_sha256": "4c2b42f9318804be1e3efc6c283a61dd69b630c1d7ca0ede05b170f5d1e3f5cd",
+   "eccezione": "builtins.RecursionError",
+   "esito": "e",
+   "impronta": "f1e187ef058632155fe67f802ff7e58eb2c6fd2672a713144f86c80668822bfa",
+   "op": 0
+  },
+  {
+   "caso_sha256": "4db1a1775f6958ca7738c29393c15be9ee2fa208d4713e51d8436c99dbb42729",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "cc521f42b726462dc9fd9452dcb21bbccbdeec0970785052f54ef8cb4ee03024",
+   "op": 0
+  },
+  {
+   "caso_sha256": "4e08b8a1b2b62126a13c57a2feecace35b85f0be64c206a355c655064ecfe1e1",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "2da4e91003b4dc44b632c7ede82c93ea2ef99149fad96d588ff11edf04be881e",
+   "op": 0
+  },
+  {
+   "caso_sha256": "4e1734a43039c7f68bfecfeea81a2c9228fe94232ec875330b43bcaed8ee53f8",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "c5c1e38bdbd8a319b94c287da44b27aca2d1c7af832bb507b4174abe026405b5",
+   "op": 0
+  },
+  {
+   "caso_sha256": "4f6f8e657b8443f410e557080476d1fd3c64b5dc4afa4f14e1847a55a174f29d",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "9491457b7b702aa3a0a896fb193e84a340db02a0f7bdd4777877531ba8cdb786",
+   "op": 0
+  },
+  {
+   "caso_sha256": "5028b5929cbfc63f83e99c3852fb82865455023e75a6da902f98f942780c9a8e",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "91866626ebeea7329688faf71a45795e338910792d43b17849a578d6362dabc5",
+   "op": 0
+  },
+  {
+   "caso_sha256": "52434e3d6d11969ad9fb2d76a1773eac63a29c686d2dbf9edf0028876bbc7c88",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "29870cc0c14ab350866dd3cc5371dd0e3d0f1d796ca85f16ab7f5420fe3ccf4d",
+   "op": 0
+  },
+  {
+   "caso_sha256": "536854704612dbd27dde10a48cc2b6465a0a6c60404d5883e035ed03f7f913b4",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "7269104dbc42b1e694ef01d5387ef3abb12ad832b48818a765efebae702b93be",
+   "op": 0
+  },
+  {
+   "caso_sha256": "558a7dfc16baedbd4b63bc76fe3ae32244c39f59fcf7820a348a86574b8cf886",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "35889b489f209bab90f8855dd85eafbf92592974206ab79a28eea3c991347ff5",
+   "op": 0
+  },
+  {
+   "caso_sha256": "562e40cca3a38d2eb9d8f7b82b21213f0a0c5d4decdba50971888ff5cad1be66",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "c50b7a5c41591c2e241e19f4961d02ef16db070463d8f884f085154cafcc0897",
+   "op": 0
+  },
+  {
+   "caso_sha256": "5729a10a875e18e0115f835641b65891afdf0dd01d03bcc9d121f14278c1b702",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "bb6bf6d9554e95609734ade5c130ea25732e82e1ae2dda2628a7967cce8bdf88",
+   "op": 0
+  },
+  {
+   "caso_sha256": "57f0cbff8a1411e591fcd9c8fa25f0e84d8fba0d5ded3aca705524a36ed101e2",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "cd9458b8189e67a13df13e9b6cd63afc37e86b3096a106251f2d397c79fe0162",
+   "op": 0
+  },
+  {
+   "caso_sha256": "590ffc654e70bc90f065b7efdbe32835b72786c9980d580d22b511c68a7b9f54",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "da0089903a4f9177c52496b4cd550dfe56a5baf2e2c715474a9235b4bee7407d",
+   "op": 0
+  },
+  {
+   "caso_sha256": "5ba9b29dac45b1efc9819ab42442b17365c797136ac3b53308c554783a9d0bf9",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "ecfd34fc2bb167ad4f7a3f52b08c2afd4acbd81618bcfe0f8a0428fbb8583106",
+   "op": 0
+  },
+  {
+   "caso_sha256": "5bb82a5f660ad2f60a47efc4e57253ade7b962dceb5440617a7a31311fec11e5",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "915201cd5968bf3ffc31e28d4dfe217721b7560fec7e9f5e8dc1375e0d55b86e",
+   "op": 0
+  },
+  {
+   "caso_sha256": "5bf04725442894a5c40311057464b159eec29a43b2919eda4c6333473fb427d6",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "6e238400d8c4d633d74d0082aeb05c18e91ae891376ea04173ee6473e63a963e",
+   "op": 0
+  },
+  {
+   "caso_sha256": "5ff3b142b60415d19e9b082534bdf56d1d51689eedf1b0e3de2e13c8ce68e75d",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "81fedaa88f86f05cbe3d6cd00bd1cf37831feb6021ab676d9b8ba2963e8dcaba",
+   "op": 0
+  },
+  {
+   "caso_sha256": "601d6e631f8d408bac727ba55b55e93574a7a7dd9ea8410dd4c3da358220008f",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "85d9867320243609da4620cadafd71b2b6cc5fe138eea69e33e1a18384bfe9c2",
+   "op": 0
+  },
+  {
+   "caso_sha256": "616f4caf56ef0b5b8e5fc03d864a40ea2051bd835306382bd13b2379d74a8cec",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "520e259e225dbd464dae72248651cedc714ff069a70424c69c1563a03a921326",
+   "op": 0
+  },
+  {
+   "caso_sha256": "629b615260a2b1d5b07a3c0f8cd7e0c2eb198f963e2a64d6523403b54c1b79da",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "b199172dfa686a079f51a9dd409371be936e14e12ccc0881b17e099ac89a9bd2",
+   "op": 0
+  },
+  {
+   "caso_sha256": "641b231c9b65773410a185b660f81130778805b9323f7b7b192f79c8c639d1a5",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "70ae4749d7d07a16fec2c87e3669b6d49a671e8f6619a2aef09c7495dad1e4d9",
+   "op": 0
+  },
+  {
+   "caso_sha256": "67aa82da70804baa0b4b5da94e7bae2f9100db28e6b5fe14458095333c415a96",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "c6c503e1db65f74bf5c5229f2361d092e2ec953475ac72d96dbea0efcb765a74",
+   "op": 0
+  },
+  {
+   "caso_sha256": "67fa8f8a2a35465433a0c8e564cd4053c9939f636e347fad4b1c161479d7aff3",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "b5f4f66df1dc780fd43caa4218b87d21b23adc6ea0b2cfc32f6f8e4fd5f2e392",
+   "op": 0
+  },
+  {
+   "caso_sha256": "68a769fa611fe9dfbae09c674d5d3773a597e6fe8b9355feca1e1083d2b47cb3",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "bd66e0219b6fd9b2f59b2c6d7ef93106974532e472957adf3720d38fc0c952b5",
+   "op": 0
+  },
+  {
+   "caso_sha256": "6b14d6802ce4c28d665c54683e4d1afd84254b72e0b5a0969d11afd7987ec506",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "479ad7097b4c9ce4b4023ff30374a6f52db094edb105aebc36babdafc184eae1",
+   "op": 0
+  },
+  {
+   "caso_sha256": "6bbe18466343053a5bde9a8b1dcfaa68c57531377d2b1485a8382c1ae03f8aaf",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "3e1988bcc45284d2e8da354933da4474430b027e8b31c1fdd58ac69148a7c87c",
+   "op": 0
+  },
+  {
+   "caso_sha256": "6c8bfb167292bb37e95b6a4bdd801fd9f3082791a3983ff237d6d9483dc90ec8",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "cbae721771ee2b9c5789ba608480070d211c91da6be341459ae6d3391416ab36",
+   "op": 0
+  },
+  {
+   "caso_sha256": "6cd3e9108f5a30ac6f67342f1f694ce635223e4c3c4d0ddfd1aaa085e3d748f7",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "857cb89a54264639b66ce3f31d68de5d7398c20d924f4dfb43877ff71cfe2702",
+   "op": 0
+  },
+  {
+   "caso_sha256": "6db189437cee7dd33e58b8d6eefaf03c5857b03e9eacc5966ca1edce57ab3afb",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "aed6495b2480c62641a12ef9ce59c36c290d354006df8a24c9dd0a6a97872b40",
+   "op": 0
+  },
+  {
+   "caso_sha256": "6e3166c6a3e56a3b190b7bcfbc3da88e5c114469695815521ff911004db25cd6",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "361501a0c275d778b92baac8b05f6af1b31d51973558f67b3a80422399b387ea",
+   "op": 0
+  },
+  {
+   "caso_sha256": "6e54a422486f5094b7d5c5da5c0056e77c7d701ec15747d8df7e2924f60505fc",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "d07b989bf9667db7a09a97af17815efce3ea0307521dd68cee32bffeb2b4cbee",
+   "op": 0
+  },
+  {
+   "caso_sha256": "6e61d4b2393b767379e2dac4ac97e16331ddf0c74e78cf1691f6238ace07e84d",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "fc9b5c6c1d4f02acb993ecff89be5b78d4d82546ee157003a1474de2fcf917f7",
+   "op": 0
+  },
+  {
+   "caso_sha256": "6fce100410be2c6bcda6f10dd818e28083536a4eafa5c3001fc88a01c16c1698",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "9982f51bc312c41834e4b3b84707a968618b9fd95daa3eff91d7e11891706695",
+   "op": 0
+  },
+  {
+   "caso_sha256": "720a7b91dba99abbec61fec248e518a0463e46b0bf834ea840d003fcf824a650",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "549bb6e1a3af2f38b0a9819d9493d7ff88e487f6c4848fa133de858117860779",
+   "op": 0
+  },
+  {
+   "caso_sha256": "73559af30ecf3786db847aee5ee0e0120f833f1459a3739edbd2d3d2db393ba5",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "315ac3283a13f522f3662e571805cd084981f7eb6375fcd521e2d1845bbedf20",
+   "op": 0
+  },
+  {
+   "caso_sha256": "73799df308aeee28d65dcbe126a60ce9740c1e0339b1d96382f06eb6ad44e93b",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "34e96980e2322a6aa1006894ac32f5719c12c1a10dce81b24fecad75a01a3547",
+   "op": 0
+  },
+  {
+   "caso_sha256": "747282f83a01a84fb1f9ca52a4e4bb53506e31373796489aea4a36194a60b54f",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "5303901f94fbedff5958f24bd4fc15dc4a8757853f800df55a64a0f80cee8bd8",
+   "op": 0
+  },
+  {
+   "caso_sha256": "755f5af18288325f572d50f1f0d7ce2d5f40195455a8fa93dc78d67704cf227c",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "665cd359947a45349dcd973afea67b64b53220d8874721fb685d2061946375e9",
+   "op": 0
+  },
+  {
+   "caso_sha256": "757aa975d468f4d18b3beb6994b26bf503b52bdf314dde0864f12277d2989aa3",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "a39ef336f7410d840a537d3c942c95a1a213c8b225c316b96688d231e34e1655",
+   "op": 0
+  },
+  {
+   "caso_sha256": "7590ab92d6fcba74c35001887749af4c05f6a5b9dc952a70664fd06df6641147",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "5a977d5014a9294630a632b1395d08517a9f9f22d8c8613f11530c92a70297b0",
+   "op": 0
+  },
+  {
+   "caso_sha256": "75c9e5dbe746651130b54cc54d90eaed2deb694053c1edde95217563717f360d",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "8a9d13e3cc2c625bbfcfa329362772fc7e46292532e343918d9737323fe9fcfc",
+   "op": 0
+  },
+  {
+   "caso_sha256": "7621b51a44a6fa132a0a8c5b1605370181472a61292c7b59ec14e0fd69e06890",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "d3107567f52082046b5e73f0a36109ae0246473dc36e28c2719cd58c39347987",
+   "op": 0
+  },
+  {
+   "caso_sha256": "7694eafe5a79f6ec17047bc11f65226b4481be791006d51c47294e4e94684b03",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "a1b50ef783700ce210de2c9195b0f43b2403c82e10de22863b08c06def945cfb",
+   "op": 0
+  },
+  {
+   "caso_sha256": "76b1b55c8a76ec531af0577d52fa79107bf5a9bfde026334356f25ae6387f074",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "649043f9a4e14569943915c62dbea50a9c66cd635b1b54be3da278d2cf987f2f",
+   "op": 0
+  },
+  {
+   "caso_sha256": "79ba603541bc390aed1e53df347d36255582085929220c45d4661dd1f20bcae9",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "d23323e9b0177f1911c6d83b021eb1771241c09cbf7f921bfc2526e31c9077f6",
+   "op": 0
+  },
+  {
+   "caso_sha256": "7c02fa87c5d1066e1f203b8add3b6ee02b412baca43c94e260f95bcc470b5d39",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "7421f522d5b01c6d6484b34f9d275993f5e66d531ed3ddaafbcf1245cdd7a88d",
+   "op": 0
+  },
+  {
+   "caso_sha256": "7caa26d291ea851b9b5875d7eba42e5bebedb598300aa5c124c6e56b9d0dadcf",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "6f981aea6388947de1ff1abc927158516b53cd1c7c725b7531e40f7fb8a6c304",
+   "op": 0
+  },
+  {
+   "caso_sha256": "7f2341ea933ae964887ef9b9aff008ea7d47ec6e5bb6b63baa6da6e5403617f2",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "471ee474428d9307b09d9aa035d07e68501c01bff3a8b917a02847086ff9f37d",
+   "op": 0
+  },
+  {
+   "caso_sha256": "807c17571fe1e7e33d9a4296c82fe3053914bf52f1275e1c632a2245742c858f",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "4022853d5f36bb4d05b5ef325114ba5dc8f3167337f67d490a745f44284bcd1f",
+   "op": 0
+  },
+  {
+   "caso_sha256": "80fdbe18d2a9f5431e288ae626fb80e8f0713eef8180a1419ea78db2be3c5f5c",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "c9d427eacb2f16cf16cb244771b6acddbf0b9f6889d1834ffef464da48a93719",
+   "op": 0
+  },
+  {
+   "caso_sha256": "80fe60e5cd03c8ac735b1f59b6976e8a525b4a3be6d4f00f13b926cc1752894c",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "b3a58a6331395ba8cb48765ef127765776fd2cafd2a972f9cd61c573efde94d9",
+   "op": 0
+  },
+  {
+   "caso_sha256": "83acc984f45129aa075453e75a73f686ff81760dc6cab426737db98c3990ae01",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "103d988acbffa8d45cbda40096fe038a786aa5c4af81d364295aa2ebb38371a8",
+   "op": 0
+  },
+  {
+   "caso_sha256": "86635d47ee3e15d9c8e0757e28a2d638408d96f8e3c964b9ec021b6193b34df2",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "32591a79ae0d720831d6844d269ecaf2d62cff3ee8fe6922275004b3e27994fd",
+   "op": 0
+  },
+  {
+   "caso_sha256": "87b10b06949903c8c8686baac9829ec4988e6bb603087c883a3ba1bc9b28873f",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "5b55f1cfc59afd80905d473aa8d8504b5c3db6a45bd3570d610eeb82b6447788",
+   "op": 0
+  },
+  {
+   "caso_sha256": "89c25bb3aaab566dbb1dec39adf56a9dd73f648fbcd52244f71750116dda1e47",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "0cb13b3f41699e42f6a5c970284808f0e9bf0b99f9a338c7dd6c8e45cf1abb87",
+   "op": 0
+  },
+  {
+   "caso_sha256": "8a99bf564f5a6b890856793207401d87232609af292f09d0c8de587a9030ea7f",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "039bbad664d918857f5da0bea7f270cd20f4ba398167d192cb3fdd13938b2447",
+   "op": 0
+  },
+  {
+   "caso_sha256": "8b27f414a464b398c9c9b53e3866170916bd8d599dc10bd22d46b946c039ec2d",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "289ce82cf1f732bae8d8b79b220c6977df2fd70ac80013f95a46f361604441c5",
+   "op": 0
+  },
+  {
+   "caso_sha256": "8b80f900cf5ea8bf638fd22c8dcc815ff22745615159cfef012a553816311d51",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "7c23512b3958c1ec56505294da5617602bf232cd7ac5635735aab8462d38663c",
+   "op": 0
+  },
+  {
+   "caso_sha256": "8e3020488b0f321c57f6d5fef9ef4b94a4181e1f3908e6b61a04a78bc4df4213",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "91e60fa69166225e866cce62e3ebee0b035b11abff18cdda3777a2ddf2ad8461",
+   "op": 0
+  },
+  {
+   "caso_sha256": "9025719fc074f41cae07422d5319fccfd74754aa1e09555fcdf7ef0870f8da12",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "c43c31fb62af2e77fbf04981342ae9039ef66dc6def1d333698f26e82e9dbf47",
+   "op": 0
+  },
+  {
+   "caso_sha256": "91dc363b132d8e36f6e788d48ab4020e4c402b322911fd31efd4044a495e72d4",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "e63f5b63884f5b7daeff4aaeb6dc72eb6190b839bd7690d159a73d4ed72b2d3f",
+   "op": 0
+  },
+  {
+   "caso_sha256": "92158b0d3d277f27e8ce242e0382f8721ea8fa1786463581c59de030d8708bca",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "6ba7ea615ee51822f13c845a6b331e7b30be2d5c232c8dc1e2019cc811392a30",
+   "op": 0
+  },
+  {
+   "caso_sha256": "926b3d9602f4fb0342c91354a41b0c197ce39103855e6ec4bc66f7bd84190ae5",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "c1d622e7a3c803c426896f1974f6d1a07a0fbf8bd36b376f64791b9339a8721a",
+   "op": 0
+  },
+  {
+   "caso_sha256": "93163324d050715050b9ced08c09cd4669e2df9a47dae45c29428c3384bbd272",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "571b6a6b7a73faf37d3b0eb211c752c9b402717ec8ae88c903c947b27829d313",
+   "op": 0
+  },
+  {
+   "caso_sha256": "95da16eb04f3ddc1da2bcb572405b35c9ed6aca06d4a903c42f4813f21fd80cc",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "0ef43562036bddeb33d24ad92325dc44669de4af430edcb470bfc36fd60fb1ab",
+   "op": 0
+  },
+  {
+   "caso_sha256": "965c014b5a6051aec483c5a5cd4407784137b378144c20761380e4962af8cdcd",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "b2a8685214a1cb8ead1d6fd47429820518e5dcd375a5f1593f5b5cf47c008bd0",
+   "op": 0
+  },
+  {
+   "caso_sha256": "984df42a8d65056e5ce3b92bcc39fdc9b49943c5c232e7fbc8a731303de370d8",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "17e9a327871d37b2fb3068f226043f4dfa340b3c5c0404d3359e70d2e8c6d2b7",
+   "op": 0
+  },
+  {
+   "caso_sha256": "98f3004042417571ea6b74d86755b52bc6aae53ea35c60f45a9e6ca887172484",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "7dc23330ecae5c077c6707d8e7ae079702f89c3847a84d790d4c121befbc5386",
+   "op": 0
+  },
+  {
+   "caso_sha256": "9a236ab145cc67d60fbe941e0de5ea8c44ed7f0fb6ebb0a604e40bf1d5e37230",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "63ed4f9b1720a5e8878c749a145eb8bab420f00397b1e69dc9b91670d6d0667a",
+   "op": 0
+  },
+  {
+   "caso_sha256": "9a8db30429a9d7700bbdbab760272544b5cecb8e235c0c03d100c13188acd192",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "7ff268fccb9392b11a725384c6862b2f9135bfda06612a5cbb02638df51bea4b",
+   "op": 0
+  },
+  {
+   "caso_sha256": "9b7f360f3e6149333c8f7998a66c5a088be6d0053dc438c0e4feef6d3f2b462f",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "05bb754b2ff66680ab947a94d8e7c5aa3fc635fce74487b7f0edff6b4507506f",
+   "op": 0
+  },
+  {
+   "caso_sha256": "9ccfe2bea8def8f193c12a2c7497a95079426901a199d76b219326cf4d6696f0",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "1f4b2c7848acd56045efab7cf1a7be54fdb39d07923881b2bfe2817abd9b15e2",
+   "op": 0
+  },
+  {
+   "caso_sha256": "9e4461c35c97f865a6472924148cb4f6d6d11d24167ca18e3898839be6567d48",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "f3e650cca906662def233ad8e168c0e557e5c69b88ad257eefe384be51d8e2b8",
+   "op": 0
+  },
+  {
+   "caso_sha256": "9ebf6c801f25a621446d3a3b255c187b166a0e5cabc042c0ae01506f0a116488",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "91b939dce57fe78f8448e3c704ac82de9518ce7a603956abac399e89e0256ea0",
+   "op": 0
+  },
+  {
+   "caso_sha256": "9ffa768e974ccd85490996978de244ace9531c5c8dec4e60d6f29ff4bc404fb2",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "b0c11096a375b425b662ed661b509181e161d2eb39626b94f409d6721aade03f",
+   "op": 0
+  },
+  {
+   "caso_sha256": "a1738fe082f1731aa6009fbcd6ae9c947e18632e3dc975ae92b05f8c8e1797f1",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "f9a898a2b0e3b8c71b023c9b02c795c0c4e7f5f2a6e9035ab8bdfc0628e30b77",
+   "op": 0
+  },
+  {
+   "caso_sha256": "a180dbde1c35815fdbe0d5587666e4572fb28a2f8865e33ce5d135763b55c372",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "5fb4e3e1536c6f726fd74cef4e9e206d915d4f97a4c686aea50a4108907c5052",
+   "op": 0
+  },
+  {
+   "caso_sha256": "a1d2a2af17cf97c1b069f9cab4533faa2fa81a10fe60823f2d1004ce960a1878",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "9137704b8f7942b8a72324527d66afc59a70adb5644d9b1def0471a13d13cc4b",
+   "op": 0
+  },
+  {
+   "caso_sha256": "a2574b03dff0c27b93f5c763d806f4340a109ad83e06a16b78414df8cd70cca2",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "359e9164ee269c4ea030f02078c487d627ffe086ea31d957c342d77475a834df",
+   "op": 0
+  },
+  {
+   "caso_sha256": "a2a27c69e8d77a15db08e9ff523ab6df9165e5831cda2695966b9d613ce00276",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "3e917155db19ad58780e4c60d24ffc84f6859a91df9a08b4abddd7da11957435",
+   "op": 0
+  },
+  {
+   "caso_sha256": "a2f7167fb32ae3e3a31d4f570c7e4d4124f7a18d6300d348cca2f3dbe68cb541",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "096d859b533fbc93c9e73ba7da199b83d1b6c1d35ce765f1cfa27699cffcd181",
+   "op": 0
+  },
+  {
+   "caso_sha256": "a3621f877b8dc00d0d88ce5e563f82c57982798c8b5cea54e499942e42b8f91c",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "e48c3e80dcee4d4445ba15ac5aca33851db871472d7bb282e1864ffa806f25ba",
+   "op": 0
+  },
+  {
+   "caso_sha256": "a39a9db8223c6447000568632ea42b2a460e40d5d5d5133d1edcef27471704a1",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "c3da5a8c388165f7cd93555d57e7864c1ec0ceee005ae31073b4efeb97a8acae",
+   "op": 0
+  },
+  {
+   "caso_sha256": "a528666579c92636e23ccffc16ce92f708c6e8c7ee35c64de07525f550da4c9e",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "b4557fe23951ed08b3987f8c126c9458c983d5dc787e54147580736a60c3e28f",
+   "op": 0
+  },
+  {
+   "caso_sha256": "a56b24a490f6bbbbdd804f389115413520f7121895113ea808f11e73c17a0658",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "7838e4cead0fb746bb5baacf83de0935b984f61aadd76e1eb960277f07151518",
+   "op": 0
+  },
+  {
+   "caso_sha256": "a5e482a61b6f82e1b6b7d6eee240a3742baf2193c09625db1d3ece84ead1d759",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "607ecec28e87f0288f391489f7242d507e86ecf6302dbfd23aeaf5507ac682de",
+   "op": 0
+  },
+  {
+   "caso_sha256": "a7d78e95a8cb5ac5a3dae06decdb2913a08dc76bd03192569930f631910b68b7",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "bd7a263eee69eba4fa16daaa0c11fce66e78aa0835504155c779a0ebb9123d5d",
+   "op": 0
+  },
+  {
+   "caso_sha256": "a811072a3f6cc8fde8da19d88449ad626b4e29d9129ccea9d6847e12d1b559c5",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "f433eecca4e5ea18a5ded6ea00596be0e7825ac88b54ee9555237376988653fd",
+   "op": 0
+  },
+  {
+   "caso_sha256": "a94fcfeb7943d4b2410a81377cc7aba89d6f702d8559dd7730e6044eb95fb1e4",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "877413a21a973ec59486c8416305c7c554c2b0aaa05acc731ed11bcd5ad693e4",
+   "op": 0
+  },
+  {
+   "caso_sha256": "a9ce753dd29267658bdfd5594cbae6263ce2f35766863fda9042c7b65e7bb6e5",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "6816362db003ac2421046ee59dff41618273a639d10e0df32d9aed0669f1a27e",
+   "op": 0
+  },
+  {
+   "caso_sha256": "a9f1a1856a1af6b563600759cab407e07918994f9d2ab78c6d6f48828881549f",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "34bc41fe682dd15ee7f4a70c72afba4ab0dd9919ef0d0cbdad7202408e0d230a",
+   "op": 0
+  },
+  {
+   "caso_sha256": "ab119022ef69cf1246fd3fb5450e4aa73a972cc860c4f3f15713d2ca32f3159b",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "8cb5b9ce41178387823f336b3dffc262e3cc88fe2d0ef9ee3c85f59875e1ce9c",
+   "op": 0
+  },
+  {
+   "caso_sha256": "ac86a1f222ad6475ef1019409149e0f9e49e0e5320403284029c164c9e685e2e",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "403117f8bea1c1adb8912f6b96a2a5e00ac36cdd274edf68885ab773cd0a2cef",
+   "op": 0
+  },
+  {
+   "caso_sha256": "ad0887ab911a0d832dc451ec6051c1c1ff0623f0f576d0c67f474721040114ca",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "28ff01ab96cac1e008de0ba409cfb1bbfcf8708450fcd297de3df9d5b43a35b8",
+   "op": 0
+  },
+  {
+   "caso_sha256": "b08584d6321b5206621b16c08edeedfded4584d8074acbcb68fdd214ab2c3425",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "4208ff1d5992c86782649d892fcd94f2606152acd97d996a92d3eff2967c8b87",
+   "op": 0
+  },
+  {
+   "caso_sha256": "b20741092ae88a7101ee5b0ad7fdbcff4d36b7a9ab344e327e99121bbf7bd53f",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "97043948bb36318c73854e2685ae271da9cda686de3ebea270391af401c55a4e",
+   "op": 0
+  },
+  {
+   "caso_sha256": "b29d1b68e094e83b932d431bff75a67878088f2cd7305891357020ec995ea8f7",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "43c0b45c5d54e30205fda1fb60c2b92d1aa065f0e5390759fa94d8cbbd8e78d9",
+   "op": 0
+  },
+  {
+   "caso_sha256": "b356afa907dd2de117f11f597465f6e952b8cb302aecb4161a4ea8ec5a7df040",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "8ce7f33f02fb17b5eaa86855ee52dd8039ffe8c6e4a1fd4c573fc6e2fbc6c59a",
+   "op": 0
+  },
+  {
+   "caso_sha256": "b457b4e4d00728249f69bd6f3f8fea755b056db9397a713b59367f707aa53712",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "708b6ba5b2b77f9dc058e6e06982e7b007bab8d1c7e0ddd9d6722c2300ba3392",
+   "op": 0
+  },
+  {
+   "caso_sha256": "b691e2776d63857ca0173ab384f468c4165196aa5be7ddef450573b17121c3bc",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "f58d2829742a06ef17e34bbef2462b617ac0972b6f779bd9274b0507595d826c",
+   "op": 0
+  },
+  {
+   "caso_sha256": "b74d86e4abf4fba40c42c7ee45dea251792f8534537146959ab9f0bcc08948a8",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "470f3a711e5bf5dd298e8163b877f7c238ef4c1d86b310d6748c98b50094badf",
+   "op": 0
+  },
+  {
+   "caso_sha256": "b75179d4cec6d3cf027fc368411b682a76a4723b099a4cbd81c942695ca90ad9",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "690f8d4740261b6cc30fe93b18559df94c766bd0a51d488762b82349e76bd02a",
+   "op": 0
+  },
+  {
+   "caso_sha256": "b7720e52ae1281d5b13bca2632780d36fdf19b7d660f30240b0624980d7a9497",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "c66ae55b133e1ee6cba8f1467790493691d47e42516c470cd1758a4b1e5282e4",
+   "op": 0
+  },
+  {
+   "caso_sha256": "b827d0de055d4c93c00aad6dd29b0c22b865e409d33ef52f36740f71092c8ff8",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "82a6e6dddd14983dfc5112aab3a5a790685b3e72729fa0b1f22b79f5096c1738",
+   "op": 0
+  },
+  {
+   "caso_sha256": "b8de14f07aa48fc8a3ca3cd54c701ff4bf33cb2fe1c5fe090c179296a0d997fb",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "82ad23fa920251aa5a0da7059bd62ee8f29c763e58b5ad1ba8545745a460b536",
+   "op": 0
+  },
+  {
+   "caso_sha256": "b9c365cd08aa29f9cd6c914912a25ab76829233728ab09ed67a1645a79c82bf0",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "cac21a83ab72a099d989fd1e9c6ad8e31d3ffa5a4202665215a4c5d1c9a009da",
+   "op": 0
+  },
+  {
+   "caso_sha256": "ba36df645bba0a75165ce05e9dda77dd2e04cd4382bb89d83035860bae012725",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "b628f3bb3292176b44c5ea83dffe9ac7dcbe1258c823c910f2cdf1c2908b6346",
+   "op": 0
+  },
+  {
+   "caso_sha256": "bbd15c6c0d231a15df31d7223b01c1131da0a28ce2a4b97f99312a99d941dc5a",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "c538b1426269d8712b8c09382ebf9f9ed28621886b115877a3e39fc732eb85ba",
+   "op": 0
+  },
+  {
+   "caso_sha256": "bd690f9bcb6723bba1c55a95e9c9d310051f8d4e02c9edc373c7a24931381d53",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "542b4d6a5c328cd4008b7466f3102536c85a80e68245aa9131edf3ca70367bd7",
+   "op": 0
+  },
+  {
+   "caso_sha256": "be46413d230ee8ac5bc8ea68e8d84440981c95bfe06934705940e0ca81d87042",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "56c8a23767d5bfe8f258e14431c81bf1cc2312ec70be8d979f66c6c5e1151a94",
+   "op": 0
+  },
+  {
+   "caso_sha256": "c07a92f72ce989b3186cb0203895c5b36b41127656e176b61a16863e57ad6dcd",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "90163b9fbf5007ce60ce9ec711fdacaad9c1db13e008227e0fdb7f92d4aaa030",
+   "op": 0
+  },
+  {
+   "caso_sha256": "c11a48422b36adb5fe18a9683d94e6a498472bd6e8337f8322fa7faf81fec489",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "6693f3f2845fb8dc69b5656bf780a554f05ce71ded7837a5aaad775e14a13fd9",
+   "op": 0
+  },
+  {
+   "caso_sha256": "c34c231e354aa47db0f6e196a625641a57420caba63759cec96a6d0ca96c36e1",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "e153a6277f71a856e61bb1e854ef92cecbbc37bd8d101f77f4ae8201fe48f803",
+   "op": 0
+  },
+  {
+   "caso_sha256": "c356cd1bd9a6b574b8ae31241c04a7c8c89ba544c65aea9cf2c6a6c49d76ffd8",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "f1484e0403fa9160a67bd743b4e084b15625cb8fa14cfdea82021bad0fca039d",
+   "op": 0
+  },
+  {
+   "caso_sha256": "c3654f314ab04c1d28dd762a63408ab00c6484086613739bdccdc69ede477887",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "715eb00fc715f9f02d9bd0031f8b98cc1cf3febbb7a686362fcf1c6a0a028143",
+   "op": 0
+  },
+  {
+   "caso_sha256": "c7f3de11928be630b5c0246aab2b49ecef93c8a568725ee0065d3781028f5a1f",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "031add156dc2190f2dfbfc2961f728a461a6dcaa72b06ede48c02d5327041d59",
+   "op": 0
+  },
+  {
+   "caso_sha256": "c971a0bec6b06d85bf3d1acb2d09005a76fa0893fd85fb7d0d7ee85009f1f94a",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "4793d7ada1d5eb7239a2747fc4b0a3adca1b093f916aec5c6a82338a4c4acf3b",
+   "op": 0
+  },
+  {
+   "caso_sha256": "c9dafe7177c79e18424081ee82459f7b09ca551060b52cbf4736f0ea14582e4b",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "e99ed24c9bf95136352870ede4285b0f879af57b9da137d2b2c50c3a0d7b3f6f",
+   "op": 0
+  },
+  {
+   "caso_sha256": "ca854891cb5bbd236dfd9d4123af30ca8eefad5aec1cc3ff3752c6f4f78cfbac",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "1229ebece6c6d6ec07e22f9437c8c12011fc14103830424aab6b7517d96c91ec",
+   "op": 0
+  },
+  {
+   "caso_sha256": "caea9d2f94a574e54ed657ef1bc40dd04bd18dec76540352cd9332c802d82453",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "4e78b055403ff05709f1998b32d443fdf8ae45c7a4d0b938585dc1ae7b4e96af",
+   "op": 0
+  },
+  {
+   "caso_sha256": "cb2a2b464e88f645b1317a5b02830dabfa37d389fc5ea18ee6b7506d0ddb9e09",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "e43f4254672f02c71e750921be1d3e51aac6a2dd5c3101f411054abcf6fbe123",
+   "op": 0
+  },
+  {
+   "caso_sha256": "ccbab80b2c3c312e4d36b5b8f0e24dc52b90c150a3b0df3eb470a389707550fe",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "0a4483e47f3529a6ed70feb72c250220e37042730f14dbe2556378d6b19f0307",
+   "op": 0
+  },
+  {
+   "caso_sha256": "cceee34c11180b2dcf3c38aed706ba229f334f26f11ee6d7e90987a42635dc8d",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "495202126358ee12b6bf06cb87e11bc4503bf214cefb5111f436b854f7e37699",
+   "op": 0
+  },
+  {
+   "caso_sha256": "cd82a2aa9af957957719450fba548d0ab906dc0d2e2cda728f436cb52f692813",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "a07c892439de5f067eeb22e44de49b9b9c677b115d8a45d917ced7473a76d28b",
+   "op": 0
+  },
+  {
+   "caso_sha256": "cde93074da78c57016c04aa8fb254d17edce6e206d1b09e82445e3c090b1691d",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "898639db35d33e326aa2a227eb9403cb319fb43b6a6e6c77127fa2a471973767",
+   "op": 0
+  },
+  {
+   "caso_sha256": "cdfe60ba3feb218cfe039081b7c239204ccea9f24f55a73f98e15845d70e3809",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "cb0a17a226516429d720aa8a98c1523cdae3414a9122b4b432f314f7b895d3a3",
+   "op": 0
+  },
+  {
+   "caso_sha256": "ce11ee4a3fbbbea598ae8275f9be4d26bccf653beff0743bec465161692e21c1",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "bd102173d61779e920a91139d1d58cf3bac3feda6e4c275cf6d82af175a4fb13",
+   "op": 0
+  },
+  {
+   "caso_sha256": "ce5b16cf8351488aeff6cc20017c8f990bfc984ce1a33bb425e86e43cc5a6335",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "d3f90238f10a756d5b96ca518761c3254ee3c91b59eaea38bda38de7b4d713f9",
+   "op": 0
+  },
+  {
+   "caso_sha256": "cfa3d453c15c4b5b44d44a07e8c00db1abc62cc97409f55da428f2999edaa7f8",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "236ccb30d054c44f1eaa30a460334feab72bd344663c9f620d1fcf7d75b98ab0",
+   "op": 0
+  },
+  {
+   "caso_sha256": "d00b8d3e2f1e8daa47add9fa9a375198d91e6bdd1a529a3c769d7605b540c6fa",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "0307975bcd1d4df0a5dc9a5b53f6730c8a2169a367177ae47404da725c47f81c",
+   "op": 0
+  },
+  {
+   "caso_sha256": "d0875cc4ceb5b61f313929a4bf67ecdd44cb24d59c088583868a0112de7f1dd5",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "2fab97cc52f6c3edefacd7ea21142e56bc2081cf24ba9d7a4c99ed1cb7e3defa",
+   "op": 0
+  },
+  {
+   "caso_sha256": "d0cbee79bad3cf76fb63fe16f0feb568f12588e20a79f8d98a9b9a7d9fba4663",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "262da76f2dc4f172170536416912dd012008d63a203e61d5b0c5188ddcec707f",
+   "op": 0
+  },
+  {
+   "caso_sha256": "d10cf5168cb58c06051e90163b11f5207f7e703c7ba4387831a68ce9249b52fa",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "e1e34ad6df2b66fb137a46e0ba942008492ae9679af19e203f53fb69092d1b32",
+   "op": 0
+  },
+  {
+   "caso_sha256": "d435b8fbf8d712c905a11ac985e804cd19db23f162051c6fe5327265bc45aef5",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "dbfbfd7185d60d48c5814eeb7d7c1427660154ad3b7646967dd41e93406a0649",
+   "op": 0
+  },
+  {
+   "caso_sha256": "d44077fc6cd1fc0d6e228b61247cd8d9ce4b057bc08e899e3ab75333ec37e28e",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "59eac01096264d60e635d74c963c709c7c8af81483bd478996d9da9286eee7be",
+   "op": 0
+  },
+  {
+   "caso_sha256": "d9a1276eda68c940322a072918193045931f4c13ab9fc59d5cedc53270f21bd0",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "6506018e9c5ba6d33c06b09777fde3714f16f5b1a1bcdc6111f1b6c3daa636e0",
+   "op": 0
+  },
+  {
+   "caso_sha256": "d9bb4e9f9445918d79b42b4ef6247f72f6a4273826ae86b7d9021a7026910fa2",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "8a04d44af24fd7c01d3d23aac8954c90dc0a6b62501c70063f72cf3222ee9c79",
+   "op": 0
+  },
+  {
+   "caso_sha256": "da355f95e1fe41f5618d9050f39ba21b4575f3d5e00f6bbb623d2987a6e8b1e8",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "7a6ab4f64f1db38abdfddd3f3c08c64d9fafb0a9fbba8c372ebc0ead30f3ac54",
+   "op": 0
+  },
+  {
+   "caso_sha256": "da359cde3c8ec2adb12b25c0852ea098d74bdb9cafd92416d5d08fa883e8bdbe",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "994a16dd37d09195ffb3e0c4fed984b37af9adad8b98f9a2ab8ff01b7a2b2991",
+   "op": 0
+  },
+  {
+   "caso_sha256": "dc32316a0ea99fcf80ba9c53750897dd9ba4c00428264c57a92aaa805f2d1b10",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "561e287c804f7bade54ebadd87f06e8ee0b818077f912eeaa91208be64a279a5",
+   "op": 0
+  },
+  {
+   "caso_sha256": "ddcbd9052ddce93d450cf45d32fb664072c8b527c23ec61b4762605e767372dd",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "9816c7303c7585a70141d84ce88799da2f25616e8482674ec756a92cf2eb6578",
+   "op": 0
+  },
+  {
+   "caso_sha256": "e5463142a9dff31c6025d723d1d1b8dfad9a0804d7a87d64849a24e45fab575a",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "3ad77759a86ce57f297ccfd1807925ed94ab21d2e573c3057b9321ab9d540872",
+   "op": 0
+  },
+  {
+   "caso_sha256": "e5a0a2e43f5b891eb3456034495eaea4e4eaca9f92838286c4bbcace5e917604",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "7b4f2d205bae778d2a2cc0a514648f0b76cc825300b68f230270ec7f3683e683",
+   "op": 0
+  },
+  {
+   "caso_sha256": "e5b51b4f7e3642f1e946a63175ac6400fa44cecb202a560fd0bcb355fba87210",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "b8c698e9621e042d0f0fb8e5b551259098171d7d3bb09bbef8f72fc7d3e42da8",
+   "op": 0
+  },
+  {
+   "caso_sha256": "e5b9fdfade31c9c17766d5b672bda4cc7fc2b6c53ce35db1fdea58d002b55a18",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "9818da7172d989c56f6e2827ee3bcba59640f1e02cfdd0f023b8e7cd29cacc6e",
+   "op": 0
+  },
+  {
+   "caso_sha256": "e63b3a7ed3ebc845844d28ab1fd0e108a861c181c885ee9030a4532f71f3aeff",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "71692f29223a940984b9f1984ceea2f153295b626b468361429a1ed8ab0dc9bb",
+   "op": 0
+  },
+  {
+   "caso_sha256": "e67381ee2279a112f9cc822d0c695552a8a360ac6a21227c6c456d5a55c6a4a9",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "07cb6af639570aa812aa188c952d4e3ebfe62ff2d0af5f021441007cbfb2230d",
+   "op": 0
+  },
+  {
+   "caso_sha256": "e73804eed23e671c1e0f9a556bd5e1d9b562c9ebebe5a6664094ddc54a4a4c45",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "e97c93a3683a5d52ae7696d905c4af68f8e39f5cce88dabb2169671ff001331b",
+   "op": 0
+  },
+  {
+   "caso_sha256": "e75a4155fa952db02379527aba04cabd47675a8b8a63c4300e38d3c8f3a02515",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "6013d413079a95295520f768ee45de67e5436ad73623d11ef34eaea5b3482e48",
+   "op": 0
+  },
+  {
+   "caso_sha256": "e9900373b0a5e4c5f8abe39e8d3a2904793b33fb34cee8db7d8cd2b5e0e6cb8b",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "10a2cee3f54f96c58e1f17a38a48c2946665dd3580301a0abfcb6e9cc62ea9c8",
+   "op": 0
+  },
+  {
+   "caso_sha256": "e9b4e5731da7879640d0cb09e411b0baf62e5921106c2388edf063829be77016",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "5c21978b199a0714d9705990c8ce2c052d057bacae66f98344a1d75e2d50d537",
+   "op": 0
+  },
+  {
+   "caso_sha256": "edb54980cc64c10e997ef5907faa23fd990468811954936521f6ea65023f3b83",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "faf1b45199370cfacf7d4e65c8de1b4eaea0b7b5c3bcc806415336af94fa38e8",
+   "op": 0
+  },
+  {
+   "caso_sha256": "edc25e13658e6e5bc272680a6356b1f5f4ec3bd5eac31d1e199c9fe65fed6e73",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "88d38e2ff3299b6255633291631d396805cfcdeb4d88327da85ba3be041fb62e",
+   "op": 0
+  },
+  {
+   "caso_sha256": "ee2ed21d3682fb718f5535da671f5f9058a6b0daec706853bc40cc8619d88add",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "f7b30bb80d738be63c48d35448b2b765a116c996a0ca9a59d3468ffe0eb89c2b",
+   "op": 0
+  },
+  {
+   "caso_sha256": "ee51ffbdd9f28793fa016d77135b3f26b8ec69f437641552fefb665ccb3e3870",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "b531c205dac5a2a783756296d656b4e3915d9fc68462298b73825a92038698a3",
+   "op": 0
+  },
+  {
+   "caso_sha256": "eebf04903941f2dcb2554362f63fc5101aefbb8fd722c5c3e69d2d764eb0a5af",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "6357b26c3274773ca1390a63f85e80dec7e6ba8893df8adb656d9b04de467470",
+   "op": 0
+  },
+  {
+   "caso_sha256": "f1b2b7cd459de278a529d9e6a306f879314dced79af7eadf2d626138e2d39e1d",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "18d634a6845e82f224e3ae317dd568f21fd68bf31f4bd3243dde4867fc131969",
+   "op": 0
+  },
+  {
+   "caso_sha256": "f4c8016efdd1eb2aed97e5edfd1bb3a1b7be11d42424b36555cb6ead269381ae",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "74150f33c5e35e4529f2d88e4da27e1661f8771cd5c7037a4e074db89b834816",
+   "op": 0
+  },
+  {
+   "caso_sha256": "f571192616e6c8a5a3e761ad41aa8be76ac3f8201439166a1c1fd426c754fb16",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "ee6270b7b8141bc4b04a8ae28c1290babd44430e4427d9cfad72769a44fb786b",
+   "op": 0
+  },
+  {
+   "caso_sha256": "f579146923bb44c9093b5e2b8f3babae963545f22a2e8d9ee5bbec60f9e6d6b7",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "9f80c7261fd60e90e852db1d5a0bb5586a0a6ca77e321b27ba75ce952a51a215",
+   "op": 0
+  },
+  {
+   "caso_sha256": "f59aacaa0a527d94e2558b58b68372301d6ce4da85fd002ad1d12d566528805d",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "ed6e91f1c0d769abd8fb15489f7710e03ac61fee774479e9a8b6f1a8fbf748be",
+   "op": 0
+  },
+  {
+   "caso_sha256": "f5accda32af1c8768bcefbe8ee6210744f0ce6b52012cd72cd54f15ca5f31910",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "0d119c1c76c0b8d54952068e72322f32a11f294194531402c7473b15514bddf7",
+   "op": 0
+  },
+  {
+   "caso_sha256": "f674e526c7561482cab993f00c260657351e2ada72906f20a75b12072c1569d1",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "5b9003a4652897e1506f85a672759d278b8b337fe62a8fde801707c2ec679eab",
+   "op": 0
+  },
+  {
+   "caso_sha256": "f7e04f8b4933f58cbe47152ff37eea59c819d30a9012431af29bbb5d26bd87c6",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "057065e216d5ef762fe71e4b087e81f7147a1498629f20bed6d3ee925d2bd434",
+   "op": 0
+  },
+  {
+   "caso_sha256": "f8ef6e2c0cfcb0b617042a39af6ee30e1695b0c5f105137ed15e83109166568a",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "b1e62918b2b1c55a967fe137c47b4421025219de389f4cfb26c1dba6df04c459",
+   "op": 0
+  },
+  {
+   "caso_sha256": "f8f2d6dbc534728aee91542111c5afcc7523aaef21d10948e318c58ec5ab786b",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "3d01b2448beff31afd65a4099284104e0d23885c5bf5665cba2483c3ec99e879",
+   "op": 0
+  },
+  {
+   "caso_sha256": "f9aa62efb1d472808e2864a351a8f516ba2de0c9fa4b05cd27d00dbd02b7c4fb",
+   "eccezione": "builtins.RecursionError",
+   "esito": "e",
+   "impronta": "f1e187ef058632155fe67f802ff7e58eb2c6fd2672a713144f86c80668822bfa",
+   "op": 0
+  },
+  {
+   "caso_sha256": "f9ca74ba2a036a66242eafe8639417bd81815d7930236a6fc69aeddf9b3b9692",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "f0a9002e39d1360de85403404398433c4beca5f35e4b0bf1bff90dbfc841f6fb",
+   "op": 0
+  },
+  {
+   "caso_sha256": "fa442e973621a3ee314d18263cbefe2cb4059e165f032738d9af6ddba812d14f",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "97bde4e6a24bbabcb949eb5bea8a842a81b81c710a21a093299a56dedaa35413",
+   "op": 0
+  },
+  {
+   "caso_sha256": "fad7d68f31675e158fb6942fbec2f724f0fa73ba847c9c136d06efe2402fe2c6",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "5316d26dff2898ef2b7b9ae293d141b7d17ce540fae868ff3608bf2ca437c294",
+   "op": 0
+  },
+  {
+   "caso_sha256": "fdcda35928ab3ff10f9b6bd2ddc36a4b97e7a33288b030ae8da4ab0525b494bb",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "2b79cdf7b486914e25c63d1610417172d406d6c9b2e0a7c59f43c90b41ca9b0c",
+   "op": 0
+  },
+  {
+   "caso_sha256": "fdce09a6dca625489641b4244fb420678091402693a31e8d6e84084d61d6110e",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "603a85e978221396e5a1d88a512c2d9eac67642d1bfaa5a44e25d91e4432a236",
+   "op": 0
+  },
+  {
+   "caso_sha256": "fecd8484a82bb70b618b2a354911eb61ac96a3ee10bac99e06369e42022b33c4",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "d92f32ec3c498c697b7b8b5b74add729881a062beb03c92e85105b1eb0d306f6",
+   "op": 0
+  },
+  {
+   "caso_sha256": "001ccd90e7e3009118d8f6e1977ac004781cdbe0fbd5f32a5623fdb4a3b83810",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "ce0a0b205aa26acf1074cd080a21c7d01637248474d433631ca83f05a2742c95",
+   "op": 1
+  },
+  {
+   "caso_sha256": "01831b8588d0a3e391b38e0cba8e8e3c88977cb316258ea37f0fd2192d9edb07",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "7831fa349101770379191a231e7646fb67bf93073a7108aa6104675452fe7c27",
+   "op": 1
+  },
+  {
+   "caso_sha256": "04135363e9be5d3641828d178ea033e41394faeb8cef3c319346eaf5f848f0e6",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "6ed1b76fe6e4d65a2ad7360ec089d83696806b5718243f5fa21ea92fe521b884",
+   "op": 1
+  },
+  {
+   "caso_sha256": "050b14769e3d89b9dc51eccf6aeefa73447091f2579c5ec96e7d8248a8158ba2",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "654726137c9e0acb3c420f6b5d72b459120955af74d9643e673f5454f67a4c89",
+   "op": 1
+  },
+  {
+   "caso_sha256": "0d9f442602f6c00fd436b841741949ea5a7058a352ce24b94866c35034247807",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "de0ee0a8bd409ec4d8127d8bcc8a8c5ac052ff9a2bc560d48f00ee89755eb386",
+   "op": 1
+  },
+  {
+   "caso_sha256": "119ddd368dae5be7e7902533c2852289248390c66620600bb9661b3ff2b117c7",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "b165a0da29fb395043f1917263760d2b8487dab9b87d462fb76102cb2db2e699",
+   "op": 1
+  },
+  {
+   "caso_sha256": "22bd8a5bc627b06a6b5ee080b0156293791ef7c5efa44c4e99427936ae6cfe96",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "ebe4ee3dad0da79d2abe0bbbcd15d5bba835cc3df5b4763fc658fb0b15367b61",
+   "op": 1
+  },
+  {
+   "caso_sha256": "31cfbe8703c3c6164ebdfa2b44453e56b298ec0f8bbbdb304bc4caa922df3dc9",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "d6dfc9f5d293ce5eeb7b177298f2beb9d87970591527ef7c1bb30c2f262f0aa1",
+   "op": 1
+  },
+  {
+   "caso_sha256": "3604a3955b18d015d946829cb5d9fa3e52f5549ac78b6c92076d0c87b908cc43",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "b91093c6f721f33f10579de5ed2ad8c998910b9d82f134e0bb099ed2042bebf2",
+   "op": 1
+  },
+  {
+   "caso_sha256": "4bd20bfda09254dc972326f41e845a7dfdcc6d25bac91bb8870dabfad0272a91",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "c40e149485669b3fa9fbe85c01b89a609f645035bb1b9c7bb4662811f06dda6e",
+   "op": 1
+  },
+  {
+   "caso_sha256": "518372d446a53a2796a070e33e2d95288cc82e654bbf552605d972678de1849d",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "7aafa9b89f98c44093ca63876bfaba99e29b55261324dee4994db0355555c8b9",
+   "op": 1
+  },
+  {
+   "caso_sha256": "5402babe3246239679d18baf593caed4ccf5c21df11a43635b4798395b5fdee8",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "eedcba84e5448c17d12fe25a8cd4617f0fec90cc8fcc922f5e4f6f6051a74f39",
+   "op": 1
+  },
+  {
+   "caso_sha256": "5fe2f13f858b50db99ee0950da760aedea356901e58537d82c015a6932c7b06f",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "671a15e5fcbe9fc881fa131efad8d434fe1d7b3a70f935c74ed37f2b371e3291",
+   "op": 1
+  },
+  {
+   "caso_sha256": "6b71db42328acf3b5ea5e828fe572f1aaa03c59f485aee8a4571f8987ea07136",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "cfdbb1a096d5ba8ff7f08675e7ed40440ebb1a9e28b23cfdf703d4f987bba6a3",
+   "op": 1
+  },
+  {
+   "caso_sha256": "8d403ed84598d6611c8b67dd53b7a12c49b9823beb4f339fb67b0a1bcf63ef85",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "929f21493675eb109c7d0035fdcc8a394967f8484ea3831ac5c331f74a2b2c01",
+   "op": 1
+  },
+  {
+   "caso_sha256": "9aa51530ef3e304d942d18b3a28943869e6e36f15e195f7bc7d20e7a3bbb2310",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "5477e2b34d8cc3e80d1a73eb8dc5c925ada6b5d6e45113742fff82c4d2a92b1a",
+   "op": 1
+  },
+  {
+   "caso_sha256": "9e81f17b1387f0bd0507a007ace125ed4f41666d9642efdbcf170733758b93f6",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "93e506385f50643cefed42a8f8641f87f8f17e2a0c5fe9dcb8a44a7494b27293",
+   "op": 1
+  },
+  {
+   "caso_sha256": "a0e238994891ff17cef6a54eb9feb845bee76482ec5d3785c1edbdb0baf6f648",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "9c6e7981fc45eebdb032f0ef923890e89b19ddf482cef9434f438beaddf1cbf6",
+   "op": 1
+  },
+  {
+   "caso_sha256": "a3550395fac915da362ba3e2775e5cce6e602c1d3e01d972471871c56502d1a2",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "e13a69631738e171da87f0eb2ecc6cd072483b40ad1304bf55308400e7fab321",
+   "op": 1
+  },
+  {
+   "caso_sha256": "add73ad659e1e91d486a5714d65cf1e2f03c16a9094e023e12b3402a0a9b961f",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "c65ce29136ce3fa20dae38e6d00eb494f37cd772d96deb5eedbdaf8a2b2346a1",
+   "op": 1
+  },
+  {
+   "caso_sha256": "ae9ef78372d2540b32571318f9722177350ccf29b41dc732ef614ca2659fbbb0",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "304ed073f95f404590fc77d95d6460e885e04728a21f7770541d6a9189652f31",
+   "op": 1
+  },
+  {
+   "caso_sha256": "b184cfeb061deb1ddc61975d8576e419d62a17eccf8abc9794c881e5c7e7af58",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "12bbad9d5a075b0d4fb8cb6fa0a83dec3249169f26ffb596940402d312c28bbb",
+   "op": 1
+  },
+  {
+   "caso_sha256": "b378a356a5d20184ce4a76bfd9ad138cc1ed1e5c595f38696ab4b551c758411c",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "790e5d3d512d4edd0576d209f413786d345c7ef819c6d297be987f81d24fced6",
+   "op": 1
+  },
+  {
+   "caso_sha256": "b9dc62a0f6d8879ac64e87cdcaea1ffbf4d8cfac22d6ff72423f7c4f5102ed17",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "9dbef773a33301af8367788404a44f26511f45ccc39e4f68605aec01c212365f",
+   "op": 1
+  },
+  {
+   "caso_sha256": "cd9e3245479001590e2c03b0c80e5b9f72d542e48242d4cc0400b80cb377fd84",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "4f818684e631f5fedfede790d4eb4e96228e5e6a91e30764c8f56ae19fb70ced",
+   "op": 1
+  },
+  {
+   "caso_sha256": "ce89b30c45b2d838742c8f934744100bf0f9ca069a5688d175964d468b2e4caa",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "377c7f7fb0550e2a6d4b7058f2471e84a7b430821977d5e315391fe0dd03fd98",
+   "op": 1
+  },
+  {
+   "caso_sha256": "d6820c49ba2f4e104192576b854b8aa09e3b0aa97809c9e9e5c58fc4f73df5bd",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "8689c17a740d2473a76e0066ebde4851efeca9c0f50c9fba183bc25dd9c004a5",
+   "op": 1
+  },
+  {
+   "caso_sha256": "e566ba598672181487d73ffe4e5d1d5f6d0bff3c0da67261fe6d52f37d394271",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "80591c8372723f3bc968d0f758275ca3848ac9208d2400e3a6649b747050c7a6",
+   "op": 1
+  },
+  {
+   "caso_sha256": "eca0126dd17d3eb207c4a0d7dbadd07f11f960004a435b2784451af2497a5b47",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "ab6716845f9b6bac3dde89ab620b073ee49ae5e19b38ddbfc145281532bfebf5",
+   "op": 1
+  },
+  {
+   "caso_sha256": "efe9ef4884806647057e4a65ecde505caaa2aa9559cde703bee2480677ed1ea1",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "73072b5226efde6a7a4f578cf1d92497d84cfa178582ba268c493b049ceb32be",
+   "op": 1
+  },
+  {
+   "caso_sha256": "167a8d22589e6d2618511d5922ab6443b26a32e5500d09308b8bfc4087482a95",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "78e7099f927f25217493613812f40d0aeaecd59013884e6f338df39de70ff490",
+   "op": 2
+  },
+  {
+   "caso_sha256": "16b2b76e741c07d4f055bd1273f418ecd79b059d85396b8bb6a5bf279f9fc41f",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "903890f0ccc384a732a7956ec6e221808a99994048c3fbf2bc3e6e63b20920ea",
+   "op": 2
+  },
+  {
+   "caso_sha256": "1f208e2e6b5b0394f3bd04c11097d1f61e7cb111870e53171b113e004f28304b",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "1a70922bab57ed10fb130b125bd1eb34c04c8e88e5f5ec341e733c21fb0d0c0b",
+   "op": 2
+  },
+  {
+   "caso_sha256": "286e31a0ca05c2e44d98efc34f82db0192311d4c816015f1f9b4a66ace19bd86",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "43e56526d48f8519af2baaafa0c5f4cebbff20695de93f2a82c756b6d4dc32cd",
+   "op": 2
+  },
+  {
+   "caso_sha256": "2cb43f8429d4bc56f35ecd51b55968e7caf35bdd90b565fd515d9b025d2c2fa4",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "39ca2156f4493afc1e83aa9c6147a9ea9e6fc7fd03f2b961468870f99699ae3f",
+   "op": 2
+  },
+  {
+   "caso_sha256": "2fa8bb0a86ec1555e08000833a37346127b1534a9f713c47865addc376794351",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "f302c771bedf1cca060e46044e6119a03916a287bbdff205a16ccd30b6b02f95",
+   "op": 2
+  },
+  {
+   "caso_sha256": "3390338c2d7e3449caeb4623c78acc043b794e764e5fe5e94e1f5078bb69cedc",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "cfb072db01de6a5aa1b3b373ed595b8d165778eec46a23a5e8de2b761f501fae",
+   "op": 2
+  },
+  {
+   "caso_sha256": "33afcac60c2ab991b68394ee4bd829ff13f0e0d855530f4c9b8b8e8c7e83ba5a",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "bfc5410558eb6d62f130452bce7399a8bac6c4a698fa53a5aa636ffe54ba7e90",
+   "op": 2
+  },
+  {
+   "caso_sha256": "33e11c58f6364416f5f2df1aefef1493bd35f596a0fe07816379b011dbd784e4",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "feb5dafd5756c8b5a72d1781dcbe88c94cb09c1bdb56900f3f2d890bdc5431be",
+   "op": 2
+  },
+  {
+   "caso_sha256": "3d66ad9439b402b5b77157d040e62cb9a6382aac712e5fa3a9fbac5ce6bcc429",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "64119277d52421d5acc7e463f6d8d8acb46952cceb5a2786ed1bc37cbd88b413",
+   "op": 2
+  },
+  {
+   "caso_sha256": "42781cc1f36f40d46c0e3d04ad4a922109b0318f208a833b17cfa6960c0beeb5",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "967657a17ec4247cc8afe6bd4f1a10b4346f56ca52d47826f6d3c8cc985d2a91",
+   "op": 2
+  },
+  {
+   "caso_sha256": "442a690445a909ca53fb491a6d221f45902dbe0e77a8b710e141704b363ff181",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "99eec43f4b31e9fd79d42b999c3a72b17b154cb0c240db701c2c4ebbb504e8e1",
+   "op": 2
+  },
+  {
+   "caso_sha256": "47a4e0bf17f1260db1d80755f075bed0b59c1391e5ec07fed34001cb966ee2a3",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "7a1a4479649c3e9efe02e119ff28b07cf4787d661bb3f82aecf623f3c456e6cf",
+   "op": 2
+  },
+  {
+   "caso_sha256": "77eb4ea44c56fcf1186f4aaec33c2f691eb718d8d8498727c2575e74a712f5fa",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "1c827be19c2d5c355bf554995639a274e0d5b152149142b5a20addf39208f577",
+   "op": 2
+  },
+  {
+   "caso_sha256": "7da0eb319ae710f1a579c05dfc95114b311b95eb6a9f3fe0c339871f29c0016d",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "067b2c22eb124be44ffa9a5fcb4c5ddb1304f11b563bfa28fc6ee6dd5ae8c29a",
+   "op": 2
+  },
+  {
+   "caso_sha256": "86d1c28f4f5838559004d68bb7840abe88d4f5c99e28b476be76c8c5e9d64719",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "b70c200d87b6577a3b4abdce44cb9f6a8e3db664614a3550afc4fa0fca18d840",
+   "op": 2
+  },
+  {
+   "caso_sha256": "8880742aa715039919a255700cfa7c08f8d88dc5644e4badf085e801dee2cdd9",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "471d36dd79765737ac5b2f01cc78d2867ec7879dea19a7f44cb05b51c6e5f8f2",
+   "op": 2
+  },
+  {
+   "caso_sha256": "a48e1bd230e55f6041c567d5331bbfd6db20cadc6d57ac6dd6fbf9e5c327fa5e",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "320e263409924514d1a2874d0bdab56c23164c64dfea9e0fa8e3c974b67cc6cd",
+   "op": 2
+  },
+  {
+   "caso_sha256": "a978ce26828c1f7073a752dfed191c0f338aded6c48016b1d33ffed09240e1d0",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "c55071c17a2189478c780d034ec47769ee70f25a4e70ecb0e4d19c650c6a8996",
+   "op": 2
+  },
+  {
+   "caso_sha256": "b38992328b0be7b3fb74fea72a845325d783416a37ffa04fd1826b1943f3289e",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "fe0cf7df42928b6dfc61006d23fe341247e5d7ab27c4e268208421ff3ccaa94b",
+   "op": 2
+  },
+  {
+   "caso_sha256": "b52912789eaf47669c9a64af89e1833da2f62b147c61be558e791566d9a983a1",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "87dd1f7a01e69ceb16b3b5d17eb52b425e65c499e595182f02ad2ad853083740",
+   "op": 2
+  },
+  {
+   "caso_sha256": "ca8f95dbec3a731ec563972cf3d82d595b28fa7d443a42920c80e5ba76aa7197",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "fffded45b1bae5be44ae71ab203f9ca9543611b091e026ead04e945b8d322d62",
+   "op": 2
+  },
+  {
+   "caso_sha256": "cf8205ae8c4f4ec64c1024201f2b7c457894451186a11b4ea4ead97c936cc5c9",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "6730d8d69018a15afc2e66d4f8fe79b01d3bc49909494daee3fff1af72e10847",
+   "op": 2
+  },
+  {
+   "caso_sha256": "d1da1e9e90e2578b5502063c5b0f0096bccc2ec94195017cd6dafbd5bf4e74fc",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "747fd5681f1b1ab5b0777955a33d329b47268d0fff94942d25075a38cbbfffff",
+   "op": 2
+  },
+  {
+   "caso_sha256": "d9a363d16a7eadc655aec036a23c9fc37abdbae59f4d5780eb762ab989378cdf",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "4cf0921434bd652359f9dcaaa6b1f6809a76229d6e1f1b6a1277f60361da1772",
+   "op": 2
+  },
+  {
+   "caso_sha256": "e2bb6843c5e7bcd39ad1e12312c000e82fd65d74045a60e28a91b8ffbbe936c4",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "f17936f40e9efae0ce4d966012592c41884dc8b9828d6d1226fcc5e7f236cb5d",
+   "op": 2
+  },
+  {
+   "caso_sha256": "e89bc4e43781d1e486c33e971bfab3b56248df86bfbd33084b88b232f0e6508c",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "69f89562c4cefeb27c64a2d04451a2f0b76ed71e40d82f6158e08fd7624cdbbb",
+   "op": 2
+  },
+  {
+   "caso_sha256": "eabcee1281a05e51bca5564e4ef2be9da91a47fb970d9d55fda1f93162dfb5bd",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "b122b1c0d6880cfa317a8b841eed9959c87f7747914df5eebd6e75edab185ad8",
+   "op": 2
+  },
+  {
+   "caso_sha256": "f2b9d2d7998d231813b4d9af27124afeeb0ed71d4ccf542f26262d05ae6ac073",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "489589ef778e11cff0fdf5916115c30646d97dfc6cd6f9150aa3a44f2c035a2f",
+   "op": 2
+  },
+  {
+   "caso_sha256": "f92d2cb8abd378e30b77d2aa43ee47fa7eb187bfcadbd8e67d80d28e1aa35c7d",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "2907bf742a95cacf7608aa2207ebd9e9a35970f00997eba3e912ea6a5e1e8599",
+   "op": 2
+  },
+  {
+   "caso_sha256": "70072eff2454b30fc77f0dfc5db4c5837d714c1475e3bdef2552a20e8164586f",
+   "eccezione": "builtins.ValueError",
+   "esito": "e",
+   "impronta": "86f1f650acc1cd1aa4f64d8fd3b0ae3e22aad9927f9e7faf29061dc59d1e169d",
+   "op": 3
+  },
+  {
+   "caso_sha256": "b1756e651ccb978647c8601ceadb3da32d9b739679bd71e7fa1c053b697038a6",
+   "eccezione": "builtins.ValueError",
+   "esito": "e",
+   "impronta": "86f1f650acc1cd1aa4f64d8fd3b0ae3e22aad9927f9e7faf29061dc59d1e169d",
+   "op": 3
+  },
+  {
+   "caso_sha256": "0ab899e5134ccb99df882a9942cc3b2a7d8d11e5317810c43901627664bcfc8c",
+   "eccezione": "builtins.TypeError",
+   "esito": "e",
+   "impronta": "a3608a16b254521e312c73f9c0aea838025ed6a2bb500ecc5452a444d1b1af54",
+   "op": 4
+  },
+  {
+   "caso_sha256": "d5a7d79f9165a7f9bfa0e0d2c64c2e99431789bd252a4a8046f8bebd64c498e2",
+   "eccezione": "builtins.TypeError",
+   "esito": "e",
+   "impronta": "a3608a16b254521e312c73f9c0aea838025ed6a2bb500ecc5452a444d1b1af54",
+   "op": 4
+  },
+  {
+   "caso_sha256": "eb82b2d3f1260a627c507813bae6242e8e06a2188f17da3ec881d3489e6b776f",
+   "eccezione": "builtins.TypeError",
+   "esito": "e",
+   "impronta": "a3608a16b254521e312c73f9c0aea838025ed6a2bb500ecc5452a444d1b1af54",
+   "op": 5
+  },
+  {
+   "caso_sha256": "6ac5ff9f49d342bfe64e908fc580db67e5064e43dbf4ee2a7d7476cf1871985c",
+   "eccezione": "builtins.TypeError",
+   "esito": "e",
+   "impronta": "a3608a16b254521e312c73f9c0aea838025ed6a2bb500ecc5452a444d1b1af54",
+   "op": 6
+  },
+  {
+   "caso_sha256": "a43cfc73b7ee355c71daf76ac229b00e67796c816637c40bf323e17b8e927f97",
+   "eccezione": "builtins.ValueError",
+   "esito": "e",
+   "impronta": "86f1f650acc1cd1aa4f64d8fd3b0ae3e22aad9927f9e7faf29061dc59d1e169d",
+   "op": 7
+  },
+  {
+   "caso_sha256": "086a4321146314270a94076dd49f6f9f262650550a420583e9dd911d007b6828",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "fd5685040a80efd1ec690796f5801162f7e7990099f96b41bad9b3583c820b10",
+   "op": 8
+  },
+  {
+   "caso_sha256": "afe1d0460e6f6d3c0be46b944e820256079d4c6fbf32f0c8dad595ad78803f58",
+   "eccezione": null,
+   "esito": "v",
+   "impronta": "7aea650497b3b4fda80655f9493628bb55469f5bec815efe94975a46cfb94ce3",
+   "op": 9
+  }
+ ]
+}
