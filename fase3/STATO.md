@@ -14,6 +14,19 @@ procedura in `CLAUDE.md`). `segreti/` resta fuori da git. Il 2026-10-06, su via 
 stato pulito (`20c6c84`, che conteneva il predicato, e `6718fe8`, duplicato della radice): i quattro
 controlli passano.
 
+## Aggiornamento del 2026-10-07 (prevale su quanto sotto, dove diverso)
+
+- **Protocollo 5.1** in vigore (`REQUISITI_AGGIUNTI.md` N1–N8): nessun tetto sul pronto; costo = finestra + CPU del
+  container prima del pronto; cronometro prima della lettura della CPU (N7); limite del pronto 60 s; impronta
+  `61cde672…`; manifest ricostruito (`fase4/esiti/oracolo_p51.json`).
+- **Fase 4** (`fase4/RAPPORTO_FASE4.md`): con la 5.1 criterio 3 superato (1/40, 0 rifiuti), G1 superato, G2 1,031×,
+  collaudo 6/6; G3 1,1755×. N8 (minima mediana ≤ 1,05× nei 20 nulli prima di spendere) dichiarata, **non ancora
+  implementata** in `modello.corsa`.
+- **I9 ridefinita**: `pronto_non_addebitato` (v5 che non addebita la CPU prima del pronto).
+- **Fase 3 ancora da completare** (controlli positivi contro le v5 indebolite): il modo di procedere si decide con
+  Morgan, perché i tentativi di scrivere in sessione il codice di quei controlli sono stati fermati dal filtro di
+  sicurezza.
+
 ## File da leggere, in ordine
 
 1. `CLAUDE.md`, `BRIEF_v5_per_Claude_Code.md`, `REQUISITI_AGGIUNTI.md`.
@@ -57,7 +70,7 @@ bloccato/limitato). Riferimenti e attacchi (da `attacchi.py`/`riferimenti.py`):
 | I6 senza_verifica_albero | GRAFO_NODI | bloccato (già provato in fase 2: `v5/test/test_grafo_nodi.py`) |
 | I7 fixture_pubbliche | FIXTURE_HARDCODE | limitato |
 | I8 casi_su_file | PRECOMPUTE | bloccato |
-| I9 senza_tetto_pronto | READY_ABUSE, READY_STALL | limitato |
+| I9 pronto_non_addebitato (ridefinita, 5.1) | READY_ABUSE, READY_STALL | limitato (atteso ~0 per costruzione) |
 | I10 container_riusato | CROSS_RUN_STATE, DISK_CACHE | bloccato |
 | I11 marcatori_ripetizione | INPUT_MARKER | bloccato |
 | I12 finale_leggibile | FINAL_CORRETTEZZA (tre bracci) | bloccato (braccio b fallisce sulla v5 vera) |

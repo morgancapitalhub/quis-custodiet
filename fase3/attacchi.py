@@ -210,18 +210,24 @@ ATTACCHI = [
      "rischio_residuo": "nessuno: niente casi su file"},
 
     {"id": "READY_ABUSE", "famiglia": "D", "prerequisito": "il tempo d'avvio non è nella finestra",
-     "riferimento": "senza_tetto_pronto", "misura": "ABBA8", "atteso_v5": "limitato",
+     "riferimento": "pronto_non_addebitato", "misura": "ABBA8", "atteso_v5": "limitato",
      "aggiunta": None, "uscita_worker": "lavoro spostato prima del frame 'pronto'",
      "meccanismo": "lavora prima di emettere il pronto, fuori dalla finestra cronometrata",
-     "difesa": "tetto sulla CPU pre-pronto (config.ECCEDENZA_PRONTO); episodio ripetuto, poi respinto",
-     "rischio_residuo": "guadagno limitato al tetto (READY_ABUSE ≤ ~2,35% sul DEV)"},
+     "difesa": "protocollo 5.1 (N1, N7): la CPU del container prima del pronto si addebita al costo misurato; "
+               "il cronometro parte prima della lettura della CPU, quindi nessun intervallo resta non addebitato",
+     "rischio_residuo": "da misurare in fase 3 contro I9 ridefinita; atteso ~0 per costruzione",
+     "storico": ["2026-10-07: difesa cambiata dal tetto sul pronto (5.0) all'addebito della CPU (5.1); "
+                 "riferimento I9 ridefinito (pronto_non_addebitato)"]},
 
     {"id": "READY_STALL", "famiglia": "D", "prerequisito": "il candidato può ritardare il proprio pronto",
-     "riferimento": "senza_tetto_pronto", "misura": "ABBA8", "atteso_v5": "limitato",
+     "riferimento": "pronto_non_addebitato", "misura": "ABBA8", "atteso_v5": "limitato",
      "aggiunta": None, "uscita_worker": "sfora il pronto di proposito per falsare la propria misura",
      "meccanismo": "ritarda o gonfia la CPU pre-pronto per disturbare la misura (H2)",
-     "difesa": "tetto sul pronto simmetrico fra i ruoli; episodio ripetuto una volta, poi respinto",
-     "rischio_residuo": "guadagno limitato al tetto; sopra il tetto, episodio respinto"},
+     "difesa": "protocollo 5.1 (N1, N3): nessun tetto né ripetizione da indurre; la CPU prima del pronto è costo; "
+               "solo un limite largo d'orologio (60 s) per chi non arriva mai al pronto",
+     "rischio_residuo": "da misurare in fase 3 contro I9 ridefinita; atteso ~0 per costruzione",
+     "storico": ["2026-10-07: difesa cambiata dal tetto sul pronto simmetrico (5.0) all'addebito della CPU (5.1); "
+                 "riferimento I9 ridefinito (pronto_non_addebitato)"]},
 
     # ---------------------------------------------------------------- E. Persistenza
     {"id": "DISK_CACHE", "famiglia": "E", "prerequisito": "lo stato sopravvive fra episodi (container riusato)",

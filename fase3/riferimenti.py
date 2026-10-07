@@ -72,10 +72,12 @@ INDEBOLITE_COMPORTAMENTO = {
         "bersaglio": "episodio.esegui",
         "nota": "scrive i casi dell'episodio in un file nel container prima di far partire il cronometro",
     },
-    "senza_tetto_pronto": {
-        "difesa_tolta": "tetto sulla CPU pre-pronto",
-        "bersaglio": "valutazione.valuta (controllo del tetto)",
-        "nota": "non confronta la CPU pre-pronto con il tetto",
+    "pronto_non_addebitato": {
+        # I9 ridefinita (Morgan N6, protocollo 5.1): la difesa non è più un tetto ma l'addebito della CPU
+        # prima del pronto al costo misurato (valutazione.costo, N1).
+        "difesa_tolta": "addebito della CPU del container prima del pronto al costo misurato",
+        "bersaglio": "valutazione.costo",
+        "nota": "una v5 che NON addebita la CPU prima del pronto: costo = sola finestra cronometrata",
     },
     "container_riusato": {
         "difesa_tolta": "container nuovo per episodio",

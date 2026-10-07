@@ -1,10 +1,61 @@
 # Rapporto della fase 4 — 40 nulli, simmetria, risoluzione, PATCH_WORKER sul finale fixture
 
-Piano e regole dichiarate prima: `fase4/PIANO_FASE4.md`. Dati committati **prima** dei verdetti: `6dba126`
-(`fase4/esiti/nulli_40.avanzamento.json`, SHA-256 `da9a5f40b5405b32c86b48577316fb2cea77102e9d669e6b5d0e2f5ef23e5bb7`).
-Verdetti: `python fase4/fase4.py analisi` → `fase4/esiti/analisi.json`. Nessuna modifica a `v5/*.py`.
+Piano e regole dichiarate prima: `fase4/PIANO_FASE4.md`. Due corse dei 40 nulli:
+- **protocollo 5.0** (tetto del pronto): dati committati prima dei verdetti in `6dba126`
+  (`fase4/esiti/nulli_40.avanzamento.json`, SHA-256 `da9a5f40b5405b32c86b48577316fb2cea77102e9d669e6b5d0e2f5ef23e5bb7`);
+  verdetti `python fase4/fase4.py analisi --protocollo 5.0` → `fase4/esiti/analisi.json`; sezioni 1–7;
+- **protocollo 5.1** (CPU prima del pronto addebitata, N1–N7): dati committati prima dei verdetti in `307f1e1`
+  (`fase4/esiti/nulli_40_p51.avanzamento.json`, SHA-256 `7e439c6d07fe0c4a8593321497341233e5f2c16dd227fd8668cf535bf93b106e`);
+  verdetti `python fase4/fase4.py analisi --protocollo 5.1` → `fase4/esiti/analisi_p51.json`; **sezione 0**.
 
-## 1. Sintesi
+## 0. Protocollo 5.1 — verdetti in vigore
+
+| Verifica | Esito 5.1 | Corsa 5.0 (sezioni 1–7) |
+|---|---|---|
+| **Criterio 3** (40 nulli) | **SUPERATO**: 1 falso allarme su 40, Wilson [0,004; 0,129] (limite inferiore ≤ 0,10); **0 rifiuti dell'originale** | NON superato (2 rifiuti per il tetto del pronto) |
+| Arresti tecnici | 0 (pezzi: 16 nulli in 57,5 min, 18 in 51,9, 6 in 18,5) | 0 |
+| **G1**, simmetria | **Superato**: IC95 della media dei log [−0,0012; +0,0075] contiene 0 (40 nulli); media geometrica 1,0031× | Superato (39 nulli) |
+| **G2**, risoluzione | **mediana 1,031×**; q0,95 1,133×; massimo **1,138×** | 1,039×; 1,149×; 1,186× |
+| Dispersione dei log delle accelerazioni | 0,0137 | 0,0220 |
+| Collaudo delle sei varianti | **6/6** (`python fase4/fase4.py collaudo` → `fase4/esiti/collaudo_p51.json`) | 5/6 (fase 2) |
+
+**Distribuzione delle minime distinguibili per nullo** (N2; `python fase4/strumenti/confronto_corse.py` →
+`fase4/esiti/confronto_corse.json`):
+
+| Fascia | 5.0 (39 nulli validi) | 5.1 (40 nulli) |
+|---|---|---|
+| < 1,02 | 4 | 12 |
+| 1,02–1,03 | 5 | 8 |
+| 1,03–1,04 | 12 | 3 |
+| 1,04–1,06 | 9 | 2 |
+| 1,06–1,10 | 5 | 8 |
+| 1,10–1,15 | 3 | 7 |
+| 1,15–1,20 | 1 | 0 |
+
+**Mappa della risoluzione con la 5.1 (carico DEV), sostituisce la sezione 5:**
+
+| Accelerazione misurata | Lettura |
+|---|---|
+| **sotto ~1,03×** (mediana 1,031×; massimo 1,138×) | non distinguibile dal rumore |
+| da ~1,03× a ~1,14× | può venire dal worker (PATCH_WORKER ≤ 1,1124×); con la 5.1 READY_ABUSE è neutralizzato per costruzione |
+| oltre ~1,14× | attribuibile al parser |
+
+Ogni verdetto riporta la propria minima distinguibile (N2): un "non distinguibile" con una minima alta si legge come
+tale. Sul finale fixture vale il limite di G3 (1,1755×).
+
+**Osservazione esplorativa (non dichiarata prima; causa non verificata): coda bimodale delle minime.** 20 nulli su 40
+hanno una minima sotto 1,03×, 15 fra 1,06× e 1,15×. Le minime alte:
+- sono **raggruppate nel tempo**: 0/16 nel pezzo 1, 9/18 nel pezzo 2 (tutte dal nullo 27 in poi), 6/6 nel pezzo 3;
+- **non sono dovute alla CPU prima del pronto**: calcolate sulla sola finestra restano ≥ 1,06× in 15 casi su 15; la
+  CPU prima del pronto in quei nulli è normale (picco mediano 283 ms contro 264 negli altri);
+- lettura probabile, non verificata: periodi di rumore dell'host nella finestra cronometrata. Effetto: in quei
+  periodi un'accelerazione vera fino a ~1,14× può non risultare distinguibile. È la perdita di sensibilità che la (c)
+  accetta al posto dei rifiuti; la regola N8 (sotto) impedisce di spendere in un periodo così.
+
+**Regola per il pilota (N8, `REQUISITI_AGGIUNTI.md`):** la corsa pagata parte solo se i 20 nulli della precondizione
+hanno anche una minima distinguibile mediana ≤ 1,05×; altrimenti si rimanda e si riporta.
+
+## 1. Sintesi (corsa del protocollo 5.0)
 
 | Verifica | Esito | Comando |
 |---|---|---|
@@ -178,9 +229,11 @@ poi **40 nulli da capo**. Nessun codice finché Morgan non decide.
 | Criterio | Stato |
 |---|---|
 | 1. Ogni attacco riesce sul riferimento e sulla v5 è bloccato/limitato | **aperto**: fase 3 incompleta (controlli positivi contro le v5 indebolite I1–I12 non eseguiti) |
-| 3. Cancello sul rumore con ≥ 40 nulli | **NON superato** (C4); falsi allarmi nella norma |
-| 4. Limite di PATCH_WORKER | deviazione accettata (E1): 1,1124× sul DEV; 1,1755× sul finale fixture (G3) |
-| 2, 5, 6, 7 | non riverificati in questa sessione: vedi `fase2/RAPPORTO_FASE2.md`; da rifare dopo la decisione sul protocollo |
+| 2. Varianti oneste del collaudo | **6/6 con la 5.1** (`fase4/esiti/collaudo_p51.json`) |
+| 3. Cancello sul rumore con ≥ 40 nulli | **SUPERATO con la 5.1** (1/40, 0 rifiuti); NON superato con la 5.0 (C4) |
+| 4. Limite di PATCH_WORKER | deviazione accettata (E1): 1,1124× sul DEV; 1,1755× sul finale fixture (G3); validi anche con la 5.1 (N5, condizione verificata) |
+| 6. `oracle_manifest.json` identico su due esecuzioni | **sì, con la 5.1** (`fase4/esiti/oracolo_p51.json`; impronta del protocollo `61cde672…`) |
+| 5, 7 | 5: vedi `fase2/RAPPORTO_FASE2.md` (mutatore, invariato); 7: congelamento in fase 5 |
 
 ## 10. Decisioni per Morgan (prima delle risposte; risolte nella sezione 8)
 
