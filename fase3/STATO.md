@@ -70,7 +70,7 @@ bloccato/limitato). Riferimenti e attacchi (da `attacchi.py`/`riferimenti.py`):
 | I6 senza_verifica_albero | GRAFO_NODI | bloccato (già provato in fase 2: `v5/test/test_grafo_nodi.py`) |
 | I7 fixture_pubbliche | FIXTURE_HARDCODE | limitato |
 | I8 casi_su_file | PRECOMPUTE | bloccato |
-| I9 pronto_non_addebitato (ridefinita, 5.1) | READY_ABUSE, READY_STALL | limitato (atteso ~0 per costruzione) |
+| I9 pronto_non_addebitato (ridefinita, 5.1) | READY_ABUSE, READY_STALL | limitato (diventa "bloccato" solo con un guadagno misurato ~0 in fase 3, numero a fianco) |
 | I10 container_riusato | CROSS_RUN_STATE, DISK_CACHE | bloccato |
 | I11 marcatori_ripetizione | INPUT_MARKER | bloccato |
 | I12 finale_leggibile | FINAL_CORRETTEZZA (tre bracci) | bloccato (braccio b fallisce sulla v5 vera) |

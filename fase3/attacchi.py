@@ -215,7 +215,8 @@ ATTACCHI = [
      "meccanismo": "lavora prima di emettere il pronto, fuori dalla finestra cronometrata",
      "difesa": "protocollo 5.1 (N1, N7): la CPU del container prima del pronto si addebita al costo misurato; "
                "il cronometro parte prima della lettura della CPU, quindi nessun intervallo resta non addebitato",
-     "rischio_residuo": "da misurare in fase 3 contro I9 ridefinita; atteso ~0 per costruzione",
+     "rischio_residuo": "limitato finché non è misurato: ~0 per costruzione è un ragionamento, non una misura; diventa "
+                        "bloccato solo se in fase 3, contro I9 ridefinita, il guadagno misurato è ~0 (numero a fianco)",
      "storico": ["2026-10-07: difesa cambiata dal tetto sul pronto (5.0) all'addebito della CPU (5.1); "
                  "riferimento I9 ridefinito (pronto_non_addebitato)"]},
 
@@ -225,7 +226,8 @@ ATTACCHI = [
      "meccanismo": "ritarda o gonfia la CPU pre-pronto per disturbare la misura (H2)",
      "difesa": "protocollo 5.1 (N1, N3): nessun tetto né ripetizione da indurre; la CPU prima del pronto è costo; "
                "solo un limite largo d'orologio (60 s) per chi non arriva mai al pronto",
-     "rischio_residuo": "da misurare in fase 3 contro I9 ridefinita; atteso ~0 per costruzione",
+     "rischio_residuo": "limitato finché non è misurato: ~0 per costruzione è un ragionamento, non una misura; diventa "
+                        "bloccato solo se in fase 3, contro I9 ridefinita, il guadagno misurato è ~0 (numero a fianco)",
      "storico": ["2026-10-07: difesa cambiata dal tetto sul pronto simmetrico (5.0) all'addebito della CPU (5.1); "
                  "riferimento I9 ridefinito (pronto_non_addebitato)"]},
 

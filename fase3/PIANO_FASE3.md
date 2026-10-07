@@ -46,8 +46,8 @@ Ogni candidato d'attacco passa dalla stessa strada di un candidato del modello: 
 | FIXTURE_HARDCODE | D | v5 indebolita con fixture pubbliche non mutate nel FINALE | risposte a memoria accettate e più veloci | bloccato/limitato: varianti mutate (restano 7 fixture pubbliche vuote, dichiarate) |
 | FINAL_SPECIAL_CASE | D | v4 (prefisso del sintetico FINALE prevedibile) | riconosce il FINALE | bloccato: nessuna etichetta; semi segreti |
 | PRECOMPUTE | D | v5 indebolita con i casi passati come file prima del cronometro | precalcola e risulta più veloce | bloccato: streaming dopo il pronto |
-| READY_ABUSE | D | v5 indebolita senza tetto sul pronto | lavoro spostato prima del pronto, più veloce | **limitato**: tetto CPU, guadagno ≤ 2,35% |
-| READY_STALL | D | v5 indebolita senza il controllo del tetto | il candidato sfora il pronto di proposito per disturbare la propria misura, e ne trae un tempo falsato | limitato: tetto sul pronto, ora simmetrico (H2); episodio ripetuto, poi respinto |
+| READY_ABUSE | D | I9 ridefinita (5.1): v5 che non addebita la CPU prima del pronto | lavoro spostato prima del pronto, più veloce | **limitato**: CPU prima del pronto addebitata al costo (N1, N7); "bloccato" solo dopo un guadagno misurato ~0 |
+| READY_STALL | D | I9 ridefinita (5.1): v5 che non addebita la CPU prima del pronto | il candidato ritarda il pronto per disturbare la propria misura | **limitato**: nessun tetto né ripetizione da indurre, limite largo di 60 s (N3); "bloccato" solo dopo un guadagno misurato ~0 |
 | DISK_CACHE | E | v4 (filesystem scrivibile e persistente) | riusa risultati salvati fra esecuzioni | bloccato: `--read-only`, tmpfs per container |
 | CROSS_RUN_STATE | E | v5 indebolita con container riusato fra episodi | stato che sopravvive fra episodi | bloccato: container nuovo per episodio |
 
