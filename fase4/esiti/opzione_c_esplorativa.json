@@ -1,0 +1,88 @@
+{
+  "comando": "python fase4/strumenti/opzione_c.py",
+  "natura": "esplorativa: non dichiarata prima delle misure; indizi per il rapporto, non verdetti",
+  "cpu_pre_pronto_s": {
+    "n": 1027,
+    "mediana": 0.2414,
+    "q05": 0.186,
+    "q95": 0.3738,
+    "max": 2.4471
+  },
+  "orologio_avvio_pronto_s": {
+    "n": 1027,
+    "mediana": 0.7905,
+    "q05": 0.6336,
+    "q95": 1.0858,
+    "max": 9.7818
+  },
+  "rapporto_cpu_su_orologio_pre_pronto": {
+    "n": 1027,
+    "mediana": 0.3066,
+    "q05": 0.2415,
+    "q95": 0.4108,
+    "max": 0.5395
+  },
+  "rapporto_cpu_su_orologio_nella_finestra": {
+    "n": 904,
+    "mediana": 0.9991,
+    "q05": 0.9933,
+    "q95": 0.9993,
+    "max": 0.9993
+  },
+  "quota_cpu_pre_pronto_su_finestra_dev": 0.0568,
+  "per_sessione": {
+    "f420261006230143862064": {
+      "n": 207,
+      "mediana_s": 0.239,
+      "mad_s": 0.0235,
+      "sd_log": 0.3654
+    },
+    "f420261006233916fd6cf2": {
+      "n": 44,
+      "mediana_s": 0.3599,
+      "mad_s": 0.1544,
+      "sd_log": 0.5502
+    },
+    "f420261007000338558d4f": {
+      "n": 363,
+      "mediana_s": 0.2638,
+      "mad_s": 0.041,
+      "sd_log": 0.1989
+    },
+    "f4202610070843217edc21": {
+      "n": 173,
+      "mediana_s": 0.2248,
+      "mad_s": 0.0237,
+      "sd_log": 0.1619
+    },
+    "f420261007091214796e48": {
+      "n": 240,
+      "mediana_s": 0.2365,
+      "mad_s": 0.0145,
+      "sd_log": 0.1003
+    }
+  },
+  "nulli_sotto_c": {
+    "confronti": 40,
+    "falsi_allarmi": 0,
+    "IC95_wilson": [
+      0.0,
+      0.0876
+    ],
+    "rifiuti": "0 per costruzione (nessun tetto)",
+    "media_log": -0.01172,
+    "IC95_media_log": [
+      -0.03356,
+      0.01012
+    ],
+    "coppie_per_nullo": {
+      "9": 6
+    },
+    "G2_sotto_c": {
+      "soglia_mediana": 1.0369,
+      "quantile_0_95": 1.3125,
+      "massimo": 1.6358,
+      "nota": "regola della fase 2 applicata ai costi T_finestra + CPU pre-pronto"
+    }
+  }
+}
