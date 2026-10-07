@@ -10,7 +10,13 @@ Modifiche dichiarate (fase2/PIANO_FASE2.md):
   - la valutazione è valutazione.valuta (container, oracolo, misura esterna);
   - nuove righe di storia per gli esiti nuovi (violazione del protocollo); "avvio oltre il tetto" tolto
     con il protocollo 5.1 (Morgan N1: nessun tetto sul pronto);
-  - precondizione di ogni corsa: 20 confronti nulli (Morgan D7), con zero rifiuti dell'originale.
+  - precondizione per SESSIONE di corse (Morgan N9, modifica D7): prima di ogni blocco di corse consecutive
+    (al massimo DURATA_MAX_SESSIONE_S), 20 confronti nulli con zero rifiuti dell'originale, falsi allarmi
+    come in D7, e minima distinguibile mediana ≤ SOGLIA_SENSIBILITA (N8). A prova di guasto: un errore o
+    un dato mancante = precondizione fallita = nessuna chiamata pagata, sessione rimandata e riportata;
+  - durante la sessione (N9): ogni valutazione segnala "bassa sensibilità" se la mediana delle minime
+    distinguibili delle ultime FINESTRA_SENSIBILITA valutazioni valide supera SOGLIA_SENSIBILITA; le corse
+    non si scartano, si segnalano.
 Il codice del modello è solo TESTO: si scrive in un pacchetto e si copia in un'immagine; l'host non
 lo esegue mai. La chiave API la usa solo questo processo, e solo in `corsa`.
 """
@@ -31,6 +37,9 @@ CORSE_PER_MODELLO, ITERAZIONI_MAX = 3, 4
 TETTO_SPESA_USD, MAX_TOKEN_USCITA = 20.00, 32000
 STORIA_MAX = 6
 PARTI_FINALE = ("finale_sintetico", "finale_fixture")
+SOGLIA_SENSIBILITA = 1.05            # Morgan N8: minima distinguibile mediana massima
+DURATA_MAX_SESSIONE_S = 3 * 3600     # Morgan N9: una sessione di corse dura al massimo ~3 h
+FINESTRA_SENSIBILITA = 5             # N9, proposta: "ultime valutazioni" = le ultime 5 valutazioni valide
 
 SISTEMA = ("You are a performance engineer. You receive the full source of a Python module. "
            "Make it run faster. Hard constraints: behavior and public API must stay exactly "
@@ -63,7 +72,44 @@ def valuta_testo(s, imm_orig, codice, carico, etichetta, valuta=None):
     return valuta(s, imm_orig, imm, carico, etichetta=etichetta)
 
 
-def una_corsa(client, modello, prezzi, s, imm_orig, n, spesa, righe, valuta=None):
+class Sensibilita:
+    """N9, durante la sessione: mediana delle minime distinguibili delle ultime FINESTRA_SENSIBILITA
+    valutazioni valide. registra() restituisce True se il tratto è in bassa sensibilità (mediana oltre la
+    soglia), False se no, None se ancora non ci sono valutazioni valide."""
+
+    def __init__(self, finestra=FINESTRA_SENSIBILITA, soglia=SOGLIA_SENSIBILITA):
+        self.finestra, self.soglia, self.minime = finestra, soglia, []
+
+    def registra(self, esito):
+        m = esito.get("accelerazione_minima_distinguibile")
+        if esito.get("esito") == "valido" and isinstance(m, (int, float)):
+            self.minime.append(m)
+        if not self.minime:
+            return None
+        return statistics.median(self.minime[-self.finestra:]) > self.soglia
+
+
+def precondizione(cancello, s, imm_orig):
+    """N9 (D7 + N8), a prova di guasto: qualunque errore o dato mancante = precondizione fallita."""
+    try:
+        esito = cancello(s, imm_orig, statistica.NULLI_PRECONDIZIONE)
+        minime = [d.get("accelerazione_minima_distinguibile") for d in esito.get("dettagli", [])]
+        completo = (len(minime) == statistica.NULLI_PRECONDIZIONE
+                    and all(isinstance(m, (int, float)) for m in minime))
+        mediana = statistics.median(minime) if completo else None
+        d7 = esito.get("passa") is True
+        n8 = completo and mediana <= SOGLIA_SENSIBILITA
+        motivo = None if d7 and n8 else (
+            "D7: falsi allarmi o rifiuti dell'originale" if not d7 else
+            "N8: minime distinguibili mancanti o incomplete" if not completo else
+            f"N8: minima distinguibile mediana {mediana:.4f} > {SOGLIA_SENSIBILITA}")
+        return {"passa": d7 and n8, "motivo": motivo, "minima_mediana": mediana, "nullo": esito}
+    except Exception as e:                                              # a prova di guasto
+        return {"passa": False, "motivo": f"precondizione non eseguibile ({type(e).__name__}: {e})"[:300],
+                "minima_mediana": None, "nullo": None}
+
+
+def una_corsa(client, modello, prezzi, s, imm_orig, n, spesa, righe, valuta=None, sensibilita=None):
     originale = carichi.parser_originale()
     migliore, acc_migliore = originale, 1.0          # accettato: base dell'iterazione successiva
     prodotto, acc_prodotto = originale, None          # miglior valido prodotto: va SEMPRE al finale
@@ -95,6 +141,7 @@ def una_corsa(client, modello, prezzi, s, imm_orig, n, spesa, righe, valuta=None
         else:
             codice = max(blocchi, key=len)
             esito = valuta_testo(s, imm_orig, codice, "dev", f"{modello[:12]}_{n}_{it}", valuta)
+        bassa = sensibilita.registra(esito) if sensibilita is not None else None
         riga = _riga(it, esito)
         if esito["esito"] == "valido":
             if acc_prodotto is None or esito["accelerazione"] > acc_prodotto:
@@ -110,7 +157,9 @@ def una_corsa(client, modello, prezzi, s, imm_orig, n, spesa, righe, valuta=None
                       "costo_usd": round(costo, 5), "latenza_s": round(time.time() - t0, 1), "esito": esito["esito"],
                       "accelerazione_dev": round(esito["accelerazione"], 4) if "accelerazione" in esito else None,
                       "t_dev": round(esito["t"], 3) if "t" in esito else None,
-                      "picco_dev": esito.get("picco_candidato")})
+                      "picco_dev": esito.get("picco_candidato"),
+                      "minima_distinguibile_dev": esito.get("accelerazione_minima_distinguibile"),
+                      "bassa_sensibilita": bassa})
         print(f"  iter {it}: {u.input_tokens}+{u.output_tokens} token, {costo:.4f} $ — {esito['esito']}")
     # FINALE: sempre, anche dopo un arresto — è calcolo locale, non costa chiamate
     finale = {"su_originale": prodotto == originale}
@@ -118,9 +167,13 @@ def una_corsa(client, modello, prezzi, s, imm_orig, n, spesa, righe, valuta=None
         f = valuta_testo(s, imm_orig, prodotto, parte, f"{modello[:12]}_{n}_{parte[7:]}", valuta)
         finale[parte] = {k: (round(v, 6) if isinstance(v, float) else v) for k, v in f.items()
                          if k not in ("tempi_originale", "tempi_candidato")}
+        finale[parte]["bassa_sensibilita"] = sensibilita.registra(f) if sensibilita is not None else None
+    segnalate = [r for r in righe if r["modello"] == modello and r["corsa"] == n and r.get("bassa_sensibilita")]
+    segnalate += [p for p in PARTI_FINALE if finale[p].get("bassa_sensibilita")]
     return {"costo": costo_corsa, "completa": motivo is None, "motivo_arresto": motivo,
             "accelerazione_accettata_dev": acc_migliore, "accelerazione_prodotta_dev": acc_prodotto,
-            "finale": finale}
+            "finale": finale, "valutazioni_in_bassa_sensibilita": len(segnalate),
+            "bassa_sensibilita": bool(segnalate)}
 
 
 def riepilogo_modello(modello, corse):
@@ -133,23 +186,43 @@ def riepilogo_modello(modello, corse):
             "attesa_usd": [lo, hi], "nella_banda": (lo <= media <= hi) if media is not None else None}
 
 
-def corsa(client, s, imm_orig, cancello):
-    """Corsa pagata: precondizione sul rumore (20 nulli), poi i modelli in ordine; tetto condiviso."""
-    esito_nullo = cancello(s, imm_orig, statistica.NULLI_PRECONDIZIONE)
-    if not esito_nullo["passa"]:
-        return {"bloccata": "precondizione sul rumore non superata: nessuna chiamata, 0 $ spesi", "nullo": esito_nullo}
-    spesa, righe, per_modello = [0.0], [], {}
+def corsa(client, s, imm_orig, cancello, orologio=time.monotonic):
+    """Corsa pagata, a sessioni (Morgan N9): prima di ogni sessione di corse (blocco di corse consecutive;
+    la sessione non avvia corse nuove dopo DURATA_MAX_SESSIONE_S = 3 ore) la precondizione D7 + N8; se
+    fallisce, nessuna chiamata pagata da lì in poi: le corse restanti sono rimandate e riportate. Poi i
+    modelli in ordine; tetto di spesa condiviso; segnalazione di bassa sensibilità durante la sessione."""
+    spesa, righe, per_modello, sessioni = [0.0], [], {}, []
+    inizio_sessione, sensibilita, rimandate, stop = None, None, [], False
     for modello, prezzi in MODELLI.items():
         corse = []
         for n in range(1, CORSE_PER_MODELLO + 1):
+            if stop:
+                rimandate.append({"modello": modello, "corsa": n})
+                continue
+            if inizio_sessione is None or orologio() - inizio_sessione >= DURATA_MAX_SESSIONE_S:
+                p = precondizione(cancello, s, imm_orig)
+                sessioni.append({"prima_della_corsa": {"modello": modello, "corsa": n}, **p})
+                if not p["passa"]:
+                    print(f"  STOP: precondizione della sessione non superata ({p['motivo']}): nessuna chiamata pagata.")
+                    stop = True
+                    rimandate.append({"modello": modello, "corsa": n})
+                    continue
+                inizio_sessione, sensibilita = orologio(), Sensibilita()
             print(f"\n{modello} — corsa {n}")
-            r = una_corsa(client, modello, prezzi, s, imm_orig, n, spesa, righe)
+            r = una_corsa(client, modello, prezzi, s, imm_orig, n, spesa, righe, sensibilita=sensibilita)
+            r["sessione"], r["corsa"] = len(sessioni), n
             corse.append(r)
             if not r["completa"]:
                 break
-        per_modello[modello] = riepilogo_modello(modello, corse)
+        if corse:
+            per_modello[modello] = riepilogo_modello(modello, corse)
         if any((c["motivo_arresto"] or "").startswith("conteggio") for c in corse):
             print("  STOP: conteggio dei token non disponibile: nessuna chiamata anche per i modelli successivi.")
             break
-    return {"commit_tomli": config.TOMLI_COMMIT, "prezzi": MODELLI, "spesa_totale_usd": round(spesa[0], 4),
-            "per_modello": per_modello, "nullo": esito_nullo, "righe": righe}
+    esito = {"commit_tomli": config.TOMLI_COMMIT, "prezzi": MODELLI, "spesa_totale_usd": round(spesa[0], 4),
+             "per_modello": per_modello, "sessioni": sessioni, "rimandate": rimandate, "righe": righe,
+             "corse_in_bassa_sensibilita": [{"modello": m, "corsa": c["corsa"]} for m, v in per_modello.items()
+                                            for c in v["corse"] if c.get("bassa_sensibilita")]}
+    if not sessioni or not sessioni[0]["passa"]:
+        esito["bloccata"] = "precondizione della prima sessione non superata: nessuna chiamata, 0 $ spesi"
+    return esito

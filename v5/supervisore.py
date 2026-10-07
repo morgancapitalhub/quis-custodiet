@@ -758,7 +758,8 @@ def cancello(s, imm, n, carico="dev"):
             rifiuti += 1                    # l'originale respinto contro sé stesso: da riferire (C4)
         else:
             allarmi += r["piu_veloce"] or r["piu_lento"]
-        dettagli.append({"esito": r["esito"], "accelerazione": r.get("accelerazione"), "t": r.get("t")})
+        dettagli.append({"esito": r["esito"], "accelerazione": r.get("accelerazione"), "t": r.get("t"),
+                         "accelerazione_minima_distinguibile": r.get("accelerazione_minima_distinguibile")})  # N8, N9
         print(f"nullo {k}: {valutazione.classifica(r)} {r.get('accelerazione')}", flush=True)
     passa, lo, hi = statistica.verdetto_nullo(allarmi, n)
     return {"confronti": n, "falsi_allarmi": allarmi, "rifiuti_dell_originale": rifiuti, "IC95": [lo, hi],
