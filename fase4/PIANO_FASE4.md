@@ -66,6 +66,20 @@ del finale fixture ≈ 2,4 s (`quota-fixture`).
 Ripetizioni per il tetto del pronto allungano i pezzi; il controllo sul tempo ferma il pezzo prima dei 55 min.
 Durante le misure nessun altro lavoro pesante sull'host (regola 7).
 
+## Corsa dei 40 nulli con il protocollo 5.1 (Morgan, 2026-10-07), regole dichiarate prima
+
+- `python fase4/fase4.py nulli` → `fase4/esiti/nulli_40_p51.avanzamento.json` (file nuovo; la corsa 5.0 resta).
+- **40 nulli**, numero fissato; verdetti (criterio 3, G1, G2) **solo a 40 raggiunti**; nessuna lettura delle
+  accelerazioni prima; a fine pezzo si riportano solo nulli registrati e arresti tecnici.
+- **Arresto tecnico** = solo guasti dell'ambiente; si scarta e si rifà; oltre 3 nella corsa, stop e si riferisce.
+- **Criterio 3:** limite inferiore di Wilson dei falsi allarmi ≤ 0,10 e **zero rifiuti dell'originale** (con la 5.1
+  restano possibili solo per memoria, risultato diverso o violazione).
+- **G2:** mediana come soglia; quantile 0,95 e massimo come contesto.
+- **Se il criterio 3 fallisce anche con la 5.1:** si riporta come non superato, se ne cerca la causa, e **non si
+  ripete la corsa con le stesse regole** finché la causa non è capita e una regola nuova non è dichiarata.
+- A 40 raggiunti: commit dei dati **prima** dell'analisi; poi tutti i verdetti insieme, la distribuzione delle
+  minime distinguibili per nullo e il confronto con la corsa 5.0.
+
 ## Classificazione C4 (Morgan, 2026-10-06, dopo il pezzo 1), dichiarata
 
 - **Evento C4:** qualunque sforamento del tetto del pronto da parte dell'originale, in qualunque ruolo (nel nullo la
