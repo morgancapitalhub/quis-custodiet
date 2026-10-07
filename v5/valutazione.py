@@ -5,12 +5,13 @@ REQUISITI_AGGIUNTI.md Q3, C4, D4). Riprende la struttura di valuta() e confronto
 Per ogni coppia ABBA: un episodio dell'originale e uno del candidato, ciascuno in un container nuovo.
   - ogni risposta del candidato si confronta con l'ORACOLO congelato, fuori dalla finestra; al primo
     errore il candidato è respinto ("risultato diverso su carico nascosto");
-  - tetto sulla CPU pre-pronto, uguale per i due ruoli: posizione = mediana dell'originale nella sessione,
-    eccedenza congelata (config.ECCEDENZA_PRONTO); superato da uno dei due → la coppia si ripete una volta;
-    di nuovo → candidato respinto, oppure stop della sessione se a sforare è l'originale;
+  - costo misurato (Morgan N1, protocollo 5.1) = finestra cronometrata + CPU del container prima del pronto
+    (cgroup, dall'osservatore; non l'orologio, che comprende la creazione del container). Nessun tetto e
+    nessun rifiuto sul pronto: il lavoro fatto prima del pronto si paga come quello fatto dopo. Chi non
+    arriva mai al pronto incontra solo il limite largo d'orologio (episodio.PRONTO_S, N3);
   - le verifiche con l'oracolo si fanno dopo entrambi gli episodi della coppia (simmetria);
   - memoria (Q3): mediana(P_cand) − mediana(P_import) ≤ 1,05·(mediana(P_orig) − mediana(P_import)) + τ;
-  - tempo: soglia t sulle differenze appaiate (v4).
+  - tempo: soglia t sulle differenze appaiate dei costi (v4), con l'accelerazione minima distinguibile (N2).
 """
 import statistics
 
@@ -65,19 +66,28 @@ def _verifica(frame, casi, attesi):
     return None
 
 
+def costo(r):
+    """Morgan N1: costo misurato di un episodio, in secondi = finestra cronometrata dall'host + CPU del
+    container prima del pronto (cgroup). Nella finestra, CPU e orologio coincidono (0,999 sul carico DEV,
+    fase4/esiti/opzione_c_esplorativa.json): sommarli è legittimo."""
+    return r["t_finestra_ns"] / 1e9 + r["cpu_pre_pronto_us"] / 1e6
+
+
 def valuta(s, imm_orig, imm_cand, carico, coppie=statistica.COPPIE, etichetta="cand"):
     """Valuta il candidato `imm_cand` contro `imm_orig` sul carico congelato `carico`, nella Sessione `s`."""
-    if config.TOLLERANZA_MEMORIA is None or config.ECCEDENZA_PRONTO is None:
+    if config.TOLLERANZA_MEMORIA is None:
         raise RuntimeError("dispersioni non calibrate: python v5/supervisore.py calibra-dispersione")
     casi, attesi = oracolo.carica(carico)
     timeout = 600
-    p_import, cpu_orig, p_orig, p_cand, cpu_cand, to, tc = [], [], [], [], [], [], []
+    p_import, p_orig, p_cand, to, tc = [], [], [], [], []
+    finestre = {"originale": [], "candidato": []}
+    cpu_pre = {"originale": [], "candidato": []}
     for k in range(3):
         r, _ = episodio.con_ripetizione(s.reg, s.sessione, f"{etichetta}_imp{k}", imm_orig, [], s.oss, "originale")
-        p_import.append(r["memory_peak"]); cpu_orig.append(r["cpu_pre_pronto_us"])
-    esito = {"carico": carico, "coppie": coppie}
-    k = ripetizioni_tetto = 0
-    while len(to) < coppie:
+        p_import.append(r["memory_peak"])
+    esito = {"carico": carico, "coppie": coppie, "protocollo": config.VERSIONE_PROTOCOLLO,
+             "costo": "finestra + CPU del container prima del pronto"}
+    for k in range(coppie):
         ordine_casi = carichi.episodio(casi, seme_ordine=f"{carico}:{k}")
         ruoli = [("originale", imm_orig), ("candidato", imm_cand)]
         if k % 2:
@@ -99,33 +109,23 @@ def valuta(s, imm_orig, imm_cand, carico, coppie=statistica.COPPIE, etichetta="c
                 if ruolo == "originale":
                     raise episodio.InfrastrutturaFallita(f"l'originale non coincide con l'oracolo: {difetto}")
                 return {**esito, "esito": difetto, "coppia": k}
+        # Morgan N1: costo = finestra + CPU del container prima del pronto, uguale per i due ruoli.
+        # Nessun tetto, nessuna ripetizione, nessun rifiuto sul pronto.
+        for ruolo, (r, _) in coppia.items():
+            finestre[ruolo].append(r["t_finestra_ns"] / 1e9)
+            cpu_pre[ruolo].append(r["cpu_pre_pronto_us"])
         r_o, r_c = coppia["originale"][0], coppia["candidato"][0]
-        # Asimmetria (c), corretta: la stessa regola del tetto sul "pronto" vale per entrambi i ruoli.
-        # Posizione = mediana della CPU pre-pronto dell'originale nella sessione (prima di questa coppia).
-        tetto = statistics.median(cpu_orig) + config.ECCEDENZA_PRONTO
-        cpu_orig.append(r_o["cpu_pre_pronto_us"])
-        sforati = [ruolo for ruolo, (r, _) in coppia.items() if r["cpu_pre_pronto_us"] > tetto]
-        k += 1
-        if sforati:
-            ripetizioni_tetto += 1
-            s.reg.episodio({"evento": "tetto del pronto superato", "coppia": k - 1, "ruoli": sforati, "tetto_us": tetto,
-                            "ripetizione": ripetizioni_tetto})
-            if ripetizioni_tetto > 1:
-                if "candidato" in sforati:
-                    return {**esito, "esito": "avvio oltre il tetto", "cpu_pre_pronto_us": r_c["cpu_pre_pronto_us"],
-                            "tetto_us": tetto}
-                raise episodio.InfrastrutturaFallita("l'originale supera il tetto del pronto due volte di seguito")
-            continue                                                    # la coppia si ripete una volta
-        ripetizioni_tetto = 0
-        to.append(r_o["t_finestra_ns"] / 1e9)
-        tc.append(r_c["t_finestra_ns"] / 1e9)
+        to.append(costo(r_o))
+        tc.append(costo(r_c))
         p_orig.append(r_o["memory_peak"]); p_cand.append(r_c["memory_peak"])
-        cpu_cand.append(r_c["cpu_pre_pronto_us"])
     m_imp, m_orig, m_cand = (statistics.median(x) for x in (p_import, p_orig, p_cand))
     soglia_memoria = m_imp + config.VINCOLO_MEMORIA * (m_orig - m_imp) + config.TOLLERANZA_MEMORIA
     base = {**esito, "picco_import": m_imp, "picco_originale": m_orig, "picco_candidato": m_cand,
-            "soglia_picco": soglia_memoria, "cpu_pre_pronto_orig_us": statistics.median(cpu_orig),
-            "cpu_pre_pronto_cand_us": statistics.median(cpu_cand), "tempi_originale": to, "tempi_candidato": tc}
+            "soglia_picco": soglia_memoria, "cpu_pre_pronto_orig_us": statistics.median(cpu_pre["originale"]),
+            "cpu_pre_pronto_cand_us": statistics.median(cpu_pre["candidato"]),
+            "tempi_originale": to, "tempi_candidato": tc,                 # costi (finestra + CPU pre-pronto), s
+            "finestre_originale": finestre["originale"], "finestre_candidato": finestre["candidato"],
+            "cpu_pre_pronto_originale_us": cpu_pre["originale"], "cpu_pre_pronto_candidato_us": cpu_pre["candidato"]}
     if m_cand > soglia_memoria:
         return {**base, "esito": "memoria oltre il vincolo"}
     return {**base, "esito": "valido", **statistica.confronto(to, tc)}

@@ -113,6 +113,17 @@ Piano: `C:\Users\T490\.claude\plans\swirling-drifting-tulip.md`, revisione 2, ap
 | M5 | **Nel rapporto:** DEV e finale sintetico hanno gli stessi costrutti; il finale sintetico misura la generalizzazione su valori nuovi, il finale fixture la copertura di costrutti assenti dal DEV. |
 | M6 | **Prima di ogni lancio:** verificare che il demone Docker risponda davvero (`docker info`), non solo che risultasse attivo prima. |
 
+### Decisioni sul tetto del pronto (2026-10-07, `fase4/RAPPORTO_FASE4.md`)
+
+| | Decisione |
+|---|---|
+| N1 | **Opzione (c), per ragioni strutturali:** toglie un'euristica (regola 5); trasforma i rifiuti di candidati onesti in minore sensibilità (prudenza); neutralizza READY_ABUSE e READY_STALL per costruzione. **Nessun tetto né rifiuto sul pronto.** **Costo misurato = finestra cronometrata + CPU del container prima del pronto** (CPU del cgroup letta dall'osservatore, non orologio: l'orologio comprende la creazione del container). Sostituisce il tetto del pronto di D4, Q4, C4 (parte "pronto") ed H2. |
+| N2 | **Ogni verdetto riporta l'accelerazione minima distinguibile di quel confronto** (1 + t·es / media del costo del candidato), così un "non distinguibile" in una sessione rumorosa si legge come tale. |
+| N3 | **Limite per il pronto: 60 s d'orologio**, solo per chi non arriva mai (era 20 s). |
+| N4 | L'asimmetria del rifiuto per ruolo (pronuncia nel ruolo di candidato = voce; nel ruolo d'originale = nullo rifatto) **sparisce con (c)**: non ci sono più rifiuti sul pronto. |
+| N5 | **I limiti di PATCH_WORKER non si rimisurano:** worker e pavimento girano sulla stessa immagine dell'originale, con la stessa CPU prima del pronto; sommare la stessa quantità a numeratore e denominatore avvicina il rapporto a 1. Restano limiti superiori validi: **1,1124× DEV, 1,1755× finale fixture**. |
+| N6 | **Ordine dei lavori:** dichiarazione (questa tabella) → implementazione nella v5 (nuova versione del protocollo, impronta nuova) → test e collaudo delle sei varianti con la regola nuova → **40 nulli da capo**, regole dichiarate prima come nel piano attuale → **I9 ridefinita**: l'indebolita è una v5 che NON addebita la CPU prima del pronto → completamento della fase 3. La corsa dei 40 nulli del 2026-10-06/07 resta come prova che la regola vecchia falliva. |
+
 ## Versione verificata dell'ambiente
 
 Verificata il 2026-10-04 dopo l'aggiornamento. Su questa versione sono state ripetute con esito positivo la misura del picco (fase 0), la prova di aggancio (100 episodi) e la fase 1. Vedi `aggiornamento_docker/RAPPORTO_AGGIORNAMENTO.md`.

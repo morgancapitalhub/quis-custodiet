@@ -2,14 +2,16 @@
 
     python fase4/fase4.py nulli [--per-pezzo N] [--minuti M]      un pezzo dei 40 nulli (Docker)
     python fase4/fase4.py patch-worker-ff [--minuti M]            un pezzo di G3 (Docker)
-    python fase4/fase4.py analisi                                 verdetti dai file di avanzamento (senza Docker)
+    python fase4/fase4.py analisi [--protocollo 5.0|5.1]         verdetti dai file di avanzamento (senza Docker)
+    python fase4/fase4.py collaudo                                varianti oneste + cancello corto, protocollo in vigore (Docker)
 
 Corse spezzate in pezzi ripartibili (L2): ogni lancio è un pezzo, apre una Sessione nuova (controlli
 preliminari, sqz_demo_* fermati, riscaldamento e picco a vuoto), riprende dall'ultima voce salvata in
 fase4/esiti/*.avanzamento.json e si ferma prima di superare --minuti (predefinito 55). Le voci già
 misurate non si rifanno. Codici d'uscita: 0 concluso, 10 pezzo finito ma resta lavoro, 3 la sessione si
 è fermata per l'infrastruttura (InfrastrutturaFallita: si riferisce, la voce non conta).
-Nessuna modifica alla v5: si usano valutazione.valuta, episodio.con_ripetizione, oracolo.carica.
+Si usano valutazione.valuta, episodio.con_ripetizione, oracolo.carica della v5 in vigore (config.VERSIONE_PROTOCOLLO).
+La corsa dei nulli del protocollo 5.0 resta in nulli_40.avanzamento.json e si rianalizza con --protocollo 5.0.
 """
 import argparse
 import json
@@ -28,10 +30,16 @@ from v5 import ambiente, carichi, config, episodio, oracolo, statistica, valutaz
 SESSIONI = config.LAVORO / "sessioni"
 
 ESITI = RADICE / "fase4" / "esiti"
-AV_NULLI = ESITI / "nulli_40.avanzamento.json"
 AV_PW_FF = ESITI / "patch_worker_ff.avanzamento.json"
-INTESTAZIONE_NULLI = {"criterio": 3, "confronti": statistica.NULLI_ACCETTAZIONE, "coppie": statistica.COPPIE,
-                      "carico": "dev", "falso_allarme": "piu_veloce o piu_lento"}
+# Corsa dei 40 nulli del protocollo 5.0 (tetto del pronto, 2026-10-06/07): conservata come prova che la regola
+# vecchia falliva (Morgan N6); si rianalizza con `analisi --protocollo 5.0`, non si estende.
+AV_NULLI_50 = ESITI / "nulli_40.avanzamento.json"
+INTESTAZIONE_NULLI_50 = {"criterio": 3, "confronti": statistica.NULLI_ACCETTAZIONE, "coppie": statistica.COPPIE,
+                         "carico": "dev", "falso_allarme": "piu_veloce o piu_lento"}
+# Corsa del protocollo in vigore (5.1: costo = finestra + CPU prima del pronto, N1): 40 nulli da capo.
+AV_NULLI = ESITI / "nulli_40_p51.avanzamento.json"
+INTESTAZIONE_NULLI = {**INTESTAZIONE_NULLI_50, "protocollo": config.VERSIONE_PROTOCOLLO,
+                      "costo": "finestra + CPU del container prima del pronto"}
 INTESTAZIONE_PW_FF = {"decisione": "G3", "carico": "finale_fixture", "seme_ordine": "pw-ff",
                       "blocchi": list(config.BLOCCHI_PATCH_WORKER), "soglia": config.LIMITE_PATCH_WORKER}
 STIMA_NULLO_S = 125        # 19 episodi DEV × ~6,4 s (patch-worker della fase 2: 240 episodi in 25,6 min)
@@ -60,8 +68,10 @@ def _resta_tempo(t0, minuti, stima_s):
 
 def riga_nullo(k, sessione, r):
     """Ciò che serve a criterio 3, G1 e G2 (niente diario: quello resta nel registro di sessione)."""
-    chiavi = ("esito", "accelerazione", "piu_veloce", "piu_lento", "t", "m", "es", "tempi_originale",
-              "tempi_candidato", "picco_candidato", "soglia_picco", "cpu_pre_pronto_cand_us")
+    chiavi = ("esito", "accelerazione", "piu_veloce", "piu_lento", "t", "m", "es", "accelerazione_minima_distinguibile",
+              "tempi_originale", "tempi_candidato", "finestre_originale", "finestre_candidato",
+              "cpu_pre_pronto_originale_us", "cpu_pre_pronto_candidato_us",
+              "picco_candidato", "soglia_picco", "cpu_pre_pronto_cand_us", "protocollo")
     return {"k": k, "sessione": sessione, **{c: r[c] for c in chiavi if c in r}}
 
 
@@ -210,10 +220,12 @@ def patch_worker_ff(minuti):
 
 # ------------------------------------------------------------------ analisi (senza Docker)
 
-def analizza():
-    out = {"comando": "python fase4/fase4.py analisi"}
-    if AV_NULLI.exists():
-        d = analisi.Avanzamento(AV_NULLI, INTESTAZIONE_NULLI).dati
+def analizza(protocollo=config.VERSIONE_PROTOCOLLO):
+    out = {"comando": f"python fase4/fase4.py analisi --protocollo {protocollo}"}
+    percorso, intestazione = (AV_NULLI_50, INTESTAZIONE_NULLI_50) if protocollo == "5.0" else (AV_NULLI, INTESTAZIONE_NULLI)
+    out["protocollo"] = protocollo
+    if percorso.exists():
+        d = analisi.Avanzamento(percorso, intestazione).dati
         righe = d["voci"]
         out["nulli_registrati"] = len(righe)
         out["arresti_tecnici"] = [ev for ev in d["eventi"] if ev["evento"] == "arresto tecnico"]
@@ -232,9 +244,43 @@ def analizza():
                                      "nota": "controlli intermedi sulla stessa serie: l'errore di primo tipo "
                                              "complessivo supera il 5% nominale"}
     ESITI.mkdir(parents=True, exist_ok=True)
-    (ESITI / "analisi.json").write_text(json.dumps(out, indent=2, ensure_ascii=False), encoding="utf-8")
+    nome = "analisi.json" if protocollo == "5.0" else f"analisi_p{protocollo.replace('.', '')}.json"
+    (ESITI / nome).write_text(json.dumps(out, indent=2, ensure_ascii=False), encoding="utf-8")
     print(json.dumps(out, indent=2, ensure_ascii=False))
     return ESCI_CONCLUSO
+
+
+# ------------------------------------------------------------------ collaudo con la regola nuova (N6)
+
+def collaudo(n_nulli=5):
+    """Le sei varianti oneste (esiti dichiarati prima in valutazione.VARIANTI) + cancello corto, con il
+    protocollo in vigore. Come `supervisore.py collaudo`, ma scrive in fase4/esiti/ (il collaudo della
+    fase 2 resta com'è) e riporta per ogni verdetto l'accelerazione minima distinguibile (N2)."""
+    from v5 import supervisore
+    preliminari()
+    imm = ambiente.immagine_pacchetto(carichi.pacchetto_originale())
+    varianti = {nome: valutazione.immagine_variante(nome) for nome in valutazione.VARIANTI}
+    sessione = _nuova_sessione()
+    righe = []
+    with valutazione.Sessione(sessione, [imm, *varianti.values()], _riscaldamento()) as s:
+        for nome, imm_v in varianti.items():
+            atteso = valutazione.VARIANTI[nome][1]
+            r = valutazione.valuta(s, imm, imm_v, "dev", etichetta=f"c51{nome.lower()}")
+            osservato = valutazione.classifica(r)
+            righe.append({"variante": nome, "atteso": atteso, "osservato": osservato, "ok": osservato == atteso,
+                          "accelerazione": r.get("accelerazione"), "t": r.get("t"),
+                          "accelerazione_minima_distinguibile": r.get("accelerazione_minima_distinguibile"),
+                          "picco_candidato": r.get("picco_candidato"), "soglia_picco": r.get("soglia_picco")})
+            print(json.dumps(righe[-1], ensure_ascii=False), flush=True)
+        nulli = supervisore.cancello(s, imm, n_nulli)
+    dati = {"comando": "python fase4/fase4.py collaudo", "protocollo": config.VERSIONE_PROTOCOLLO,
+            "sessione": sessione, "varianti": righe, "superate": f"{sum(r['ok'] for r in righe)}/{len(righe)}",
+            "cancello_corto": nulli, "diario": s.reg.diario}
+    ESITI.mkdir(parents=True, exist_ok=True)
+    (ESITI / f"collaudo_p{config.VERSIONE_PROTOCOLLO.replace('.', '')}.json").write_text(
+        json.dumps(dati, indent=2, ensure_ascii=False), encoding="utf-8")
+    print(json.dumps({k: v for k, v in dati.items() if k != "diario"}, indent=2, ensure_ascii=False))
+    return ESCI_CONCLUSO if all(r["ok"] for r in righe) else 1
 
 
 def _nuova_sessione():
@@ -245,15 +291,18 @@ def _nuova_sessione():
 def main(argv=None):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     ap = argparse.ArgumentParser(prog="fase4.py")
-    ap.add_argument("comando", choices=["nulli", "patch-worker-ff", "analisi"])
+    ap.add_argument("comando", choices=["nulli", "patch-worker-ff", "analisi", "collaudo"])
     ap.add_argument("--per-pezzo", type=int, default=20)
     ap.add_argument("--minuti", type=float, default=55)
+    ap.add_argument("--protocollo", choices=["5.0", config.VERSIONE_PROTOCOLLO], default=config.VERSIONE_PROTOCOLLO)
     a = ap.parse_args(argv)
     if a.comando == "nulli":
         return nulli(a.per_pezzo, a.minuti)
     if a.comando == "patch-worker-ff":
         return patch_worker_ff(a.minuti)
-    return analizza()
+    if a.comando == "collaudo":
+        return collaudo()
+    return analizza(a.protocollo)
 
 
 if __name__ == "__main__":

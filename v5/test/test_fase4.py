@@ -46,9 +46,16 @@ class TestC4(unittest.TestCase):
         return {"evento": "C4", "tipo": "sforamento del tetto del pronto (originale)", "ruoli": ruoli,
                 "ripetizione": rip, "pronuncia": rip > 1}
 
-    def test_messaggio_presente_nella_v5(self):
+    def test_messaggio_tolto_dal_protocollo_51(self):
+        """Il tetto del pronto non esiste più (Morgan N1): il messaggio vale solo per i dati del protocollo 5.0."""
         sorgente = (config.RADICE / "v5" / "valutazione.py").read_text(encoding="utf-8")
-        self.assertIn(f'"{fase4.MSG_TETTO_ORIGINALE}"', sorgente)
+        self.assertNotIn(fase4.MSG_TETTO_ORIGINALE, sorgente)
+        self.assertNotIn("tetto del pronto superato", sorgente)
+
+    def test_corsa_50_intatta_e_51_separata(self):
+        self.assertNotEqual(fase4.AV_NULLI, fase4.AV_NULLI_50)
+        self.assertEqual(fase4.INTESTAZIONE_NULLI["protocollo"], config.VERSIONE_PROTOCOLLO)
+        self.assertNotIn("protocollo", fase4.INTESTAZIONE_NULLI_50)
 
     def test_pronuncia_ruolo_originale_e_un_rifiuto(self):
         eventi = [self.sfor(["originale", "candidato"], 1), self.sfor(["originale"], 2)]
@@ -257,14 +264,14 @@ class TestOrchestrazioneNulli(unittest.TestCase):
         fase4.nulli(per_pezzo=20, minuti=55)
         with mock.patch.object(fase4, "ESITI", Path(self.dir.name)):
             fase4.analizza()
-        out = json.loads((Path(self.dir.name) / "analisi.json").read_text(encoding="utf-8"))
+        out = json.loads((Path(self.dir.name) / "analisi_p51.json").read_text(encoding="utf-8"))
         self.assertEqual(out["nulli_registrati"], 20)
         self.assertNotIn("criterio3", out)
         self.assertNotIn("G1_simmetria", out)
         fase4.nulli(per_pezzo=20, minuti=55)
         with mock.patch.object(fase4, "ESITI", Path(self.dir.name)):
             fase4.analizza()
-        out = json.loads((Path(self.dir.name) / "analisi.json").read_text(encoding="utf-8"))
+        out = json.loads((Path(self.dir.name) / "analisi_p51.json").read_text(encoding="utf-8"))
         self.assertIn("criterio3", out)
         self.assertIn("G1_simmetria", out)
 

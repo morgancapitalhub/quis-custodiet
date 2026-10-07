@@ -8,7 +8,8 @@ Copiato da pilota_costo_v4.py con gli stessi valori:
 Modifiche dichiarate (fase2/PIANO_FASE2.md):
   - SISTEMA: "a hidden test suite" → "hidden checks" (Morgan D2: niente pytest, oracolo per caso);
   - la valutazione è valutazione.valuta (container, oracolo, misura esterna);
-  - nuove righe di storia per gli esiti nuovi (violazione del protocollo, avvio oltre il tetto);
+  - nuove righe di storia per gli esiti nuovi (violazione del protocollo); "avvio oltre il tetto" tolto
+    con il protocollo 5.1 (Morgan N1: nessun tetto sul pronto);
   - precondizione di ogni corsa: 20 confronti nulli (Morgan D7), con zero rifiuti dell'originale.
 Il codice del modello è solo TESTO: si scrive in un pacchetto e si copia in un'immagine; l'host non
 lo esegue mai. La chiave API la usa solo questo processo, e solo in `corsa`.
@@ -50,8 +51,6 @@ def _riga(it, esito):
         return f"Attempt {it}: the candidate crashed or hung during measurement — rejected."
     if e.startswith("violazione"):
         return f"Attempt {it}: the candidate's output violated the protocol — rejected."
-    if e == "avvio oltre il tetto":
-        return f"Attempt {it}: start-up work exceeded the limit — rejected."
     return f"Attempt {it}: result differed on a hidden input — rejected."
 
 

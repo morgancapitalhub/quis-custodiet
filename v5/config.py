@@ -110,7 +110,13 @@ VINCOLO_MEMORIA = 1.05            # pilota_costo_v4.py riga 67, applicato alla m
 # Limite dichiarato di PATCH_WORKER (Morgan E1): criterio 4 NON superato a 120 coppie, deviazione accettata.
 LIMITE_DICHIARATO_PATCH_WORKER = 1.1124   # `patch-worker` del 2026-10-05 sui byte esatti, 120 coppie (prima: 1.116)
 TOLLERANZA_MEMORIA = 69632        # byte = quantile 0,995 dei residui assoluti (E2), `calibra-dispersione 5 40` del 2026-10-05 sui byte esatti (prima: 137216)
-ECCEDENZA_PRONTO = 109446         # µs = max(20 ms, quantile 0,995 dei residui), `calibra-dispersione 5 40` del 2026-10-05 sui byte esatti (prima: 85147)
+# ECCEDENZA_PRONTO (109446 µs, tetto del pronto) tolta con il protocollo 5.1 (Morgan N1): nessun tetto sul
+# pronto; la CPU prima del pronto si addebita al costo (valutazione.costo). Storia in REQUISITI_AGGIUNTI.md.
+
+# ------------------------------------------------------------- versione del protocollo
+# 5.0: fasi 2-4 fino al 2026-10-07 (tetto del pronto). 5.1: costo = finestra + CPU prima del pronto (N1),
+# accelerazione minima distinguibile in ogni verdetto (N2), limite del pronto 60 s (N3).
+VERSIONE_PROTOCOLLO = "5.1"
 
 # ------------------------------------------------------------- statistica
 # t di Student bilaterale al 95% per gradi di libertà = coppie - 1. Da pilota_costo_v4.py riga 65,

@@ -16,13 +16,18 @@ NULLI_ACCETTAZIONE = 40          # brief, criterio 3
 
 
 def confronto(to, tc):
-    """Tempi dell'originale e del candidato, appaiati per coppia ABBA. Soglia t di Student sulle differenze."""
+    """Costi dell'originale e del candidato, appaiati per coppia ABBA. Soglia t di Student sulle differenze.
+
+    Morgan N2: ogni verdetto riporta l'accelerazione minima distinguibile di QUEL confronto,
+    1 + t·es / media(tc) (regola di fase2/strumenti/risoluzione.py): un "né più veloce né più lento" con una
+    minima alta si legge come "non distinguibile in questa sessione", non come "nessun miglioramento"."""
     diff = [a - b for a, b in zip(to, tc)]                  # > 0: candidato più veloce
     m, es = statistics.mean(diff), statistics.stdev(diff) / math.sqrt(len(diff))
     soglia = config.T_CRITICO_95[len(diff) - 1] * es
     t = m / es if es > 0 else (0.0 if m == 0 else math.copysign(math.inf, m))
     return {"accelerazione": statistics.mean(to) / statistics.mean(tc),
-            "piu_veloce": m > soglia, "piu_lento": m < -soglia, "m": m, "es": es, "t": t}
+            "piu_veloce": m > soglia, "piu_lento": m < -soglia, "m": m, "es": es, "t": t,
+            "accelerazione_minima_distinguibile": 1 + soglia / statistics.mean(tc)}
 
 
 def wilson(k, n, z=1.96):

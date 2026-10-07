@@ -22,7 +22,7 @@ import time
 
 from v5 import ambiente, confine, config
 
-PRONTO_S = 20.0                 # timeout reale del pronto (piano: proposta approvata)
+PRONTO_S = 60.0                 # Morgan N3: limite largo d'orologio, solo per chi non arriva mai al pronto (era 20 s)
 
 
 class InfrastrutturaFallita(Exception):

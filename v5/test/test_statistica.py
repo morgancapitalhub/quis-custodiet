@@ -27,6 +27,13 @@ class TestStatistica(unittest.TestCase):
         uguale = statistica.confronto(to, [x + d for x, d in zip(to, [0.05, -0.05] * 4)])
         self.assertFalse(uguale["piu_veloce"] or uguale["piu_lento"])
 
+    def test_minima_distinguibile(self):
+        """Morgan N2: 1 + t·es / media(tc), la regola di fase2/strumenti/risoluzione.py."""
+        to = [5.0, 5.1, 4.9, 5.05, 5.0, 4.95, 5.1, 5.0]
+        tc = [x + d for x, d in zip(to, [0.05, -0.05] * 4)]
+        r = statistica.confronto(to, tc)
+        self.assertAlmostEqual(r["accelerazione_minima_distinguibile"], 1 + config.T_CRITICO_95[7] * r["es"] / (sum(tc) / 8))
+
     def test_ic_rapporto(self):
         g, (lo, hi) = statistica.ic_rapporto([1.1, 1.0, 1.05, 1.08, 1.02, 1.07, 1.04, 1.06])
         self.assertTrue(lo < g < hi)

@@ -142,7 +142,30 @@ Toglie la capacità invece di usare una soglia: lavorare prima del pronto non è
 per il pronto; ricalcolo dichiarato di mappa della risoluzione e limiti di PATCH_WORKER sulla grandezza nuova;
 poi **40 nulli da capo**. Nessun codice finché Morgan non decide.
 
-## 8. Stato dei criteri d'accettazione
+## 8. Decisioni di Morgan sul rapporto (2026-10-07; `REQUISITI_AGGIUNTI.md` N1–N6)
+
+- **(c) scelta per ragioni strutturali**, non per la rianalisi esplorativa: toglie un'euristica (regola 5); trasforma
+  i verdetti sbagliati (rifiuti di onesti) in minore sensibilità (prudenza); neutralizza READY_ABUSE e READY_STALL per
+  costruzione. Costo = finestra + **CPU del container** prima del pronto. Ogni verdetto riporta l'**accelerazione
+  minima distinguibile** di quel confronto. Limite per il pronto **60 s** d'orologio, solo per chi non arriva mai.
+  Protocollo **5.1**: `config.VERSIONE_PROTOCOLLO`, impronta nuova `4658e9cf…b722b7b3`
+  (`python -c "from v5 import oracolo; print(oracolo.impronta_protocollo())"`; la 5.0 era `ace50f5e…d17a04a`).
+- **Asimmetria del rifiuto per ruolo (sezione 3): sparisce con (c)**, perché non ci sono più rifiuti sul pronto.
+- **I limiti di PATCH_WORKER non si rimisurano.** Ragionamento: worker e pavimento girano sulla stessa immagine
+  dell'originale, quindi hanno la stessa CPU prima del pronto c (interprete, worker, import di tomli). Con (c) il
+  rapporto diventa (T_w + c)/(T_p + c); con T_w > T_p e c > 0, sommare la stessa quantità a numeratore e denominatore
+  **avvicina il rapporto a 1**: (T_w + c)/(T_p + c) < T_w/T_p. I limiti misurati restano **limiti superiori validi**:
+  **1,1124× sul DEV, 1,1755× sul finale fixture**.
+  - Condizione, da dichiarare: il ragionamento vale finché la CPU prima del pronto dei due worker è la stessa (o
+    quella del worker non supera quella del pavimento di più del rapporto stesso). I due script importano moduli
+    leggermente diversi; la differenza è piccola rispetto a c.
+  - Con (c) il candidato non può spostare guadagno nella CPU prima del pronto: il worker importa la libreria standard
+    **prima** di tomli, quindi prima che il codice del candidato giri; ciò che il candidato può ridurre prima del pronto
+    è solo l'import del proprio `_parser.py`, che è costo legittimo del parser.
+- **Ordine dei lavori:** dichiarazione → v5 5.1 → test e collaudo con la regola nuova → 40 nulli da capo → I9
+  ridefinita (v5 che non addebita la CPU prima del pronto) → completamento della fase 3.
+
+## 9. Stato dei criteri d'accettazione
 
 | Criterio | Stato |
 |---|---|
@@ -151,7 +174,7 @@ poi **40 nulli da capo**. Nessun codice finché Morgan non decide.
 | 4. Limite di PATCH_WORKER | deviazione accettata (E1): 1,1124× sul DEV; 1,1755× sul finale fixture (G3) |
 | 2, 5, 6, 7 | non riverificati in questa sessione: vedi `fase2/RAPPORTO_FASE2.md`; da rifare dopo la decisione sul protocollo |
 
-## 9. Decisioni per Morgan
+## 10. Decisioni per Morgan (prima delle risposte; risolte nella sezione 8)
 
 1. Opzione per il tetto del pronto: (c) proposta; oppure (a), (b), o una combinazione.
 2. Con (c): valore del limite largo di tempo per il pronto (oggi 20 s d'orologio; massimo osservato 9,8 s).

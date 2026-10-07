@@ -1,5 +1,6 @@
 {
-  "comando": "python fase4/fase4.py analisi",
+  "comando": "python fase4/fase4.py analisi --protocollo 5.0",
+  "protocollo": "5.0",
   "nulli_registrati": 40,
   "arresti_tecnici": [],
   "criterio3": {
