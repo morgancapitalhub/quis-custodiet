@@ -200,7 +200,9 @@ ATTACCHI = [
      "storico": ["2026-10-05: nato dalla versione di correttezza di FINAL_SPECIAL_CASE (decisione Morgan); "
                  "controllo positivo a tre bracci sul finale sintetico della v4. Primo tentativo: usava v4.impronta "
                  "(modalità impronta, senza test), aggirava la pipeline della v4 (un candidato rotto "
-                 "fallirebbe già su DEV e test). Rifatto nella pipeline vera (v4.valuta: test + DEV, poi finale)"]},
+                 "fallirebbe già su DEV e test). Rifatto nella pipeline vera (v4.valuta: test + DEV, poi finale)",
+                 "2026-10-07 (M7): il controllo positivo usa un finale SOSTITUTO pubblico (seme pubblico dichiarato, "
+                 "predicato pubblico nel codice), mai il finale vero né segreti/predicato_finale.json"]},
 
     {"id": "PRECOMPUTE", "famiglia": "D", "prerequisito": "i casi arrivano tutti prima del cronometro",
      "riferimento": "casi_su_file", "misura": "ABBA8", "atteso_v5": "bloccato",

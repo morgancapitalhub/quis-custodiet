@@ -13,7 +13,7 @@ La specifica completa è in `BRIEF_v5_per_Claude_Code.md` (versione 1.2). Va let
 7. **Durante le misure di tempo nessun altro lavoro pesante sull'host**, test compresi: un carico concorrente sposta i tempi misurati.
 8. **Se Docker Desktop si arresta, se ne cerca la causa nei log** (`%LOCALAPPDATA%\Docker\log`, registro eventi di Windows) e la si riporta prima di riprendere.
 9. **Ogni ingresso esterno si verifica byte per byte contro la sua fonte** (impronta del blob o SHA-256), mai con `git status`.
-10. **Nessun dato derivato dai semi segreti entra nel repository** (documenti, valori, indici, predicati del finale): vive solo in `segreti/` e si legge a runtime. Se in `segreti/` entra qualcosa che **non** si può rigenerare dai semi, la copia cifrata (`segreti.tar.gpg`, D3) va rifatta.
+10. **Nessun dato derivato dai semi segreti entra nel repository né in un container di prova** (documenti, valori, indici, predicati del finale): vive solo in `segreti/` e lo legge solo il supervisore, a runtime. I controlli positivi usano solo dati pubblici o finti (oracolo finto, finale sostituto pubblico, carico DEV). Se in `segreti/` entra qualcosa che **non** si può rigenerare dai semi, la copia cifrata (`segreti.tar.gpg`, D3) va rifatta.
 
 ## Prima di ogni push — quattro controlli
 

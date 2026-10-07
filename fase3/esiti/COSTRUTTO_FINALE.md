@@ -1,5 +1,12 @@
 # FINAL_CORRETTEZZA opzione 2: predicato sui valori e proprietà dei carichi
 
+> **Superato in parte il 2026-10-07 (M7, `REQUISITI_AGGIUNTI.md`).** Il controllo positivo non usa più il finale
+> vero né `segreti/predicato_finale.json`: usa un **finale SOSTITUTO pubblico** (stesso generatore, seme pubblico
+> dichiarato, diverso dai semi DEV e segreti) con un predicato sui valori trovato con `fase3/trova_costrutto.py` sul
+> sostituto, pubblico e nel codice. I tre bracci restano gli stessi, sul sostituto. Nel rapporto: il controllo
+> dimostra il meccanismo; la segretezza del finale vero non è toccata. `segreti/predicato_finale.json` resta fuori
+> da git, superato. Le sezioni qui sotto restano come storia.
+
 ## Proprietà dei carichi (condizione 4, scritta correttamente)
 
 `python fase3/trova_costrutto.py`: DEV e finale sintetico (300 documenti ciascuno) hanno **gli stessi

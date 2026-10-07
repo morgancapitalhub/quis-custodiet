@@ -73,7 +73,8 @@ INDEBOLITE_COMPORTAMENTO = {
     "casi_su_file": {
         "difesa_tolta": "casi solo in streaming dopo il pronto",
         "bersaglio": "episodio.esegui",
-        "nota": "scrive i casi dell'episodio in un file nel container prima di far partire il cronometro",
+        "nota": "scrive i casi dell'episodio in un file nel container prima di far partire il cronometro; "
+                "solo carico DEV, mai il finale (regola 10 estesa)",
     },
     "pronto_non_addebitato": {
         # I9 ridefinita (Morgan N6, protocollo 5.1): la difesa non è più un tetto ma l'addebito della CPU
@@ -91,8 +92,10 @@ INDEBOLITE_COMPORTAMENTO = {
     "finale_leggibile": {
         "difesa_tolta": "i documenti del finale non sono leggibili dal candidato",
         "bersaglio": "episodio/consegna del carico finale",
-        "nota": "I12: monta in sola lettura i soli DOCUMENTI del finale nel container (non l'oracolo, che "
-                "resta sull'host, I1); riferimento di FINAL_CORRETTEZZA",
+        # Correzione di Morgan (M7, 2026-10-07): mai il finale vero. Finale SOSTITUTO pubblico: stesso
+        # generatore, seme pubblico dichiarato nel codice del controllo, diverso dai semi DEV e segreti.
+        "nota": "I12: monta in sola lettura i soli DOCUMENTI del finale SOSTITUTO pubblico nel container (non "
+                "l'oracolo); mai il finale vero né altro derivato dai semi segreti; riferimento di FINAL_CORRETTEZZA",
     },
     "marcatori_ripetizione": {
         "difesa_tolta": "casi tutti distinti (nessun marcatore di ripetizione)",
