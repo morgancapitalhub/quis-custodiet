@@ -147,7 +147,17 @@ def finestre_pubbliche(fixture):
     return pub
 
 
-def bersagli(segreti, fixture):
+def impronte_pubbliche_dev(oracolo_dev):
+    """Impronte presenti nell'oracolo del carico DEV (semi pubblici), calcolate a runtime: un valore che compare
+    nel DEV non rivela nulla dei semi segreti (Morgan, 2026-10-07: p.es. le impronte delle eccezioni, che non
+    dipendono dal documento). Se l'oracolo DEV non c'è, nessuna esclusione (la scelta più severa)."""
+    if not Path(oracolo_dev).exists():
+        return set(), False
+    voci = json.loads(Path(oracolo_dev).read_text(encoding="utf-8"))
+    return {x for v in voci for x in (v.get("caso_sha256"), v.get("impronta")) if x}, True
+
+
+def bersagli(segreti, fixture, oracolo_dev):
     """Tutto ciò che non deve uscire, letto a runtime. Nessun valore viene stampato."""
     semi = json.loads((segreti / "semi.json").read_text(encoding="utf-8"))
     pred = json.loads((segreti / "predicato_finale.json").read_text(encoding="utf-8"))
@@ -168,22 +178,28 @@ def bersagli(segreti, fixture):
                         h = hash(f)
                         if h not in pub:
                             finestre.add(h)
-    return letterali, numeri, esadecimali, finestre
+    dev, dev_presente = impronte_pubbliche_dev(oracolo_dev)
+    esclusi = esadecimali & dev
+    esadecimali -= esclusi
+    return (letterali, numeri, esadecimali, finestre), esclusi, dev_presente
 
 
 NUMERO = re.compile(rb"(?<![0-9])[0-9]{4,}(?![0-9])")
 ESA = re.compile(rb"(?<![0-9a-fA-F])[0-9a-fA-F]{64}(?![0-9a-fA-F])")
 
 
-def categorie_trovate(dati, letterali, numeri, esadecimali, finestre):
+def categorie_trovate(dati, letterali, numeri, esadecimali, finestre, esclusi=frozenset(), conta=None):
     trovate = set()
     for cat, lista in letterali.items():
         if any(x in dati for x in lista):
             trovate.add(cat)
     if any(m.group().decode() in numeri for m in NUMERO.finditer(dati)):
         trovate.add("valore del predicato")
-    if any(m.group().decode().lower() in esadecimali for m in ESA.finditer(dati)):
+    esa = [m.group().decode().lower() for m in ESA.finditer(dati)]
+    if any(x in esadecimali for x in esa):
         trovate.add("impronta di un caso del finale")
+    if conta is not None:
+        conta[0] += sum(x in esclusi for x in esa)          # coincidenze escluse perché presenti nel DEV
     d = dati.replace(b"\r", b"")
     if any(hash(d[i:i + W]) in finestre for i in range(len(d) - W + 1)):
         trovate.add("frammento di un documento del finale")
@@ -211,45 +227,52 @@ def blob_dei_commit(commit):
     return out
 
 
-def controllo_4(leggi, commit, commit_blob, segreti, fixture):
-    t = bersagli(segreti, fixture)
-    errori = []
+def controllo_4(leggi, commit, commit_blob, segreti, fixture, oracolo_dev):
+    t, esclusi, dev_presente = bersagli(segreti, fixture, oracolo_dev)
+    errori, conta = [], [0]
     for c in commit:
         msg = git("log", "-1", "--format=%B", c)
-        for cat in sorted(categorie_trovate(msg, *t)):
+        for cat in sorted(categorie_trovate(msg, *t, esclusi, conta)):
             errori.append(f"{cat}: messaggio del commit {c[:7]}")
     for c, percorso, sha in commit_blob:
         dati = leggi(sha)
         if dati is None:
             continue
-        for cat in sorted(categorie_trovate(dati, *t)):
+        for cat in sorted(categorie_trovate(dati, *t, esclusi, conta)):
             errori.append(f"{cat}: commit {c[:7]}, file {percorso}")
-    return errori
+    nota = (f"{conta[0]} coincidenze escluse perché l'impronta compare anche nell'oracolo DEV pubblico "
+            f"({len(esclusi)} impronte del finale escludibili)" if dev_presente else
+            "oracolo DEV assente: nessuna esclusione (scelta più severa)")
+    return errori, nota
 
 
 def main():
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")     # la console di Windows è cp1252
     ap = argparse.ArgumentParser()
     ap.add_argument("--base", default="origin/master")
     ap.add_argument("--segreti", type=Path, default=RADICE / "segreti")
     ap.add_argument("--fixture", type=Path, default=RADICE / "lavoro_v5" / "tomli" / "tests" / "data")
+    ap.add_argument("--oracolo-dev", type=Path, default=RADICE / "lavoro_v5" / "oracolo" / "dev" / "oracolo.json")
     a = ap.parse_args()
     try:
         git("rev-parse", "--verify", a.base)
         commit = commit_da_caricare(a.base)
         commit_blob = blob_dei_commit(commit)
         leggi, proc = blob_lettore()
-        esiti = [("1 ls-files senza segreti/, segreti.tar*, lavoro_v5/", controllo_1()),
-                 ("2 nessun file di segreti in tutta la storia", controllo_2(a.segreti)),
-                 ("3 nessuna chiave API nei file tracciati e nei commit da caricare", controllo_3(leggi, commit_blob)),
-                 (f"4 nessun dato derivato dai semi in {a.base}..HEAD ({len(commit)} commit)",
-                  controllo_4(leggi, commit, commit_blob, a.segreti, a.fixture))]
+        errori_4, nota_4 = controllo_4(leggi, commit, commit_blob, a.segreti, a.fixture, a.oracolo_dev)
+        esiti = [("1 ls-files senza segreti/, segreti.tar*, lavoro_v5/", controllo_1(), None),
+                 ("2 nessun file di segreti in tutta la storia", controllo_2(a.segreti), None),
+                 ("3 nessuna chiave API nei file tracciati e nei commit da caricare", controllo_3(leggi, commit_blob), None),
+                 (f"4 nessun dato derivato dai semi in {a.base}..HEAD ({len(commit)} commit)", errori_4, nota_4)]
         proc.stdin.close(); proc.wait(timeout=60)
     except (RuntimeError, FileNotFoundError, KeyError, ValueError, subprocess.TimeoutExpired) as e:
         print(f"IMPOSSIBILE ESEGUIRE I CONTROLLI: {type(e).__name__}: {e}")
         return 2
     falliti = 0
-    for nome, errori in esiti:
+    for nome, errori, nota in esiti:
         print(f"[{'OK' if not errori else 'FALLITO'}] {nome}")
+        if nota:
+            print(f"    nota: {nota}")
         for e in errori:
             print(f"    trovato: {e}")
         falliti += bool(errori)
