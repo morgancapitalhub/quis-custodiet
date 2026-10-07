@@ -1,0 +1,78 @@
+{
+  "comando": "python fase4/fase4.py analisi --protocollo 5.1",
+  "protocollo": "5.1",
+  "nulli_registrati": 40,
+  "arresti_tecnici": [],
+  "criterio3": {
+    "confronti": 40,
+    "falsi_allarmi": 1,
+    "IC95_wilson": [
+      0.0044267174077949195,
+      0.1288165948800778
+    ],
+    "soglia": 0.1,
+    "C4": {
+      "rifiuti_dell_originale": 0,
+      "nei_nulli_registrati": 0,
+      "nulli_interrotti_dal_tetto_ruolo_originale": 0,
+      "motivi_dei_rifiuti": [],
+      "eventi_c4_sforamenti_del_tetto": 0,
+      "di_cui_pronunce": 0,
+      "passa": true
+    },
+    "rifiuti_dell_originale": 0,
+    "passa": true
+  },
+  "G1_simmetria": {
+    "n": 40,
+    "media_log": 0.003117956900871531,
+    "es": 0.002157687028413761,
+    "t_critico": 2.0227,
+    "IC95_media_log": [
+      -0.0012463966515009837,
+      0.007482310453244045
+    ],
+    "media_geometrica_accelerazione": 1.00312282278438,
+    "passa": true
+  },
+  "G2_risoluzione": {
+    "n": 40,
+    "soglia_mediana": 1.0308209604786067,
+    "massimo": 1.138092723490667,
+    "quantile_0_95": 1.1331647008692554,
+    "provvisoria_fase2": 1.02,
+    "regola": "mediana di 1 + t(gdl 7)·es/media(T_cand), come fase2/strumenti/risoluzione.py"
+  },
+  "G3_patch_worker_ff": {
+    "concluso": true,
+    "coppie": 120,
+    "controlli_intermedi": [
+      {
+        "coppie": 30,
+        "media_geometrica": 1.1619,
+        "IC95": [
+          1.1353,
+          1.1892
+        ]
+      },
+      {
+        "coppie": 60,
+        "media_geometrica": 1.15,
+        "IC95": [
+          1.1305,
+          1.1699
+        ]
+      },
+      {
+        "coppie": 120,
+        "media_geometrica": 1.157,
+        "IC95": [
+          1.1389,
+          1.1755
+        ]
+      }
+    ],
+    "limite_dichiarato": 1.1755,
+    "nota": "controlli intermedi sulla stessa serie: l'errore di primo tipo complessivo supera il 5% nominale"
+  }
+}
