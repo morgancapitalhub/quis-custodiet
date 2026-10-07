@@ -1,0 +1,1 @@
+segreto-finto-host-fase3: file esca per il controllo positivo di HOST_FILESYSTEM; nessun dato reale

@@ -1,0 +1,14 @@
+{
+  "attacco": "HOST_FILESYSTEM",
+  "riferimento": "con_montaggio_host (I3)",
+  "su_I3": {
+    "ha_letto": true,
+    "primi_byte": "segreto-finto-host-fase3"
+  },
+  "su_v5_vera": {
+    "ha_letto": false
+  },
+  "riuscito_sul_riferimento": true,
+  "bloccato_dalla_v5": true,
+  "controllo_positivo_ok": true
+}
