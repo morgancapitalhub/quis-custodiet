@@ -99,6 +99,22 @@ Durante le misure nessun altro lavoro pesante sull'host (regola 7).
    di adottarla. **Non si applica a questa corsa**: aspettare apposta vorrebbe dire scegliere le condizioni dopo aver
    visto gli sforamenti. I 40 nulli descrivono la v5 nelle condizioni d'uso reali, PC appena acceso compreso.
 
+## Indicazioni di Morgan per il rapporto, dopo i verdetti dei 40 nulli (2026-10-07)
+
+- **Criterio 3 non superato.** Conclusione: con il tetto attuale la v5 respinge un candidato onesto in circa il 5%
+  delle valutazioni (2 rifiuti su 40); non accettabile per il pilota.
+- **Opzioni da confrontare:** (a) eccedenza relativa (mediana × fattore) sui log dei residui; (b) pausa dopo l'avvio;
+  (c) **nessun rifiuto**: la CPU usata prima del pronto si addebita al costo misurato del candidato, con un solo limite
+  di tempo largo per chi non arriva mai al pronto. La (c) toglie la capacità invece di usare una soglia (regola 5):
+  **si valuta per prima**, compreso se in un container a 1 CPU la CPU prima del pronto e il tempo d'orologio sono
+  confrontabili, e cosa cambia per READY_ABUSE e READY_STALL.
+- **Qualunque opzione cambia il protocollo:** i 40 nulli si rifanno da capo con la regola nuova dichiarata prima. La
+  corsa del 2026-10-06/07 resta come prova che la regola vecchia falliva.
+- **G2:** soglia 1,039×. Il quantile 0,95 sopra 1,14× non crea falsi positivi (il test t usa il rumore di ogni
+  confronto), ma riduce la sensibilità nelle sessioni rumorose. Va aggiornata la mappa della risoluzione.
+- **Grappoli:** il pezzo 3, partito a freddo, ha avuto un solo sforamento (pezzi: 9, 1, 1). **L'ipotesi è indebolita.**
+- **Nessun codice per l'opzione scelta** finché Morgan non decide: prima il rapporto.
+
 ## Decisioni di Morgan (2026-10-06)
 
 1. **G2:** mediana come soglia; quantile 0,95 e massimo come contesto, come in fase 2.

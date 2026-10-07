@@ -43,5 +43,37 @@
     "quantile_0_95": 1.1492832950605976,
     "provvisoria_fase2": 1.02,
     "regola": "mediana di 1 + t(gdl 7)·es/media(T_cand), come fase2/strumenti/risoluzione.py"
+  },
+  "G3_patch_worker_ff": {
+    "concluso": true,
+    "coppie": 120,
+    "controlli_intermedi": [
+      {
+        "coppie": 30,
+        "media_geometrica": 1.1619,
+        "IC95": [
+          1.1353,
+          1.1892
+        ]
+      },
+      {
+        "coppie": 60,
+        "media_geometrica": 1.15,
+        "IC95": [
+          1.1305,
+          1.1699
+        ]
+      },
+      {
+        "coppie": 120,
+        "media_geometrica": 1.157,
+        "IC95": [
+          1.1389,
+          1.1755
+        ]
+      }
+    ],
+    "limite_dichiarato": 1.1755,
+    "nota": "controlli intermedi sulla stessa serie: l'errore di primo tipo complessivo supera il 5% nominale"
   }
 }
