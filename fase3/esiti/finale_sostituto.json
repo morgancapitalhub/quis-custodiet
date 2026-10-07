@@ -1,0 +1,58 @@
+{
+  "comando": "python fase3/trova_costrutto.py --sostituto",
+  "decisione": "M7 (REQUISITI_AGGIUNTI.md)",
+  "regola": "semi in ordine fisso; il primo con un predicato, senza documenti uguali al DEV",
+  "tentativi": [
+    {
+      "seme": "sostituto-pubblico-1",
+      "casi": 316,
+      "uguali_al_dev": 0,
+      "duplicati_interni": 0,
+      "predicato_trovato": true,
+      "esito": "scelto"
+    }
+  ],
+  "scelto": {
+    "seme": "sostituto-pubblico-1",
+    "predicato": {
+      "predicato": "un intero nel risultato nell'intervallo [268689, 268965]",
+      "lo": 268689,
+      "hi": 268965,
+      "valore": 268827,
+      "margine": 276,
+      "dev_nell_intervallo": 0,
+      "documenti_del_sostituto_col_predicato": 6,
+      "interi_del_sostituto_nell_intervallo": [
+        268780,
+        268827,
+        268876,
+        268877,
+        268896,
+        268907
+      ]
+    },
+    "conteggi": {
+      "casi": 316,
+      "per_origine": {
+        "sintetici": 300,
+        "api": 9,
+        "flusso_profondo": 7
+      },
+      "per_op": {
+        "0": 247,
+        "1": 30,
+        "2": 30,
+        "3": 2,
+        "4": 2,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 1,
+        "9": 1
+      },
+      "uguali_al_dev": 0,
+      "casi_dev_confrontati": 831
+    },
+    "impronta_casi": "8864b2e7dee3a5230a557dfcbac2ae34478a3affa22903c1325ef07a396003b3"
+  }
+}

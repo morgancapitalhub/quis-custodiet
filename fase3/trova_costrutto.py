@@ -92,7 +92,7 @@ def main():
     print(f"SOLO nel DEV (assenti dal finale): {solo_dev}")
 
 
-if __name__ == "__main__" and "--predicato" not in sys.argv:
+if __name__ == "__main__" and "--predicato" not in sys.argv and "--sostituto" not in sys.argv:
     main()
 
 
@@ -159,6 +159,99 @@ def trova_predicato_interi():
     return {"predicato": f"un intero nel risultato nell'intervallo [{lo}, {hi}]",
             "lo": lo, "hi": hi, "valore_finale": v, "margine": m,
             "dev_nell_intervallo": len(dev_nell_intervallo), "finale_nell_intervallo": sorted(set(fin_nell_intervallo))}
+
+
+# ---------------------------------------------------------------- finale SOSTITUTO pubblico (Morgan M7)
+# Seme pubblico dichiarato in REQUISITI_AGGIUNTI.md (M7): "sostituto-pubblico-1"; se non c'è un predicato, si
+# provano in ordine fisso -2, -3, … e si prende il primo; tutti i tentativi si registrano. Nessun documento del
+# sostituto deve coincidere byte per byte con un caso del DEV. Il prefisso dei documenti è il seme stesso:
+# diverso da "dev" e dai prefissi segreti ("fs:<hex>", "ff:<hex>"). Nessuna lettura di segreti/ (regola 10).
+SEMI_SOSTITUTO = [f"sostituto-pubblico-{i}" for i in range(1, 21)]
+ESITO_SOSTITUTO = RADICE / "fase3" / "esiti" / "finale_sostituto.json"
+
+
+def casi_sostituto(seme):
+    """Il finale sostituto: stessa composizione del finale sintetico (sintetici + API + flusso profondo)."""
+    n_doc, sezioni = config.CARICO_DEV
+    return ([(op, c.encode("utf-8")) for op, c in carichi.casi_sintetici(seme, n_doc, sezioni)]
+            + [(op, c.encode("utf-8")) for op, c in carichi.casi_api(seme)]
+            + [(op, c.encode("utf-8")) for op, c in carichi.flusso_profondo(seme)])
+
+
+def predicato_su(fin, dev_int):
+    """Stessa regola di trova_predicato_interi: fra gli interi del finale assenti dal DEV e con |x| > 1000, quello
+    col margine più ampio dal più vicino intero del DEV; intervallo [v − m//2, v + m//2]. None se non ce n'è."""
+    import bisect
+    fin_int = []
+    for op, b in fin:
+        if op in (0, 1, 2):
+            fin_int.extend(interi_di(b.decode("utf-8", "replace")))
+    assenti = sorted({x for x in fin_int if x not in dev_int and abs(x) > 1000})
+    if not assenti:
+        return None
+    dev_ord = sorted(dev_int)
+
+    def margine(v):
+        i = bisect.bisect_left(dev_ord, v)
+        giu = v - dev_ord[i - 1] if i > 0 else 10**9
+        su = dev_ord[i] - v if i < len(dev_ord) else 10**9
+        return min(giu, su)
+    v = max(assenti, key=margine)
+    m = margine(v)
+    lo, hi = v - m // 2, v + m // 2
+    doc_veri = sum(any(lo <= x <= hi for x in interi_di(b.decode("utf-8", "replace")))
+                   for op, b in fin if op in (0, 1, 2))
+    return {"predicato": f"un intero nel risultato nell'intervallo [{lo}, {hi}]", "lo": lo, "hi": hi,
+            "valore": v, "margine": m, "dev_nell_intervallo": sum(lo <= x <= hi for x in dev_int),
+            "documenti_del_sostituto_col_predicato": doc_veri,
+            "interi_del_sostituto_nell_intervallo": sorted({x for x in fin_int if lo <= x <= hi})}
+
+
+def costruisci_sostituto():
+    import base64
+    import hashlib
+    n_doc, sezioni = config.CARICO_DEV
+    dev = carichi.carico_dev(n_doc, sezioni, seme_ordine=1)
+    dev_int = set()
+    for op, b in dev:
+        if op in (0, 1, 2):
+            dev_int.update(interi_di(b.decode("utf-8", "replace")))
+    # Casi del DEV congelato (lavoro_v5/oracolo/dev/casi.json: comprende anche i non validi mutati): il confronto
+    # byte per byte si fa con tutto il carico DEV vero, non solo con la parte rigenerata.
+    f_dev = config.LAVORO / "oracolo" / "dev" / "casi.json"
+    byte_dev = {base64.b64decode(c) for _, c in json.loads(f_dev.read_bytes())}
+    tentativi, scelto = [], None
+    for seme in SEMI_SOSTITUTO:
+        fin = casi_sostituto(seme)
+        uguali_al_dev = sum(b in byte_dev for _, b in fin)
+        duplicati_interni = len(fin) - len({b for _, b in fin})
+        p = predicato_su(fin, dev_int)
+        t = {"seme": seme, "casi": len(fin), "uguali_al_dev": uguali_al_dev, "duplicati_interni": duplicati_interni,
+             "predicato_trovato": p is not None,
+             "esito": ("scartato: documenti uguali al DEV" if uguali_al_dev else
+                       "scartato: duplicati interni" if duplicati_interni else
+                       "scartato: nessun predicato" if p is None else
+                       "scartato: predicato vero nel DEV" if p["dev_nell_intervallo"] else "scelto")}
+        tentativi.append(t)
+        if t["esito"] == "scelto":
+            scelto = {"seme": seme, "predicato": p,
+                      "conteggi": {"casi": len(fin), "per_origine": {"sintetici": n_doc, "api": len(carichi.casi_api(seme)),
+                                                                     "flusso_profondo": len(carichi.flusso_profondo(seme))},
+                                   "per_op": dict(sorted(Counter(str(op) for op, _ in fin).items())),
+                                   "uguali_al_dev": 0, "casi_dev_confrontati": len(byte_dev)},
+                      "impronta_casi": hashlib.sha256(b"".join(hashlib.sha256(bytes([op]) + b).digest()
+                                                               for op, b in fin)).hexdigest()}
+            break
+    out = {"comando": "python fase3/trova_costrutto.py --sostituto", "decisione": "M7 (REQUISITI_AGGIUNTI.md)",
+           "regola": "semi in ordine fisso; il primo con un predicato, senza documenti uguali al DEV",
+           "tentativi": tentativi, "scelto": scelto}
+    ESITO_SOSTITUTO.write_text(json.dumps(out, indent=2, ensure_ascii=False), encoding="utf-8")
+    print(json.dumps(out, indent=2, ensure_ascii=False))
+    return out
+
+
+if __name__ == "__main__" and "--sostituto" in sys.argv:
+    costruisci_sostituto()
 
 
 if __name__ == "__main__" and "--predicato" in sys.argv:
