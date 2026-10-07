@@ -1,0 +1,135 @@
+{
+  "comando": "python fase4/fase4.py collaudo",
+  "protocollo": "5.1",
+  "sessione": "f420261007102413037678",
+  "varianti": [
+    {
+      "variante": "NULLO",
+      "atteso": "valido, né più veloce né più lento",
+      "osservato": "valido, né più veloce né più lento",
+      "ok": true,
+      "accelerazione": 0.9933400188609504,
+      "t": -1.4747197919063435,
+      "accelerazione_minima_distinguibile": 1.0106805750355408,
+      "picco_candidato": 12744704.0,
+      "soglia_picco": 12863385.6
+    },
+    {
+      "variante": "LENTO",
+      "atteso": "valido ma più lento",
+      "osservato": "valido ma più lento",
+      "ok": true,
+      "accelerazione": 0.9080022326359557,
+      "t": -12.464304029274519,
+      "accelerazione_minima_distinguibile": 1.0174558257970083,
+      "picco_candidato": 12750848.0,
+      "soglia_picco": 12821504.0
+    },
+    {
+      "variante": "CACHE",
+      "atteso": "memoria oltre il vincolo",
+      "osservato": "memoria oltre il vincolo",
+      "ok": true,
+      "accelerazione": null,
+      "t": null,
+      "accelerazione_minima_distinguibile": null,
+      "picco_candidato": 76425216.0,
+      "soglia_picco": 12820377.6
+    },
+    {
+      "variante": "SBAGLIATO",
+      "atteso": "risultato diverso su carico nascosto",
+      "osservato": "risultato diverso su carico nascosto",
+      "ok": true,
+      "accelerazione": null,
+      "t": null,
+      "accelerazione_minima_distinguibile": null,
+      "picco_candidato": null,
+      "soglia_picco": null
+    },
+    {
+      "variante": "TIPO",
+      "atteso": "risultato diverso su carico nascosto",
+      "osservato": "risultato diverso su carico nascosto",
+      "ok": true,
+      "accelerazione": null,
+      "t": null,
+      "accelerazione_minima_distinguibile": null,
+      "picco_candidato": null,
+      "soglia_picco": null
+    },
+    {
+      "variante": "IGNORA_PARSE_FLOAT",
+      "atteso": "risultato diverso su carico nascosto",
+      "osservato": "risultato diverso su carico nascosto",
+      "ok": true,
+      "accelerazione": null,
+      "t": null,
+      "accelerazione_minima_distinguibile": null,
+      "picco_candidato": null,
+      "soglia_picco": null
+    }
+  ],
+  "superate": "6/6",
+  "cancello_corto": {
+    "confronti": 5,
+    "falsi_allarmi": 1,
+    "rifiuti_dell_originale": 0,
+    "IC95": [
+      0.03622316096978745,
+      0.6244717358814613
+    ],
+    "passa": true,
+    "dettagli": [
+      {
+        "esito": "valido",
+        "accelerazione": 0.9890923526217352,
+        "t": -2.5234949351440217
+      },
+      {
+        "esito": "valido",
+        "accelerazione": 1.0102736218904536,
+        "t": 0.534334398114486
+      },
+      {
+        "esito": "valido",
+        "accelerazione": 0.9927702955573062,
+        "t": -0.5460100407505598
+      },
+      {
+        "esito": "valido",
+        "accelerazione": 1.015443385177394,
+        "t": 0.9345191192609491
+      },
+      {
+        "esito": "valido",
+        "accelerazione": 1.0155983049543047,
+        "t": 1.934380651606312
+      }
+    ]
+  },
+  "diario": [
+    {
+      "evento": "fermati",
+      "container": [
+        "sqz_demo_landing",
+        "sqz_demo_api",
+        "sqz_demo_grafana",
+        "sqz_demo_postgres",
+        "sqz_demo_prometheus"
+      ],
+      "ora": "2026-10-07T08:24:29.737782+00:00"
+    },
+    {
+      "evento": "riavviati",
+      "esiti": {
+        "sqz_demo_landing": true,
+        "sqz_demo_api": true,
+        "sqz_demo_grafana": true,
+        "sqz_demo_postgres": true,
+        "sqz_demo_prometheus": true
+      },
+      "ora": "2026-10-07T08:47:19.031222+00:00"
+    }
+  ]
+}
