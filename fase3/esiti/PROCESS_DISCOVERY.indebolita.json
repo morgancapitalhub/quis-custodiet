@@ -1,0 +1,14 @@
+{
+  "attacco": "PROCESS_DISCOVERY",
+  "riferimento": "con_pid_host (I4)",
+  "su_I4": {
+    "n_processi": 39
+  },
+  "su_v5_vera": {
+    "n_processi": 1
+  },
+  "soglia_minima": 20,
+  "riuscito_sul_riferimento": true,
+  "bloccato_dalla_v5": true,
+  "controllo_positivo_ok": true
+}
