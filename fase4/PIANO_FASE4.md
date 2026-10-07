@@ -92,7 +92,12 @@ Durante le misure nessun altro lavoro pesante sull'host (regola 7).
    **Il tetto non si cambia ora.**
 2. **Grappoli, indizio esplorativo.** Pezzo 1: 9 sforamenti e ~4,4 min per nullo; pezzo 2: 1 sforamento e ~2,9 min
    per nullo. È coerente con l'ipotesi dei grappoli (PC e Docker appena avviati), ma **è un indizio esplorativo, non un
-   test dichiarato prima**, e va scritto così.
+   test dichiarato prima**, e va scritto così. Il pezzo 3 è partito subito dopo l'avvio di Docker (PC appena acceso,
+   Docker avviato alle 06:40 UTC del 2026-10-07): un dato in più per lo stesso indizio, annotato nel registro
+   (evento "nota" in `fase4/esiti/nulli_40.avanzamento.json`).
+3. **Pausa dopo l'avvio di Docker come regola del protocollo**: opzione da discutere, da dichiarare e verificare prima
+   di adottarla. **Non si applica a questa corsa**: aspettare apposta vorrebbe dire scegliere le condizioni dopo aver
+   visto gli sforamenti. I 40 nulli descrivono la v5 nelle condizioni d'uso reali, PC appena acceso compreso.
 
 ## Decisioni di Morgan (2026-10-06)
 
