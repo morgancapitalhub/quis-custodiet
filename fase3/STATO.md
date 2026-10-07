@@ -27,6 +27,15 @@ controlli passano.
   Morgan, perché i tentativi di scrivere in sessione il codice di quei controlli sono stati fermati dal filtro di
   sicurezza.
 
+## Regola di lavoro: sessioni TEMATICHE (Morgan, 2026-10-07)
+
+- Il lavoro sulla **suite d'attacco** (`fase3/`) sta in **sessioni dedicate**.
+- **Pilota, infrastruttura, manifest e rapporti** stanno in sessioni che **non leggono `fase3/`**.
+- Motivo: lo stesso codice non offensivo (la correzione di `corsa_n` in `v5/modello.py`, N9) è stato fermato dal filtro
+  di sicurezza in un tratto di conversazione carico del materiale degli attacchi, ed è passato più avanti, nella
+  stessa conversazione, dopo che il perimetro delle letture era stato ristretto ai soli file necessari. Una
+  sessione nuova e tematica è la forma più pulita della stessa misura.
+
 ## File da leggere, in ordine
 
 1. `CLAUDE.md`, `BRIEF_v5_per_Claude_Code.md`, `REQUISITI_AGGIUNTI.md`.
