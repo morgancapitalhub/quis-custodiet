@@ -42,7 +42,9 @@ INTESTAZIONE_NULLI = {**INTESTAZIONE_NULLI_50, "protocollo": config.VERSIONE_PRO
                       "costo": "finestra + CPU del container prima del pronto"}
 INTESTAZIONE_PW_FF = {"decisione": "G3", "carico": "finale_fixture", "seme_ordine": "pw-ff",
                       "blocchi": list(config.BLOCCHI_PATCH_WORKER), "soglia": config.LIMITE_PATCH_WORKER}
-STIMA_NULLO_S = 125        # 19 episodi DEV × ~6,4 s (patch-worker della fase 2: 240 episodi in 25,6 min)
+STIMA_NULLO_S = 270        # Morgan, 2026-10-07: il caso lento osservato (~4,4 min per nullo, pezzo 1 della corsa
+                           # 5.0), non la media: decide se avviare un altro nullo. Era 125 s; il pezzo 1 della corsa 5.1
+                           # è durato 57,5 min. Solo spezzettamento (L2): nessun effetto su misure, protocollo o regole.
 STIMA_COPPIA_FF_S = 5      # 2 episodi del finale fixture × ~2,4 s (quota-fixture della fase 2)
 ESCI_CONCLUSO, ESCI_RESTA, ESCI_INFRASTRUTTURA = 0, 10, 3
 ARRESTI_MASSIMI = 3        # Morgan, fase 4 decisione 2: oltre 3 arresti tecnici in una corsa ci si ferma
