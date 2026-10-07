@@ -1,0 +1,13 @@
+{
+  "attacco": "PRECOMPUTE",
+  "riferimento": "casi_su_file (I8)",
+  "tipo_controllo": "test di proprieta' sul codice vero della v5 (Morgan, 2026-10-08)",
+  "ordine_casi_dopo_il_cronometro": true,
+  "test_riusato": "v5/test/test_ordine_episodio.py::test_cronometro_prima_della_cpu_e_niente_invii_prima",
+  "configurazione_senza_montaggi": true,
+  "argomenti_senza_bind": true,
+  "riuscito_sul_riferimento": "N/A: difesa strutturale, nessun canale su file da attaccare",
+  "bloccato_dalla_v5": true,
+  "controllo_positivo_ok": true,
+  "nota": "i casi arrivano solo su stdin dopo il cronometro (N7) e non c'e' alcun montaggio da cui leggerli: le due vie del precalcolo prima della misura sono chiuse"
+}
