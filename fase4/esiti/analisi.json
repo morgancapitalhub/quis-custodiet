@@ -1,0 +1,47 @@
+{
+  "comando": "python fase4/fase4.py analisi",
+  "nulli_registrati": 40,
+  "arresti_tecnici": [],
+  "criterio3": {
+    "confronti": 40,
+    "falsi_allarmi": 1,
+    "IC95_wilson": [
+      0.0044267174077949195,
+      0.1288165948800778
+    ],
+    "soglia": 0.1,
+    "C4": {
+      "rifiuti_dell_originale": 2,
+      "nei_nulli_registrati": 1,
+      "nulli_interrotti_dal_tetto_ruolo_originale": 1,
+      "motivi_dei_rifiuti": [
+        "avvio oltre il tetto"
+      ],
+      "eventi_c4_sforamenti_del_tetto": 11,
+      "di_cui_pronunce": 2,
+      "passa": false
+    },
+    "rifiuti_dell_originale": 2,
+    "passa": false
+  },
+  "G1_simmetria": {
+    "n": 39,
+    "media_log": -0.0010666543793030239,
+    "es": 0.003514525418760533,
+    "t_critico": 2.0244,
+    "IC95_media_log": [
+      -0.008181459637041847,
+      0.0060481508784357985
+    ],
+    "media_geometrica_accelerazione": 0.9989339142942687,
+    "passa": true
+  },
+  "G2_risoluzione": {
+    "n": 39,
+    "soglia_mediana": 1.039145306235741,
+    "massimo": 1.1864644515270903,
+    "quantile_0_95": 1.1492832950605976,
+    "provvisoria_fase2": 1.02,
+    "regola": "mediana di 1 + t(gdl 7)·es/media(T_cand), come fase2/strumenti/risoluzione.py"
+  }
+}
