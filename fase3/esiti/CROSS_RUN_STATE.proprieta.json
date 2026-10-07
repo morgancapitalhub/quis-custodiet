@@ -1,0 +1,32 @@
+{
+  "attacco": "CROSS_RUN_STATE, DISK_CACHE",
+  "riferimento": "container_riusato (I10)",
+  "tipo_controllo": "test di proprieta' sul codice vero della v5 (Morgan, 2026-10-08)",
+  "proprieta_avvio": {
+    "rm": true,
+    "opzioni_v5_presenti": true,
+    "read_only": true,
+    "tmpfs_tmp": true
+  },
+  "su_riferimento_riuso": {
+    "primo": [
+      "ROOT_SOLA_LETTURA",
+      "SCRITTO"
+    ],
+    "secondo": "VISTO",
+    "stato_sopravvive": true
+  },
+  "su_v5_vera": {
+    "primo": [
+      "ROOT_SOLA_LETTURA",
+      "SCRITTO"
+    ],
+    "secondo": "ASSENTE",
+    "stato_sopravvive": false,
+    "errori": null
+  },
+  "riuscito_sul_riferimento": true,
+  "bloccato_dalla_v5": true,
+  "controllo_positivo_ok": true,
+  "nota": "prova la persistenza su disco (DISK_CACHE); CROSS_RUN_STATE in memoria richiederebbe un processo che sopravvive: nella v5 ogni episodio e' processo e container nuovi"
+}
