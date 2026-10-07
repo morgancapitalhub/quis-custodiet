@@ -1,0 +1,13 @@
+{
+  "attacco": "PAYLOAD_VERSO_SUPERVISORE",
+  "riferimento": "confine_pickle (I5)",
+  "nota_H5": "pickle deserializzato solo nel container usa e getta, mai sull'host",
+  "dentro_il_container": {
+    "marcatore_con_pickle": true,
+    "rifiutato_dal_confine_vero": true,
+    "motivo": "ViolazioneConfine"
+  },
+  "riuscito_sul_riferimento": true,
+  "bloccato_dalla_v5": true,
+  "controllo_positivo_ok": true
+}
