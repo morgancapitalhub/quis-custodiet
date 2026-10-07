@@ -250,6 +250,83 @@ def analizza(protocollo=config.VERSIONE_PROTOCOLLO):
     return ESCI_CONCLUSO
 
 
+# ------------------------------------------------------------------ manifest del protocollo in vigore (Morgan, punto 3)
+
+def _impronte(cartella):
+    import hashlib
+    return {p.relative_to(cartella).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
+            for p in sorted(Path(cartella).rglob("*")) if p.is_file()}
+
+
+def manifest():
+    """oracle_manifest.json per il protocollo in vigore, con tre protezioni:
+      1. esito in fase4/esiti/oracolo_p51.json (fase2/esiti/oracolo.json resta com'è);
+      2. segreti/ non si scrive mai: le due costruzioni avvengono in cartelle temporanee (lavoro_v5/, fuori da
+         git) con gli stessi semi; i file ricostruiti si confrontano byte per byte con quelli in segreti/ e in
+         lavoro_v5/oracolo/; le impronte SHA-256 di tutti i file di segreti/ si registrano prima e dopo e devono
+         coincidere (è ciò che tiene valida la copia cifrata, D3);
+      3. nessun segreti.tar: questo comando non lo crea; se alla fine esiste, si cancella.
+    Il manifest si scrive in v5/oracle_manifest.json solo se le due costruzioni danno manifest identici e i file
+    ricostruiti coincidono con quelli esistenti."""
+    import hashlib
+    import shutil
+    from v5.registro import Registro
+    preliminari()
+    prima = _impronte(config.SEGRETI)
+    sessione = _nuova_sessione()
+    reg = Registro(sessione)
+    oss = ambiente.Osservatore(sessione)
+    semi = json.loads((config.SEGRETI / "semi.json").read_text(encoding="utf-8"))
+    tmp = config.LAVORO / "manifest_p51"
+    t0 = time.monotonic()
+    costruzioni = {}
+    try:
+        reg.imposta(controlli=ambiente.controlli(sessione, oss))
+        imm = ambiente.immagine_pacchetto(carichi.pacchetto_originale())
+        if tmp.exists():
+            shutil.rmtree(tmp)
+        for nome in ("a", "b"):
+            (tmp / nome / "segreti").mkdir(parents=True)
+            (tmp / nome / "segreti" / "semi.json").write_text(json.dumps(semi, indent=2), encoding="utf-8")
+            man, massimi = oracolo.costruisci(reg, sessione, oss, imm, tmp / nome / "segreti", tmp / nome / "dev")
+            costruzioni[nome] = man
+        reg.salva()
+        ricostruiti = {f"{c}/{f}": hashlib.sha256((tmp / "a" / "segreti" / c / f).read_bytes()).hexdigest()
+                       for c in ("finale_sintetico", "finale_fixture") for f in ("casi.json", "oracolo.json")}
+        dev = {f: hashlib.sha256((tmp / "a" / "dev" / "dev" / f).read_bytes()).hexdigest() for f in ("casi.json", "oracolo.json")}
+    finally:
+        oss.chiudi()
+        if tmp.exists():
+            shutil.rmtree(tmp)                  # le copie dei documenti segreti non restano su disco
+    dopo = _impronte(config.SEGRETI)
+    dev_esistenti = _impronte(config.LAVORO / "oracolo" / "dev")
+    identici = costruzioni["a"] == costruzioni["b"]
+    coincidono = {k: prima.get(k) == v for k, v in ricostruiti.items()}
+    dev_coincide = {k: dev_esistenti.get(k) == v for k, v in dev.items()}
+    segreti_invariati = prima == dopo
+    tar = RADICE / "segreti.tar"
+    tar_cancellato = False
+    if tar.exists():
+        tar.unlink()
+        tar_cancellato = True
+    ok = identici and all(coincidono.values()) and all(dev_coincide.values()) and segreti_invariati
+    if ok:
+        (RADICE / "v5" / "oracle_manifest.json").write_bytes(costruzioni["a"])
+    dati = {"comando": "python fase4/fase4.py manifest", "protocollo": config.VERSIONE_PROTOCOLLO,
+            "impronta_protocollo": oracolo.impronta_protocollo(), "sessione": sessione,
+            "durata_s": round(time.monotonic() - t0), "manifest_identici": identici,
+            "impronta_manifest": hashlib.sha256(costruzioni["a"]).hexdigest(),
+            "file_finale_ricostruiti_uguali_a_segreti": coincidono, "file_dev_ricostruiti_uguali": dev_coincide,
+            "segreti_impronte_prima_uguali_dopo": segreti_invariati, "file_in_segreti": len(prima),
+            "segreti_tar_presente_alla_fine": tar.exists(), "segreti_tar_cancellato": tar_cancellato,
+            "manifest_scritto": ok}
+    ESITI.mkdir(parents=True, exist_ok=True)
+    (ESITI / f"oracolo_p{config.VERSIONE_PROTOCOLLO.replace('.', '')}.json").write_text(
+        json.dumps(dati, indent=2, ensure_ascii=False), encoding="utf-8")
+    print(json.dumps(dati, indent=2, ensure_ascii=False))
+    return ESCI_CONCLUSO if ok else 1
+
+
 # ------------------------------------------------------------------ collaudo con la regola nuova (N6)
 
 def collaudo(n_nulli=5):
@@ -291,7 +368,7 @@ def _nuova_sessione():
 def main(argv=None):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     ap = argparse.ArgumentParser(prog="fase4.py")
-    ap.add_argument("comando", choices=["nulli", "patch-worker-ff", "analisi", "collaudo"])
+    ap.add_argument("comando", choices=["nulli", "patch-worker-ff", "analisi", "collaudo", "manifest"])
     ap.add_argument("--per-pezzo", type=int, default=20)
     ap.add_argument("--minuti", type=float, default=55)
     ap.add_argument("--protocollo", choices=["5.0", config.VERSIONE_PROTOCOLLO], default=config.VERSIONE_PROTOCOLLO)
@@ -302,6 +379,8 @@ def main(argv=None):
         return patch_worker_ff(a.minuti)
     if a.comando == "collaudo":
         return collaudo()
+    if a.comando == "manifest":
+        return manifest()
     return analizza(a.protocollo)
 
 

@@ -1,0 +1,23 @@
+{
+  "comando": "python fase4/strumenti/cpu_worker_pavimento.py",
+  "dev": {
+    "sessione": "20261005103741e74b82",
+    "episodi_worker": 120,
+    "episodi_pavimento": 120,
+    "mediana_cpu_pre_pronto_worker_ms": 254.3,
+    "mediana_cpu_pre_pronto_pavimento_ms": 255.9,
+    "rapporto_worker_su_pavimento": 0.9937,
+    "limite_patch_worker": 1.1124,
+    "condizione_rispettata": true
+  },
+  "finale_fixture": {
+    "sessione": "f420261007091214796e48",
+    "episodi_worker": 120,
+    "episodi_pavimento": 120,
+    "mediana_cpu_pre_pronto_worker_ms": 235.4,
+    "mediana_cpu_pre_pronto_pavimento_ms": 239.1,
+    "rapporto_worker_su_pavimento": 0.9846,
+    "limite_patch_worker": 1.1755,
+    "condizione_rispettata": true
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "comando": "python fase4/fase4.py manifest",
+  "protocollo": "5.1",
+  "impronta_protocollo": "61cde672357102dd97c467a9d2e361f8801c438cd502275a4d1aec9c755fca93",
+  "sessione": "f4202610071017461a8e8a",
+  "durata_s": 187,
+  "manifest_identici": true,
+  "impronta_manifest": "f706fa0107698cad0eed7ec56db01e482bd7424b6a7769a5bd944529122a766d",
+  "file_finale_ricostruiti_uguali_a_segreti": {
+    "finale_sintetico/casi.json": true,
+    "finale_sintetico/oracolo.json": true,
+    "finale_fixture/casi.json": true,
+    "finale_fixture/oracolo.json": true
+  },
+  "file_dev_ricostruiti_uguali": {
+    "casi.json": true,
+    "oracolo.json": true
+  },
+  "segreti_impronte_prima_uguali_dopo": true,
+  "file_in_segreti": 6,
+  "segreti_tar_presente_alla_fine": false,
+  "segreti_tar_cancellato": false,
+  "manifest_scritto": true
+}

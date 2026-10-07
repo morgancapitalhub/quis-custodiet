@@ -148,17 +148,25 @@ poi **40 nulli da capo**. Nessun codice finché Morgan non decide.
   i verdetti sbagliati (rifiuti di onesti) in minore sensibilità (prudenza); neutralizza READY_ABUSE e READY_STALL per
   costruzione. Costo = finestra + **CPU del container** prima del pronto. Ogni verdetto riporta l'**accelerazione
   minima distinguibile** di quel confronto. Limite per il pronto **60 s** d'orologio, solo per chi non arriva mai.
-  Protocollo **5.1**: `config.VERSIONE_PROTOCOLLO`, impronta nuova `4658e9cf…b722b7b3`
+  Protocollo **5.1**: `config.VERSIONE_PROTOCOLLO`, con la correzione N7 (cronometro prima della foto della CPU,
+  `v5/test/test_ordine_episodio.py`): impronta `61cde672357102dd97c467a9d2e361f8801c438cd502275a4d1aec9c755fca93`
   (`python -c "from v5 import oracolo; print(oracolo.impronta_protocollo())"`; la 5.0 era `ace50f5e…d17a04a`).
+- **Manifest 5.1** (`python fase4/fase4.py manifest` → `fase4/esiti/oracolo_p51.json`): due costruzioni in cartelle
+  temporanee, manifest identici (impronta `f706fa01…22a766d`); i file del finale e del DEV ricostruiti coincidono
+  byte per byte con quelli esistenti; impronte SHA-256 dei 6 file di `segreti/` uguali prima e dopo (la copia
+  cifrata resta valida); nessun `segreti.tar` alla fine. Rispetto al manifest 5.0 cambia solo `impronta_protocollo`.
 - **Asimmetria del rifiuto per ruolo (sezione 3): sparisce con (c)**, perché non ci sono più rifiuti sul pronto.
 - **I limiti di PATCH_WORKER non si rimisurano.** Ragionamento: worker e pavimento girano sulla stessa immagine
   dell'originale, quindi hanno la stessa CPU prima del pronto c (interprete, worker, import di tomli). Con (c) il
   rapporto diventa (T_w + c)/(T_p + c); con T_w > T_p e c > 0, sommare la stessa quantità a numeratore e denominatore
   **avvicina il rapporto a 1**: (T_w + c)/(T_p + c) < T_w/T_p. I limiti misurati restano **limiti superiori validi**:
   **1,1124× sul DEV, 1,1755× sul finale fixture**.
-  - Condizione, da dichiarare: il ragionamento vale finché la CPU prima del pronto dei due worker è la stessa (o
-    quella del worker non supera quella del pavimento di più del rapporto stesso). I due script importano moduli
-    leggermente diversi; la differenza è piccola rispetto a c.
+  - Condizione: il ragionamento vale finché la CPU prima del pronto del worker non supera quella del pavimento di
+    più del limite. **Verificata dai registri esistenti** (`python fase4/strumenti/cpu_worker_pavimento.py` →
+    `fase4/esiti/cpu_worker_pavimento.json`), mediane su 120 episodi per lato:
+    DEV (patch-worker, fase 2): worker 254,3 ms, pavimento 255,9 ms, **rapporto 0,9937** contro 1,1124;
+    finale fixture (G3): worker 235,4 ms, pavimento 239,1 ms, **rapporto 0,9846** contro 1,1755.
+    Il worker usa perfino un po' meno CPU prima del pronto: i limiti restano superiori validi.
   - Con (c) il candidato non può spostare guadagno nella CPU prima del pronto: il worker importa la libreria standard
     **prima** di tomli, quindi prima che il codice del candidato giri; ciò che il candidato può ridurre prima del pronto
     è solo l'import del proprio `_parser.py`, che è costo legittimo del parser.
