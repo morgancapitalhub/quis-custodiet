@@ -5,8 +5,8 @@ tutti distinti e risponde con un frame per caso.
 
   1. avvio; un thread ricava l'id del container e ne ispeziona la configurazione EFFETTIVA;
   2. il supervisore non scrive nulla finché non arriva il frame "pronto" (timeout PRONTO_S);
-  3. al pronto: configurazione effettiva e CPU consumata fino a lì (osservatore); POI cronometro
-     (perf_counter_ns dell'host) e invio dei casi;
+  3. al pronto: configurazione effettiva; POI cronometro (perf_counter_ns dell'host), SUBITO DOPO la CPU
+     consumata fino a lì (osservatore), e solo allora l'invio dei casi (Morgan N7);
   4. completamento = ricevuto l'ultimo frame atteso (non l'uscita del processo); stop del cronometro;
   5. a container vivo: picco di memoria e CPU totale dall'osservatore;
   6. chiusura di stdin; attesa del ritorno del client (registra `client_bloccato_dopo`);
@@ -27,6 +27,12 @@ PRONTO_S = 60.0                 # Morgan N3: limite largo d'orologio, solo per c
 
 class InfrastrutturaFallita(Exception):
     """L'originale non completa, o l'ambiente si comporta in modo inatteso: la sessione si ferma."""
+
+
+def _avvia_cronometro():
+    """Partenza della finestra cronometrata (orologio dell'host). Funzione a sé perché l'ordine rispetto alla
+    lettura della CPU prima del pronto è verificato da test_ordine_episodio (Morgan N7)."""
+    return time.perf_counter_ns()
 
 
 def _frame_caso(op, contenuto):
@@ -158,9 +164,7 @@ def esegui(sessione, n, immagine, casi, osservatore, ruolo, comando=config.COMAN
             r["violazione"] = lettore.violazione
             return r, []
         r["s_avvio_pronto"] = round((lettore.t_pronto - t_avvio) / 1e9, 4)
-        # Prima di inviare: id, configurazione effettiva e CPU consumata fino a qui. Il lavoro che il
-        # candidato fa dopo il pronto e prima del primo caso resta così contato nella CPU pre-pronto;
-        # quello successivo cade nella finestra cronometrata.
+        # Prima di inviare: id e configurazione effettiva; poi cronometro e CPU consumata fino a lì (N7).
         t_isp.join(10)
         if "id" not in ispezione:
             raise InfrastrutturaFallita(f"id di {nome} non disponibile")
@@ -170,11 +174,15 @@ def esegui(sessione, n, immagine, casi, osservatore, ruolo, comando=config.COMAN
             diverse = {k: ispezione["effettiva"].get(k) for k in attesa if ispezione["effettiva"].get(k) != attesa[k]}
             r["motivo"], r["violazione"] = "violazione", f"configurazione effettiva diversa: {diverse}"
             return r, []
+        # Morgan N7: il cronometro parte PRIMA della foto della CPU, la foto si prende SUBITO DOPO, e nessun
+        # caso si invia prima di entrambe. Ogni istante del candidato cade così nella CPU prima del pronto o
+        # nella finestra (quello fra le due in entrambe: non conviene a nessuno); la durata della lettura
+        # sta nella finestra, uguale per i due ruoli. Nulla è stato scritto prima di questo punto.
+        t0 = _avvia_cronometro()
         try:
             r["cpu_pre_pronto_us"] = osservatore.cpu_us(ispezione["id"])
         except ambiente.DockerErrore as e:
             raise InfrastrutturaFallita(f"osservatore: {e}") from e
-        # cronometro e invio: nulla è stato scritto prima di questo punto
         errore_scrittura = []
 
         def scrivi():
@@ -184,7 +192,6 @@ def esegui(sessione, n, immagine, casi, osservatore, ruolo, comando=config.COMAN
                 p.stdin.flush()
             except OSError as e:
                 errore_scrittura.append(repr(e))
-        t0 = time.perf_counter_ns()
         scrittore = threading.Thread(target=scrivi, daemon=True)
         scrittore.start()
         scadenza = time.monotonic() + timeout_completamento
