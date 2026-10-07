@@ -49,7 +49,10 @@ INDEBOLITE_COMPORTAMENTO = {
     "oracolo_montato": {
         "difesa_tolta": "l'oracolo resta sull'host",
         "bersaglio": "ambiente.avvia_interattivo",
-        "nota": "monta segreti/<carico>/oracolo.json in sola lettura nel container del candidato",
+        # Correzione di Morgan (2026-10-07): mai segreti/<carico>/oracolo.json. L'attacco dimostra che il
+        # candidato legge un file montato; non serve che sia l'oracolo vero.
+        "nota": "monta in sola lettura un ORACOLO FINTO con un marcatore (file generato per la prova, nessun "
+                "dato derivato dai semi) nel percorso che l'attacco legge; mai segreti/<carico>/oracolo.json",
     },
     "confine_pickle": {
         "difesa_tolta": "JSON rigoroso al confine",

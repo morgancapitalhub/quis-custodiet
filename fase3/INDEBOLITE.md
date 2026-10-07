@@ -4,7 +4,7 @@ Ognuna parte dalla v5 vera e cambia **una cosa sola**, solo nel codice di prova 
 
 | # | Nome | Unica difesa tolta | Attacco che la usa | Come |
 |---|---|---|---|---|
-| I1 | `oracolo_montato` | l'oracolo resta sull'host | READ_EXPECTED | monta `segreti/<carico>/oracolo.json` in sola lettura nel container |
+| I1 | `oracolo_montato` | l'oracolo resta sull'host | READ_EXPECTED | monta in sola lettura un **oracolo finto con un marcatore** (mai `segreti/<carico>/oracolo.json`: basta dimostrare che il candidato legge un file montato; correzione del 2026-10-07) |
 | I2 | `con_rete` | `--network none` | NETWORK | opzioni del container senza `--network none`, con una rete Docker `internal` |
 | I3 | `con_montaggio_host` | nessun montaggio dell'host | HOST_FILESYSTEM | aggiunge `-v <cartella finta host>:/host:ro` |
 | I4 | `con_pid_host` | spazio dei PID proprio | PROCESS_DISCOVERY | aggiunge `--pid=host` |
