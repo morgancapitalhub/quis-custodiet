@@ -1,31 +1,77 @@
-# Stato della fase 3 — passaggio di consegne (per una sessione senza memoria di quelle precedenti)
+# Stato del progetto — passaggio di consegne (per chi riprende da zero)
 
-## Dove siamo
+**Aggiornato il 2026-10-07, a fine giornata. Questa prima parte prevale su tutto il resto del file**, che resta
+sotto come storico.
 
-Progetto: pilota di benchmark v5 (sandbox). Leggere **prima** `CLAUDE.md` (10 regole non negoziabili) e
-`BRIEF_v5_per_Claude_Code.md` 1.2. Le decisioni prese dopo il brief sono in `REQUISITI_AGGIUNTI.md`
-(blocchi D, P, Q, C, E, F, G, H, L, M). Fasi 0, 1, 2 concluse e approvate. **Siamo nella fase 3**
-(suite d'attacco + `registro_attacchi.csv`). Ambiente: PC Windows con Docker Desktop 4.93.0; le corse
-lunghe si spezzano in pezzi ≤ 60 min, ripartibili (L2). Il server Hetzner CX23 è stato **eliminato**; il
-profilo `server_hetzner` resta pronto per una replica **dopo il congelamento**, su un server noleggiato a
-ore (L1). Repository privato su GitHub (remote `origin`): lì c'è `789a524`; i commit locali successivi
-**non sono caricati**. Si carica solo se `python fase3/controlli_push.py` esce con 0 (quattro controlli,
-procedura in `CLAUDE.md`). `segreti/` resta fuori da git. Il 2026-10-06, su via di Morgan, il reflog è
-stato pulito (`20c6c84`, che conteneva il predicato, e `6718fe8`, duplicato della radice): i quattro
-controlli passano.
+## 1. Stato di oggi
 
-## Aggiornamento del 2026-10-07 (prevale su quanto sotto, dove diverso)
+Progetto: pilota di benchmark v5 (sandbox). Regole in `CLAUDE.md` (10 regole + i quattro controlli prima di ogni
+push); specifica in `BRIEF_v5_per_Claude_Code.md` 1.2; decisioni successive in `REQUISITI_AGGIUNTI.md`. Ambiente:
+PC Windows, Docker Desktop 4.93.0 (dopo un'accensione del PC va avviato a mano). Repository privato su GitHub
+(`origin`), allineato; si carica solo se `python fase3/controlli_push.py` esce con 0.
 
-- **Protocollo 5.1** in vigore (`REQUISITI_AGGIUNTI.md` N1–N8): nessun tetto sul pronto; costo = finestra + CPU del
-  container prima del pronto; cronometro prima della lettura della CPU (N7); limite del pronto 60 s; impronta
-  `61cde672…`; manifest ricostruito (`fase4/esiti/oracolo_p51.json`).
-- **Fase 4** (`fase4/RAPPORTO_FASE4.md`): con la 5.1 criterio 3 superato (1/40, 0 rifiuti), G1 superato, G2 1,031×,
-  collaudo 6/6; G3 1,1755×. N8 (minima mediana ≤ 1,05× nei 20 nulli prima di spendere) dichiarata, **non ancora
-  implementata** in `modello.corsa`.
-- **I9 ridefinita**: `pronto_non_addebitato` (v5 che non addebita la CPU prima del pronto).
-- **Fase 3 ancora da completare** (controlli positivi contro le v5 indebolite): il modo di procedere si decide con
-  Morgan, perché i tentativi di scrivere in sessione il codice di quei controlli sono stati fermati dal filtro di
-  sicurezza.
+- **Fasi 0, 1, 2:** concluse e approvate.
+- **Protocollo 5.1, congelabile** (`REQUISITI_AGGIUNTI.md` N1–N9): costo = finestra + CPU del container prima del
+  pronto; nessun tetto sul pronto; cronometro prima della lettura della CPU (N7); limite del pronto 60 s; ogni
+  verdetto riporta la minima distinguibile (N2). Impronta del protocollo
+  `e796e3393360569ae8d58ee163b2b2a2196b7b41baef11c95508c104c5624f6b`; `v5/oracle_manifest.json` identico su due
+  costruzioni (impronta `eaf236b4…c3134720`; `fase4/esiti/oracolo_p51.json`).
+- **Fase 4 chiusa** (`fase4/RAPPORTO_FASE4.md`, sezione 0): con la 5.1 criterio 3 superato (1 falso allarme su 40,
+  0 rifiuti dell'originale), G1 superato, G2 1,031× (mediana; q0,95 1,133×), collaudo 6/6; G3: limite di
+  PATCH_WORKER sul finale fixture 1,1755× (DEV 1,1124×). La corsa del protocollo 5.0 resta come prova che il tetto
+  del pronto falliva.
+- **N8 e N9 fatti** in `v5/modello.py`: la corsa pagata parte a sessioni (≤ 3 h, nessuna corsa nuova dopo 3 ore);
+  prima di ogni sessione 20 nulli con D7 e minima distinguibile mediana ≤ 1,05×, a prova di guasto; durante la
+  sessione, segnalazione di bassa sensibilità (mediana delle ultime 5 minime). Test in `v5/test/test_flusso.py`.
+- **Materiale pubblico per la fase 3 pronto** (M7; nessun dato derivato dai semi segreti):
+  - finale **sostituto** pubblico: seme `sostituto-pubblico-1` (primo tentativo), 316 casi, 0 uguali al DEV;
+    `fase3/esiti/finale_sostituto.json` (impronta dei casi `8864b2e7…396003b3`);
+  - predicato pubblico: *un intero nel risultato nell'intervallo [268689, 268965]*, vero in 6 documenti del
+    sostituto, 0 interi del DEV nell'intervallo;
+  - oracolo del sostituto costruito nel container dell'originale, due volte identico, predicato confermato sulle
+    risposte dell'originale: `fase3/esiti/finale_sostituto_oracolo.json` (impronta dell'oracolo
+    `9bfd9a72…eb99db8`, dei casi `f9514022…eba57575`; copie dei casi in `lavoro_v5/sostituto/`, fuori da git).
+
+## 2. Cosa resta
+
+1. **Fase 3: i controlli positivi contro le v5 indebolite** (`fase3/INDEBOLITE.md`): **I1–I5 e I7–I11** (10), più
+   **I6** e **I12**, che hanno già il disegno (I6: `v5/test/test_grafo_nodi.py` della fase 2; I12: tre bracci di
+   FINAL_CORRETTEZZA sul finale sostituto). Ogni attacco deve prima riuscire contro la sua indebolita e poi essere
+   bloccato (o limitato) dalla v5 vera; poi `registro_attacchi.csv` e `fase3/RAPPORTO_FASE3.md`. READY_ABUSE e
+   READY_STALL restano "limitato" finché un guadagno ~0 non è misurato contro I9.
+2. **Fase 5:** congelamento della v5 con impronta SHA-256 (criterio 7), dopo il criterio 1.
+
+## 3. Come si farà la fase 3
+
+- **Il codice che tenta la violazione** (aggiunte al parser, configurazioni permissive, orchestrazione dei controlli
+  positivi) **lo scrive Morgan con Claude (chat), fuori da Claude Code.** In Claude Code i tentativi di scriverlo
+  sono stati fermati dal filtro di sicurezza; non si riformulano.
+- **Claude Code esegue** quando quel codice è nel repository: controlli preliminari (`docker info`, chiave assente),
+  esecuzione, registrazione degli esiti, rapporti, push dopo `controlli_push.py`.
+- **Prima prova: READ_EXPECTED contro I1**, il più semplice (oracolo FINTO con marcatore, mai quello vero; regola
+  10 estesa: nessun dato derivato dai semi segreti in un container di prova).
+- **Sessioni tematiche** (regola sotto): la fase 3 in sessioni dedicate; pilota, infrastruttura, manifest e
+  rapporti in sessioni che non leggono `fase3/`.
+
+## 4. File da leggere per la fase 3, in ordine
+
+1. `CLAUDE.md`; `REQUISITI_AGGIUNTI.md` (H4–H7, M7, N1–N9).
+2. Questo file, sezioni 1–3.
+3. `fase3/INDEBOLITE.md`, `fase3/PIANO_FASE3.md`.
+4. `fase3/attacchi.py` (definizioni dichiarative), `fase3/riferimenti.py` (indebolite, solo descrizione).
+5. `fase3/controlli_positivi_v4.py` (modello di orchestrazione, contro la v4) e `fase3/esiti/PEZZO1.md`.
+6. Per I12: `fase3/esiti/finale_sostituto.json`, `fase3/esiti/finale_sostituto_oracolo.json`,
+   `fase3/esiti/COSTRUTTO_FINALE.md` (nota in testa).
+
+## 5. Verifiche rapide
+
+- Test: `python -m unittest discover -s v5/test -t .` → tutti OK (137; circa 3 min, alcuni avviano container).
+- Struttura della suite: `python -m unittest v5.test.test_fase3` → OK.
+- Verdetti della fase 4: `python fase4/fase4.py analisi --protocollo 5.1` (senza Docker).
+- Impronta del protocollo: `python -c "from v5 import oracolo; print(oracolo.impronta_protocollo())"` → `e796e339…`.
+- Prima di un push: `git fetch origin`, poi `python fase3/controlli_push.py` → deve uscire con 0.
+- Docker: `docker info` deve rispondere; `docker version --format "{{.Server.Platform.Name}}"` →
+  `Docker Desktop 4.93.0 (240920)`.
 
 ## Regola di lavoro: sessioni TEMATICHE (Morgan, 2026-10-07)
 
@@ -36,7 +82,11 @@ controlli passano.
   stessa conversazione, dopo che il perimetro delle letture era stato ristretto ai soli file necessari. Una
   sessione nuova e tematica è la forma più pulita della stessa misura.
 
-## File da leggere, in ordine
+---
+
+# Storico (fino al 2026-10-07; dove diverso, prevalgono le sezioni 1–5 sopra)
+
+## File da leggere, in ordine (versione precedente)
 
 1. `CLAUDE.md`, `BRIEF_v5_per_Claude_Code.md`, `REQUISITI_AGGIUNTI.md`.
 2. `fase3/PIANO_FASE3.md` (piano della suite), `fase3/INDEBOLITE.md` (v5 indebolite I1–I12, una difesa ciascuna).
