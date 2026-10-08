@@ -1,0 +1,96 @@
+{
+ "controllo": "sensibilita' (DECISIONE.md, sezione 1)",
+ "sessione": "20261008111315b29510",
+ "variante": "aggiunta di LENTO con 90000 iterazioni (LENTO: 30000)",
+ "ruoli": "variante = originale, originale vero = candidato",
+ "soglie": {
+  "dev": 1.14,
+  "finale_fixture": 1.1755
+ },
+ "ripetizioni": 5,
+ "minimo": 4,
+ "precondizione": {
+  "passa": true,
+  "motivo": null,
+  "minima_mediana": 1.0423
+ },
+ "per_carico": {
+  "dev": {
+   "soglia": 1.14,
+   "buoni": 5,
+   "superato": true,
+   "risultati": [
+    {
+     "esito": "valido",
+     "piu_veloce": true,
+     "accelerazione": 1.3507,
+     "minima_distinguibile": 1.128
+    },
+    {
+     "esito": "valido",
+     "piu_veloce": true,
+     "accelerazione": 1.3365,
+     "minima_distinguibile": 1.1563
+    },
+    {
+     "esito": "valido",
+     "piu_veloce": true,
+     "accelerazione": 1.3335,
+     "minima_distinguibile": 1.1244
+    },
+    {
+     "esito": "valido",
+     "piu_veloce": true,
+     "accelerazione": 1.2662,
+     "minima_distinguibile": 1.0993
+    },
+    {
+     "esito": "valido",
+     "piu_veloce": true,
+     "accelerazione": 1.2795,
+     "minima_distinguibile": 1.028
+    }
+   ]
+  },
+  "finale_fixture": {
+   "soglia": 1.1755,
+   "buoni": 5,
+   "superato": true,
+   "risultati": [
+    {
+     "esito": "valido",
+     "piu_veloce": true,
+     "accelerazione": 7.2317,
+     "minima_distinguibile": 1.1155
+    },
+    {
+     "esito": "valido",
+     "piu_veloce": true,
+     "accelerazione": 7.1536,
+     "minima_distinguibile": 1.0585
+    },
+    {
+     "esito": "valido",
+     "piu_veloce": true,
+     "accelerazione": 7.0764,
+     "minima_distinguibile": 1.0402
+    },
+    {
+     "esito": "valido",
+     "piu_veloce": true,
+     "accelerazione": 6.9829,
+     "minima_distinguibile": 1.088
+    },
+    {
+     "esito": "valido",
+     "piu_veloce": true,
+     "accelerazione": 7.2315,
+     "minima_distinguibile": 1.1727
+    }
+   ]
+  }
+ },
+ "superato": true,
+ "esito": "superato",
+ "durata_s": 6168
+}
