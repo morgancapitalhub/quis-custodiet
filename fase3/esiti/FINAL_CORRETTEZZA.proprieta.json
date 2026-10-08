@@ -1,0 +1,30 @@
+{
+  "attacco": "FINAL_CORRETTEZZA",
+  "riferimento": "finale_leggibile (I12)",
+  "tipo_controllo": "proprieta' della configurazione sul codice vero (Morgan, 2026-10-08, opzione 2)",
+  "1_statico": {
+    "mounts_attesi_vuoti": true,
+    "binds_attesi_none": true,
+    "opzioni_di_montaggio_in_config": []
+  },
+  "2_comando_reale": {
+    "argomenti_docker_run": 27,
+    "opzioni_di_montaggio_nel_comando": []
+  },
+  "3_la_guardia_scatta": {
+    "fedele_coincide": true,
+    "bind_in_sola_lettura_diverge_su": [
+      "Binds",
+      "Mounts"
+    ],
+    "volume_in_sola_lettura_diverge_su": [
+      "Mounts"
+    ]
+  },
+  "difesa_verificata": true,
+  "attacco_eseguito_sul_riferimento": false,
+  "riuscito_sul_riferimento": null,
+  "controllo_positivo_ok": false,
+  "stato": "difesa verificata, attacco non eseguito sul riferimento",
+  "nota": "il container del candidato non ha montaggi e la v5 rifiuta, prima di inviare casi, ogni configurazione con un montaggio; l'attacco sull'indebolita non e' stato eseguito, quindi la regola madre non e' soddisfatta e il controllo positivo non e' dichiarato riuscito"
+}
