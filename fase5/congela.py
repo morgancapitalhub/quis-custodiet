@@ -12,9 +12,9 @@ Non modifica nulla della v5. Si rifiuta (STOP) se:
   - HEAD non coincide con origin/master (si congela solo uno stato gia' caricato);
   - il manifest non porta l'impronta del protocollo corrente, o digest/commit diversi dalla configurazione;
   - Docker Desktop non e' la versione verificata;
-  - fase5/CONGELAMENTO.json esiste gia'.
+  - il file di congelamento (USCITA) esiste gia'.
 
-    python fase5/congela.py           -> fase5/CONGELAMENTO.json
+    python fase5/congela.py           -> fase5/CONGELAMENTO_2.json (secondo congelamento, N20)
     python fase5/verifica_congelamento.py   (prima di ogni sessione del pilota)
 """
 import hashlib
@@ -28,11 +28,12 @@ RADICE = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(RADICE))
 from v5 import config, oracolo   # noqa: E402
 
-USCITA = RADICE / "fase5" / "CONGELAMENTO.json"
+USCITA = RADICE / "fase5" / "CONGELAMENTO_2.json"   # N20; il primo (CONGELAMENTO.json) resta come storia
 DOCKER_VERIFICATO = "Docker Desktop 4.93.0 (240920)"
 DOCUMENTI = ["BRIEF_v5_per_Claude_Code.md", "CLAUDE.md", "REQUISITI_AGGIUNTI.md",
              "fase3/registro_attacchi.csv", "fase3/RAPPORTO_FASE3.md", "fase4/RAPPORTO_FASE4.md",
-             "fase5/congela.py", "fase5/verifica_congelamento.py"]
+             "fase5/congela.py", "fase5/verifica_congelamento.py",
+             "DECISIONE.md", "pilota/orchestratore.py", "fase5/sensibilita.py", "fase5/esiti/SENSIBILITA.json"]
 
 
 def git(*a):
@@ -99,7 +100,7 @@ def controlli(s, m):
 
 def main():
     if USCITA.exists():
-        sys.exit("STOP: fase5/CONGELAMENTO.json esiste gia'; non si ricongela sopra un congelamento")
+        sys.exit(f"STOP: {USCITA.name} esiste gia'; non si ricongela sopra un congelamento")
     git("fetch", "origin")
     if git("rev-parse", "HEAD").strip() != git("rev-parse", "origin/master").strip():
         sys.exit("STOP: HEAD diverso da origin/master; si congela solo uno stato gia' caricato")

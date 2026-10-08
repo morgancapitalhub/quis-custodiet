@@ -1,4 +1,4 @@
-"""Verifica del congelamento: ricalcola lo stato e lo confronta con fase5/CONGELAMENTO.json.
+"""Verifica del congelamento: ricalcola lo stato e lo confronta con l'ultimo congelamento (congela.USCITA).
 
 Da eseguire prima di ogni sessione del pilota (REQUISITI_AGGIUNTI N15). Uscita 0 solo se tutto coincide;
 qualunque differenza, file mancante o errore equivale a verifica fallita (a prova di guasto, come N9).
@@ -16,7 +16,7 @@ sys.path.insert(0, str(RADICE))
 def main():
     try:
         from fase5 import congela
-        atteso = json.loads((RADICE / "fase5" / "CONGELAMENTO.json").read_text(encoding="utf-8"))
+        atteso = json.loads(congela.USCITA.read_text(encoding="utf-8"))
         ora, m = congela.stato()
         errori = congela.controlli(ora, m)
     except Exception as e:                                   # a prova di guasto
