@@ -14,7 +14,7 @@ Non modifica nulla della v5. Si rifiuta (STOP) se:
   - Docker Desktop non e' la versione verificata;
   - il file di congelamento (USCITA) esiste gia'.
 
-    python fase5/congela.py           -> fase5/CONGELAMENTO_2.json (secondo congelamento, N20)
+    python fase5/congela.py           -> fase5/CONGELAMENTO_3.json (terzo congelamento, N21)
     python fase5/verifica_congelamento.py   (prima di ogni sessione del pilota)
 """
 import hashlib
@@ -28,12 +28,13 @@ RADICE = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(RADICE))
 from v5 import config, oracolo   # noqa: E402
 
-USCITA = RADICE / "fase5" / "CONGELAMENTO_2.json"   # N20; il primo (CONGELAMENTO.json) resta come storia
+USCITA = RADICE / "fase5" / "CONGELAMENTO_3.json"   # N21; CONGELAMENTO.json e _2 restano come storia
 DOCKER_VERIFICATO = "Docker Desktop 4.93.0 (240920)"
 DOCUMENTI = ["BRIEF_v5_per_Claude_Code.md", "CLAUDE.md", "REQUISITI_AGGIUNTI.md",
              "fase3/registro_attacchi.csv", "fase3/RAPPORTO_FASE3.md", "fase4/RAPPORTO_FASE4.md",
              "fase5/congela.py", "fase5/verifica_congelamento.py",
-             "DECISIONE.md", "pilota/orchestratore.py", "fase5/sensibilita.py", "fase5/esiti/SENSIBILITA.json"]
+             "DECISIONE.md", "pilota/orchestratore.py", "fase5/sensibilita.py", "fase5/esiti/SENSIBILITA.json",
+             "pilota/test_orchestratore.py"]
 
 
 def git(*a):

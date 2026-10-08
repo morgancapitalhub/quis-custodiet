@@ -1,4 +1,4 @@
-"""Orchestratore del pilota pagato (REQUISITI_AGGIUNTI N13, N15, N19), fuori da v5/ e senza modificarla.
+"""Orchestratore del pilota pagato (REQUISITI_AGGIUNTI N13, N15, N19, N21), fuori da v5/ e senza modificarla.
 
 Usa le funzioni congelate della v5 cosi' come sono: modello.precondizione, modello.una_corsa,
 modello.Sensibilita, supervisore.cancello, valutazione.Sessione. Aggiunge solo:
@@ -11,20 +11,33 @@ modello.Sensibilita, supervisore.cancello, valutazione.Sessione. Aggiunge solo:
     spesa iniziale. Prima di ogni corsa si scrive un segno "in corso"; se all'avvio il segno c'e' ancora (una
     corsa interrotta), STOP: la spesa va riconciliata con la console prima di continuare. File mancante dopo
     la prima sessione o illeggibile: STOP;
+  - dopo ogni corsa completata si scrive PRIMA lo stato (corse_fatte), POI si chiude la spesa: se il processo
+    muore fra le due scritture il segno "in corso" resta e il rilancio si ferma, invece di rifare e ripagare
+    una corsa gia' fatta;
+  - corsa interrotta (N21): una_corsa congelata non intercetta gli errori di client.messages.stream ne' quelli
+    della valutazione. Qualunque eccezione, anche Ctrl+C, viene intercettata: si scrivono il file di sessione
+    (righe di tutte le iterazioni, traccia dell'errore), lo stato e la spesa CONTATA fino al guasto (limite
+    inferiore: una chiamata interrotta a meta' puo' essere addebitata senza essere contata), il segno
+    "in corso" resta, STOP;
   - il limite di 3 ore (N9): dopo 3 ore la sessione non avvia corse nuove; quelle restanti restano da fare;
+  - esito della sessione onesto, uguale nel file di sessione e nello stato: completata, scaduta (limite di
+    3 ore), fermata (tetto o conteggio dei token), interrotta, rimandata;
   - il salvataggio dei testi dei candidati (DECISIONE.md, sezioni 2 e 7): si intercetta solo
     carichi.pacchetto_candidato per copiarne il testo, che poi passa invariato alla funzione vera. NON si passa
     a una_corsa un `valuta` proprio: valuta_testo salterebbe il riscaldamento.
 
     python pilota/orchestratore.py prossima      la prossima sessione del piano
     python pilota/orchestratore.py stato         piano, corse fatte, spesa (nessuna chiamata)
-Uscite: 0 sessione completata, 2 rimandata (nessuna chiamata pagata), 1 STOP.
+Uscite: 0 sessione chiusa (completata o scaduta), 2 rimandata (nessuna chiamata pagata),
+        1 STOP (anche: corsa interrotta, pilota fermato).
+Verifica senza chiave, rete ne' Docker: python -m unittest pilota.test_orchestratore
 """
 import hashlib
 import json
 import os
 import sys
 import time
+import traceback
 from pathlib import Path
 
 RADICE = Path(__file__).resolve().parent.parent
@@ -121,6 +134,9 @@ def main(argv):
         (CANDIDATI / f"{h}.py").write_bytes(b)
         registro["candidati"].append({**corrente, "ordine": len(registro["candidati"]), "sha256": h})
         return vero_pacchetto(testo)
+
+    def fatte_qui():
+        return [(c["modello"], c["corsa"]) for c in registro["corse"]]
     imm = ambiente.immagine_pacchetto(carichi.pacchetto_originale())
     with valutazione.Sessione(sessione, [imm], carichi.carico_dev(*config.CARICO_DEV, seme_ordine="riscaldamento")[:20],
                               modalita="corsa") as s:
@@ -136,7 +152,7 @@ def main(argv):
         inizio, sens, righe, conto = time.monotonic(), modello.Sensibilita(), [], [spesa["spesa_usd"]]
         carichi.pacchetto_candidato = pacchetto_che_salva
         try:
-            for m, k in corse:
+            for i, (m, k) in enumerate(corse):
                 if time.monotonic() - inizio >= modello.DURATA_MAX_SESSIONE_S:
                     registro["non_avviate"].append({"modello": m, "corsa": k, "motivo": "limite di 3 ore (N9)"})
                     continue
@@ -145,27 +161,51 @@ def main(argv):
                 spesa["in_corso"] = {"sessione": sessione, "modello": m, "corsa": k, "spesa_prima_usd": conto[0]}
                 scrivi(SPESA, spesa)
                 print(f"\n{m} - corsa {k}")
-                r = modello.una_corsa(client, m, modello.MODELLI[m], s, imm, k, conto, righe, sensibilita=sens)
-                spesa["voci"].append({"sessione": sessione, "modello": m, "corsa": k, "costo_usd": round(r["costo"], 5)})
-                spesa["spesa_usd"], spesa["in_corso"] = round(conto[0], 5), None
-                scrivi(SPESA, spesa)
+                try:
+                    r = modello.una_corsa(client, m, modello.MODELLI[m], s, imm, k, conto, righe, sensibilita=sens)
+                except BaseException as e:                  # anche Ctrl+C: prima si salva, poi si esce (N21)
+                    msg = f"{type(e).__name__}: {e}"[:300]
+                    contata = round(conto[0], 5)
+                    spesa["in_corso"]["spesa_contata_al_guasto_usd"] = contata
+                    scrivi(SPESA, spesa)
+                    registro.update({"righe": righe, "esito": f"interrotta: {msg}",
+                                     "traccia": traceback.format_exc()[-4000:],
+                                     "spesa_contata_al_guasto_usd": contata,
+                                     "durata_s": round(time.monotonic() - inizio)})
+                    stato["sessioni"].append({"sessione": sessione, "esito": "interrotta", "corse": fatte_qui()})
+                    scrivi(ESITI / f"sessione_{sessione}.json", registro)
+                    scrivi(STATO, stato)
+                    return stop(f"corsa {m} n.{k} interrotta ({msg}); spesa contata {contata} $ (limite inferiore): "
+                                "riconciliare con la console (N21)")
                 registro["corse"].append({"modello": m, "corsa": k, **r})
                 stato["corse_fatte"].append({"modello": m, "corsa": k, "sessione": sessione,
                                              "completa": r["completa"], "motivo_arresto": r["motivo_arresto"]})
+                scrivi(STATO, stato)                        # prima lo stato...
+                spesa["voci"].append({"sessione": sessione, "modello": m, "corsa": k, "costo_usd": round(r["costo"], 5)})
+                spesa["spesa_usd"], spesa["in_corso"] = round(conto[0], 5), None
+                scrivi(SPESA, spesa)                        # ...poi la chiusura della spesa
                 motivo = r["motivo_arresto"] or ""
                 if motivo.startswith("conteggio") or motivo.startswith("tetto"):
                     stato["fermato"] = motivo
+                    registro["non_avviate"] += [{"modello": mm, "corsa": kk, "motivo": f"pilota fermato: {motivo}"}
+                                                for mm, kk in corse[i + 1:]]
                     break
         finally:
             carichi.pacchetto_candidato = vero_pacchetto
-    registro.update({"righe": righe, "spesa_dopo_usd": spesa["spesa_usd"], "esito": "completata",
+    if stato["fermato"]:
+        esito_sessione = f"fermata: {stato['fermato']}"
+    elif registro["non_avviate"]:
+        esito_sessione = "scaduta (limite di 3 ore)"
+    else:
+        esito_sessione = "completata"
+    registro.update({"righe": righe, "spesa_dopo_usd": spesa["spesa_usd"], "esito": esito_sessione,
                      "durata_s": round(time.monotonic() - inizio)})
-    stato["sessioni"].append({"sessione": sessione, "esito": "completata",
-                              "corse": [(c["modello"], c["corsa"]) for c in registro["corse"]]})
+    stato["sessioni"].append({"sessione": sessione, "esito": esito_sessione, "corse": fatte_qui()})
     scrivi(ESITI / f"sessione_{sessione}.json", registro)
     scrivi(STATO, stato)
-    print(json.dumps({"sessione": sessione, "corse": len(registro["corse"]), "non_avviate": registro["non_avviate"],
-                      "spesa_usd": spesa["spesa_usd"], "fermato": stato["fermato"]}, indent=1))
+    print(json.dumps({"sessione": sessione, "esito": esito_sessione, "corse": len(registro["corse"]),
+                      "non_avviate": registro["non_avviate"], "spesa_usd": spesa["spesa_usd"],
+                      "fermato": stato["fermato"]}, indent=1))
     return 1 if stato["fermato"] else 0
 
 
