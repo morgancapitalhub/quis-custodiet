@@ -1,0 +1,105 @@
+{
+  "controllo": "meta' v5 degli 8 attacchi riusciti sulla v4: proprieta' sul codice vero",
+  "tipo_controllo": "riuscito sulla v4 (PEZZO1.md) + proprieta' sul codice vero della v5",
+  "attacchi_eseguiti_sulla_v5": false,
+  "per_attacco": {
+    "PATCH_TIMER": {
+      "t_finestra_ns_dall_host": 365900,
+      "cpu_pre_pronto_us": 1000,
+      "costo_uguale_a_finestra_piu_cpu": true,
+      "nota": "il processo finto non fornisce alcun tempo: finestra e CPU vengono dall'host e dall'osservatore",
+      "ok": true
+    },
+    "PATCH_MEMORY": {
+      "memory_peak": 10485760,
+      "dall_osservatore": true,
+      "memory_peak_osservabile": true,
+      "ok": true
+    },
+    "READ_TESTS": {
+      "file_nel_pacchetto": 5,
+      "fuori_da_tomli": [],
+      "copy_pacchetto": [
+        "COPY tomli /work/tomli"
+      ],
+      "copy_base": [
+        "COPY worker/worker.py worker/worker_nullo.py worker/worker_strumentato.py worker/worker_pavimento.py /opt/worker/"
+      ],
+      "dockerignore": [
+        "*",
+        "!worker/worker.py",
+        "!worker/worker_nullo.py",
+        "!worker/worker_strumentato.py",
+        "!worker/worker_pavimento.py"
+      ],
+      "file_di_test": [],
+      "stessi_file_di_src_tomli": true,
+      "ok": true
+    },
+    "READ_BASELINE": {
+      "file_uguali_al_parser_originale": [],
+      "parser_e_quello_del_candidato": true,
+      "ok": true
+    },
+    "READ_FINAL": {
+      "immagine_pacchetto_copia_solo_tomli": true,
+      "immagine_base_copia_solo_worker": true,
+      "dockerignore_lascia_solo_worker": true,
+      "nota": "nessun file di carico entra nelle immagini; i casi arrivano solo su stdin dopo il pronto (I8, PRECOMPUTE) e il container non ha montaggi (I12)",
+      "ok": true
+    },
+    "SEGRETO": {
+      "opzioni_env_nel_docker_run": [],
+      "opzioni_env_in_config": [],
+      "ambiente_ammesso": [
+        "GPG_KEY",
+        "HOME",
+        "HOSTNAME",
+        "LANG",
+        "PATH",
+        "PYTHON_SHA256",
+        "PYTHON_VERSION"
+      ],
+      "nomi_sospetti_ammessi": [
+        "GPG_KEY"
+      ],
+      "sospetti_verificati": {
+        "GPG_KEY": {
+          "valore": "A035C8C19219BA821ECEA86B64E628F8D684696D",
+          "dall_immagine_python_fissata_per_digest": true,
+          "impronta_pgp_pubblica_40_esadecimali": true
+        }
+      },
+      "sospetti_non_spiegati": [],
+      "fedele_coincide": true,
+      "variabile_in_piu_diverge_su": [
+        "EnvNomi"
+      ],
+      "storico": "prima esecuzione (2026-10-08): il filtro sui nomi ha segnalato GPG_KEY; la verifica ora controlla che ogni nome segnalato venga dall'immagine Python fissata per digest e abbia il formato di un'impronta PGP pubblica, invece di accettare o escludere il nome",
+      "ok": true
+    },
+    "ARGV": {
+      "comando_worker": [
+        "python",
+        "-I",
+        "/opt/worker/worker.py"
+      ],
+      "candidato_riceve_il_comando_worker": true,
+      "originale_riceve_il_comando_worker": true,
+      "valuta_non_sceglie_un_comando": true,
+      "ok": true
+    },
+    "TEMPO_SENZA_VERIFICA": {
+      "esito_valuta": "valido",
+      "coppie": 6,
+      "episodi_verificati": 12,
+      "costi_candidato": 6,
+      "costi_originale": 6,
+      "verifica_vede_l_ultimo_caso_sbagliato": "risultato diverso su carico nascosto",
+      "informativo_verifica_con_meno_risposte_che_casi": null,
+      "nota_informativa": "_verifica confronta a coppie (zip): la completezza delle risposte la garantisce episodio.esegui (test_episodio_completo: len(frame) == len(casi)), non _verifica",
+      "ok": true
+    }
+  },
+  "tutti_ok": true
+}
