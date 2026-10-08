@@ -1,0 +1,209 @@
+{
+ "congelato_il": "2026-10-08T08:47:08Z",
+ "commit_congelato": "330deb610baed0b3a1a2c94a941d21f64137dfdc",
+ "versione_protocollo": "5.1",
+ "impronta_protocollo": "e796e3393360569ae8d58ee163b2b2a2196b7b41baef11c95508c104c5624f6b",
+ "manifest": {
+  "file": "v5/oracle_manifest.json",
+  "sha256": "eaf236b482c46727731b0abfabe52676aad5746327d217539a9bd881c3134720",
+  "impronta_oracolo": "c1b60e983d6e72e0856851957b6e0026fe2a3c2561e3fef599273ac4e3fa8ec5",
+  "impronta_protocollo_nel_manifest": "e796e3393360569ae8d58ee163b2b2a2196b7b41baef11c95508c104c5624f6b"
+ },
+ "immagini": {
+  "python": "python@sha256:b1b81d67b8df73bf6067191790c233ef9e598b863fc1ccf447956138ca466d99",
+  "osservatore": "alpine@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6"
+ },
+ "tomli_commit": "5a77b12a7a9f052ce5a20c335d2825658f6aea52",
+ "docker_desktop": "Docker Desktop 4.93.0 (240920)",
+ "file": {
+  "BRIEF_v5_per_Claude_Code.md": {
+   "impronta_dominio": "07d83d2bfe158cc4791a556e6f818febfb86631d504179670d55510df12f2c7c",
+   "git_blob": "0109e3a0455df59d3560fc4dc918b381203bef86"
+  },
+  "CLAUDE.md": {
+   "impronta_dominio": "5978effb592743fdab2b7e5358fd49462da4156b7ead03354ebffcf4a480bf49",
+   "git_blob": "5f96125ab0a6f094078d17fa534e1d9b291a2e91"
+  },
+  "REQUISITI_AGGIUNTI.md": {
+   "impronta_dominio": "d7a9dcb312185abbb15ef82320f334291e7c40333d0cc559ae37785ee11241cf",
+   "git_blob": "d11a031db3aa32d3f944145b467dcbddf0723d1a"
+  },
+  "fase3/RAPPORTO_FASE3.md": {
+   "impronta_dominio": "98690f73b0cd77ada7b075e77e8fad1465d5d829768b2c5f140a0901e80415cf",
+   "git_blob": "033757fd6810bff84eed5fab8000e8a8744c9871"
+  },
+  "fase3/registro_attacchi.csv": {
+   "impronta_dominio": "9c74905e897ebae47ac5acdf1ce066d0e17da9a3b41acf9c2a6b8dd2cfbd5d3b",
+   "git_blob": "1470aa95cffc13bf1e151db33578ed68cfee95fe"
+  },
+  "fase4/RAPPORTO_FASE4.md": {
+   "impronta_dominio": "0db78c6abcf7d3a9534cd5c3f37176093fb84801eb42a1a0b858931ad5063705",
+   "git_blob": "9e254b53a8b48f6c142fdbac5dca0ddc35394a6a"
+  },
+  "fase5/congela.py": {
+   "impronta_dominio": "8a7db8611b6ef68da9a6ce36cbb37b8cbe865c5e18395ff2de3201a4284736c4",
+   "git_blob": "4075e216dd982a5f31382bc8012ffb75843d73c7"
+  },
+  "fase5/verifica_congelamento.py": {
+   "impronta_dominio": "8843eaad41c82e905ad1421e86a64bafa6007532c89cbb70434ffabcc0de0daa",
+   "git_blob": "82c0d03035be0122f111809587fc4b0ae1fe352b"
+  },
+  "v5/.dockerignore": {
+   "impronta_dominio": "2fb383e32e2432cb0c9bf247b97b27a3262b5d8207bda739ac99d67c9161716c",
+   "git_blob": "0496a8bd5167ec8d232b6b3f84219d5641f2738d"
+  },
+  "v5/OSSERVATORE.md": {
+   "impronta_dominio": "27bd090c17dec51edd936fc48bfcb2e2c03a8e60ca4a4c71e73bd38665542ccf",
+   "git_blob": "c77b4f3b5628929e081c8a845069acbaf98d20f5"
+  },
+  "v5/__init__.py": {
+   "impronta_dominio": "3922872add7e631866898adcf92f8901d22bc4d54ce7e75e529cc650fe4290b1",
+   "git_blob": "a6cd2307198e69e16898ed8b9ab7853a9437a628"
+  },
+  "v5/ambiente.py": {
+   "impronta_dominio": "0bf9c35fa96de17c52639fe03aaa7feeb1e9d67a40acefd3427926f96f18e79a",
+   "git_blob": "de32b8d1a2bd7ce0bd0a7aec88d8f95a27e16d65"
+  },
+  "v5/carichi.py": {
+   "impronta_dominio": "964a9bb9e2b7ffd5d5fd807b924103bb0d7d973a35282887b59c4eeb03af73a5",
+   "git_blob": "e6d6ad6869473ca1c4bebd29da60f481a4adb793"
+  },
+  "v5/config.py": {
+   "impronta_dominio": "182f6213377b020432016fa1c2611e6efe50d82ccf79536712c4059a771ad3b4",
+   "git_blob": "737e677b6a475c3c3ebffb2fbfb5deb3f3e964d3"
+  },
+  "v5/confine.py": {
+   "impronta_dominio": "891318a1f6be0d7ae95fb60b200a05d19ba62835e99888fd478087715110e108",
+   "git_blob": "761cde6dffbe0a3a48cc33ededef53c5cb6a1cbe"
+  },
+  "v5/docker/Dockerfile.base": {
+   "impronta_dominio": "14c95421c4449304224abf7055b7b9218738c3021eaaff3adcccf973d9b897cd",
+   "git_blob": "4c855861685bc3c586bb570cd7393f0f5b6a9208"
+  },
+  "v5/docker/Dockerfile.pacchetto": {
+   "impronta_dominio": "c6251b2df59897320b8d6129a9bd30d89850c9603f88d611f07ac0f615cd9e19",
+   "git_blob": "cfd77441de49baa9397f9f241746905916433308"
+  },
+  "v5/episodio.py": {
+   "impronta_dominio": "21bdbf50d0beadf8530effaf86071ab7c77c1f628be3216e13a1e31e9b1ff4f2",
+   "git_blob": "8c83898cd48cae8843fa4714583979303385660c"
+  },
+  "v5/modello.py": {
+   "impronta_dominio": "a0118aa4521f671166ebbd7fb51b56fc83296cbb4032c68ae663db76ca0e0c71",
+   "git_blob": "c629a4505503b3f730e545a6cd042e87ba6daf9e"
+  },
+  "v5/mutatore.py": {
+   "impronta_dominio": "3f5c8951970c43c204827d734cde09f9da979a6415ee3b9c2cf690a4bdd90acd",
+   "git_blob": "34ceeb19431fd01699d49157a798fcae8939d8ca"
+  },
+  "v5/oracle_manifest.json": {
+   "impronta_dominio": "43decfb5fb0dc84f92fa8aaccfd37a01c16de30fdd57afe70d23a434da9de973",
+   "git_blob": "5c9aa40937c8b62dfb9be3e0cbd013cc2a7b5daf"
+  },
+  "v5/oracolo.py": {
+   "impronta_dominio": "dab55aa236636022af470f5478544d71af542f0badddc5ba6558bdd3e1642fe8",
+   "git_blob": "19f8b76fb68ade4363811348b3f91cd797c969e0"
+  },
+  "v5/registro.py": {
+   "impronta_dominio": "f167563413772f8a4a33b1d61bd044114448832dd36f16149dd7292ff97e9a50",
+   "git_blob": "c7de7c5ac3d7c944b9261d94570651f23b5509d6"
+  },
+  "v5/statistica.py": {
+   "impronta_dominio": "71f7abe21a6fc3a95825ff807579e75c4770ff7e99c2e79833e9076af241c49d",
+   "git_blob": "af4aeada6fc1045d52652bc5ccf5e06a651df1e4"
+  },
+  "v5/supervisore.py": {
+   "impronta_dominio": "8acb5d85e80a8a8fc98f42f979d7708159484f5b432eca54eb571565db875083",
+   "git_blob": "06712288e183e3cafc355ed1a5634d2784678b28"
+  },
+  "v5/test/__init__.py": {
+   "impronta_dominio": "c03a6c22428de11816a0be2218308603d6317eaec0326534647a67953b335580",
+   "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+  },
+  "v5/test/test_ambiente.py": {
+   "impronta_dominio": "5997269a30a19a9aaab459a101cfe6d0f54bef8615dcfbdbeea23e571bfe134a",
+   "git_blob": "6864af4d1cd2c7afb91e8fc71cd0f17aad0cef84"
+  },
+  "v5/test/test_completezza_risposte.py": {
+   "impronta_dominio": "c5243ebc85e968885b618745b06201985a85101f608ab055290612f950a0a157",
+   "git_blob": "0d533df48b84f56beabd8fd0273a81f06cbd57c9"
+  },
+  "v5/test/test_confine.py": {
+   "impronta_dominio": "e2c922802ba249072067c4f8de7c7a4014ab4c3630f91b874d361b4f30ce6180",
+   "git_blob": "9ae38b1cea9457f2d8d3af0942d27752592ce3be"
+  },
+  "v5/test/test_controlli.py": {
+   "impronta_dominio": "95f0a51bb38e46d082456ec3738241ce29eb357bdfcc5cf9c64b77002c2e04ad",
+   "git_blob": "d0fae7c070092d8bca9ef34114dad387334ae3f9"
+  },
+  "v5/test/test_episodio.py": {
+   "impronta_dominio": "9d707cf268fee599fba8a9081f2478ae55fcacb75ad3b020e924c3478253c187",
+   "git_blob": "29d09dd27830e128a5e3d211e72709d006568e3a"
+  },
+  "v5/test/test_fase3.py": {
+   "impronta_dominio": "600b567f65daeaac48e667486bb6aaefb95bece43ca232082ab020ff7008dc1e",
+   "git_blob": "58e554da90b23de9a8ce93ffb610ccb5722fa851"
+  },
+  "v5/test/test_fase4.py": {
+   "impronta_dominio": "677879962ae9266db351e99f382f36e5af06038060144974928c4914f9a1da76",
+   "git_blob": "0e2295573c6c6dccb6bacc6336500f8939eaa71d"
+  },
+  "v5/test/test_flusso.py": {
+   "impronta_dominio": "7641cd3a109ada65d51fe2d3b2db8fa3ea4902f93129f1600a2a760aaf3f13a8",
+   "git_blob": "7da7ba6511b878594b845d79f9f7c00bcf5ff74e"
+  },
+  "v5/test/test_grafo_nodi.py": {
+   "impronta_dominio": "13e496adaeb2def0e85877901f6b1446c95c03898ac6ee5ec0815e292c99a263",
+   "git_blob": "249d9749ae181172e2f85ce91a894444cfd81c68"
+  },
+  "v5/test/test_mutatore.py": {
+   "impronta_dominio": "75666520af767353914ba421c0a6c2e24e93450217957e559b0ee10a0da1e507",
+   "git_blob": "87234871c8998eccafdd812800bf19482c1471bb"
+  },
+  "v5/test/test_ordine_episodio.py": {
+   "impronta_dominio": "6b7ef252522af04c60a1a1379b2f8c3bcd676b86cefc44b6cfefd2cdc20a25de",
+   "git_blob": "67ca4f43a96102508f30b0022e7e724406d2a63f"
+  },
+  "v5/test/test_ordine_episodio_rinforzo.py": {
+   "impronta_dominio": "c7d667ef0f26222cced541fa2730f8d4cd6d605802eb7cd5bbf630bc1e06b455",
+   "git_blob": "4a56e4f5657a73eef96d6d2d8e138bb7b812d1bc"
+  },
+  "v5/test/test_statistica.py": {
+   "impronta_dominio": "e2666a63e7ae617aeffef99bfa887f2c3e6a41f8c26244898e81086126381979",
+   "git_blob": "ac7ff7b6ba78d8e76a09902f9ad33108f9464ab1"
+  },
+  "v5/test/test_valutazione.py": {
+   "impronta_dominio": "50be14f18cf0b995925c8613ba21813dac6ba0f74b92818e7a6c7bcbe2c15445",
+   "git_blob": "9784261a02ea42558ccba1f82f7da1019c672c78"
+  },
+  "v5/test/test_worker.py": {
+   "impronta_dominio": "9bd676309657114a877fae6a5c7a5ea27ab8ea804066312ecfb9a857a25b3ebc",
+   "git_blob": "c1c6ee458baed0f6c6eea9fac76462aa90ee711e"
+  },
+  "v5/valutazione.py": {
+   "impronta_dominio": "899155571fe2d2eaf90fd57544ae7e17c25067e2a1afb803c83543f1ef9c4cb5",
+   "git_blob": "515e62b3050e5462b96c07e9c3c0ab01d99af2ed"
+  },
+  "v5/varianti.py": {
+   "impronta_dominio": "bd4c204efa1b3f5f75b151ebc8c2791d386b36eb33f430963b7c1ee4e975d9ed",
+   "git_blob": "be0978d252c1b410a30b0bebb2ae6104a4ff6c9b"
+  },
+  "v5/worker/worker.py": {
+   "impronta_dominio": "81390a7e806f94774001448d9b98fccc5b27ffe9b4b36219733d6449a135ae53",
+   "git_blob": "e7ff5e7f3a89d96ac6d1b6ce8170af01ddc8c542"
+  },
+  "v5/worker/worker_nullo.py": {
+   "impronta_dominio": "32a504e470fb3faeb4ab8d2b69cf36fea04481a86c2f7d7822a84e63c69d7158",
+   "git_blob": "49a2b0577bfbec60404e8abc86047dfaced10880"
+  },
+  "v5/worker/worker_pavimento.py": {
+   "impronta_dominio": "42b14f874da903d8c95861fe759e2ca560b73b682d12c3ab0421a70793212459",
+   "git_blob": "8e0d772c914a306fa00a90bfe86f06bd840cb811"
+  },
+  "v5/worker/worker_strumentato.py": {
+   "impronta_dominio": "d11de75bd006297ec9af43bd72ebfec8bc1a1178313ae232acb11daa1689f337",
+   "git_blob": "24b2a7b79695f456ea45cef72a81cf81f46458cf"
+  }
+ },
+ "impronta_complessiva": "c9fa91f5e7f6e23a0c251361c6471626a6644d1a74780132f4013c2a0708ba64"
+}
