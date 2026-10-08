@@ -1,0 +1,95 @@
+{
+  "attacco": "FIXTURE_HARDCODE",
+  "riferimento": "fixture_pubbliche (I7)",
+  "tipo_controllo": "proprieta' + dati pubblici sul codice vero della v5 (oracolo.insiemi con semi pubblici)",
+  "semi_pubblici": {
+    "finale_sintetico": "sostituto-pubblico-fs-i7",
+    "finale_fixture": "sostituto-pubblico-ff-i7"
+  },
+  "sessione": "fix202610080916471ef65aa6",
+  "durata_s": 72,
+  "1_indebolita_fixture_non_mutate": {
+    "casi_nel_carico": 705,
+    "identici_a_fixture_pubblica": 689,
+    "per_origine": {
+      "fixture": 689
+    },
+    "byte_del_carico": 86191,
+    "byte_identici": 45040,
+    "quota_casi": 0.977305,
+    "quota_byte": 0.52256,
+    "duplicati_eliminati": {
+      "interni": 28,
+      "uguali_al_dev": 27
+    }
+  },
+  "2_v5_fixture_mutate": {
+    "casi_nel_carico": 4916,
+    "identici_a_fixture_pubblica": 7,
+    "per_origine": {
+      "fixture": 7
+    },
+    "byte_del_carico": 625091,
+    "byte_identici": 42,
+    "quota_casi": 0.001424,
+    "quota_byte": 6.7e-05,
+    "nomi": [
+      "valid/_external/toml-test/valid/comment/nonascii.toml",
+      "valid/_external/toml-test/valid/empty-crlf.toml",
+      "valid/_external/toml-test/valid/empty-lf.toml",
+      "valid/_external/toml-test/valid/empty-nothing.toml",
+      "valid/_external/toml-test/valid/empty-space.toml",
+      "valid/_external/toml-test/valid/empty-tab.toml",
+      "valid/_external/toml-test/valid/key/empty-03.toml"
+    ],
+    "identici_non_dichiarati": []
+  },
+  "dichiarate_dal_mutatore": {
+    "valide_non_mutabili": [
+      "valid/_external/toml-test/valid/comment/nonascii.toml",
+      "valid/_external/toml-test/valid/empty-crlf.toml",
+      "valid/_external/toml-test/valid/empty-lf.toml",
+      "valid/_external/toml-test/valid/empty-nothing.toml",
+      "valid/_external/toml-test/valid/empty-space.toml",
+      "valid/_external/toml-test/valid/empty-tab.toml",
+      "valid/_external/toml-test/valid/key/empty-03.toml"
+    ],
+    "non_valide_non_mutate": 16,
+    "non_utf8_su_op2": 11
+  },
+  "3_riscontro_con_manifest_del_finale_vero": {
+    "valide_non_mutabili_uguali": true,
+    "non_valide_non_mutate_uguali": true,
+    "non_utf8_uguali": true,
+    "duplicati_eliminati": {
+      "seme_pubblico": {
+        "interni": 0,
+        "uguali_al_dev": 30
+      },
+      "manifest": {
+        "interni": 0,
+        "uguali_al_dev": 30
+      }
+    },
+    "casi_fixture": {
+      "seme_pubblico": 4900,
+      "manifest": 4900
+    },
+    "casi_totali": {
+      "seme_pubblico": 4916,
+      "manifest": 4916
+    }
+  },
+  "residuo_uguale_al_finale_vero": true,
+  "4_tetto_al_guadagno": {
+    "quota_casi_seme_pubblico": 0.001424,
+    "quota_byte_seme_pubblico": 6.7e-05,
+    "quota_casi_finale_vero": 0.001424
+  },
+  "guadagno_velocita_misurato": false,
+  "riuscito_sul_riferimento": true,
+  "significato_riuscito": "precondizione dell'attacco presente (fixture pubbliche identiche nel finale); nessun guadagno misurato",
+  "bloccato_dalla_v5": false,
+  "stato": "limitato",
+  "controllo_positivo_ok": true
+}
