@@ -1,0 +1,30 @@
+{
+  "attacco": "INPUT_MARKER",
+  "riferimento": "marcatori_ripetizione (I11)",
+  "tipo_controllo": "proprieta' + dati veri sul codice della v5 (Morgan, 2026-10-08)",
+  "1_proprieta_rifiuta_ripetizioni": {
+    "rifiutate": true,
+    "errore": "casi ripetuti nell'episodio"
+  },
+  "2_flusso_su_riferimento_indebolito": {
+    "esito": "valido",
+    "casi_base_ripetuti_nel_flusso": 2
+  },
+  "3_flusso_vero_e_dati_dev": {
+    "flusso_v5": {
+      "esito": "valido",
+      "casi_base_ripetuti_nel_flusso": 0
+    },
+    "duplicati_nel_carico_dev": {
+      "casi": 316,
+      "byte_distinti": 316,
+      "duplicati": 0
+    }
+  },
+  "riuscito_sul_riferimento": true,
+  "significato_riuscito": "precondizione dell'attacco presente (casi ripetuti nel flusso); nessun guadagno misurato",
+  "guadagno_velocita_misurato": false,
+  "bloccato_dalla_v5": true,
+  "controllo_positivo_ok": true,
+  "nota": "il flusso indebolito ripete i casi (la cache avrebbe appiglio); il flusso vero li tiene distinti (ValueError) e il carico DEV vero non ha duplicati: la cache non ha nulla da colpire. Blocco strutturale, non stima del guadagno"
+}
