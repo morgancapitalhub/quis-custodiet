@@ -3,7 +3,10 @@
 Registra le impronte SHA-256 di cio' che il pilota usera': ogni file tracciato di v5/ (sorgenti, worker,
 Dockerfile, test, config con i valori congelati, manifest dell'oracolo), i documenti con le regole e gli esiti,
 l'impronta del protocollo, i digest delle immagini, il commit di tomli, la versione di Docker Desktop.
-Per i file si registrano sia l'impronta dei byte nella copia di lavoro sia l'oggetto git (per la replica).
+Per i file si registrano un'impronta con separazione di dominio, sha256(PREFISSO + percorso + NUL + byte), che
+non puo' coincidere con l'impronta di un caso (controllo 4 di controlli_push: il primo congelamento del 2026-10-08
+fu bloccato perche' l'impronta del file vuoto v5/test/__init__.py e' quella del documento vuoto del finale), e
+l'oggetto git (per la replica).
 Non modifica nulla della v5. Si rifiuta (STOP) se:
   - v5/ o i documenti hanno modifiche non committate;
   - HEAD non coincide con origin/master (si congela solo uno stato gia' caricato);
@@ -46,6 +49,14 @@ def sha(percorso):
     return hashlib.sha256((RADICE / percorso).read_bytes()).hexdigest()
 
 
+PREFISSO = b"benchmark-v5/congelamento\0"
+
+
+def impronta_file(percorso):
+    """sha256(PREFISSO + percorso + NUL + byte): non coincide con sha256(byte) di nessun caso."""
+    return hashlib.sha256(PREFISSO + percorso.encode("utf-8") + b"\0" + (RADICE / percorso).read_bytes()).hexdigest()
+
+
 def stato():
     """Lo stato da congelare o da verificare, senza data e senza commit."""
     blob = {}
@@ -55,7 +66,7 @@ def stato():
     mancanti = [d for d in DOCUMENTI if d not in blob]
     if mancanti:
         sys.exit(f"STOP: documenti non tracciati da git: {mancanti}")
-    file = {p: {"sha256": sha(p), "git_blob": b} for p, b in sorted(blob.items())}
+    file = {p: {"impronta_dominio": impronta_file(p), "git_blob": b} for p, b in sorted(blob.items())}
     m = json.loads((RADICE / "v5" / "oracle_manifest.json").read_bytes())
     s = {"versione_protocollo": config.VERSIONE_PROTOCOLLO,
          "impronta_protocollo": oracolo.impronta_protocollo(),
