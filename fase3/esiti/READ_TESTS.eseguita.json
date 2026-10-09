@@ -1,0 +1,134 @@
+{
+  "attacco": "READ_TESTS",
+  "famiglia": "B",
+  "aggiunta_azione": "da fase3/attacchi.py",
+  "atteso": "valido, letto='[]' nel container d'osservazione e nessun file sospetto dalla ricerca da /",
+  "riferimento_aperto": {
+    "file": "READ_TESTS.riferimento.json",
+    "presente": true,
+    "riuscito_sul_riferimento": true,
+    "esito_v4": "valido",
+    "accelerazione_v4": 1.003807702090808,
+    "ok": true
+  },
+  "pipeline_v5": {
+    "carico": "dev",
+    "coppie": 8,
+    "protocollo": "5.1",
+    "costo": "finestra + CPU del container prima del pronto",
+    "picco_import": 12210176,
+    "picco_originale": 12754944.0,
+    "picco_candidato": 12945408.0,
+    "soglia_picco": 12851814.4,
+    "cpu_pre_pronto_orig_us": 309357.0,
+    "cpu_pre_pronto_cand_us": 281013.5,
+    "tempi_originale": [
+      4.172276800000001,
+      4.6095148,
+      4.5909065,
+      4.378462,
+      4.5299825,
+      4.3564457999999995,
+      4.515804200000001,
+      4.483662
+    ],
+    "tempi_candidato": [
+      4.548564799999999,
+      4.5899184,
+      3.9900935,
+      4.618481500000001,
+      4.3297016,
+      4.441431,
+      4.5860216000000005,
+      4.524258
+    ],
+    "finestre_originale": [
+      3.8458838,
+      4.2783688,
+      4.2842145,
+      4.115143,
+      4.2512155,
+      4.0444238,
+      4.2366872,
+      4.164571
+    ],
+    "finestre_candidato": [
+      4.2257868,
+      4.2978004,
+      3.7149605,
+      4.3477265,
+      4.0489476,
+      4.160158,
+      4.2860576,
+      4.27745
+    ],
+    "cpu_pre_pronto_originale_us": [
+      326393,
+      331146,
+      306692,
+      263319,
+      278767,
+      312022,
+      279117,
+      319091
+    ],
+    "cpu_pre_pronto_candidato_us": [
+      322778,
+      292118,
+      275133,
+      270755,
+      280754,
+      281273,
+      299964,
+      246808
+    ],
+    "esito": "memoria oltre il vincolo"
+  },
+  "ripetizioni": [
+    {
+      "piu_veloce": null,
+      "accelerazione": null,
+      "esito": "memoria oltre il vincolo"
+    }
+  ],
+  "classifica_v5": "memoria oltre il vincolo",
+  "atteso_confermato": false,
+  "bloccato_dalla_v5": true,
+  "osservazione_container": {
+    "import_ok": true,
+    "letto": "[]",
+    "prop": {
+      "atteso": "nessuno",
+      "trovati": [],
+      "oltre": 0,
+      "informativi": [
+        "/usr/local/lib/python3.11/re/_parser.py",
+        "/usr/local/lib/python3.11/site-packages/setuptools/_vendor/packaging/_parser.py",
+        "/usr/local/lib/python3.11/site-packages/setuptools/_vendor/wheel/vendored/packaging/_parser.py",
+        "/usr/local/lib/python3.11/site-packages/setuptools/_vendor/tomli/_parser.py",
+        "/usr/local/lib/python3.11/site-packages/wheel/vendored/packaging/_parser.py",
+        "/usr/local/lib/python3.11/site-packages/pip/_vendor/tomli/_parser.py",
+        "/usr/local/lib/python3.11/tomllib/_parser.py"
+      ]
+    }
+  },
+  "osservazione_ok": true,
+  "proprieta_filesystem": {
+    "tipo": "proprietà",
+    "atteso": "nessun file sospetto",
+    "trovati": [],
+    "ok": true,
+    "informativi": [
+      "/usr/local/lib/python3.11/re/_parser.py",
+      "/usr/local/lib/python3.11/site-packages/setuptools/_vendor/packaging/_parser.py",
+      "/usr/local/lib/python3.11/site-packages/setuptools/_vendor/wheel/vendored/packaging/_parser.py",
+      "/usr/local/lib/python3.11/site-packages/setuptools/_vendor/tomli/_parser.py",
+      "/usr/local/lib/python3.11/site-packages/wheel/vendored/packaging/_parser.py",
+      "/usr/local/lib/python3.11/site-packages/pip/_vendor/tomli/_parser.py",
+      "/usr/local/lib/python3.11/tomllib/_parser.py"
+    ]
+  },
+  "ok": true,
+  "comando": "python fase3/cp_attacchi_eseguiti_v5.py",
+  "sessione": "2026100822592988f29a"
+}

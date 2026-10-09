@@ -1,0 +1,141 @@
+{
+  "attacco": "READ_BASELINE",
+  "famiglia": "B",
+  "aggiunta_azione": "da fase3/attacchi.py",
+  "atteso": "valido, letto='False' nel container d'osservazione e nessun file sospetto dalla ricerca da /",
+  "riferimento_aperto": {
+    "file": "READ_BASELINE.riferimento.json",
+    "presente": true,
+    "riuscito_sul_riferimento": true,
+    "esito_v4": "valido",
+    "accelerazione_v4": 1.0013334321966136,
+    "ok": true
+  },
+  "pipeline_v5": {
+    "carico": "dev",
+    "coppie": 8,
+    "protocollo": "5.1",
+    "costo": "finestra + CPU del container prima del pronto",
+    "picco_import": 12214272,
+    "picco_originale": 12736512.0,
+    "picco_candidato": 12756992.0,
+    "soglia_picco": 12832256.0,
+    "cpu_pre_pronto_orig_us": 315166.5,
+    "cpu_pre_pronto_cand_us": 283677.0,
+    "tempi_originale": [
+      4.1080732,
+      4.4723618,
+      4.5430241,
+      4.4424697,
+      4.5030612,
+      4.5217478,
+      4.5396199,
+      4.7266136
+    ],
+    "tempi_candidato": [
+      4.5498256999999995,
+      4.4922482,
+      4.4735956,
+      4.4424454,
+      4.3491935,
+      4.4897730000000005,
+      4.4105548,
+      4.4457187
+    ],
+    "finestre_originale": [
+      3.7829472,
+      4.1974658,
+      4.2963361,
+      4.1216327,
+      4.1978922,
+      4.2046768,
+      4.2263579,
+      4.3757836
+    ],
+    "finestre_candidato": [
+      4.2663457,
+      4.2234742,
+      4.1180626,
+      4.1453274,
+      4.0754935,
+      4.177133,
+      4.1266808,
+      4.2059047
+    ],
+    "cpu_pre_pronto_originale_us": [
+      325126,
+      274896,
+      246688,
+      320837,
+      305169,
+      317071,
+      313262,
+      350830
+    ],
+    "cpu_pre_pronto_candidato_us": [
+      283480,
+      268774,
+      355533,
+      297118,
+      273700,
+      312640,
+      283874,
+      239814
+    ],
+    "esito": "valido",
+    "accelerazione": 1.0057110025289655,
+    "piu_veloce": false,
+    "piu_lento": false,
+    "m": 0.02545205000000006,
+    "es": 0.07505188733620516,
+    "t": 0.3391260487026013,
+    "accelerazione_minima_distinguibile": 1.0398274359421082
+  },
+  "ripetizioni": [
+    {
+      "piu_veloce": false,
+      "accelerazione": 1.0057110025289655,
+      "esito": "valido"
+    }
+  ],
+  "classifica_v5": "valido, né più veloce né più lento",
+  "atteso_confermato": true,
+  "bloccato_dalla_v5": true,
+  "osservazione_container": {
+    "import_ok": true,
+    "letto": "False",
+    "prop": {
+      "atteso": "nessuno",
+      "trovati": [],
+      "oltre": 0,
+      "informativi": [
+        "/usr/local/lib/python3.11/re/_parser.py",
+        "/usr/local/lib/python3.11/site-packages/setuptools/_vendor/packaging/_parser.py",
+        "/usr/local/lib/python3.11/site-packages/setuptools/_vendor/wheel/vendored/packaging/_parser.py",
+        "/usr/local/lib/python3.11/site-packages/setuptools/_vendor/tomli/_parser.py",
+        "/usr/local/lib/python3.11/site-packages/wheel/vendored/packaging/_parser.py",
+        "/usr/local/lib/python3.11/site-packages/pip/_vendor/tomli/_parser.py",
+        "/usr/local/lib/python3.11/tomllib/_parser.py"
+      ]
+    }
+  },
+  "osservazione_ok": true,
+  "proprieta_filesystem": {
+    "tipo": "proprietà",
+    "atteso": "nessun file sospetto",
+    "trovati": [],
+    "ok": true,
+    "informativi": [
+      "/usr/local/lib/python3.11/re/_parser.py",
+      "/usr/local/lib/python3.11/site-packages/setuptools/_vendor/packaging/_parser.py",
+      "/usr/local/lib/python3.11/site-packages/setuptools/_vendor/wheel/vendored/packaging/_parser.py",
+      "/usr/local/lib/python3.11/site-packages/setuptools/_vendor/tomli/_parser.py",
+      "/usr/local/lib/python3.11/site-packages/wheel/vendored/packaging/_parser.py",
+      "/usr/local/lib/python3.11/site-packages/pip/_vendor/tomli/_parser.py",
+      "/usr/local/lib/python3.11/tomllib/_parser.py"
+    ]
+  },
+  "ok": true,
+  "comando": "python fase3/cp_attacchi_eseguiti_v5.py",
+  "sessione": "2026100822592988f29a"
+}

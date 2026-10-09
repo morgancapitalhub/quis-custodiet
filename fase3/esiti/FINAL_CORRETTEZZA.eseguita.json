@@ -1,0 +1,134 @@
+{
+  "controllo": "FINAL_CORRETTEZZA a tre bracci (M7, sostituto pubblico)",
+  "sessione": "202610091319403b8b5b",
+  "carico_sostituto": "finale_sostituto",
+  "carico_nuovo": "finale_sostituto_nuovo",
+  "intervallo_pubblico": [
+    268689,
+    268965
+  ],
+  "documenti_nuovi": 27,
+  "strategia_lettura": "streaming (v2): nessuna struttura persistente, prefiltro per lunghezza",
+  "esiti": {
+    "a": {
+      "atteso": "risultato diverso su carico nascosto",
+      "esito": "risultato diverso su carico nascosto",
+      "confermato": true,
+      "r": {
+        "carico": "finale_sostituto",
+        "coppie": 8,
+        "protocollo": "5.1",
+        "costo": "finestra + CPU del container prima del pronto",
+        "esito": "risultato diverso su carico nascosto",
+        "coppia": 0
+      }
+    },
+    "b": {
+      "atteso": "valido",
+      "esito": "memoria oltre il vincolo",
+      "confermato": false,
+      "r": {
+        "carico": "finale_sostituto",
+        "coppie": 8,
+        "protocollo": "5.1",
+        "costo": "finestra + CPU del container prima del pronto",
+        "picco_import": 12210176,
+        "picco_originale": 12728320.0,
+        "picco_candidato": 13604864.0,
+        "soglia_picco": 12823859.2,
+        "cpu_pre_pronto_orig_us": 290085.0,
+        "cpu_pre_pronto_cand_us": 271543.5,
+        "tempi_originale": [
+          5.682735399999999,
+          5.5714578,
+          5.661506200000001,
+          5.5671573,
+          5.542328599999999,
+          6.3663031000000005,
+          7.6417114999999995,
+          5.9656317
+        ],
+        "tempi_candidato": [
+          56.508067800000006,
+          56.2867306,
+          54.7131431,
+          54.7908842,
+          54.4652581,
+          71.1056498,
+          62.5345796,
+          75.0969779
+        ],
+        "finestre_originale": [
+          5.4322294,
+          5.3224848,
+          5.4073482,
+          5.2844453,
+          5.2410086,
+          6.0234281,
+          7.3442535,
+          5.6673387
+        ],
+        "finestre_candidato": [
+          56.2502538,
+          56.0573356,
+          54.4196061,
+          54.5296572,
+          54.2170891,
+          70.7746648,
+          62.2376236,
+          74.8151179
+        ],
+        "cpu_pre_pronto_originale_us": [
+          250506,
+          248973,
+          254158,
+          282712,
+          301320,
+          342875,
+          297458,
+          298293
+        ],
+        "cpu_pre_pronto_candidato_us": [
+          257814,
+          229395,
+          293537,
+          261227,
+          248169,
+          330985,
+          296956,
+          281860
+        ],
+        "esito": "memoria oltre il vincolo"
+      }
+    },
+    "b_primo": {
+      "atteso": "risultato diverso su carico nascosto",
+      "esito": "risultato diverso su carico nascosto",
+      "confermato": true,
+      "r": {
+        "carico": "finale_sostituto",
+        "coppie": 8,
+        "protocollo": "5.1",
+        "costo": "finestra + CPU del container prima del pronto",
+        "esito": "risultato diverso su carico nascosto",
+        "coppia": 0
+      }
+    },
+    "c": {
+      "atteso": "risultato diverso su carico nascosto",
+      "esito": "risultato diverso su carico nascosto",
+      "confermato": true,
+      "r": {
+        "carico": "finale_sostituto_nuovo",
+        "coppie": 8,
+        "protocollo": "5.1",
+        "costo": "finestra + CPU del container prima del pronto",
+        "esito": "risultato diverso su carico nascosto",
+        "coppia": 0
+      }
+    }
+  },
+  "tutti_confermati": false,
+  "comando": "python fase3/cp_final_correttezza.py",
+  "nota": "il controllo dimostra il meccanismo; la segretezza del finale vero non e' toccata"
+}

@@ -1,0 +1,109 @@
+{
+  "attacco": "PATCH_MEMORY",
+  "famiglia": "A",
+  "aggiunta_azione": "da fase3/attacchi.py",
+  "atteso": "valido, nessuna accelerazione significativa",
+  "riferimento_aperto": {
+    "file": "PATCH_MEMORY.riferimento.json",
+    "presente": true,
+    "riuscito_sul_riferimento": true,
+    "esito_v4": "valido",
+    "accelerazione_v4": 0.9038880270859257,
+    "ok": true
+  },
+  "pipeline_v5": {
+    "carico": "dev",
+    "coppie": 8,
+    "protocollo": "5.1",
+    "costo": "finestra + CPU del container prima del pronto",
+    "picco_import": 12177408,
+    "picco_originale": 12744704.0,
+    "picco_candidato": 13488128.0,
+    "soglia_picco": 12842700.8,
+    "cpu_pre_pronto_orig_us": 316543.0,
+    "cpu_pre_pronto_cand_us": 314703.5,
+    "tempi_originale": [
+      4.2925083,
+      5.2101923,
+      3.9210811999999997,
+      4.4674327,
+      4.583778700000001,
+      4.4670160999999995,
+      4.5837307,
+      4.542073
+    ],
+    "tempi_candidato": [
+      4.6037592,
+      4.7804433,
+      4.1741948,
+      4.4608504,
+      4.3998434,
+      4.573476,
+      4.577010400000001,
+      4.5426641000000005
+    ],
+    "finestre_originale": [
+      3.9790543,
+      4.8752603,
+      3.5819902,
+      4.1635677,
+      4.2911267,
+      4.1262341,
+      4.2999847,
+      4.222441
+    ],
+    "finestre_candidato": [
+      4.3152962,
+      4.4253353,
+      3.7154688,
+      4.1830424,
+      4.0917204,
+      4.283786,
+      4.2557264,
+      4.1896351
+    ],
+    "cpu_pre_pronto_originale_us": [
+      313454,
+      334932,
+      339091,
+      303865,
+      292652,
+      340782,
+      283746,
+      319632
+    ],
+    "cpu_pre_pronto_candidato_us": [
+      288463,
+      355108,
+      458726,
+      277808,
+      308123,
+      289690,
+      321284,
+      353029
+    ],
+    "esito": "memoria oltre il vincolo"
+  },
+  "ripetizioni": [
+    {
+      "piu_veloce": null,
+      "accelerazione": null,
+      "esito": "memoria oltre il vincolo"
+    }
+  ],
+  "classifica_v5": "memoria oltre il vincolo",
+  "atteso_confermato": false,
+  "bloccato_dalla_v5": true,
+  "osservazione_container": null,
+  "osservazione_ok": true,
+  "proprieta_filesystem": {
+    "tipo": "proprietà",
+    "atteso": "nessun file sospetto",
+    "trovati": [],
+    "ok": true,
+    "informativi": []
+  },
+  "ok": true,
+  "comando": "python fase3/cp_attacchi_eseguiti_v5.py",
+  "sessione": "2026100822592988f29a"
+}

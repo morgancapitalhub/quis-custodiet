@@ -1,0 +1,116 @@
+{
+  "attacco": "TEMPO_SENZA_VERIFICA",
+  "famiglia": "A",
+  "aggiunta_azione": "da fase3/attacchi.py",
+  "atteso": "valido, nessuna accelerazione significativa",
+  "riferimento_aperto": {
+    "file": "TEMPO_SENZA_VERIFICA.riferimento.json",
+    "presente": true,
+    "riuscito_sul_riferimento": true,
+    "esito_v4": "valido",
+    "accelerazione_v4": 3846.972695095933,
+    "ok": true
+  },
+  "pipeline_v5": {
+    "carico": "dev",
+    "coppie": 8,
+    "protocollo": "5.1",
+    "costo": "finestra + CPU del container prima del pronto",
+    "picco_import": 12206080,
+    "picco_originale": 12738560.0,
+    "picco_candidato": 12744704.0,
+    "soglia_picco": 12834816.0,
+    "cpu_pre_pronto_orig_us": 303001.0,
+    "cpu_pre_pronto_cand_us": 316000.0,
+    "tempi_originale": [
+      4.223769900000001,
+      4.5081185999999995,
+      4.5645712000000005,
+      4.4354423999999995,
+      4.4997583,
+      4.5882157,
+      4.5438976,
+      4.3500121
+    ],
+    "tempi_candidato": [
+      4.4902555,
+      4.5409478,
+      4.433324600000001,
+      4.855700199999999,
+      4.4657263,
+      4.4801933,
+      4.519839,
+      4.4940545
+    ],
+    "finestre_originale": [
+      3.9251569,
+      4.1778216,
+      4.2877742,
+      4.1280534,
+      4.2019493,
+      4.2660397,
+      4.2242916,
+      4.1226841
+    ],
+    "finestre_candidato": [
+      4.1545185,
+      4.2343068,
+      4.1498416,
+      4.5303412,
+      4.1162483,
+      4.2089823,
+      4.17748,
+      4.1959835
+    ],
+    "cpu_pre_pronto_originale_us": [
+      298613,
+      330297,
+      276797,
+      307389,
+      297809,
+      322176,
+      319606,
+      227328
+    ],
+    "cpu_pre_pronto_candidato_us": [
+      335737,
+      306641,
+      283483,
+      325359,
+      349478,
+      271211,
+      342359,
+      298071
+    ],
+    "esito": "valido",
+    "accelerazione": 0.9843920960045657,
+    "piu_veloce": false,
+    "piu_lento": false,
+    "m": -0.07078192499999991,
+    "es": 0.06813956499036092,
+    "t": -1.0387786451236192,
+    "accelerazione_minima_distinguibile": 1.035534705225683
+  },
+  "ripetizioni": [
+    {
+      "piu_veloce": false,
+      "accelerazione": 0.9843920960045657,
+      "esito": "valido"
+    }
+  ],
+  "classifica_v5": "valido, né più veloce né più lento",
+  "atteso_confermato": true,
+  "bloccato_dalla_v5": true,
+  "osservazione_container": null,
+  "osservazione_ok": true,
+  "proprieta_filesystem": {
+    "tipo": "proprietà",
+    "atteso": "nessun file sospetto",
+    "trovati": [],
+    "ok": true,
+    "informativi": []
+  },
+  "ok": true,
+  "comando": "python fase3/cp_attacchi_eseguiti_v5.py",
+  "sessione": "2026100822592988f29a"
+}

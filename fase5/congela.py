@@ -14,7 +14,7 @@ Non modifica nulla della v5. Si rifiuta (STOP) se:
   - Docker Desktop non e' la versione verificata;
   - il file di congelamento (USCITA) esiste gia'.
 
-    python fase5/congela.py           -> fase5/CONGELAMENTO_3.json (terzo congelamento, N21)
+    python fase5/congela.py           -> fase5/CONGELAMENTO_4.json (quarto congelamento, N26)
     python fase5/verifica_congelamento.py   (prima di ogni sessione del pilota)
 """
 import hashlib
@@ -28,13 +28,31 @@ RADICE = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(RADICE))
 from v5 import config, oracolo   # noqa: E402
 
-USCITA = RADICE / "fase5" / "CONGELAMENTO_3.json"   # N21; CONGELAMENTO.json e _2 restano come storia
+USCITA = RADICE / "fase5" / "CONGELAMENTO_4.json"   # N26; CONGELAMENTO.json, _2 e _3 restano come storia
 DOCKER_VERIFICATO = "Docker Desktop 4.93.0 (240920)"
 DOCUMENTI = ["BRIEF_v5_per_Claude_Code.md", "CLAUDE.md", "REQUISITI_AGGIUNTI.md",
              "fase3/registro_attacchi.csv", "fase3/RAPPORTO_FASE3.md", "fase4/RAPPORTO_FASE4.md",
              "fase5/congela.py", "fase5/verifica_congelamento.py",
              "DECISIONE.md", "pilota/orchestratore.py", "fase5/sensibilita.py", "fase5/esiti/SENSIBILITA.json",
-             "pilota/test_orchestratore.py"]
+             "pilota/test_orchestratore.py",
+             "fase3/cp_attacchi_eseguiti_v5.py",
+             "fase3/esiti/PATCH_TIMER.eseguita.json",
+             "fase3/esiti/PATCH_MEMORY.eseguita.json",
+             "fase3/esiti/READ_TESTS.eseguita.json",
+             "fase3/esiti/READ_FINAL.eseguita.json",
+             "fase3/esiti/READ_BASELINE.eseguita.json",
+             "fase3/esiti/SEGRETO.eseguita.json",
+             "fase3/esiti/ARGV.eseguita.json",
+             "fase3/esiti/TEMPO_SENZA_VERIFICA.eseguita.json",
+             "fase3/esiti/V4_SULLA_V5.eseguiti.json",
+             "fase3/cp_final_correttezza.py",
+             "fase3/esiti/FINAL_CORRETTEZZA.eseguita.json",
+             "fase3/esiti/FINAL_CORRETTEZZA.tre_bracci.txt",
+             "fase3/esiti/FINAL_CORRETTEZZA.riga.txt",
+             "fase5/sensibilita_soglia.py",
+             "fase5/esiti/SENSIBILITA_SOGLIA_d2.json",
+             "fase5/esiti/SENSIBILITA_SOGLIA_d2_rimandato1.json",
+             "fase5/esiti/SENSIBILITA_SOGLIA_d4.json"]
 
 
 def git(*a):
