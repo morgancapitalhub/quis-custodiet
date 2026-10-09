@@ -1,0 +1,23 @@
+{
+ "controllo": "sensibilita' vicino alla soglia (revisione esterna, lavoro 2)",
+ "sessione": "202610090936413fd5cf",
+ "variante": "rifa' il parsing di un documento su 2 (len % 2 == 0), primo risultato scartato",
+ "divisore": 2,
+ "carichi": [
+  "finale_fixture"
+ ],
+ "ruoli": "variante = originale, originale vero = candidato",
+ "zona": [
+  1.15,
+  1.3
+ ],
+ "ripetizioni": 5,
+ "minimo": 4,
+ "precondizione": {
+  "passa": false,
+  "motivo": "N8: minima distinguibile mediana 1.1692 > 1.05",
+  "minima_mediana": 1.1692
+ },
+ "esito": "rimandato",
+ "durata_s": 3599
+}

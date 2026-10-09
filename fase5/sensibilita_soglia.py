@@ -21,7 +21,10 @@ DICHIARATO PRIMA, per ciascun carico:
   ZONA: se la mediana delle accelerazioni valide e' fuori da [1,15; 1,30], su quel carico il controllo e'
     NON INFORMATIVO (la variante non ha dato l'effetto voluto: non e' un difetto della v5). Si puo' ripetere
     UNA sola volta, solo su quel carico, con il divisore suggerito d' = d * (mediana - 1) / 0,22, arrotondato
-    e limitato a [2, 10]. Nessun'altra ripetizione.
+    e limitato a [2, 10]. Nessun'altra ripetizione. Una sessione RIMANDATA (precondizione N9 non superata: nessuna valutazione
+    della variante) non e' un'esecuzione e non consuma la ripetizione: come in N9, si rimanda e si riporta;
+    il suo esito si conserva rinominato (SENSIBILITA_SOGLIA_d<N>_rimandato<k>.json). [aggiunto il
+    2026-10-09, dopo la prima sessione rimandata e prima di qualsiasi valutazione della variante con d=2]
   Conseguenza: S1 non superato su un carico = la v5 non vede in modo affidabile ~1,2x su quel carico; si
     riporta come limite, e i risultati del pilota fra la soglia di N11 e ~1,3x su quel carico si dichiarano
     non garantiti. Non e' uno STOP: lo STOP scientifico (DECISIONE.md, 3a) riguarda il primo controllo, gia'
@@ -71,11 +74,26 @@ def tondo(x):
     return round(x, 4) if isinstance(x, float) else x
 
 
+def rimandato(percorso):
+    return json.loads(percorso.read_text(encoding="utf-8")).get("esito") == "rimandato"
+
+
+def archivia_rimandato(d):
+    """L'esito rimandato con questo divisore si conserva con un nome nuovo (N9: si rimanda e si riporta)."""
+    f = file_esito(d)
+    if f.exists() and rimandato(f):
+        k = 1
+        while (ESITI / f"SENSIBILITA_SOGLIA_d{d}_rimandato{k}.json").exists():
+            k += 1
+        f.rename(ESITI / f"SENSIBILITA_SOGLIA_d{d}_rimandato{k}.json")
+
+
 def permesso(d, carichi_scelti):
-    """Prima esecuzione: divisore 4, entrambi i carichi. Poi solo la ripetizione dichiarata, una volta."""
-    if file_esito(d).exists():
+    """Prima esecuzione: divisore 4, entrambi i carichi. Poi solo la ripetizione dichiarata, una volta.
+    Le sessioni rimandate (nessuna valutazione della variante) non contano."""
+    if file_esito(d).exists() and not rimandato(file_esito(d)):
         return f"{file_esito(d).name} esiste gia'"
-    precedenti = sorted(ESITI.glob("SENSIBILITA_SOGLIA_d*.json"))
+    precedenti = [p for p in sorted(ESITI.glob("SENSIBILITA_SOGLIA_d*.json")) if not rimandato(p)]
     if not precedenti:
         if d == DIVISORE_INIZIALE and carichi_scelti == list(SOGLIE):
             return None
@@ -123,6 +141,7 @@ def main(argv=None):
     motivo = permesso(d, scelti)
     if motivo:
         sys.exit(f"STOP: {motivo}")
+    archivia_rimandato(d)
     if verifica_congelamento.main() != 0:
         sys.exit("STOP: congelamento non verificato")
     imm_orig = ambiente.immagine_pacchetto(carichi.pacchetto_originale())
