@@ -1,0 +1,18 @@
+{
+ "spesa_usd": 1.27882,
+ "voci": [
+  {
+   "sessione": "202610100020430118df",
+   "modello": "claude-opus-5-5",
+   "corsa": 1,
+   "costo_usd": 1.27882
+  }
+ ],
+ "in_corso": {
+  "sessione": "202610100020430118df",
+  "modello": "claude-sonnet-5",
+  "corsa": 1,
+  "spesa_prima_usd": 1.2788240000000002,
+  "spesa_contata_al_guasto_usd": 1.27882
+ }
+}

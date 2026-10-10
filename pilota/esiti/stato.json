@@ -1,0 +1,24 @@
+{
+ "sessioni": [
+  {
+   "sessione": "202610100020430118df",
+   "esito": "interrotta",
+   "corse": [
+    [
+     "claude-opus-5-5",
+     1
+    ]
+   ]
+  }
+ ],
+ "corse_fatte": [
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 1,
+   "sessione": "202610100020430118df",
+   "completa": true,
+   "motivo_arresto": null
+  }
+ ],
+ "fermato": null
+}

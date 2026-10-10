@@ -1,0 +1,275 @@
+{
+ "sessione": "202610100020430118df",
+ "corse_previste": [
+  [
+   "claude-opus-5-5",
+   1
+  ],
+  [
+   "claude-sonnet-5",
+   1
+  ],
+  [
+   "claude-haiku-4-5-20251001",
+   1
+  ]
+ ],
+ "id_verificati": {
+  "claude-opus-5-5": "claude-opus-5-5",
+  "claude-sonnet-5": "claude-sonnet-5",
+  "claude-haiku-4-5-20251001": "claude-haiku-4-5-20251001"
+ },
+ "spesa_prima_usd": 0.0,
+ "corse": [
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 1,
+   "costo": 1.2788240000000002,
+   "completa": true,
+   "motivo_arresto": null,
+   "accelerazione_accettata_dev": 1.256621493952376,
+   "accelerazione_prodotta_dev": 1.256621493952376,
+   "finale": {
+    "su_originale": false,
+    "finale_sintetico": {
+     "carico": "finale_sintetico",
+     "coppie": 8,
+     "protocollo": "5.1",
+     "costo": "finestra + CPU del container prima del pronto",
+     "picco_import": 12210176,
+     "picco_originale": 12707840.0,
+     "picco_candidato": 12716032.0,
+     "soglia_picco": 12802355.2,
+     "cpu_pre_pronto_orig_us": 225887.5,
+     "cpu_pre_pronto_cand_us": 234717.0,
+     "finestre_originale": [
+      4.3000467,
+      4.3416695,
+      4.3220243,
+      4.3552457,
+      4.4318896,
+      4.3757739,
+      4.2632133,
+      4.3279316
+     ],
+     "finestre_candidato": [
+      3.5300002,
+      3.4717527,
+      3.5073771,
+      3.4313971,
+      3.5184827,
+      3.5697177,
+      3.5644753,
+      3.4724184
+     ],
+     "cpu_pre_pronto_originale_us": [
+      268228,
+      231789,
+      210935,
+      236221,
+      209714,
+      244762,
+      208048,
+      219986
+     ],
+     "cpu_pre_pronto_candidato_us": [
+      220154,
+      238813,
+      241212,
+      230621,
+      243016,
+      225662,
+      244206,
+      230213
+     ],
+     "esito": "valido",
+     "accelerazione": 1.22071,
+     "piu_veloce": true,
+     "piu_lento": false,
+     "m": 0.825995,
+     "es": 0.027987,
+     "t": 29.513292,
+     "accelerazione_minima_distinguibile": 1.017686,
+     "bassa_sensibilita": true
+    },
+    "finale_fixture": {
+     "carico": "finale_fixture",
+     "coppie": 8,
+     "protocollo": "5.1",
+     "costo": "finestra + CPU del container prima del pronto",
+     "picco_import": 12226560,
+     "picco_originale": 12648448.0,
+     "picco_candidato": 12734464.0,
+     "soglia_picco": 12739174.4,
+     "cpu_pre_pronto_orig_us": 229715.0,
+     "cpu_pre_pronto_cand_us": 235819.0,
+     "finestre_originale": [
+      1.0802731,
+      1.1427545,
+      1.076452,
+      1.0234477,
+      1.0615764,
+      1.0583638,
+      0.9599018,
+      1.1296849
+     ],
+     "finestre_candidato": [
+      1.055139,
+      0.9441853,
+      0.9592871,
+      0.9923384,
+      0.8559472,
+      0.9437381,
+      0.9842797,
+      0.9952648
+     ],
+     "cpu_pre_pronto_originale_us": [
+      191455,
+      244931,
+      182642,
+      242949,
+      202292,
+      230450,
+      228980,
+      246504
+     ],
+     "cpu_pre_pronto_candidato_us": [
+      240578,
+      232718,
+      218504,
+      224783,
+      254015,
+      198464,
+      240377,
+      238920
+     ],
+     "esito": "valido",
+     "accelerazione": 1.075598,
+     "piu_veloce": true,
+     "piu_lento": false,
+     "m": 0.090515,
+     "es": 0.031375,
+     "t": 2.884919,
+     "accelerazione_minima_distinguibile": 1.061974,
+     "bassa_sensibilita": true
+    }
+   },
+   "valutazioni_in_bassa_sensibilita": 4,
+   "bassa_sensibilita": true
+  }
+ ],
+ "candidati": [
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 1,
+   "ordine": 0,
+   "sha256": "8eb5bd022b822d16c43d4a1b8a6b38ce4f3559fa37b0f0b1830ecbcadc9bd215"
+  },
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 1,
+   "ordine": 1,
+   "sha256": "9312efbba5e803b0eab634662058201b86d1d4a47b214e309b275e8a17231847"
+  },
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 1,
+   "ordine": 2,
+   "sha256": "a2c443f1fbbf88065149e2f138550aa12c1ed82ffce2a4d46f16984979c2fb86"
+  },
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 1,
+   "ordine": 3,
+   "sha256": "aca71c96d358406eff85430d7c05ba5760dff04a5b07d44088fc0dcf909f2e34"
+  },
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 1,
+   "ordine": 4,
+   "sha256": "9312efbba5e803b0eab634662058201b86d1d4a47b214e309b275e8a17231847"
+  },
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 1,
+   "ordine": 5,
+   "sha256": "9312efbba5e803b0eab634662058201b86d1d4a47b214e309b275e8a17231847"
+  }
+ ],
+ "non_avviate": [],
+ "precondizione": {
+  "passa": true,
+  "motivo": null,
+  "minima_mediana": 1.0274180557733923
+ },
+ "righe": [
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 1,
+   "iterazione": 1,
+   "token_ingresso": 11222,
+   "token_uscita": 13525,
+   "caratteri_ragionamento": 0,
+   "costo_usd": 0.31539,
+   "latenza_s": 250.7,
+   "esito": "valido",
+   "accelerazione_dev": 1.1213,
+   "t_dev": 9.586,
+   "picco_dev": 12738560.0,
+   "minima_distinguibile_dev": 1.0299293363981892,
+   "bassa_sensibilita": false
+  },
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 1,
+   "iterazione": 2,
+   "token_ingresso": 11560,
+   "token_uscita": 14230,
+   "caratteri_ragionamento": 0,
+   "costo_usd": 0.33084,
+   "latenza_s": 252.2,
+   "esito": "valido",
+   "accelerazione_dev": 1.2566,
+   "t_dev": 11.153,
+   "picco_dev": 12777472.0,
+   "minima_distinguibile_dev": 1.054415707229832,
+   "bassa_sensibilita": false
+  },
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 1,
+   "iterazione": 3,
+   "token_ingresso": 11993,
+   "token_uscita": 14089,
+   "caratteri_ragionamento": 0,
+   "costo_usd": 0.32975,
+   "latenza_s": 249.0,
+   "esito": "valido",
+   "accelerazione_dev": 1.2,
+   "t_dev": 7.11,
+   "picco_dev": 12697600.0,
+   "minima_distinguibile_dev": 1.0665331959408557,
+   "bassa_sensibilita": true
+  },
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 1,
+   "iterazione": 4,
+   "token_ingresso": 12026,
+   "token_uscita": 12737,
+   "caratteri_ragionamento": 0,
+   "costo_usd": 0.30284,
+   "latenza_s": 240.4,
+   "esito": "valido",
+   "accelerazione_dev": 1.1791,
+   "t_dev": 7.306,
+   "picco_dev": 12744704.0,
+   "minima_distinguibile_dev": 1.0579634688244473,
+   "bassa_sensibilita": true
+  }
+ ],
+ "esito": "interrotta: ReadError: [WinError 10054] Connessione in corso interrotta forzatamente dall'host remoto",
+ "traccia": "ata\\Local\\Programs\\Python\\Python314\\Lib\\contextlib.py\", line 162, in __exit__\n    self.gen.throw(value)\n    ~~~~~~~~~~~~~~^^^^^^^\n  File \"C:\\Users\\T490\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\httpcore\\_exceptions.py\", line 14, in map_exceptions\n    raise to_exc(exc) from exc\nhttpcore.ReadError: [WinError 10054] Connessione in corso interrotta forzatamente dall'host remoto\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"C:\\Users\\T490\\benchmark-v5\\pilota\\orchestratore.py\", line 165, in main\n    r = modello.una_corsa(client, m, modello.MODELLI[m], s, imm, k, conto, righe, sensibilita=sens)\n  File \"C:\\Users\\T490\\benchmark-v5\\v5\\modello.py\", line 132, in una_corsa\n    risposta = st.get_final_message()\n  File \"C:\\Users\\T490\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\anthropic\\lib\\streaming\\_messages.py\", line 93, in get_final_message\n    self.until_done()\n    ~~~~~~~~~~~~~~~^^\n  File \"C:\\Users\\T490\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\anthropic\\lib\\streaming\\_messages.py\", line 120, in until_done\n    consume_sync_iterator(self)\n    ~~~~~~~~~~~~~~~~~~~~~^^^^^^\n  File \"C:\\Users\\T490\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\anthropic\\_utils\\_streams.py\", line 6, in consume_sync_iterator\n    for _ in iterator:\n             ^^^^^^^^\n  File \"C:\\Users\\T490\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\anthropic\\lib\\streaming\\_messages.py\", line 67, in __iter__\n    for item in self._iterator:\n                ^^^^^^^^^^^^^^\n  File \"C:\\Users\\T490\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\anthropic\\lib\\streaming\\_messages.py\", line 129, in __stream__\n    for sse_event in self._raw_stream:\n                     ^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\T490\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\anthropic\\_streaming.py\", line 71, in __iter__\n    for item in self._iterator:\n                ^^^^^^^^^^^^^^\n  File \"C:\\Users\\T490\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\anthropic\\_streaming.py\", line 93, in __stream__\n    for sse in iterator:\n               ^^^^^^^^\n  File \"C:\\Users\\T490\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\anthropic\\_streaming.py\", line 75, in _iter_events\n    yield from self._decoder.iter_bytes(self.response.iter_bytes())\n  File \"C:\\Users\\T490\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\anthropic\\_streaming.py\", line 429, in iter_bytes\n    for chunk in self._iter_chunks(iterator):\n                 ~~~~~~~~~~~~~~~~~^^^^^^^^^^\n  File \"C:\\Users\\T490\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\anthropic\\_streaming.py\", line 440, in _iter_chunks\n    for chunk in iterator:\n                 ^^^^^^^^\n  File \"C:\\Users\\T490\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\httpx\\_models.py\", line 897, in iter_bytes\n    for raw_bytes in self.iter_raw():\n                     ~~~~~~~~~~~~~^^\n  File \"C:\\Users\\T490\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\httpx\\_models.py\", line 951, in iter_raw\n    for raw_stream_bytes in self.stream:\n                            ^^^^^^^^^^^\n  File \"C:\\Users\\T490\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\httpx\\_client.py\", line 153, in __iter__\n    for chunk in self._stream:\n                 ^^^^^^^^^^^^\n  File \"C:\\Users\\T490\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\httpx\\_transports\\default.py\", line 126, in __iter__\n    with map_httpcore_exceptions():\n         ~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"C:\\Users\\T490\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\contextlib.py\", line 162, in __exit__\n    self.gen.throw(value)\n    ~~~~~~~~~~~~~~^^^^^^^\n  File \"C:\\Users\\T490\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\httpx\\_transports\\default.py\", line 118, in map_httpcore_exceptions\n    raise mapped_exc(message) from exc\nhttpx.ReadError: [WinError 10054] Connessione in corso interrotta forzatamente dall'host remoto\n",
+ "spesa_contata_al_guasto_usd": 1.27882,
+ "durata_s": 1623
+}
