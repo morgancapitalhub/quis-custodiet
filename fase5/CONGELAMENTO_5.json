@@ -1,0 +1,493 @@
+{
+ "congelato_il": "2026-10-13T10:05:20Z",
+ "commit_congelato": "b611cbbdb770868f27ea3f3c8250fee90f57816e",
+ "versione_protocollo": "5.1",
+ "impronta_protocollo": "e796e3393360569ae8d58ee163b2b2a2196b7b41baef11c95508c104c5624f6b",
+ "manifest": {
+  "file": "v5/oracle_manifest.json",
+  "sha256": "eaf236b482c46727731b0abfabe52676aad5746327d217539a9bd881c3134720",
+  "impronta_oracolo": "c1b60e983d6e72e0856851957b6e0026fe2a3c2561e3fef599273ac4e3fa8ec5",
+  "impronta_protocollo_nel_manifest": "e796e3393360569ae8d58ee163b2b2a2196b7b41baef11c95508c104c5624f6b"
+ },
+ "immagini": {
+  "python": "python@sha256:b1b81d67b8df73bf6067191790c233ef9e598b863fc1ccf447956138ca466d99",
+  "osservatore": "alpine@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6"
+ },
+ "tomli_commit": "5a77b12a7a9f052ce5a20c335d2825658f6aea52",
+ "docker_desktop": "Docker Desktop 4.93.0 (240920)",
+ "file": {
+  "BRIEF_v5_per_Claude_Code.md": {
+   "impronta_dominio": "07d83d2bfe158cc4791a556e6f818febfb86631d504179670d55510df12f2c7c",
+   "git_blob": "0109e3a0455df59d3560fc4dc918b381203bef86"
+  },
+  "CLAUDE.md": {
+   "impronta_dominio": "5978effb592743fdab2b7e5358fd49462da4156b7ead03354ebffcf4a480bf49",
+   "git_blob": "5f96125ab0a6f094078d17fa534e1d9b291a2e91"
+  },
+  "DECISIONE.md": {
+   "impronta_dominio": "c89e9930fb36a9f510bf018e736c2bcfd90a7a9f7806b4280054d07dade36e1f",
+   "git_blob": "a1a8ef796b60608411a3724eebe1428f88ad84a8"
+  },
+  "REQUISITI_AGGIUNTI.md": {
+   "impronta_dominio": "8448e274dab544ac9f1df2509b9664faa53c08d7be10aa91b509a5e4d917cfbc",
+   "git_blob": "31239c63db28d83761d4e05ac1e017ff0546d81c"
+  },
+  "fase3/ADDENDUM_V4V5.md": {
+   "impronta_dominio": "a1e799523494c85e0ed184bcb3934ccd142d3f6f28058f766f4af6fe2a3d7933",
+   "git_blob": "c3b31947b2fdfb02c196d148fccc7be896636800"
+  },
+  "fase3/RAPPORTO_FASE3.md": {
+   "impronta_dominio": "98690f73b0cd77ada7b075e77e8fad1465d5d829768b2c5f140a0901e80415cf",
+   "git_blob": "033757fd6810bff84eed5fab8000e8a8744c9871"
+  },
+  "fase3/confronto_v4_v5.py": {
+   "impronta_dominio": "5d4eb40efe40dc8b348952300b7c87b2f07249caef0db953a39b133447d2b69d",
+   "git_blob": "8f40097044be5255a513b760bc076479c768507f"
+  },
+  "fase3/cp_attacchi_eseguiti_v5.py": {
+   "impronta_dominio": "a466a064dd6cf3086f18573fa7642a45caee9b4cff58b09c6bab83119aa4a10e",
+   "git_blob": "ddd83f1a3c7a9ed38e517c1fbafffaf0a25908b2"
+  },
+  "fase3/cp_final_correttezza.py": {
+   "impronta_dominio": "c494eafab3781e5553983840c2fccd9e9185e531261fb1d4315f05bb70790cd2",
+   "git_blob": "b2a30d7d5569ed8fcf2cfeff10d0449ad023db4b"
+  },
+  "fase3/esiti/ARGV.eseguita.json": {
+   "impronta_dominio": "42c60dd95132114a343ba4b9ff4d1744ab51378157180c6f7d042f1ebf078e3d",
+   "git_blob": "1709bf146a1911a0206f85bd81ddb9fc411564bc"
+  },
+  "fase3/esiti/FINAL_CORRETTEZZA.eseguita.json": {
+   "impronta_dominio": "a49e940bf39ed95ebe90a1bd9887aa1ca1665595cbebb940cb8c8412b00783ea",
+   "git_blob": "26dce8a720800d20f13aa5fba28aff9edef1f33b"
+  },
+  "fase3/esiti/FINAL_CORRETTEZZA.riga.txt": {
+   "impronta_dominio": "34455d2b7bc30dfd1aef78684587f051faf98d7c93da2223999855b42583e860",
+   "git_blob": "5a00f4229ce3410c807066c9a3a5161349565120"
+  },
+  "fase3/esiti/FINAL_CORRETTEZZA.tre_bracci.txt": {
+   "impronta_dominio": "2d15e87357df98c2a5d5fbaf0684d6848e3a5a827a6090410fffee4dce5f9a97",
+   "git_blob": "f51702b94241c45e5c7b24e0721fbef8c218a13f"
+  },
+  "fase3/esiti/PATCH_MEMORY.eseguita.json": {
+   "impronta_dominio": "372898a27d98dc38a7119fbc8824b99059be69ffa57973044d9e42eba2466a5c",
+   "git_blob": "74c675b22244939e876093d548fd61d4c5aae306"
+  },
+  "fase3/esiti/PATCH_TIMER.eseguita.json": {
+   "impronta_dominio": "bca99c28da6432af2cf97a0fddbf92e229775b4507b5dfef073308cc18a32a5f",
+   "git_blob": "88413467e5f90cde3e75f20f327fc6b1b580260d"
+  },
+  "fase3/esiti/READ_BASELINE.eseguita.json": {
+   "impronta_dominio": "7027b2b01f272cf4e3cb6cdde4779c2fd7fee2f54863226b0c6775bc1c0c5ee3",
+   "git_blob": "00147fa59ebcd99fc2de1ad3866b623a09939df4"
+  },
+  "fase3/esiti/READ_FINAL.eseguita.json": {
+   "impronta_dominio": "d54e6adba90128eaca83dffdf9c08b0106913a42414c43f4bd282a860f9e4857",
+   "git_blob": "86e808895fa6734288b4757338d2f703ec45086d"
+  },
+  "fase3/esiti/READ_TESTS.eseguita.json": {
+   "impronta_dominio": "1ef121cf667877a24813918573428145c44e06c0e74e472bafc37e16cdc4bd40",
+   "git_blob": "5955f38ab6f58d2d65ea422dc29d84f113f35baf"
+  },
+  "fase3/esiti/SEGRETO.eseguita.json": {
+   "impronta_dominio": "2a80bb20d31a35b87d61d23745b22edb6f2f0692333afbe9b4f7f7669a37ed3f",
+   "git_blob": "639fc69c6edcef61840eaef521d2175f62882e61"
+  },
+  "fase3/esiti/TEMPO_SENZA_VERIFICA.eseguita.json": {
+   "impronta_dominio": "42731f74d34cf5f1bd37d35b69176730f63783de8530f9a35c418df3a85dc3dc",
+   "git_blob": "df606faf7b7934928c9b989e423b2b5e8c17aab9"
+  },
+  "fase3/esiti/V4_SULLA_V5.eseguiti.json": {
+   "impronta_dominio": "2c95e566693c199ce86b8ecd720195fbb7a0ef4ad37a1f8712ffc29739024e63",
+   "git_blob": "62e0bee1fc3ef8311a48f57ce66bdcefab13df4b"
+  },
+  "fase3/esiti/confronto_v4v5/prova/8f39cf8fca36ba6c1749ee13754b30652a9210cc7e720f7101b3043def1cae3f.v4.json": {
+   "impronta_dominio": "4bbffc16e10fcb6f3d870640d44d8b93dacea1e92f70e49d9ab4cd880cd90a55",
+   "git_blob": "3e2a81fab5728b38e397fe6011427f02a2e97b70"
+  },
+  "fase3/registro_attacchi.csv": {
+   "impronta_dominio": "70cb5302ae3d73be56e848ea958c417a4a94053920c2f3efe690c9dc3960e6f4",
+   "git_blob": "7b881afc69143071aa1972a73f037bfb25af551b"
+  },
+  "fase3/test_confronto_v4_v5.py": {
+   "impronta_dominio": "ef647755e4dedb961d1e9752cc0e4bc1ae31ae6f44dcad55a362e1ac4e48d5fd",
+   "git_blob": "8f7808bab9c9d7d7c391bfb665687e7f7ab04d13"
+  },
+  "fase4/RAPPORTO_FASE4.md": {
+   "impronta_dominio": "0db78c6abcf7d3a9534cd5c3f37176093fb84801eb42a1a0b858931ad5063705",
+   "git_blob": "9e254b53a8b48f6c142fdbac5dca0ddc35394a6a"
+  },
+  "fase5/congela.py": {
+   "impronta_dominio": "a60ae81e599999a3892e77deb69342c7949bb8caf2cb19c3cdf5110d5e0cbfae",
+   "git_blob": "31555f36506b123d681f78d22c6598c942ac90cf"
+  },
+  "fase5/esiti/SENSIBILITA.json": {
+   "impronta_dominio": "ffb2af74104616e8e259c8c3384417d43ca007a8d83e8d589a038c6c56957b9a",
+   "git_blob": "4bfec70f155c681e979a3731fa2840f2bbeef8de"
+  },
+  "fase5/esiti/SENSIBILITA_SOGLIA_d2.json": {
+   "impronta_dominio": "91a8863b9fd1413f0752c165f8087c755bf35bc4edd2163b9b151ba70afcbc57",
+   "git_blob": "f0f50b2b9506fefcb54d3e8fab75085780cfc705"
+  },
+  "fase5/esiti/SENSIBILITA_SOGLIA_d2_rimandato1.json": {
+   "impronta_dominio": "b165a7054b775cd072fe28c9c7772f38518551e2e1e243fbde73627f0fb0df1f",
+   "git_blob": "e66f9fd6af7e6f0e50dbd2b856def9919fb90b09"
+  },
+  "fase5/esiti/SENSIBILITA_SOGLIA_d4.json": {
+   "impronta_dominio": "cef49707d402c46897b5a7594fb1e63c4456c737e42b685435e8acea3f54d0c2",
+   "git_blob": "c5586d76190498414e0be20d2d3faddf6bea521c"
+  },
+  "fase5/sensibilita.py": {
+   "impronta_dominio": "bba70c5e998ac885970d4f047271dcd0307f59ea7743d8e2ea4531fa29df54dd",
+   "git_blob": "d9c387c35028ee2a5a4c57749cdccc300be99bed"
+  },
+  "fase5/sensibilita_soglia.py": {
+   "impronta_dominio": "46f059c2b1d7c3771a0cf383ef2ccc8445852aa22c39965db37173881766d7b4",
+   "git_blob": "7acf26185a2b219c982c5b85c573197338d17358"
+  },
+  "fase5/verifica_congelamento.py": {
+   "impronta_dominio": "314370da598699f6958188450e6577841c743306529368ad8d9a1f1f16cc8f1b",
+   "git_blob": "fcd20681d0714d2748aefc9100f7f70223d92157"
+  },
+  "pilota/candidati/1d7faf11363fda454cbdd1ac899ba045eae9b8921a0b066040b57f35b291824e.py": {
+   "impronta_dominio": "83d2012cfb3b72fb2c8e380727c96cec097aa252494c8016fe5b6a61c3a6aa0b",
+   "git_blob": "2d097a5ab5bfc5a09b871591d2afbf98666bd539"
+  },
+  "pilota/candidati/2da5888b235f09f0950ceca0ad70085e18596a475a3082df507a5b78a0224f6e.py": {
+   "impronta_dominio": "dad50f1ab6b693b737c83522b756cb62e072f008bd0f67587c7cd10245f5926b",
+   "git_blob": "7c63ba6fedbbe3f868a746eb3637b72388e6e9e1"
+  },
+  "pilota/candidati/320f65aae3468a9108a479a690cb16e72f16fa2c264ab9e25626d6c583d8834b.py": {
+   "impronta_dominio": "cf23037fe4e711f54a6d74fca5547574c6da3f43c18945c324ae2cc04aa0efa9",
+   "git_blob": "14d7f8c6deefbc2d98ad5aa441e93a32dc2f8b59"
+  },
+  "pilota/candidati/3cb8de99793b5f9d3890d9024e59fa137de5ec96fd520a572a5c669790cf230f.py": {
+   "impronta_dominio": "4aebaf3b18b815e589d6b91d9b3bc73d6a372bcc813aab4ac7b30e5bcd0620e6",
+   "git_blob": "5adae41b18dd4ae9772da8a73fcd6ef20d1afb91"
+  },
+  "pilota/candidati/3d1e45a81857c1c612944fcf97bcdf64b774ca71c7a697fe2b567d2b1d334fb0.py": {
+   "impronta_dominio": "d1e55c45594dcdb6b4cc320e4ee42e5a438a238b4e4610bea9c57b1d53b1e570",
+   "git_blob": "cb36e0bd1a3ba0acd0bb997678cc50e2e76bfd24"
+  },
+  "pilota/candidati/41ee15f42d1f96d144ec56b9c9c4f0fbb6615267885508c1c6f1fc842d95d407.py": {
+   "impronta_dominio": "90ccedc7e2c0384c6c905ec4448c7dfc004f63c7d93726acbffa41a4bab15672",
+   "git_blob": "963b07163598389c77af8d5f7383ed7502643b30"
+  },
+  "pilota/candidati/4243e7ac79c630ea33e897abe1a42691f481d3eff15e3c397c984c9241cf66da.py": {
+   "impronta_dominio": "4b64a5afedf4de7aec9840110f4a4c447e8886d5bcccc9e28b33fea99ddf107d",
+   "git_blob": "38f273eb01db92032a27869a1f15b7066ab06be6"
+  },
+  "pilota/candidati/540a61b1b10ba38536722301e7a62eaa545771c2f338e906cf6100e508ffc4d1.py": {
+   "impronta_dominio": "2c2583f993cd4ac307e22a1b74c1e689d4bb41f333ae73c314627aefeed27140",
+   "git_blob": "09dff4e018daa3c610aa96ecbc58aa1dfbb1e712"
+  },
+  "pilota/candidati/5669bd39630635d9d9b5018a0c2fb3e17e18fc5099d95c1e06dcebd2af745f18.py": {
+   "impronta_dominio": "683b4ff0a578e73fa5e933762969c6d7ed74cd4d2f9a3a91b4e9ae94daa6655b",
+   "git_blob": "e11f32244ebe6510fb8f7fbb5051294c37b3e285"
+  },
+  "pilota/candidati/602a39af10dc52473a383df24ecd92237848d21dd13f5c47bb4cba6548527ce3.py": {
+   "impronta_dominio": "748dfb24dae59e0ea947f199a28cb52b6487350be7a08cf6445320f0720301d6",
+   "git_blob": "8f928e684314da1bf739ce770847ad546bb6505a"
+  },
+  "pilota/candidati/7e2dc3bd3f06943739fb39c9a43cf7160afc3fd2cd9dbd5093992b4e4de6d68d.py": {
+   "impronta_dominio": "fa8f3e8d722af833c0a88bdb90a497fffba49c5cf94dc3d6f93cbef5a8462885",
+   "git_blob": "eb854a3c0a1acc8c7ace9c6fe14c8ebffda7d1ec"
+  },
+  "pilota/candidati/8eb5bd022b822d16c43d4a1b8a6b38ce4f3559fa37b0f0b1830ecbcadc9bd215.py": {
+   "impronta_dominio": "f7020b21b456e09e11fa7376ff275ddc203edcd661fd11dc89ed515df14fb626",
+   "git_blob": "38e922cc44afd57cb815e8eb1cda183cdfa0d98c"
+  },
+  "pilota/candidati/8f39cf8fca36ba6c1749ee13754b30652a9210cc7e720f7101b3043def1cae3f.py": {
+   "impronta_dominio": "e74110b9f442b3dcd42f0dc30d69af878b8b24c0d3a280b77d1acf5302abfbc6",
+   "git_blob": "a68d9328219ce55bc52760cedb8f58f0a8649e3a"
+  },
+  "pilota/candidati/9312efbba5e803b0eab634662058201b86d1d4a47b214e309b275e8a17231847.py": {
+   "impronta_dominio": "bead8fc17e59782dea12dbe22bb3c5bb9da2b4baf2075174a54b3121b63ef471",
+   "git_blob": "1b649afefb3dfd0e5438ad51ad3437d52d96fd7a"
+  },
+  "pilota/candidati/95483372e8aa3a416947cae95dabbf9289cbc8eaa115eb3aaecf2b0d56976a57.py": {
+   "impronta_dominio": "15aca08b1c7c3bd4bb671caf5859985b6d5283cbc8c51d9b2932fa545e7c1d52",
+   "git_blob": "3d7c5e9f51bf289f1b7bd5888bec7003925a013e"
+  },
+  "pilota/candidati/99c00aa51d989317f515e88ba478e49b690ecbbcff248f3959a3f864c30fe82b.py": {
+   "impronta_dominio": "d5e50c520d21bd3217618c0c64cb37de7e47336937c34d45903d5861b6990635",
+   "git_blob": "50b4f8a42829e66cc9d01bbc7b6f9d87001a45f8"
+  },
+  "pilota/candidati/a2a6960dd99c4aff86a4d258e8c4fbbda1c01fb685f324ca4a1b7d93a11b7788.py": {
+   "impronta_dominio": "3f806e7a56aab660c5eaa5a66d85ca1feb4a2c6e6551a0cf663a303996a1c068",
+   "git_blob": "902cc2788868d0be1dd51e538e02675e0163f79f"
+  },
+  "pilota/candidati/a2c443f1fbbf88065149e2f138550aa12c1ed82ffce2a4d46f16984979c2fb86.py": {
+   "impronta_dominio": "6d8fdc5efc8a5d043f6f047e21ff24c58b46ced9c6b248a2c474b13db9fb6b33",
+   "git_blob": "867b6ab06d009e13908065da745c14fb68b3c4ec"
+  },
+  "pilota/candidati/a6e19f65f317722691538f8c242575de7dc3dd540bd3942fa4347aa1ebf3cc1c.py": {
+   "impronta_dominio": "659679ba7bece7da0b103975029779cbfda71b213fd483d2b763f2cb14ba9573",
+   "git_blob": "0d8d551f3e55ca756e5c385b7397a5a37f5a13a0"
+  },
+  "pilota/candidati/a936b8afb28163d7b6db5b79b581eafbe81bf22de5a21c79be4c2572f6afe33e.py": {
+   "impronta_dominio": "555619666b0864886c4db5a479ce21bffbf921130a66a0bbf4b27ac6cdad29ed",
+   "git_blob": "2a226b23aefa447b6a4ba55bcbcc4718ee9acd02"
+  },
+  "pilota/candidati/aa55ab7b5864ecefa5fa5ced79de5da67ddcd11e87424b01bb5dc2e8e1a020ba.py": {
+   "impronta_dominio": "46318361530785a941079e39b1de1561f5ab21d30f700fdfe50a0b278bc80c02",
+   "git_blob": "636959aff2353b782743b67a7d4591fb12b03e90"
+  },
+  "pilota/candidati/aca71c96d358406eff85430d7c05ba5760dff04a5b07d44088fc0dcf909f2e34.py": {
+   "impronta_dominio": "38c3637e01a5365bd0a0c0d08f9cc424b4f0cd5764e62c779133cad2995fad78",
+   "git_blob": "facb378366b8da73693afc2e8205195c413d4850"
+  },
+  "pilota/candidati/baf6320ac80a01913d1473728ca23f472ae67a63c2ca7d806571716c0bbeb4ee.py": {
+   "impronta_dominio": "72eed6feb6b9819aae6958d0315d544c4a8ada07aa545ad308b23c24bb8ae777",
+   "git_blob": "58ac467fa7290c5977684cf7b9ee98fe5c6c1f46"
+  },
+  "pilota/candidati/c77fd2bede42bc4a0073679ea8d532bea657ec1d19b40e8960cb8718d8a0bf7b.py": {
+   "impronta_dominio": "faa217dd699386b6e774dbb6ef893ce3dd85c0ed527e48259cf7aee314728b51",
+   "git_blob": "054ddd1b5b3737fe0011cb3a4187f10029d0d062"
+  },
+  "pilota/candidati/cad4e67b35cbb47f4a7cac866f56ea51ac91248e6070865920ab67ad46c4fd6a.py": {
+   "impronta_dominio": "5e6a829be9946b9e89ba3d06f700f9c2064a622ce9a28a7092d604a8791f52b0",
+   "git_blob": "7350bf72b52c08f6c2314753d39e1995f986a141"
+  },
+  "pilota/candidati/d793a5435ea950adf964892acb8a55214dc0769575dc83878d5fa29a7ebd08d0.py": {
+   "impronta_dominio": "3d55c25924b322077b0a9094eb231acf0c86895b3663f1f594b39e7f7e640c72",
+   "git_blob": "7727bf377181133e4af4dab2ee8cf5dd5f2e4c93"
+  },
+  "pilota/candidati/da74baa94a1eba33879d4eb9073d04f973292d79efc82fc8181149b1563793b9.py": {
+   "impronta_dominio": "a7f4925b9872d20473cfa0ee7f4d726cc7afd4b7ff2c712e8bc9bd114ec485f2",
+   "git_blob": "816537b89e269584d6c9b38ae765212acb4586bf"
+  },
+  "pilota/candidati/de97e410c5b1369afe239d08f384387cdba24ebb9967737d56a02fb4825f98a8.py": {
+   "impronta_dominio": "aa019fe979fd37bc48a51259780d73d10f5d17a189560b6c748eb22104b097ba",
+   "git_blob": "b510ee9873551a1d2391ef3bab22b45a01f101e6"
+  },
+  "pilota/candidati/df76bb28b0a755b18007419405cf0358d9b57a892d5ca07a5b72a4f26f9b9acf.py": {
+   "impronta_dominio": "4c84e1ef6052d8df887f76fdba7ebef7d306f2118515a4df67b8855fe59f1b2c",
+   "git_blob": "d1292aafd7bd3e57e7aec4069a3e72b9f7253680"
+  },
+  "pilota/candidati/f0e0043a5a1830c4c0de46c1717f7d24f84fe43607c8cb8f6b1e57b9bdb9c950.py": {
+   "impronta_dominio": "8e8e1db590216a3f7adfd32be1825058c4529b082223de4f098578ad2f9d2c2b",
+   "git_blob": "b547ea71177a1dc315b7a474777140b2e1e6a225"
+  },
+  "pilota/candidati/f198ba943242bc5793be685b42046be295f7b2fffa4753c08c6d72adf0ae29f6.py": {
+   "impronta_dominio": "41e27c3756a5b69d41283d2b2f028a6d6bb306240b8f841e6704149790788a99",
+   "git_blob": "c7783081c4eb88b608759ca1f01ab920fcac0367"
+  },
+  "pilota/candidati/f26b4de4ccda8676e6f74f7a941dc0c0f22b218def2a99e287a7faeb083ac3ce.py": {
+   "impronta_dominio": "664cea4b16ef8061a762b3ffd4f2cb6b1fe04e483945abace8e43cac96e88da9",
+   "git_blob": "77061e15e065fa04f4cad06b4d00f76adf8aa509"
+  },
+  "pilota/candidati/f9d9acfaf289f211e415b03035b8e1ff1032dd9f1415a809d1f079b8ce74aa9f.py": {
+   "impronta_dominio": "e8ee458bcafaccdd544f47b62ecfbe413c85249c8b3268ae9aa5257f1f79015f",
+   "git_blob": "8fc59897873a93c00c44641a944a227ff2a71043"
+  },
+  "pilota/esiti/sessione_202610100020430118df.json": {
+   "impronta_dominio": "4a0faae88b52fb2c6188aa653d4748145505cf7f01af9d9411eb11dbefbd8274",
+   "git_blob": "bc7c4062cbd37ec30746d447fe4fc0fbc7f94a19"
+  },
+  "pilota/esiti/sessione_202610101031011ac1ef.json": {
+   "impronta_dominio": "23275f95d5c4fd55bfbb99040c667b3f00d1b4a80ad8db09f3ab5006068d543e",
+   "git_blob": "1d51a6ee36c917ecaa6461e585baaccd4bf67986"
+  },
+  "pilota/esiti/sessione_20261010114446fe6846.json": {
+   "impronta_dominio": "361e63e6f75bfa7d3fdacf7047930645c8cd0b7f64a9ac57fb315ba365943d59",
+   "git_blob": "f0f9385f431261274a47f6ff866d102be0480e18"
+  },
+  "pilota/esiti/sessione_2026101012392049d715.json": {
+   "impronta_dominio": "3ca1f2f85b60024776f5aeeb5f67a201501e22baa15ad3f5b732ead3418a2437",
+   "git_blob": "a4351bafe459be03591646c1ac37c1af93057e26"
+  },
+  "pilota/esiti/sessione_2026101109491566b9da.json": {
+   "impronta_dominio": "19f27436231ba5acec86ba9e21678553e2fd15e4e195d76e334c11a2ad7615f1",
+   "git_blob": "5201eb0e3d9b2b77db27718dbe20ec66514857df"
+  },
+  "pilota/esiti/sessione_202610120915194213a0.json": {
+   "impronta_dominio": "fc2525d9a8648fa31ec638e89aed7c3b3a8bfb97f1418cbf13266224cedfafd3",
+   "git_blob": "cd6f2dd6fa45dac98ee6c65f776b21aa0725efad"
+  },
+  "pilota/esiti/sessione_20261013093833d1aed7.json": {
+   "impronta_dominio": "53c2c54d74199ab042a083ac3730a2490c254c88cc3b0f84f67b8b91a4a46f11",
+   "git_blob": "319c556b286bde0e8baa5babab630f90d6b19f9f"
+  },
+  "pilota/esiti/spesa.json": {
+   "impronta_dominio": "95d027f6b62ab100878ffe67e704a0583fff5c220f87cf12a898a509f8205d6a",
+   "git_blob": "afd02a5bdb05e8c65ed672dd48bc39e7be3839f2"
+  },
+  "pilota/esiti/stato.json": {
+   "impronta_dominio": "ed12f039d4dfdf0412aaf2821e132df5c04d703b3c2e9eebd80a2e1cfaf82c7b",
+   "git_blob": "4be09d8aa49214a6bce8d34e649d8c1235a13360"
+  },
+  "pilota/log/pilota_20261010_0020.txt": {
+   "impronta_dominio": "77b90693d537f5f22da52da19b3d21941cf5a9d244f206563cc26224ff91ef15",
+   "git_blob": "2e271aefc7d0810eea4c5081d9936176090f1113"
+  },
+  "pilota/log/pilota_20261013_0938.txt": {
+   "impronta_dominio": "bf9dced9768d6120ebe97a9cea623eea6c7fbeb1738cb5a491f1da29a9471d13",
+   "git_blob": "85d1e785ef8005ed076ccc238c0bd476833c7e19"
+  },
+  "pilota/orchestratore.py": {
+   "impronta_dominio": "819e58ede7cd409482843c4078f32611bb828788762131e7d65a9a554e05d5de",
+   "git_blob": "6818989c2da2500b2a22e27dbee53bde0716ce2b"
+  },
+  "pilota/test_orchestratore.py": {
+   "impronta_dominio": "97ef03fef72a6031086c6581e67397fe67133eeda0b15fddffeddc4f5e315c99",
+   "git_blob": "427e15437782348145748c7fcfbdd7551a679dfe"
+  },
+  "v5/.dockerignore": {
+   "impronta_dominio": "2fb383e32e2432cb0c9bf247b97b27a3262b5d8207bda739ac99d67c9161716c",
+   "git_blob": "0496a8bd5167ec8d232b6b3f84219d5641f2738d"
+  },
+  "v5/OSSERVATORE.md": {
+   "impronta_dominio": "27bd090c17dec51edd936fc48bfcb2e2c03a8e60ca4a4c71e73bd38665542ccf",
+   "git_blob": "c77b4f3b5628929e081c8a845069acbaf98d20f5"
+  },
+  "v5/__init__.py": {
+   "impronta_dominio": "3922872add7e631866898adcf92f8901d22bc4d54ce7e75e529cc650fe4290b1",
+   "git_blob": "a6cd2307198e69e16898ed8b9ab7853a9437a628"
+  },
+  "v5/ambiente.py": {
+   "impronta_dominio": "0bf9c35fa96de17c52639fe03aaa7feeb1e9d67a40acefd3427926f96f18e79a",
+   "git_blob": "de32b8d1a2bd7ce0bd0a7aec88d8f95a27e16d65"
+  },
+  "v5/carichi.py": {
+   "impronta_dominio": "964a9bb9e2b7ffd5d5fd807b924103bb0d7d973a35282887b59c4eeb03af73a5",
+   "git_blob": "e6d6ad6869473ca1c4bebd29da60f481a4adb793"
+  },
+  "v5/config.py": {
+   "impronta_dominio": "182f6213377b020432016fa1c2611e6efe50d82ccf79536712c4059a771ad3b4",
+   "git_blob": "737e677b6a475c3c3ebffb2fbfb5deb3f3e964d3"
+  },
+  "v5/confine.py": {
+   "impronta_dominio": "891318a1f6be0d7ae95fb60b200a05d19ba62835e99888fd478087715110e108",
+   "git_blob": "761cde6dffbe0a3a48cc33ededef53c5cb6a1cbe"
+  },
+  "v5/docker/Dockerfile.base": {
+   "impronta_dominio": "14c95421c4449304224abf7055b7b9218738c3021eaaff3adcccf973d9b897cd",
+   "git_blob": "4c855861685bc3c586bb570cd7393f0f5b6a9208"
+  },
+  "v5/docker/Dockerfile.pacchetto": {
+   "impronta_dominio": "c6251b2df59897320b8d6129a9bd30d89850c9603f88d611f07ac0f615cd9e19",
+   "git_blob": "cfd77441de49baa9397f9f241746905916433308"
+  },
+  "v5/episodio.py": {
+   "impronta_dominio": "21bdbf50d0beadf8530effaf86071ab7c77c1f628be3216e13a1e31e9b1ff4f2",
+   "git_blob": "8c83898cd48cae8843fa4714583979303385660c"
+  },
+  "v5/modello.py": {
+   "impronta_dominio": "a0118aa4521f671166ebbd7fb51b56fc83296cbb4032c68ae663db76ca0e0c71",
+   "git_blob": "c629a4505503b3f730e545a6cd042e87ba6daf9e"
+  },
+  "v5/mutatore.py": {
+   "impronta_dominio": "3f5c8951970c43c204827d734cde09f9da979a6415ee3b9c2cf690a4bdd90acd",
+   "git_blob": "34ceeb19431fd01699d49157a798fcae8939d8ca"
+  },
+  "v5/oracle_manifest.json": {
+   "impronta_dominio": "43decfb5fb0dc84f92fa8aaccfd37a01c16de30fdd57afe70d23a434da9de973",
+   "git_blob": "5c9aa40937c8b62dfb9be3e0cbd013cc2a7b5daf"
+  },
+  "v5/oracolo.py": {
+   "impronta_dominio": "dab55aa236636022af470f5478544d71af542f0badddc5ba6558bdd3e1642fe8",
+   "git_blob": "19f8b76fb68ade4363811348b3f91cd797c969e0"
+  },
+  "v5/registro.py": {
+   "impronta_dominio": "f167563413772f8a4a33b1d61bd044114448832dd36f16149dd7292ff97e9a50",
+   "git_blob": "c7de7c5ac3d7c944b9261d94570651f23b5509d6"
+  },
+  "v5/statistica.py": {
+   "impronta_dominio": "71f7abe21a6fc3a95825ff807579e75c4770ff7e99c2e79833e9076af241c49d",
+   "git_blob": "af4aeada6fc1045d52652bc5ccf5e06a651df1e4"
+  },
+  "v5/supervisore.py": {
+   "impronta_dominio": "8acb5d85e80a8a8fc98f42f979d7708159484f5b432eca54eb571565db875083",
+   "git_blob": "06712288e183e3cafc355ed1a5634d2784678b28"
+  },
+  "v5/test/__init__.py": {
+   "impronta_dominio": "c03a6c22428de11816a0be2218308603d6317eaec0326534647a67953b335580",
+   "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+  },
+  "v5/test/test_ambiente.py": {
+   "impronta_dominio": "5997269a30a19a9aaab459a101cfe6d0f54bef8615dcfbdbeea23e571bfe134a",
+   "git_blob": "6864af4d1cd2c7afb91e8fc71cd0f17aad0cef84"
+  },
+  "v5/test/test_completezza_risposte.py": {
+   "impronta_dominio": "c5243ebc85e968885b618745b06201985a85101f608ab055290612f950a0a157",
+   "git_blob": "0d533df48b84f56beabd8fd0273a81f06cbd57c9"
+  },
+  "v5/test/test_confine.py": {
+   "impronta_dominio": "e2c922802ba249072067c4f8de7c7a4014ab4c3630f91b874d361b4f30ce6180",
+   "git_blob": "9ae38b1cea9457f2d8d3af0942d27752592ce3be"
+  },
+  "v5/test/test_controlli.py": {
+   "impronta_dominio": "95f0a51bb38e46d082456ec3738241ce29eb357bdfcc5cf9c64b77002c2e04ad",
+   "git_blob": "d0fae7c070092d8bca9ef34114dad387334ae3f9"
+  },
+  "v5/test/test_episodio.py": {
+   "impronta_dominio": "9d707cf268fee599fba8a9081f2478ae55fcacb75ad3b020e924c3478253c187",
+   "git_blob": "29d09dd27830e128a5e3d211e72709d006568e3a"
+  },
+  "v5/test/test_fase3.py": {
+   "impronta_dominio": "600b567f65daeaac48e667486bb6aaefb95bece43ca232082ab020ff7008dc1e",
+   "git_blob": "58e554da90b23de9a8ce93ffb610ccb5722fa851"
+  },
+  "v5/test/test_fase4.py": {
+   "impronta_dominio": "677879962ae9266db351e99f382f36e5af06038060144974928c4914f9a1da76",
+   "git_blob": "0e2295573c6c6dccb6bacc6336500f8939eaa71d"
+  },
+  "v5/test/test_flusso.py": {
+   "impronta_dominio": "7641cd3a109ada65d51fe2d3b2db8fa3ea4902f93129f1600a2a760aaf3f13a8",
+   "git_blob": "7da7ba6511b878594b845d79f9f7c00bcf5ff74e"
+  },
+  "v5/test/test_grafo_nodi.py": {
+   "impronta_dominio": "13e496adaeb2def0e85877901f6b1446c95c03898ac6ee5ec0815e292c99a263",
+   "git_blob": "249d9749ae181172e2f85ce91a894444cfd81c68"
+  },
+  "v5/test/test_mutatore.py": {
+   "impronta_dominio": "75666520af767353914ba421c0a6c2e24e93450217957e559b0ee10a0da1e507",
+   "git_blob": "87234871c8998eccafdd812800bf19482c1471bb"
+  },
+  "v5/test/test_ordine_episodio.py": {
+   "impronta_dominio": "6b7ef252522af04c60a1a1379b2f8c3bcd676b86cefc44b6cfefd2cdc20a25de",
+   "git_blob": "67ca4f43a96102508f30b0022e7e724406d2a63f"
+  },
+  "v5/test/test_ordine_episodio_rinforzo.py": {
+   "impronta_dominio": "c7d667ef0f26222cced541fa2730f8d4cd6d605802eb7cd5bbf630bc1e06b455",
+   "git_blob": "4a56e4f5657a73eef96d6d2d8e138bb7b812d1bc"
+  },
+  "v5/test/test_statistica.py": {
+   "impronta_dominio": "e2666a63e7ae617aeffef99bfa887f2c3e6a41f8c26244898e81086126381979",
+   "git_blob": "ac7ff7b6ba78d8e76a09902f9ad33108f9464ab1"
+  },
+  "v5/test/test_valutazione.py": {
+   "impronta_dominio": "50be14f18cf0b995925c8613ba21813dac6ba0f74b92818e7a6c7bcbe2c15445",
+   "git_blob": "9784261a02ea42558ccba1f82f7da1019c672c78"
+  },
+  "v5/test/test_worker.py": {
+   "impronta_dominio": "9bd676309657114a877fae6a5c7a5ea27ab8ea804066312ecfb9a857a25b3ebc",
+   "git_blob": "c1c6ee458baed0f6c6eea9fac76462aa90ee711e"
+  },
+  "v5/valutazione.py": {
+   "impronta_dominio": "899155571fe2d2eaf90fd57544ae7e17c25067e2a1afb803c83543f1ef9c4cb5",
+   "git_blob": "515e62b3050e5462b96c07e9c3c0ab01d99af2ed"
+  },
+  "v5/varianti.py": {
+   "impronta_dominio": "bd4c204efa1b3f5f75b151ebc8c2791d386b36eb33f430963b7c1ee4e975d9ed",
+   "git_blob": "be0978d252c1b410a30b0bebb2ae6104a4ff6c9b"
+  },
+  "v5/worker/worker.py": {
+   "impronta_dominio": "81390a7e806f94774001448d9b98fccc5b27ffe9b4b36219733d6449a135ae53",
+   "git_blob": "e7ff5e7f3a89d96ac6d1b6ce8170af01ddc8c542"
+  },
+  "v5/worker/worker_nullo.py": {
+   "impronta_dominio": "32a504e470fb3faeb4ab8d2b69cf36fea04481a86c2f7d7822a84e63c69d7158",
+   "git_blob": "49a2b0577bfbec60404e8abc86047dfaced10880"
+  },
+  "v5/worker/worker_pavimento.py": {
+   "impronta_dominio": "42b14f874da903d8c95861fe759e2ca560b73b682d12c3ab0421a70793212459",
+   "git_blob": "8e0d772c914a306fa00a90bfe86f06bd840cb811"
+  },
+  "v5/worker/worker_strumentato.py": {
+   "impronta_dominio": "d11de75bd006297ec9af43bd72ebfec8bc1a1178313ae232acb11daa1689f337",
+   "git_blob": "24b2a7b79695f456ea45cef72a81cf81f46458cf"
+  }
+ },
+ "impronta_complessiva": "049cc979a25ca7c5e656c8027a820283582f1b2d43ede41efc21e749a90ad10b"
+}
