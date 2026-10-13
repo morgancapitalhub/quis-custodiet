@@ -14,7 +14,7 @@ Non modifica nulla della v5. Si rifiuta (STOP) se:
   - Docker Desktop non e' la versione verificata;
   - il file di congelamento (USCITA) esiste gia'.
 
-    python fase5/congela.py           -> fase5/CONGELAMENTO_5.json (quinto congelamento, N28)
+    python fase5/congela.py           -> fase5/CONGELAMENTO_6.json (sesto congelamento, N29)
     python fase5/verifica_congelamento.py   (prima di ogni sessione del pilota)
 """
 import hashlib
@@ -28,7 +28,7 @@ RADICE = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(RADICE))
 from v5 import config, oracolo   # noqa: E402
 
-USCITA = RADICE / "fase5" / "CONGELAMENTO_5.json"   # N28; CONGELAMENTO.json, _2, _3 e _4 restano come storia
+USCITA = RADICE / "fase5" / "CONGELAMENTO_6.json"   # N29; CONGELAMENTO.json, _2, _3, _4 e _5 restano come storia
 DOCKER_VERIFICATO = "Docker Desktop 4.93.0 (240920)"
 DOCUMENTI = ["BRIEF_v5_per_Claude_Code.md", "CLAUDE.md", "REQUISITI_AGGIUNTI.md",
              "fase3/registro_attacchi.csv", "fase3/RAPPORTO_FASE3.md", "fase4/RAPPORTO_FASE4.md",
