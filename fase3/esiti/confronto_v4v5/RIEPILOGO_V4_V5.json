@@ -1,0 +1,1345 @@
+{
+  "controllo": "confronto v4/v5 (DECISIONE.md 7, fase3/ADDENDUM_V4V5.md, N28)",
+  "candidature_abbinate": 31,
+  "giudicate_dalla_v4": 31,
+  "categorie": {
+    "diagnostica_due_rifiuti": 2,
+    "divergenza_solo_letterale": 6,
+    "nessuna_divergenza": 23
+  },
+  "divergenze_valide": [],
+  "letterale_6ii_grezzo": {
+    "conteggio": 6,
+    "sha256": [
+      "41ee15f42d1f96d144ec56b9c9c4f0fbb6615267885508c1c6f1fc842d95d407",
+      "602a39af10dc52473a383df24ecd92237848d21dd13f5c47bb4cba6548527ce3",
+      "8eb5bd022b822d16c43d4a1b8a6b38ce4f3559fa37b0f0b1830ecbcadc9bd215",
+      "99c00aa51d989317f515e88ba478e49b690ecbbcff248f3959a3f864c30fe82b",
+      "a2a6960dd99c4aff86a4d258e8c4fbbda1c01fb685f324ca4a1b7d93a11b7788",
+      "baf6320ac80a01913d1473728ca23f472ae67a63c2ca7d806571716c0bbeb4ee"
+    ]
+  },
+  "orfane_fuori_dal_confronto": [
+    "8f39cf8fca36ba6c1749ee13754b30652a9210cc7e720f7101b3043def1cae3f",
+    "c77fd2bede42bc4a0073679ea8d532bea657ec1d19b40e8960cb8718d8a0bf7b"
+  ],
+  "problemi": [],
+  "righe": [
+    {
+      "sha256": "1d7faf11363fda454cbdd1ac899ba045eae9b8921a0b066040b57f35b291824e",
+      "misure_v5": [
+        {
+          "sessione": "20261013093833d1aed7",
+          "modello": "claude-haiku-4-5-20251001",
+          "corsa": 3,
+          "ordine": 0,
+          "iterazione": 1,
+          "prodotto": true,
+          "esito": "valido",
+          "accelerazione_dev": 1.0058,
+          "minima_distinguibile_dev": 1.0147972169939639,
+          "picco_dev": 12711936.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": false,
+        "acc": 1.0058,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": false,
+        "accelerazione": 0.9872557422196099,
+        "t": -0.8302981989468979,
+        "picco": 177206,
+        "crescita": 16040,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "valido_non_veloce",
+      "categoria": "nessuna_divergenza",
+      "letterale": false,
+      "D": false,
+      "motivo": null
+    },
+    {
+      "sha256": "2da5888b235f09f0950ceca0ad70085e18596a475a3082df507a5b78a0224f6e",
+      "misure_v5": [
+        {
+          "sessione": "20261013093833d1aed7",
+          "modello": "claude-haiku-4-5-20251001",
+          "corsa": 3,
+          "ordine": 1,
+          "iterazione": 2,
+          "prodotto": false,
+          "esito": "valido",
+          "accelerazione_dev": 0.976,
+          "minima_distinguibile_dev": 1.042431549385691,
+          "picco_dev": 12724224.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": false,
+        "acc": 0.976,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": false,
+        "accelerazione": 0.9768745833689872,
+        "t": -1.1044520283408055,
+        "picco": 177406,
+        "crescita": 16040,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "valido_non_veloce",
+      "categoria": "nessuna_divergenza",
+      "letterale": false,
+      "D": false,
+      "motivo": null
+    },
+    {
+      "sha256": "320f65aae3468a9108a479a690cb16e72f16fa2c264ab9e25626d6c583d8834b",
+      "misure_v5": [
+        {
+          "sessione": "2026101109491566b9da",
+          "modello": "claude-haiku-4-5-20251001",
+          "corsa": 1,
+          "ordine": 5,
+          "iterazione": 2,
+          "prodotto": false,
+          "esito": "valido",
+          "accelerazione_dev": 1.0079,
+          "minima_distinguibile_dev": 1.0421320899187507,
+          "picco_dev": 12728320.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": false,
+        "acc": 1.0079,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": false,
+        "accelerazione": 1.0158312176494286,
+        "t": 0.5104506456571242,
+        "picco": 177406,
+        "crescita": 16040,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "valido_non_veloce",
+      "categoria": "nessuna_divergenza",
+      "letterale": false,
+      "D": false,
+      "motivo": null
+    },
+    {
+      "sha256": "3cb8de99793b5f9d3890d9024e59fa137de5ec96fd520a572a5c669790cf230f",
+      "misure_v5": [
+        {
+          "sessione": "20261013093833d1aed7",
+          "modello": "claude-haiku-4-5-20251001",
+          "corsa": 3,
+          "ordine": 2,
+          "iterazione": 3,
+          "prodotto": false,
+          "esito": "valido",
+          "accelerazione_dev": 0.9318,
+          "minima_distinguibile_dev": 1.04228730957288,
+          "picco_dev": 12738560.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": false,
+        "acc": 0.9318,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": false,
+        "accelerazione": 0.8597895288973575,
+        "t": -5.3846971985228995,
+        "picco": 177406,
+        "crescita": 16040,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "valido_non_veloce",
+      "categoria": "nessuna_divergenza",
+      "letterale": false,
+      "D": false,
+      "motivo": null
+    },
+    {
+      "sha256": "3d1e45a81857c1c612944fcf97bcdf64b774ca71c7a697fe2b567d2b1d334fb0",
+      "misure_v5": [
+        {
+          "sessione": "202610120915194213a0",
+          "modello": "claude-haiku-4-5-20251001",
+          "corsa": 2,
+          "ordine": 6,
+          "iterazione": 2,
+          "prodotto": true,
+          "esito": "valido",
+          "accelerazione_dev": 1.0432,
+          "minima_distinguibile_dev": 1.1330777876500402,
+          "picco_dev": 12759040.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": false,
+        "acc": 1.0432,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": false,
+        "accelerazione": 0.9964732249499165,
+        "t": -0.13273946629170286,
+        "picco": 177406,
+        "crescita": 16040,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "valido_non_veloce",
+      "categoria": "nessuna_divergenza",
+      "letterale": false,
+      "D": false,
+      "motivo": null
+    },
+    {
+      "sha256": "41ee15f42d1f96d144ec56b9c9c4f0fbb6615267885508c1c6f1fc842d95d407",
+      "misure_v5": [
+        {
+          "sessione": "202610120915194213a0",
+          "modello": "claude-opus-5-5",
+          "corsa": 3,
+          "ordine": 11,
+          "iterazione": 1,
+          "prodotto": false,
+          "esito": "valido",
+          "accelerazione_dev": 1.0754,
+          "minima_distinguibile_dev": 1.1081752593857828,
+          "picco_dev": 12756992.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": false,
+        "acc": 1.0754,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": true,
+        "accelerazione": 1.0562162330844045,
+        "t": 2.5057052711452927,
+        "picco": 177254,
+        "crescita": 15976,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "promuove",
+      "categoria": "divergenza_solo_letterale",
+      "letterale": true,
+      "D": false,
+      "motivo": "la v4 promuove, la v5 valida ma sotto soglia o non piu' veloce"
+    },
+    {
+      "sha256": "4243e7ac79c630ea33e897abe1a42691f481d3eff15e3c397c984c9241cf66da",
+      "misure_v5": [
+        {
+          "sessione": "202610120915194213a0",
+          "modello": "claude-haiku-4-5-20251001",
+          "corsa": 2,
+          "ordine": 8,
+          "iterazione": 4,
+          "prodotto": false,
+          "esito": "valido",
+          "accelerazione_dev": 1.0013,
+          "minima_distinguibile_dev": 1.0238985909657927,
+          "picco_dev": 12750848.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": false,
+        "acc": 1.0013,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": false,
+        "accelerazione": 0.9773481527533412,
+        "t": -3.425061134513742,
+        "picco": 177406,
+        "crescita": 16040,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "valido_non_veloce",
+      "categoria": "nessuna_divergenza",
+      "letterale": false,
+      "D": false,
+      "motivo": null
+    },
+    {
+      "sha256": "540a61b1b10ba38536722301e7a62eaa545771c2f338e906cf6100e508ffc4d1",
+      "misure_v5": [
+        {
+          "sessione": "20261013093833d1aed7",
+          "modello": "claude-sonnet-5",
+          "corsa": 3,
+          "ordine": 8,
+          "iterazione": 4,
+          "prodotto": true,
+          "esito": "valido",
+          "accelerazione_dev": 0.9016,
+          "minima_distinguibile_dev": 1.0213085525161691,
+          "picco_dev": 12740608.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": false,
+        "acc": 0.9016,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": false,
+        "accelerazione": 0.8489568985456583,
+        "t": -6.555492515637316,
+        "picco": 177334,
+        "crescita": 15976,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "valido_non_veloce",
+      "categoria": "nessuna_divergenza",
+      "letterale": false,
+      "D": false,
+      "motivo": null
+    },
+    {
+      "sha256": "5669bd39630635d9d9b5018a0c2fb3e17e18fc5099d95c1e06dcebd2af745f18",
+      "misure_v5": [
+        {
+          "sessione": "20261013093833d1aed7",
+          "modello": "claude-sonnet-5",
+          "corsa": 3,
+          "ordine": 6,
+          "iterazione": 1,
+          "prodotto": false,
+          "esito": "valido",
+          "accelerazione_dev": 0.88,
+          "minima_distinguibile_dev": 1.039543396600968,
+          "picco_dev": 12730368.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": false,
+        "acc": 0.88,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": false,
+        "accelerazione": 0.813909350543167,
+        "t": -17.476696624294537,
+        "picco": 178541,
+        "crescita": 17183,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "valido_non_veloce",
+      "categoria": "nessuna_divergenza",
+      "letterale": false,
+      "D": false,
+      "motivo": null
+    },
+    {
+      "sha256": "602a39af10dc52473a383df24ecd92237848d21dd13f5c47bb4cba6548527ce3",
+      "misure_v5": [
+        {
+          "sessione": "202610120915194213a0",
+          "modello": "claude-opus-5-5",
+          "corsa": 3,
+          "ordine": 12,
+          "iterazione": 2,
+          "prodotto": false,
+          "esito": "valido",
+          "accelerazione_dev": 1.0368,
+          "minima_distinguibile_dev": 1.038671690096537,
+          "picco_dev": 12746752.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": false,
+        "acc": 1.0368,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": true,
+        "accelerazione": 1.0678473066604117,
+        "t": 3.83235298958544,
+        "picco": 177258,
+        "crescita": 15976,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "promuove",
+      "categoria": "divergenza_solo_letterale",
+      "letterale": true,
+      "D": false,
+      "motivo": "la v4 promuove, la v5 valida ma sotto soglia o non piu' veloce"
+    },
+    {
+      "sha256": "7e2dc3bd3f06943739fb39c9a43cf7160afc3fd2cd9dbd5093992b4e4de6d68d",
+      "misure_v5": [
+        {
+          "sessione": "202610120915194213a0",
+          "modello": "claude-sonnet-5",
+          "corsa": 2,
+          "ordine": 1,
+          "iterazione": 3,
+          "prodotto": true,
+          "esito": "valido",
+          "accelerazione_dev": 0.9116,
+          "minima_distinguibile_dev": 1.1487987578340009,
+          "picco_dev": 12720128.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": false,
+        "acc": 0.9116,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": false,
+        "accelerazione": 0.8910220876574059,
+        "t": -14.08912681085566,
+        "picco": 177398,
+        "crescita": 16040,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "valido_non_veloce",
+      "categoria": "nessuna_divergenza",
+      "letterale": false,
+      "D": false,
+      "motivo": null
+    },
+    {
+      "sha256": "8eb5bd022b822d16c43d4a1b8a6b38ce4f3559fa37b0f0b1830ecbcadc9bd215",
+      "misure_v5": [
+        {
+          "sessione": "202610100020430118df",
+          "modello": "claude-opus-5-5",
+          "corsa": 1,
+          "ordine": 0,
+          "iterazione": 1,
+          "prodotto": false,
+          "esito": "valido",
+          "accelerazione_dev": 1.1213,
+          "minima_distinguibile_dev": 1.0299293363981892,
+          "picco_dev": 12738560.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": true,
+        "acc": 1.1213,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": true,
+        "accelerazione": 1.1564700996351427,
+        "t": 10.072149159596504,
+        "picco": 177326,
+        "crescita": 16040,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "promuove",
+      "categoria": "divergenza_solo_letterale",
+      "letterale": true,
+      "D": false,
+      "motivo": "la v4 promuove, la v5 valida ma sotto soglia o non piu' veloce"
+    },
+    {
+      "sha256": "9312efbba5e803b0eab634662058201b86d1d4a47b214e309b275e8a17231847",
+      "misure_v5": [
+        {
+          "sessione": "202610100020430118df",
+          "modello": "claude-opus-5-5",
+          "corsa": 1,
+          "ordine": 1,
+          "iterazione": 2,
+          "prodotto": true,
+          "esito": "valido",
+          "accelerazione_dev": 1.2566,
+          "minima_distinguibile_dev": 1.054415707229832,
+          "picco_dev": 12777472.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": true,
+        "acc": 1.2566,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": true,
+        "accelerazione": 1.4017340118310164,
+        "t": 12.038860739641654,
+        "picco": 177326,
+        "crescita": 16040,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "promuove",
+      "categoria": "nessuna_divergenza",
+      "letterale": false,
+      "D": false,
+      "motivo": null
+    },
+    {
+      "sha256": "95483372e8aa3a416947cae95dabbf9289cbc8eaa115eb3aaecf2b0d56976a57",
+      "misure_v5": [
+        {
+          "sessione": "2026101109491566b9da",
+          "modello": "claude-sonnet-5",
+          "corsa": 1,
+          "ordine": 0,
+          "iterazione": 2,
+          "prodotto": false,
+          "esito": "valido",
+          "accelerazione_dev": 0.8772,
+          "minima_distinguibile_dev": 1.0296316040689224,
+          "picco_dev": 12761088.0,
+          "deviazione": "terzo tentativo di Sonnet 5 corsa 1 dopo due interruzioni (deviazione da N21)"
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": false,
+        "acc": 0.8772,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": false,
+        "accelerazione": 0.8012780025008505,
+        "t": -13.146840821993555,
+        "picco": 179108,
+        "crescita": 17710,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "valido_non_veloce",
+      "categoria": "nessuna_divergenza",
+      "letterale": false,
+      "D": false,
+      "motivo": null
+    },
+    {
+      "sha256": "99c00aa51d989317f515e88ba478e49b690ecbbcff248f3959a3f864c30fe82b",
+      "misure_v5": [
+        {
+          "sessione": "2026101109491566b9da",
+          "modello": "claude-opus-5-5",
+          "corsa": 2,
+          "ordine": 10,
+          "iterazione": 1,
+          "prodotto": false,
+          "esito": "valido",
+          "accelerazione_dev": 1.1133,
+          "minima_distinguibile_dev": 1.0483702589763588,
+          "picco_dev": 12742656.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": true,
+        "acc": 1.1133,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": true,
+        "accelerazione": 1.1644832072449405,
+        "t": 10.497615615010263,
+        "picco": 177326,
+        "crescita": 16040,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "promuove",
+      "categoria": "divergenza_solo_letterale",
+      "letterale": true,
+      "D": false,
+      "motivo": "la v4 promuove, la v5 valida ma sotto soglia o non piu' veloce"
+    },
+    {
+      "sha256": "a2a6960dd99c4aff86a4d258e8c4fbbda1c01fb685f324ca4a1b7d93a11b7788",
+      "misure_v5": [
+        {
+          "sessione": "202610120915194213a0",
+          "modello": "claude-opus-5-5",
+          "corsa": 3,
+          "ordine": 13,
+          "iterazione": 3,
+          "prodotto": false,
+          "esito": "valido",
+          "accelerazione_dev": 1.042,
+          "minima_distinguibile_dev": 1.0454775060468255,
+          "picco_dev": 12765184.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": false,
+        "acc": 1.042,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": true,
+        "accelerazione": 1.0740976826396824,
+        "t": 3.076283599744639,
+        "picco": 177254,
+        "crescita": 15976,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "promuove",
+      "categoria": "divergenza_solo_letterale",
+      "letterale": true,
+      "D": false,
+      "motivo": "la v4 promuove, la v5 valida ma sotto soglia o non piu' veloce"
+    },
+    {
+      "sha256": "a2c443f1fbbf88065149e2f138550aa12c1ed82ffce2a4d46f16984979c2fb86",
+      "misure_v5": [
+        {
+          "sessione": "202610100020430118df",
+          "modello": "claude-opus-5-5",
+          "corsa": 1,
+          "ordine": 2,
+          "iterazione": 3,
+          "prodotto": false,
+          "esito": "valido",
+          "accelerazione_dev": 1.2,
+          "minima_distinguibile_dev": 1.0665331959408557,
+          "picco_dev": 12697600.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": true,
+        "acc": 1.2,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": true,
+        "accelerazione": 1.2161566091623048,
+        "t": 10.989764528787969,
+        "picco": 177258,
+        "crescita": 15976,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "promuove",
+      "categoria": "nessuna_divergenza",
+      "letterale": false,
+      "D": false,
+      "motivo": null
+    },
+    {
+      "sha256": "a6e19f65f317722691538f8c242575de7dc3dd540bd3942fa4347aa1ebf3cc1c",
+      "misure_v5": [
+        {
+          "sessione": "2026101109491566b9da",
+          "modello": "claude-haiku-4-5-20251001",
+          "corsa": 1,
+          "ordine": 6,
+          "iterazione": 3,
+          "prodotto": false,
+          "esito": "risultato diverso su carico nascosto",
+          "accelerazione_dev": null,
+          "minima_distinguibile_dev": null,
+          "picco_dev": null,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "rifiuto",
+        "causa": "correttezza",
+        "cv": true,
+        "pv5": null,
+        "acc": null,
+        "esito": "risultato diverso su carico nascosto"
+      },
+      "v4": {
+        "esito": "test falliti",
+        "piu_veloce": null,
+        "accelerazione": null,
+        "t": null,
+        "picco": null,
+        "crescita": null,
+        "n_falliti": 2,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "rifiuto",
+      "categoria": "diagnostica_due_rifiuti",
+      "letterale": false,
+      "D": false,
+      "motivo": "entrambe respingono (v5: correttezza)"
+    },
+    {
+      "sha256": "a936b8afb28163d7b6db5b79b581eafbe81bf22de5a21c79be4c2572f6afe33e",
+      "misure_v5": [
+        {
+          "sessione": "2026101109491566b9da",
+          "modello": "claude-opus-5-5",
+          "corsa": 2,
+          "ordine": 13,
+          "iterazione": 4,
+          "prodotto": true,
+          "esito": "valido",
+          "accelerazione_dev": 1.319,
+          "minima_distinguibile_dev": 1.0848043337470825,
+          "picco_dev": 12752896.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": true,
+        "acc": 1.319,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": true,
+        "accelerazione": 1.6012365365432162,
+        "t": 19.544831831372512,
+        "picco": 177147,
+        "crescita": 15976,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "promuove",
+      "categoria": "nessuna_divergenza",
+      "letterale": false,
+      "D": false,
+      "motivo": null
+    },
+    {
+      "sha256": "aa55ab7b5864ecefa5fa5ced79de5da67ddcd11e87424b01bb5dc2e8e1a020ba",
+      "misure_v5": [
+        {
+          "sessione": "2026101109491566b9da",
+          "modello": "claude-haiku-4-5-20251001",
+          "corsa": 1,
+          "ordine": 4,
+          "iterazione": 1,
+          "prodotto": false,
+          "esito": "valido",
+          "accelerazione_dev": 0.995,
+          "minima_distinguibile_dev": 1.0618570622701036,
+          "picco_dev": 12761088.0,
+          "deviazione": null
+        },
+        {
+          "sessione": "202610120915194213a0",
+          "modello": "claude-haiku-4-5-20251001",
+          "corsa": 2,
+          "ordine": 5,
+          "iterazione": 1,
+          "prodotto": false,
+          "esito": "valido",
+          "accelerazione_dev": 0.9961,
+          "minima_distinguibile_dev": 1.133501638505374,
+          "picco_dev": 12711936.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": false,
+        "acc": 0.995,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": false,
+        "accelerazione": 1.0391689824586074,
+        "t": 1.8098467406875196,
+        "picco": 177206,
+        "crescita": 16040,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "valido_non_veloce",
+      "categoria": "nessuna_divergenza",
+      "letterale": false,
+      "D": false,
+      "motivo": null
+    },
+    {
+      "sha256": "aca71c96d358406eff85430d7c05ba5760dff04a5b07d44088fc0dcf909f2e34",
+      "misure_v5": [
+        {
+          "sessione": "202610100020430118df",
+          "modello": "claude-opus-5-5",
+          "corsa": 1,
+          "ordine": 3,
+          "iterazione": 4,
+          "prodotto": false,
+          "esito": "valido",
+          "accelerazione_dev": 1.1791,
+          "minima_distinguibile_dev": 1.0579634688244473,
+          "picco_dev": 12744704.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": true,
+        "acc": 1.1791,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": true,
+        "accelerazione": 1.2216519586983798,
+        "t": 7.893755521289281,
+        "picco": 177258,
+        "crescita": 15976,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "promuove",
+      "categoria": "nessuna_divergenza",
+      "letterale": false,
+      "D": false,
+      "motivo": null
+    },
+    {
+      "sha256": "baf6320ac80a01913d1473728ca23f472ae67a63c2ca7d806571716c0bbeb4ee",
+      "misure_v5": [
+        {
+          "sessione": "202610120915194213a0",
+          "modello": "claude-opus-5-5",
+          "corsa": 3,
+          "ordine": 14,
+          "iterazione": 4,
+          "prodotto": true,
+          "esito": "valido",
+          "accelerazione_dev": 1.1017,
+          "minima_distinguibile_dev": 1.0551314756967696,
+          "picco_dev": 12759040.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": true,
+        "acc": 1.1017,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": true,
+        "accelerazione": 1.14040223701306,
+        "t": 7.691379438580091,
+        "picco": 176315,
+        "crescita": 15976,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "promuove",
+      "categoria": "divergenza_solo_letterale",
+      "letterale": true,
+      "D": false,
+      "motivo": "la v4 promuove, la v5 valida ma sotto soglia o non piu' veloce"
+    },
+    {
+      "sha256": "cad4e67b35cbb47f4a7cac866f56ea51ac91248e6070865920ab67ad46c4fd6a",
+      "misure_v5": [
+        {
+          "sessione": "2026101109491566b9da",
+          "modello": "claude-haiku-4-5-20251001",
+          "corsa": 1,
+          "ordine": 7,
+          "iterazione": 4,
+          "prodotto": true,
+          "esito": "valido",
+          "accelerazione_dev": 1.0307,
+          "minima_distinguibile_dev": 1.0580132563516877,
+          "picco_dev": 12722176.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": false,
+        "acc": 1.0307,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": false,
+        "accelerazione": 1.0182605517952992,
+        "t": 0.8597914771182769,
+        "picco": 177406,
+        "crescita": 16040,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "valido_non_veloce",
+      "categoria": "nessuna_divergenza",
+      "letterale": false,
+      "D": false,
+      "motivo": null
+    },
+    {
+      "sha256": "d793a5435ea950adf964892acb8a55214dc0769575dc83878d5fa29a7ebd08d0",
+      "misure_v5": [
+        {
+          "sessione": "20261013093833d1aed7",
+          "modello": "claude-haiku-4-5-20251001",
+          "corsa": 3,
+          "ordine": 3,
+          "iterazione": 4,
+          "prodotto": false,
+          "esito": "risultato diverso su carico nascosto",
+          "accelerazione_dev": null,
+          "minima_distinguibile_dev": null,
+          "picco_dev": null,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "rifiuto",
+        "causa": "correttezza",
+        "cv": true,
+        "pv5": null,
+        "acc": null,
+        "esito": "risultato diverso su carico nascosto"
+      },
+      "v4": {
+        "esito": "test falliti",
+        "piu_veloce": null,
+        "accelerazione": null,
+        "t": null,
+        "picco": null,
+        "crescita": null,
+        "n_falliti": 2,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "rifiuto",
+      "categoria": "diagnostica_due_rifiuti",
+      "letterale": false,
+      "D": false,
+      "motivo": "entrambe respingono (v5: correttezza)"
+    },
+    {
+      "sha256": "da74baa94a1eba33879d4eb9073d04f973292d79efc82fc8181149b1563793b9",
+      "misure_v5": [
+        {
+          "sessione": "20261013093833d1aed7",
+          "modello": "claude-sonnet-5",
+          "corsa": 3,
+          "ordine": 7,
+          "iterazione": 3,
+          "prodotto": false,
+          "esito": "valido",
+          "accelerazione_dev": 0.8825,
+          "minima_distinguibile_dev": 1.0115625770743752,
+          "picco_dev": 12720128.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": false,
+        "acc": 0.8825,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": false,
+        "accelerazione": 0.8363524293181845,
+        "t": -10.513475491715857,
+        "picco": 177202,
+        "crescita": 16040,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "valido_non_veloce",
+      "categoria": "nessuna_divergenza",
+      "letterale": false,
+      "D": false,
+      "motivo": null
+    },
+    {
+      "sha256": "de97e410c5b1369afe239d08f384387cdba24ebb9967737d56a02fb4825f98a8",
+      "misure_v5": [
+        {
+          "sessione": "202610120915194213a0",
+          "modello": "claude-haiku-4-5-20251001",
+          "corsa": 2,
+          "ordine": 7,
+          "iterazione": 3,
+          "prodotto": false,
+          "esito": "valido",
+          "accelerazione_dev": 0.9787,
+          "minima_distinguibile_dev": 1.185316058733226,
+          "picco_dev": 12752896.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": false,
+        "acc": 0.9787,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": false,
+        "accelerazione": 0.9629952431955165,
+        "t": -2.2835276138438227,
+        "picco": 177406,
+        "crescita": 16040,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "valido_non_veloce",
+      "categoria": "nessuna_divergenza",
+      "letterale": false,
+      "D": false,
+      "motivo": null
+    },
+    {
+      "sha256": "df76bb28b0a755b18007419405cf0358d9b57a892d5ca07a5b72a4f26f9b9acf",
+      "misure_v5": [
+        {
+          "sessione": "202610120915194213a0",
+          "modello": "claude-sonnet-5",
+          "corsa": 2,
+          "ordine": 2,
+          "iterazione": 4,
+          "prodotto": false,
+          "esito": "valido",
+          "accelerazione_dev": 0.8829,
+          "minima_distinguibile_dev": 1.1545789663550998,
+          "picco_dev": 12730368.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": false,
+        "acc": 0.8829,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": false,
+        "accelerazione": 0.8329891300486681,
+        "t": -38.515054230770495,
+        "picco": 178541,
+        "crescita": 17183,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "valido_non_veloce",
+      "categoria": "nessuna_divergenza",
+      "letterale": false,
+      "D": false,
+      "motivo": null
+    },
+    {
+      "sha256": "f0e0043a5a1830c4c0de46c1717f7d24f84fe43607c8cb8f6b1e57b9bdb9c950",
+      "misure_v5": [
+        {
+          "sessione": "2026101109491566b9da",
+          "modello": "claude-opus-5-5",
+          "corsa": 2,
+          "ordine": 11,
+          "iterazione": 2,
+          "prodotto": false,
+          "esito": "valido",
+          "accelerazione_dev": 1.1817,
+          "minima_distinguibile_dev": 1.0702497765131669,
+          "picco_dev": 12769280.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": true,
+        "acc": 1.1817,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": true,
+        "accelerazione": 1.2985556655415527,
+        "t": 11.147677469027311,
+        "picco": 177326,
+        "crescita": 16040,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "promuove",
+      "categoria": "nessuna_divergenza",
+      "letterale": false,
+      "D": false,
+      "motivo": null
+    },
+    {
+      "sha256": "f198ba943242bc5793be685b42046be295f7b2fffa4753c08c6d72adf0ae29f6",
+      "misure_v5": [
+        {
+          "sessione": "2026101109491566b9da",
+          "modello": "claude-opus-5-5",
+          "corsa": 2,
+          "ordine": 12,
+          "iterazione": 3,
+          "prodotto": false,
+          "esito": "valido",
+          "accelerazione_dev": 1.2611,
+          "minima_distinguibile_dev": 1.078354422021999,
+          "picco_dev": 12797952.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": true,
+        "acc": 1.2611,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": true,
+        "accelerazione": 1.48987602723005,
+        "t": 20.39296651772241,
+        "picco": 177147,
+        "crescita": 15976,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "promuove",
+      "categoria": "nessuna_divergenza",
+      "letterale": false,
+      "D": false,
+      "motivo": null
+    },
+    {
+      "sha256": "f26b4de4ccda8676e6f74f7a941dc0c0f22b218def2a99e287a7faeb083ac3ce",
+      "misure_v5": [
+        {
+          "sessione": "202610120915194213a0",
+          "modello": "claude-sonnet-5",
+          "corsa": 2,
+          "ordine": 0,
+          "iterazione": 1,
+          "prodotto": false,
+          "esito": "valido",
+          "accelerazione_dev": 0.8655,
+          "minima_distinguibile_dev": 1.0213406162217362,
+          "picco_dev": 12761088.0,
+          "deviazione": null
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": false,
+        "acc": 0.8655,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": false,
+        "accelerazione": 0.7892464365528097,
+        "t": -8.74455049261057,
+        "picco": 178637,
+        "crescita": 17279,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "valido_non_veloce",
+      "categoria": "nessuna_divergenza",
+      "letterale": false,
+      "D": false,
+      "motivo": null
+    },
+    {
+      "sha256": "f9d9acfaf289f211e415b03035b8e1ff1032dd9f1415a809d1f079b8ce74aa9f",
+      "misure_v5": [
+        {
+          "sessione": "2026101109491566b9da",
+          "modello": "claude-sonnet-5",
+          "corsa": 1,
+          "ordine": 1,
+          "iterazione": 3,
+          "prodotto": true,
+          "esito": "valido",
+          "accelerazione_dev": 0.8829,
+          "minima_distinguibile_dev": 1.0326962139151306,
+          "picco_dev": 12722176.0,
+          "deviazione": "terzo tentativo di Sonnet 5 corsa 1 dopo due interruzioni (deviazione da N21)"
+        }
+      ],
+      "v5": {
+        "classe": "valido",
+        "causa": null,
+        "cv": false,
+        "pv5": false,
+        "acc": 0.8829,
+        "esito": "valido"
+      },
+      "v4": {
+        "esito": "valido",
+        "piu_veloce": false,
+        "accelerazione": 0.7878642169797577,
+        "t": -7.96251417275783,
+        "picco": 179144,
+        "crescita": 17786,
+        "n_falliti": null,
+        "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+        "errore": null
+      },
+      "classe_v4": "valido_non_veloce",
+      "categoria": "nessuna_divergenza",
+      "letterale": false,
+      "D": false,
+      "motivo": null
+    }
+  ],
+  "nota": "la lettura letterale e' riportata, non decide (addendum, sezione 5)"
+}

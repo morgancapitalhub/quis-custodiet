@@ -1,0 +1,15 @@
+{
+  "sha256": "a936b8afb28163d7b6db5b79b581eafbe81bf22de5a21c79be4c2572f6afe33e",
+  "impronta_v4": "67ffaa4a7dc2a8f3e1a0cd9784b82595e55433de5846d1cc50d2721fae6c072e",
+  "esito": "valido",
+  "test": "passati",
+  "impronta": "identica",
+  "picco": 177147,
+  "crescita": 15976,
+  "accelerazione": 1.6012365365432162,
+  "piu_veloce": true,
+  "piu_lento": false,
+  "m": 0.2923777923749924,
+  "es": 0.014959340397377086,
+  "t": 19.544831831372512
+}
