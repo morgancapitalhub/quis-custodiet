@@ -1,0 +1,23 @@
+name: Problem in code or documentation
+description: A bug in non-attack code, a wrong number, or an unclear statement in the README or the report.
+title: "[problem] "
+labels: ["problem"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        If the problem lets a candidate influence the judge, do not use this form: report it privately (see SECURITY.md).
+  - type: input
+    id: where
+    attributes:
+      label: Where
+      description: File and line, or report section.
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What is wrong
+      description: What it says or does, and what you expected, with evidence.
+    validations:
+      required: true

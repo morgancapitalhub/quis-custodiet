@@ -1,0 +1,54 @@
+name: Reproduction report
+description: Report the outcome of reproducing the freezes, tests, attack controls or the DEV comparison — successful or not.
+title: "[reproduction] "
+labels: ["reproduction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you. Failed reproductions are as useful as successful ones. Do not paste API keys or other credentials.
+  - type: input
+    id: commit
+    attributes:
+      label: Commit
+      description: The commit you checked out.
+    validations:
+      required: true
+  - type: dropdown
+    id: what
+    attributes:
+      label: What you reproduced
+      multiple: true
+      options:
+        - Freeze check (fase5/verifica_congelamento.py)
+        - Test files
+        - Attack controls on the public substitute final
+        - v4/v5 comparison on DEV
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: outcome
+    attributes:
+      label: Outcome
+      options:
+        - Matches the published results
+        - Differs from the published results
+        - Could not run
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Docker version, Python version, and whether you cloned with core.autocrlf=false.
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Commands and raw output
+      description: Paste the exact commands and their raw output.
+      render: text
+    validations:
+      required: true

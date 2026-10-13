@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a new attack or a leak (private)
+    url: https://github.com/morgancapitalhub/quis-custodiet/security/advisories/new
+    about: New ways for a candidate to influence the judge, or leaked secrets, go here privately — not in a public issue. See SECURITY.md.
+  - name: Questions and discussion
+    url: https://github.com/morgancapitalhub/quis-custodiet/discussions
+    about: Questions about the method, the results or reuse of the harness.
