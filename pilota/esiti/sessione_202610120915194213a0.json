@@ -1,0 +1,740 @@
+{
+ "sessione": "202610120915194213a0",
+ "corse_previste": [
+  [
+   "claude-sonnet-5",
+   2
+  ],
+  [
+   "claude-haiku-4-5-20251001",
+   2
+  ],
+  [
+   "claude-opus-5-5",
+   3
+  ]
+ ],
+ "id_verificati": {
+  "claude-sonnet-5": "claude-sonnet-5",
+  "claude-haiku-4-5-20251001": "claude-haiku-4-5-20251001",
+  "claude-opus-5-5": "claude-opus-5-5"
+ },
+ "spesa_prima_usd": 4.95161,
+ "corse": [
+  {
+   "modello": "claude-sonnet-5",
+   "corsa": 2,
+   "costo": 1.084344,
+   "completa": true,
+   "motivo_arresto": null,
+   "accelerazione_accettata_dev": 1.0,
+   "accelerazione_prodotta_dev": 0.9115538723148771,
+   "finale": {
+    "su_originale": false,
+    "finale_sintetico": {
+     "carico": "finale_sintetico",
+     "coppie": 8,
+     "protocollo": "5.1",
+     "costo": "finestra + CPU del container prima del pronto",
+     "picco_import": 12230656,
+     "picco_originale": 12742656.0,
+     "picco_candidato": 12697600.0,
+     "soglia_picco": 12837888.0,
+     "cpu_pre_pronto_orig_us": 243077.5,
+     "cpu_pre_pronto_cand_us": 225189.5,
+     "finestre_originale": [
+      4.8549152,
+      4.8145609,
+      4.0113977,
+      4.5886831,
+      5.1758576,
+      5.0332593,
+      5.1154143,
+      4.643515
+     ],
+     "finestre_candidato": [
+      5.1723947,
+      4.1191861,
+      4.9820966,
+      4.0762467,
+      4.9629138,
+      4.8312656,
+      5.8269036,
+      4.8272922
+     ],
+     "cpu_pre_pronto_originale_us": [
+      245660,
+      240495,
+      163342,
+      253250,
+      271068,
+      229789,
+      259180,
+      218416
+     ],
+     "cpu_pre_pronto_candidato_us": [
+      236681,
+      166457,
+      246755,
+      206366,
+      251617,
+      214209,
+      236170,
+      197095
+     ],
+     "esito": "valido",
+     "accelerazione": 0.989277,
+     "piu_veloce": false,
+     "piu_lento": false,
+     "m": -0.054356,
+     "es": 0.219141,
+     "t": -0.248041,
+     "accelerazione_minima_distinguibile": 1.102238,
+     "bassa_sensibilita": true
+    },
+    "finale_fixture": {
+     "carico": "finale_fixture",
+     "coppie": 8,
+     "protocollo": "5.1",
+     "costo": "finestra + CPU del container prima del pronto",
+     "picco_import": 12242944,
+     "picco_originale": 12597248.0,
+     "picco_candidato": 12584960.0,
+     "soglia_picco": 12684595.2,
+     "cpu_pre_pronto_orig_us": 246189.0,
+     "cpu_pre_pronto_cand_us": 244279.0,
+     "finestre_originale": [
+      1.0537077,
+      1.0946599,
+      1.1066261,
+      1.1250948,
+      1.0468817,
+      1.154355,
+      0.9905942,
+      1.0275257
+     ],
+     "finestre_candidato": [
+      1.3120574,
+      1.1978476,
+      1.2540118,
+      1.105487,
+      1.1875293,
+      1.1029245,
+      1.0480529,
+      1.0037784
+     ],
+     "cpu_pre_pronto_originale_us": [
+      275467,
+      254928,
+      246395,
+      296511,
+      214383,
+      226379,
+      200671,
+      245983
+     ],
+     "cpu_pre_pronto_candidato_us": [
+      242510,
+      219819,
+      268900,
+      237011,
+      214165,
+      304365,
+      246048,
+      246063
+     ],
+     "esito": "valido",
+     "accelerazione": 0.943666,
+     "piu_veloce": false,
+     "piu_lento": false,
+     "m": -0.078801,
+     "es": 0.035967,
+     "t": -2.190944,
+     "accelerazione_minima_distinguibile": 1.060809,
+     "bassa_sensibilita": true
+    }
+   },
+   "valutazioni_in_bassa_sensibilita": 4,
+   "bassa_sensibilita": true
+  },
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 2,
+   "costo": 0.21079299999999998,
+   "completa": true,
+   "motivo_arresto": null,
+   "accelerazione_accettata_dev": 1.0,
+   "accelerazione_prodotta_dev": 1.0431924386445275,
+   "finale": {
+    "su_originale": false,
+    "finale_sintetico": {
+     "carico": "finale_sintetico",
+     "coppie": 8,
+     "protocollo": "5.1",
+     "costo": "finestra + CPU del container prima del pronto",
+     "picco_import": 12201984,
+     "picco_originale": 12693504.0,
+     "picco_candidato": 12683264.0,
+     "soglia_picco": 12787712.0,
+     "cpu_pre_pronto_orig_us": 227519.0,
+     "cpu_pre_pronto_cand_us": 230155.0,
+     "finestre_originale": [
+      4.5887258,
+      4.5559555,
+      4.534285,
+      4.5245649,
+      4.5276428,
+      4.6112868,
+      4.6014112,
+      4.4762639
+     ],
+     "finestre_candidato": [
+      4.5774674,
+      4.6227382,
+      4.4785382,
+      4.6472195,
+      4.6423178,
+      4.4888959,
+      4.639576,
+      4.4634985
+     ],
+     "cpu_pre_pronto_originale_us": [
+      223965,
+      239781,
+      230156,
+      223770,
+      228480,
+      223316,
+      257596,
+      226558
+     ],
+     "cpu_pre_pronto_candidato_us": [
+      261071,
+      206610,
+      265841,
+      217440,
+      242870,
+      201575,
+      257982,
+      198624
+     ],
+     "esito": "valido",
+     "accelerazione": 0.996394,
+     "piu_veloce": false,
+     "piu_lento": false,
+     "m": -0.017313,
+     "es": 0.031027,
+     "t": -0.558017,
+     "accelerazione_minima_distinguibile": 1.015282,
+     "bassa_sensibilita": true
+    },
+    "finale_fixture": {
+     "carico": "finale_fixture",
+     "coppie": 8,
+     "protocollo": "5.1",
+     "costo": "finestra + CPU del container prima del pronto",
+     "picco_import": 12242944,
+     "picco_originale": 12695552.0,
+     "picco_candidato": 12689408.0,
+     "soglia_picco": 12787814.4,
+     "cpu_pre_pronto_orig_us": 237819.5,
+     "cpu_pre_pronto_cand_us": 238323.5,
+     "finestre_originale": [
+      1.2293606,
+      1.0892049,
+      1.0479311,
+      1.0183582,
+      1.0479582,
+      0.9702934,
+      1.0943308,
+      1.0587147
+     ],
+     "finestre_candidato": [
+      1.0539863,
+      1.025015,
+      0.9801384,
+      1.1028211,
+      1.1872862,
+      1.0877567,
+      1.138514,
+      1.0496612
+     ],
+     "cpu_pre_pronto_originale_us": [
+      296904,
+      255889,
+      218057,
+      261797,
+      204191,
+      214211,
+      237556,
+      238083
+     ],
+     "cpu_pre_pronto_candidato_us": [
+      247059,
+      240183,
+      237144,
+      223115,
+      208272,
+      208788,
+      239503,
+      240360
+     ],
+     "esito": "valido",
+     "accelerazione": 1.001264,
+     "piu_veloce": false,
+     "piu_lento": false,
+     "m": 0.001655,
+     "es": 0.041586,
+     "t": 0.039788,
+     "accelerazione_minima_distinguibile": 1.075152,
+     "bassa_sensibilita": true
+    }
+   },
+   "valutazioni_in_bassa_sensibilita": 6,
+   "bassa_sensibilita": true
+  },
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 3,
+   "costo": 1.29844,
+   "completa": true,
+   "motivo_arresto": null,
+   "accelerazione_accettata_dev": 1.1016577057026804,
+   "accelerazione_prodotta_dev": 1.1016577057026804,
+   "finale": {
+    "su_originale": false,
+    "finale_sintetico": {
+     "carico": "finale_sintetico",
+     "coppie": 8,
+     "protocollo": "5.1",
+     "costo": "finestra + CPU del container prima del pronto",
+     "picco_import": 12230656,
+     "picco_originale": 12709888.0,
+     "picco_candidato": 12705792.0,
+     "soglia_picco": 12803481.6,
+     "cpu_pre_pronto_orig_us": 222864.5,
+     "cpu_pre_pronto_cand_us": 233015.5,
+     "finestre_originale": [
+      4.5471498,
+      4.6372439,
+      4.468864,
+      4.6641721,
+      4.9391434,
+      4.7449658,
+      4.5369101,
+      4.653374
+     ],
+     "finestre_candidato": [
+      4.1842621,
+      4.0176868,
+      4.2649483,
+      4.1180356,
+      4.2604356,
+      4.0666735,
+      4.2635267,
+      4.1324055
+     ],
+     "cpu_pre_pronto_originale_us": [
+      219985,
+      225744,
+      212654,
+      257462,
+      210875,
+      232884,
+      234275,
+      194390
+     ],
+     "cpu_pre_pronto_candidato_us": [
+      230556,
+      234695,
+      232650,
+      233381,
+      205561,
+      243032,
+      196409,
+      253875
+     ],
+     "esito": "valido",
+     "accelerazione": 1.109339,
+     "piu_veloce": true,
+     "piu_lento": false,
+     "m": 0.480245,
+     "es": 0.064781,
+     "t": 7.413397,
+     "accelerazione_minima_distinguibile": 1.034881,
+     "bassa_sensibilita": false
+    },
+    "finale_fixture": {
+     "carico": "finale_fixture",
+     "coppie": 8,
+     "protocollo": "5.1",
+     "costo": "finestra + CPU del container prima del pronto",
+     "picco_import": 12193792,
+     "picco_originale": 12642304.0,
+     "picco_candidato": 12707840.0,
+     "soglia_picco": 12734361.6,
+     "cpu_pre_pronto_orig_us": 226543.0,
+     "cpu_pre_pronto_cand_us": 234904.5,
+     "finestre_originale": [
+      1.051129,
+      0.9749662,
+      1.1617493,
+      1.0216795,
+      1.1647589,
+      1.0625091,
+      1.0912611,
+      1.0368765
+     ],
+     "finestre_candidato": [
+      1.0335714,
+      1.1775611,
+      1.0423224,
+      1.0142416,
+      1.0615991,
+      1.0108578,
+      1.0289574,
+      1.0458561
+     ],
+     "cpu_pre_pronto_originale_us": [
+      248690,
+      222174,
+      280922,
+      226746,
+      216966,
+      250669,
+      226340,
+      216549
+     ],
+     "cpu_pre_pronto_candidato_us": [
+      257125,
+      242936,
+      266827,
+      238486,
+      231323,
+      203914,
+      223848,
+      230384
+     ],
+     "esito": "valido",
+     "accelerazione": 1.013984,
+     "piu_veloce": false,
+     "piu_lento": false,
+     "m": 0.018022,
+     "es": 0.03953,
+     "t": 0.455901,
+     "accelerazione_minima_distinguibile": 1.072544,
+     "bassa_sensibilita": false
+    }
+   },
+   "valutazioni_in_bassa_sensibilita": 2,
+   "bassa_sensibilita": true
+  }
+ ],
+ "candidati": [
+  {
+   "modello": "claude-sonnet-5",
+   "corsa": 2,
+   "ordine": 0,
+   "sha256": "f26b4de4ccda8676e6f74f7a941dc0c0f22b218def2a99e287a7faeb083ac3ce"
+  },
+  {
+   "modello": "claude-sonnet-5",
+   "corsa": 2,
+   "ordine": 1,
+   "sha256": "7e2dc3bd3f06943739fb39c9a43cf7160afc3fd2cd9dbd5093992b4e4de6d68d"
+  },
+  {
+   "modello": "claude-sonnet-5",
+   "corsa": 2,
+   "ordine": 2,
+   "sha256": "df76bb28b0a755b18007419405cf0358d9b57a892d5ca07a5b72a4f26f9b9acf"
+  },
+  {
+   "modello": "claude-sonnet-5",
+   "corsa": 2,
+   "ordine": 3,
+   "sha256": "7e2dc3bd3f06943739fb39c9a43cf7160afc3fd2cd9dbd5093992b4e4de6d68d"
+  },
+  {
+   "modello": "claude-sonnet-5",
+   "corsa": 2,
+   "ordine": 4,
+   "sha256": "7e2dc3bd3f06943739fb39c9a43cf7160afc3fd2cd9dbd5093992b4e4de6d68d"
+  },
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 2,
+   "ordine": 5,
+   "sha256": "aa55ab7b5864ecefa5fa5ced79de5da67ddcd11e87424b01bb5dc2e8e1a020ba"
+  },
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 2,
+   "ordine": 6,
+   "sha256": "3d1e45a81857c1c612944fcf97bcdf64b774ca71c7a697fe2b567d2b1d334fb0"
+  },
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 2,
+   "ordine": 7,
+   "sha256": "de97e410c5b1369afe239d08f384387cdba24ebb9967737d56a02fb4825f98a8"
+  },
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 2,
+   "ordine": 8,
+   "sha256": "4243e7ac79c630ea33e897abe1a42691f481d3eff15e3c397c984c9241cf66da"
+  },
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 2,
+   "ordine": 9,
+   "sha256": "3d1e45a81857c1c612944fcf97bcdf64b774ca71c7a697fe2b567d2b1d334fb0"
+  },
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 2,
+   "ordine": 10,
+   "sha256": "3d1e45a81857c1c612944fcf97bcdf64b774ca71c7a697fe2b567d2b1d334fb0"
+  },
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 3,
+   "ordine": 11,
+   "sha256": "41ee15f42d1f96d144ec56b9c9c4f0fbb6615267885508c1c6f1fc842d95d407"
+  },
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 3,
+   "ordine": 12,
+   "sha256": "602a39af10dc52473a383df24ecd92237848d21dd13f5c47bb4cba6548527ce3"
+  },
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 3,
+   "ordine": 13,
+   "sha256": "a2a6960dd99c4aff86a4d258e8c4fbbda1c01fb685f324ca4a1b7d93a11b7788"
+  },
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 3,
+   "ordine": 14,
+   "sha256": "baf6320ac80a01913d1473728ca23f472ae67a63c2ca7d806571716c0bbeb4ee"
+  },
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 3,
+   "ordine": 15,
+   "sha256": "baf6320ac80a01913d1473728ca23f472ae67a63c2ca7d806571716c0bbeb4ee"
+  },
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 3,
+   "ordine": 16,
+   "sha256": "baf6320ac80a01913d1473728ca23f472ae67a63c2ca7d806571716c0bbeb4ee"
+  }
+ ],
+ "non_avviate": [],
+ "precondizione": {
+  "passa": true,
+  "motivo": null,
+  "minima_mediana": 1.0336974117629305
+ },
+ "righe": [
+  {
+   "modello": "claude-sonnet-5",
+   "corsa": 2,
+   "iterazione": 1,
+   "token_ingresso": 11220,
+   "token_uscita": 23361,
+   "caratteri_ragionamento": 0,
+   "costo_usd": 0.25605,
+   "latenza_s": 367.0,
+   "esito": "valido",
+   "accelerazione_dev": 0.8655,
+   "t_dev": -14.905,
+   "picco_dev": 12761088.0,
+   "minima_distinguibile_dev": 1.0213406162217362,
+   "bassa_sensibilita": false
+  },
+  {
+   "modello": "claude-sonnet-5",
+   "corsa": 2,
+   "iterazione": 2,
+   "token_ingresso": 11251,
+   "token_uscita": 32000,
+   "caratteri_ragionamento": 0,
+   "costo_usd": 0.3425,
+   "latenza_s": 294.1,
+   "esito": "nessun blocco python",
+   "accelerazione_dev": null,
+   "t_dev": null,
+   "picco_dev": null,
+   "minima_distinguibile_dev": null,
+   "bassa_sensibilita": false
+  },
+  {
+   "modello": "claude-sonnet-5",
+   "corsa": 2,
+   "iterazione": 3,
+   "token_ingresso": 11269,
+   "token_uscita": 24095,
+   "caratteri_ragionamento": 0,
+   "costo_usd": 0.26349,
+   "latenza_s": 395.0,
+   "esito": "valido",
+   "accelerazione_dev": 0.9116,
+   "t_dev": -1.406,
+   "picco_dev": 12720128.0,
+   "minima_distinguibile_dev": 1.1487987578340009,
+   "bassa_sensibilita": true
+  },
+  {
+   "modello": "claude-sonnet-5",
+   "corsa": 2,
+   "iterazione": 4,
+   "token_ingresso": 11302,
+   "token_uscita": 19970,
+   "caratteri_ragionamento": 0,
+   "costo_usd": 0.2223,
+   "latenza_s": 343.2,
+   "esito": "valido",
+   "accelerazione_dev": 0.8829,
+   "t_dev": -1.792,
+   "picco_dev": 12730368.0,
+   "minima_distinguibile_dev": 1.1545789663550998,
+   "bassa_sensibilita": true
+  },
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 2,
+   "iterazione": 1,
+   "token_ingresso": 8590,
+   "token_uscita": 8687,
+   "caratteri_ragionamento": 0,
+   "costo_usd": 0.05203,
+   "latenza_s": 236.0,
+   "esito": "valido",
+   "accelerazione_dev": 0.9961,
+   "t_dev": -0.068,
+   "picco_dev": 12711936.0,
+   "minima_distinguibile_dev": 1.133501638505374,
+   "bassa_sensibilita": true
+  },
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 2,
+   "iterazione": 2,
+   "token_ingresso": 8612,
+   "token_uscita": 8910,
+   "caratteri_ragionamento": 0,
+   "costo_usd": 0.05316,
+   "latenza_s": 256.1,
+   "esito": "valido",
+   "accelerazione_dev": 1.0432,
+   "t_dev": 0.768,
+   "picco_dev": 12759040.0,
+   "minima_distinguibile_dev": 1.1330777876500402,
+   "bassa_sensibilita": true
+  },
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 2,
+   "iterazione": 3,
+   "token_ingresso": 8636,
+   "token_uscita": 8771,
+   "caratteri_ragionamento": 0,
+   "costo_usd": 0.05249,
+   "latenza_s": 251.4,
+   "esito": "valido",
+   "accelerazione_dev": 0.9787,
+   "t_dev": -0.272,
+   "picco_dev": 12752896.0,
+   "minima_distinguibile_dev": 1.185316058733226,
+   "bassa_sensibilita": true
+  },
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 2,
+   "iterazione": 4,
+   "token_ingresso": 8660,
+   "token_uscita": 8891,
+   "caratteri_ragionamento": 0,
+   "costo_usd": 0.05311,
+   "latenza_s": 254.0,
+   "esito": "valido",
+   "accelerazione_dev": 1.0013,
+   "t_dev": 0.126,
+   "picco_dev": 12750848.0,
+   "minima_distinguibile_dev": 1.0238985909657927,
+   "bassa_sensibilita": true
+  },
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 3,
+   "iterazione": 1,
+   "token_ingresso": 11222,
+   "token_uscita": 13119,
+   "caratteri_ragionamento": 0,
+   "costo_usd": 0.30727,
+   "latenza_s": 261.8,
+   "esito": "valido",
+   "accelerazione_dev": 1.0754,
+   "t_dev": 1.649,
+   "picco_dev": 12756992.0,
+   "minima_distinguibile_dev": 1.1081752593857828,
+   "bassa_sensibilita": true
+  },
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 3,
+   "iterazione": 2,
+   "token_ingresso": 11253,
+   "token_uscita": 14711,
+   "caratteri_ragionamento": 0,
+   "costo_usd": 0.33923,
+   "latenza_s": 270.6,
+   "esito": "valido",
+   "accelerazione_dev": 1.0368,
+   "t_dev": 2.249,
+   "picco_dev": 12746752.0,
+   "minima_distinguibile_dev": 1.038671690096537,
+   "bassa_sensibilita": false
+  },
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 3,
+   "iterazione": 3,
+   "token_ingresso": 11286,
+   "token_uscita": 14121,
+   "caratteri_ragionamento": 0,
+   "costo_usd": 0.32756,
+   "latenza_s": 266.9,
+   "esito": "valido",
+   "accelerazione_dev": 1.042,
+   "t_dev": 2.186,
+   "picco_dev": 12765184.0,
+   "minima_distinguibile_dev": 1.0454775060468255,
+   "bassa_sensibilita": false
+  },
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 3,
+   "iterazione": 4,
+   "token_ingresso": 11319,
+   "token_uscita": 13955,
+   "caratteri_ragionamento": 0,
+   "costo_usd": 0.32438,
+   "latenza_s": 263.6,
+   "esito": "valido",
+   "accelerazione_dev": 1.1017,
+   "t_dev": 4.361,
+   "picco_dev": 12759040.0,
+   "minima_distinguibile_dev": 1.0551314756967696,
+   "bassa_sensibilita": true
+  }
+ ],
+ "spesa_dopo_usd": 7.54519,
+ "esito": "completata",
+ "durata_s": 4160
+}

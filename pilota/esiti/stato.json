@@ -9,6 +9,68 @@
      1
     ]
    ]
+  },
+  {
+   "sessione": "202610101031011ac1ef",
+   "esito": "rimandata"
+  },
+  {
+   "sessione": "20261010114446fe6846",
+   "esito": "rimandata"
+  },
+  {
+   "sessione": "2026101012392049d715",
+   "esito": "rimandata"
+  },
+  {
+   "sessione": "2026101109491566b9da",
+   "esito": "completata",
+   "corse": [
+    [
+     "claude-sonnet-5",
+     1
+    ],
+    [
+     "claude-haiku-4-5-20251001",
+     1
+    ],
+    [
+     "claude-opus-5-5",
+     2
+    ]
+   ]
+  },
+  {
+   "sessione": "202610120915194213a0",
+   "esito": "completata",
+   "corse": [
+    [
+     "claude-sonnet-5",
+     2
+    ],
+    [
+     "claude-haiku-4-5-20251001",
+     2
+    ],
+    [
+     "claude-opus-5-5",
+     3
+    ]
+   ]
+  },
+  {
+   "sessione": "20261013093833d1aed7",
+   "esito": "completata",
+   "corse": [
+    [
+     "claude-haiku-4-5-20251001",
+     3
+    ],
+    [
+     "claude-sonnet-5",
+     3
+    ]
+   ]
   }
  ],
  "corse_fatte": [
@@ -16,6 +78,62 @@
    "modello": "claude-opus-5-5",
    "corsa": 1,
    "sessione": "202610100020430118df",
+   "completa": true,
+   "motivo_arresto": null
+  },
+  {
+   "modello": "claude-sonnet-5",
+   "corsa": 1,
+   "sessione": "2026101109491566b9da",
+   "completa": true,
+   "motivo_arresto": null
+  },
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 1,
+   "sessione": "2026101109491566b9da",
+   "completa": true,
+   "motivo_arresto": null
+  },
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 2,
+   "sessione": "2026101109491566b9da",
+   "completa": true,
+   "motivo_arresto": null
+  },
+  {
+   "modello": "claude-sonnet-5",
+   "corsa": 2,
+   "sessione": "202610120915194213a0",
+   "completa": true,
+   "motivo_arresto": null
+  },
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 2,
+   "sessione": "202610120915194213a0",
+   "completa": true,
+   "motivo_arresto": null
+  },
+  {
+   "modello": "claude-opus-5-5",
+   "corsa": 3,
+   "sessione": "202610120915194213a0",
+   "completa": true,
+   "motivo_arresto": null
+  },
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 3,
+   "sessione": "20261013093833d1aed7",
+   "completa": true,
+   "motivo_arresto": null
+  },
+  {
+   "modello": "claude-sonnet-5",
+   "corsa": 3,
+   "sessione": "20261013093833d1aed7",
    "completa": true,
    "motivo_arresto": null
   }

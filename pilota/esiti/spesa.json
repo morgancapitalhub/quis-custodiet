@@ -1,18 +1,75 @@
 {
- "spesa_usd": 1.27882,
+ "spesa_usd": 8.85828,
  "voci": [
   {
    "sessione": "202610100020430118df",
    "modello": "claude-opus-5-5",
    "corsa": 1,
    "costo_usd": 1.27882
+  },
+  {
+   "sessione": "202610101512218d9717",
+   "modello": "claude-sonnet-5",
+   "corsa": 1,
+   "costo_usd": 0.84,
+   "esito": "interrotta dall'utente prima del completamento",
+   "nota": "costo da Console (differenza 2,34 - 1,50); stima client non disponibile (processo interrotto)"
+  },
+  {
+   "sessione": "2026101109491566b9da",
+   "modello": "claude-sonnet-5",
+   "corsa": 1,
+   "costo_usd": 1.15907
+  },
+  {
+   "sessione": "2026101109491566b9da",
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 1,
+   "costo_usd": 0.20756
+  },
+  {
+   "sessione": "2026101109491566b9da",
+   "modello": "claude-opus-5-5",
+   "corsa": 2,
+   "costo_usd": 1.24497
+  },
+  {
+   "sessione": "202610120915194213a0",
+   "modello": "claude-sonnet-5",
+   "corsa": 2,
+   "costo_usd": 1.08434
+  },
+  {
+   "sessione": "202610120915194213a0",
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 2,
+   "costo_usd": 0.21079
+  },
+  {
+   "sessione": "202610120915194213a0",
+   "modello": "claude-opus-5-5",
+   "corsa": 3,
+   "costo_usd": 1.29844
+  },
+  {
+   "sessione": "20261013093833d1aed7",
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 3,
+   "costo_usd": 0.20774
+  },
+  {
+   "sessione": "20261013093833d1aed7",
+   "modello": "claude-sonnet-5",
+   "corsa": 3,
+   "costo_usd": 1.10534
   }
  ],
- "in_corso": {
-  "sessione": "202610100020430118df",
-  "modello": "claude-sonnet-5",
-  "corsa": 1,
-  "spesa_prima_usd": 1.2788240000000002,
-  "spesa_contata_al_guasto_usd": 1.27882
+ "in_corso": null,
+ "riconciliazione": {
+  "console_usd": 1.5,
+  "stimata_usd": 1.2788,
+  "scarto_usd": 0.2212,
+  "scarto_pct": 17.3,
+  "nota": "lo scarto e' la quota di token di ragionamento non inclusa nella stima del client"
  }
 }

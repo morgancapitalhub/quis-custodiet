@@ -1,0 +1,30 @@
+CONGELAMENTO VERIFICATO: 70 file, impronta complessiva aa6f6235d0f1554aa1158eb1f5b0b669393adc565df6448753ea2b514a89fbad, congelato il 2026-10-09T22:10:21Z sul commit 35ca622
+nullo 0: valido, né più veloce né più lento 1.001743190099228
+nullo 1: valido, né più veloce né più lento 1.0235971555540198
+nullo 2: valido, né più veloce né più lento 0.9865532562088942
+nullo 3: valido, né più veloce né più lento 1.0185065188081932
+nullo 4: valido, né più veloce né più lento 0.916780847652055
+nullo 5: valido, né più veloce né più lento 0.9980768413063212
+nullo 6: valido, né più veloce né più lento 1.0230239882050294
+nullo 7: valido, né più veloce né più lento 1.0052039339879353
+nullo 8: valido, né più veloce né più lento 1.0035405323833553
+nullo 9: valido, né più veloce né più lento 1.005996363142656
+nullo 10: valido, né più veloce né più lento 0.9995760324139362
+nullo 11: valido, né più veloce né più lento 0.9834737932814496
+nullo 12: valido, né più veloce né più lento 1.0093403633396616
+nullo 13: valido e più veloce 1.0265621256349584
+nullo 14: valido, né più veloce né più lento 1.0179472085317292
+nullo 15: valido, né più veloce né più lento 0.9976158856230836
+nullo 16: valido, né più veloce né più lento 1.0104596741563254
+nullo 17: valido, né più veloce né più lento 0.9969850155501186
+nullo 18: valido, né più veloce né più lento 0.9949724142553126
+nullo 19: valido, né più veloce né più lento 0.9992079489024415
+
+claude-opus-5-5 - corsa 1
+  iter 1: 11222+13525 token, 0.3154 $ — valido
+  iter 2: 11560+14230 token, 0.3308 $ — valido
+  iter 3: 11993+14089 token, 0.3298 $ — valido
+  iter 4: 12026+12737 token, 0.3028 $ — valido
+
+claude-sonnet-5 - corsa 1
+STOP: corsa claude-sonnet-5 n.1 interrotta (ReadError: [WinError 10054] Connessione in corso interrotta forzatamente dall'host remoto); spesa contata 1.27882 $ (limite inferiore): riconciliare con la console (N21)

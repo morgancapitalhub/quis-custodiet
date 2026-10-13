@@ -1,0 +1,32 @@
+{
+ "sessione": "20261010114446fe6846",
+ "corse_previste": [
+  [
+   "claude-sonnet-5",
+   1
+  ],
+  [
+   "claude-haiku-4-5-20251001",
+   1
+  ],
+  [
+   "claude-opus-5-5",
+   2
+  ]
+ ],
+ "id_verificati": {
+  "claude-sonnet-5": "claude-sonnet-5",
+  "claude-haiku-4-5-20251001": "claude-haiku-4-5-20251001",
+  "claude-opus-5-5": "claude-opus-5-5"
+ },
+ "spesa_prima_usd": 1.5,
+ "corse": [],
+ "candidati": [],
+ "non_avviate": [],
+ "precondizione": {
+  "passa": false,
+  "motivo": "precondizione non eseguibile (DockerTimeout: docker exec v5_osservatore_20261010114446fe6846 cat…: nessuna risposta entro 10 s)",
+  "minima_mediana": null
+ },
+ "esito": "rimandata: precondizione non superata, nessuna chiamata pagata"
+}

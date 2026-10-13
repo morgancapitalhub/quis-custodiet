@@ -1,0 +1,492 @@
+{
+ "sessione": "20261013093833d1aed7",
+ "corse_previste": [
+  [
+   "claude-haiku-4-5-20251001",
+   3
+  ],
+  [
+   "claude-sonnet-5",
+   3
+  ]
+ ],
+ "id_verificati": {
+  "claude-haiku-4-5-20251001": "claude-haiku-4-5-20251001",
+  "claude-sonnet-5": "claude-sonnet-5"
+ },
+ "spesa_prima_usd": 7.54519,
+ "corse": [
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 3,
+   "costo": 0.20774299999999998,
+   "completa": true,
+   "motivo_arresto": null,
+   "accelerazione_accettata_dev": 1.0,
+   "accelerazione_prodotta_dev": 1.0058372183684448,
+   "finale": {
+    "su_originale": false,
+    "finale_sintetico": {
+     "carico": "finale_sintetico",
+     "coppie": 8,
+     "protocollo": "5.1",
+     "costo": "finestra + CPU del container prima del pronto",
+     "picco_import": 12201984,
+     "picco_originale": 12652544.0,
+     "picco_candidato": 12738560.0,
+     "soglia_picco": 12744704.0,
+     "cpu_pre_pronto_orig_us": 237515.0,
+     "cpu_pre_pronto_cand_us": 221247.0,
+     "finestre_originale": [
+      4.5268488,
+      4.497829,
+      4.4911821,
+      4.4376046,
+      4.5295649,
+      4.4242416,
+      4.5238559,
+      4.541226
+     ],
+     "finestre_candidato": [
+      4.4657303,
+      4.8355511,
+      4.4257976,
+      4.5791241,
+      4.2864987,
+      4.5242266,
+      4.4839018,
+      4.4747514
+     ],
+     "cpu_pre_pronto_originale_us": [
+      291165,
+      239814,
+      243369,
+      215525,
+      192816,
+      311016,
+      235216,
+      217958
+     ],
+     "cpu_pre_pronto_candidato_us": [
+      242096,
+      194069,
+      259971,
+      221662,
+      213276,
+      239034,
+      220832,
+      216599
+     ],
+     "esito": "valido",
+     "accelerazione": 1.000953,
+     "piu_veloce": false,
+     "piu_lento": false,
+     "m": 0.004514,
+     "es": 0.056585,
+     "t": 0.079773,
+     "accelerazione_minima_distinguibile": 1.02826,
+     "bassa_sensibilita": false
+    },
+    "finale_fixture": {
+     "carico": "finale_fixture",
+     "coppie": 8,
+     "protocollo": "5.1",
+     "costo": "finestra + CPU del container prima del pronto",
+     "picco_import": 12201984,
+     "picco_originale": 12589056.0,
+     "picco_candidato": 12687360.0,
+     "soglia_picco": 12678041.6,
+     "cpu_pre_pronto_orig_us": 230158.0,
+     "cpu_pre_pronto_cand_us": 229124.5,
+     "finestre_originale": [
+      1.0554884,
+      1.1298439,
+      1.0808094,
+      1.1007522,
+      1.0345975,
+      0.9559073,
+      1.1023313,
+      1.1539863
+     ],
+     "finestre_candidato": [
+      1.0212121,
+      1.0970933,
+      1.055123,
+      1.0808548,
+      1.0999711,
+      1.1333341,
+      1.1642624,
+      1.015661
+     ],
+     "cpu_pre_pronto_originale_us": [
+      232778,
+      219595,
+      227538,
+      254665,
+      253379,
+      195712,
+      224967,
+      244590
+     ],
+     "cpu_pre_pronto_candidato_us": [
+      219090,
+      309872,
+      267357,
+      234872,
+      223377,
+      236240,
+      214530,
+      213377
+     ],
+     "esito": "memoria oltre il vincolo",
+     "bassa_sensibilita": false
+    }
+   },
+   "valutazioni_in_bassa_sensibilita": 0,
+   "bassa_sensibilita": false
+  },
+  {
+   "modello": "claude-sonnet-5",
+   "corsa": 3,
+   "costo": 1.105344,
+   "completa": true,
+   "motivo_arresto": null,
+   "accelerazione_accettata_dev": 1.0,
+   "accelerazione_prodotta_dev": 0.901566446940038,
+   "finale": {
+    "su_originale": false,
+    "finale_sintetico": {
+     "carico": "finale_sintetico",
+     "coppie": 8,
+     "protocollo": "5.1",
+     "costo": "finestra + CPU del container prima del pronto",
+     "picco_import": 12189696,
+     "picco_originale": 12722176.0,
+     "picco_candidato": 12730368.0,
+     "soglia_picco": 12818432.0,
+     "cpu_pre_pronto_orig_us": 232464.0,
+     "cpu_pre_pronto_cand_us": 217958.0,
+     "finestre_originale": [
+      4.3669353,
+      4.4027837,
+      4.3884787,
+      4.447346,
+      4.4731687,
+      4.5570597,
+      4.3802307,
+      4.3811556
+     ],
+     "finestre_candidato": [
+      4.9893661,
+      4.8888706,
+      5.0298836,
+      4.897123,
+      5.099966,
+      4.925623,
+      5.1340068,
+      5.0551229
+     ],
+     "cpu_pre_pronto_originale_us": [
+      225472,
+      255927,
+      213729,
+      230770,
+      234158,
+      222188,
+      236653,
+      237439
+     ],
+     "cpu_pre_pronto_candidato_us": [
+      221546,
+      204317,
+      248639,
+      198473,
+      236771,
+      213136,
+      214370,
+      223758
+     ],
+     "esito": "valido",
+     "accelerazione": 0.891638,
+     "piu_veloce": false,
+     "piu_lento": true,
+     "m": -0.565935,
+     "es": 0.049501,
+     "t": -11.432819,
+     "accelerazione_minima_distinguibile": 1.022416,
+     "bassa_sensibilita": false
+    },
+    "finale_fixture": {
+     "carico": "finale_fixture",
+     "coppie": 8,
+     "protocollo": "5.1",
+     "costo": "finestra + CPU del container prima del pronto",
+     "picco_import": 12218368,
+     "picco_originale": 12595200.0,
+     "picco_candidato": 12611584.0,
+     "soglia_picco": 12683673.6,
+     "cpu_pre_pronto_orig_us": 224459.5,
+     "cpu_pre_pronto_cand_us": 235039.5,
+     "finestre_originale": [
+      1.1356591,
+      1.0705448,
+      1.1350663,
+      1.1217614,
+      1.0703339,
+      1.152233,
+      1.0841988,
+      1.0121725
+     ],
+     "finestre_candidato": [
+      1.1870332,
+      1.1439794,
+      1.1757283,
+      1.1650403,
+      1.2069168,
+      1.1886391,
+      1.1605751,
+      1.2224803
+     ],
+     "cpu_pre_pronto_originale_us": [
+      245951,
+      224446,
+      195012,
+      224473,
+      221160,
+      224903,
+      229342,
+      217085
+     ],
+     "cpu_pre_pronto_candidato_us": [
+      271827,
+      218285,
+      227905,
+      220807,
+      242174,
+      246594,
+      252929,
+      219917
+     ],
+     "esito": "valido",
+     "accelerazione": 0.930711,
+     "piu_veloce": false,
+     "piu_lento": true,
+     "m": -0.098311,
+     "es": 0.020609,
+     "t": -4.770235,
+     "accelerazione_minima_distinguibile": 1.034352,
+     "bassa_sensibilita": false
+    }
+   },
+   "valutazioni_in_bassa_sensibilita": 0,
+   "bassa_sensibilita": false
+  }
+ ],
+ "candidati": [
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 3,
+   "ordine": 0,
+   "sha256": "1d7faf11363fda454cbdd1ac899ba045eae9b8921a0b066040b57f35b291824e"
+  },
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 3,
+   "ordine": 1,
+   "sha256": "2da5888b235f09f0950ceca0ad70085e18596a475a3082df507a5b78a0224f6e"
+  },
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 3,
+   "ordine": 2,
+   "sha256": "3cb8de99793b5f9d3890d9024e59fa137de5ec96fd520a572a5c669790cf230f"
+  },
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 3,
+   "ordine": 3,
+   "sha256": "d793a5435ea950adf964892acb8a55214dc0769575dc83878d5fa29a7ebd08d0"
+  },
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 3,
+   "ordine": 4,
+   "sha256": "1d7faf11363fda454cbdd1ac899ba045eae9b8921a0b066040b57f35b291824e"
+  },
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 3,
+   "ordine": 5,
+   "sha256": "1d7faf11363fda454cbdd1ac899ba045eae9b8921a0b066040b57f35b291824e"
+  },
+  {
+   "modello": "claude-sonnet-5",
+   "corsa": 3,
+   "ordine": 6,
+   "sha256": "5669bd39630635d9d9b5018a0c2fb3e17e18fc5099d95c1e06dcebd2af745f18"
+  },
+  {
+   "modello": "claude-sonnet-5",
+   "corsa": 3,
+   "ordine": 7,
+   "sha256": "da74baa94a1eba33879d4eb9073d04f973292d79efc82fc8181149b1563793b9"
+  },
+  {
+   "modello": "claude-sonnet-5",
+   "corsa": 3,
+   "ordine": 8,
+   "sha256": "540a61b1b10ba38536722301e7a62eaa545771c2f338e906cf6100e508ffc4d1"
+  },
+  {
+   "modello": "claude-sonnet-5",
+   "corsa": 3,
+   "ordine": 9,
+   "sha256": "540a61b1b10ba38536722301e7a62eaa545771c2f338e906cf6100e508ffc4d1"
+  },
+  {
+   "modello": "claude-sonnet-5",
+   "corsa": 3,
+   "ordine": 10,
+   "sha256": "540a61b1b10ba38536722301e7a62eaa545771c2f338e906cf6100e508ffc4d1"
+  }
+ ],
+ "non_avviate": [],
+ "precondizione": {
+  "passa": true,
+  "motivo": null,
+  "minima_mediana": 1.0257710808634362
+ },
+ "righe": [
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 3,
+   "iterazione": 1,
+   "token_ingresso": 8590,
+   "token_uscita": 8531,
+   "caratteri_ragionamento": 0,
+   "costo_usd": 0.05124,
+   "latenza_s": 228.7,
+   "esito": "valido",
+   "accelerazione_dev": 1.0058,
+   "t_dev": 0.933,
+   "picco_dev": 12711936.0,
+   "minima_distinguibile_dev": 1.0147972169939639,
+   "bassa_sensibilita": false
+  },
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 3,
+   "iterazione": 2,
+   "token_ingresso": 8612,
+   "token_uscita": 7888,
+   "caratteri_ragionamento": 0,
+   "costo_usd": 0.04805,
+   "latenza_s": 237.6,
+   "esito": "valido",
+   "accelerazione_dev": 0.976,
+   "t_dev": -1.337,
+   "picco_dev": 12724224.0,
+   "minima_distinguibile_dev": 1.042431549385691,
+   "bassa_sensibilita": false
+  },
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 3,
+   "iterazione": 3,
+   "token_ingresso": 8636,
+   "token_uscita": 9071,
+   "caratteri_ragionamento": 0,
+   "costo_usd": 0.05399,
+   "latenza_s": 249.3,
+   "esito": "valido",
+   "accelerazione_dev": 0.9318,
+   "t_dev": -3.816,
+   "picco_dev": 12738560.0,
+   "minima_distinguibile_dev": 1.04228730957288,
+   "bassa_sensibilita": false
+  },
+  {
+   "modello": "claude-haiku-4-5-20251001",
+   "corsa": 3,
+   "iterazione": 4,
+   "token_ingresso": 8660,
+   "token_uscita": 9159,
+   "caratteri_ragionamento": 0,
+   "costo_usd": 0.05446,
+   "latenza_s": 87.5,
+   "esito": "risultato diverso su carico nascosto",
+   "accelerazione_dev": null,
+   "t_dev": null,
+   "picco_dev": null,
+   "minima_distinguibile_dev": null,
+   "bassa_sensibilita": false
+  },
+  {
+   "modello": "claude-sonnet-5",
+   "corsa": 3,
+   "iterazione": 1,
+   "token_ingresso": 11220,
+   "token_uscita": 19932,
+   "caratteri_ragionamento": 0,
+   "costo_usd": 0.22176,
+   "latenza_s": 330.3,
+   "esito": "valido",
+   "accelerazione_dev": 0.88,
+   "t_dev": -7.178,
+   "picco_dev": 12730368.0,
+   "minima_distinguibile_dev": 1.039543396600968,
+   "bassa_sensibilita": false
+  },
+  {
+   "modello": "claude-sonnet-5",
+   "corsa": 3,
+   "iterazione": 2,
+   "token_ingresso": 11251,
+   "token_uscita": 32000,
+   "caratteri_ragionamento": 0,
+   "costo_usd": 0.3425,
+   "latenza_s": 302.5,
+   "esito": "nessun blocco python",
+   "accelerazione_dev": null,
+   "t_dev": null,
+   "picco_dev": null,
+   "minima_distinguibile_dev": null,
+   "bassa_sensibilita": false
+  },
+  {
+   "modello": "claude-sonnet-5",
+   "corsa": 3,
+   "iterazione": 3,
+   "token_ingresso": 11269,
+   "token_uscita": 19734,
+   "caratteri_ragionamento": 0,
+   "costo_usd": 0.21988,
+   "latenza_s": 322.2,
+   "esito": "valido",
+   "accelerazione_dev": 0.8825,
+   "t_dev": -24.038,
+   "picco_dev": 12720128.0,
+   "minima_distinguibile_dev": 1.0115625770743752,
+   "bassa_sensibilita": false
+  },
+  {
+   "modello": "claude-sonnet-5",
+   "corsa": 3,
+   "iterazione": 4,
+   "token_ingresso": 11302,
+   "token_uscita": 29860,
+   "caratteri_ragionamento": 0,
+   "costo_usd": 0.3212,
+   "latenza_s": 425.2,
+   "esito": "valido",
+   "accelerazione_dev": 0.9016,
+   "t_dev": -10.925,
+   "picco_dev": 12740608.0,
+   "minima_distinguibile_dev": 1.0213085525161691,
+   "bassa_sensibilita": false
+  }
+ ],
+ "spesa_dopo_usd": 8.85828,
+ "esito": "completata",
+ "durata_s": 2639
+}

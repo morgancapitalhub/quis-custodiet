@@ -1,0 +1,41 @@
+CONGELAMENTO VERIFICATO: 70 file, impronta complessiva aa6f6235d0f1554aa1158eb1f5b0b669393adc565df6448753ea2b514a89fbad, congelato il 2026-10-09T22:10:21Z sul commit 35ca622
+nullo 0: valido, né più veloce né più lento 1.0639013949351241
+nullo 1: valido, né più veloce né più lento 0.9977711348668477
+nullo 2: valido, né più veloce né più lento 0.9922374512638603
+nullo 3: valido, né più veloce né più lento 0.9928774265570997
+nullo 4: valido, né più veloce né più lento 1.0492603217281014
+nullo 5: valido, né più veloce né più lento 0.9993123895085253
+nullo 6: valido, né più veloce né più lento 1.0060170362314969
+nullo 7: valido, né più veloce né più lento 0.9920429908013765
+nullo 8: valido, né più veloce né più lento 1.0112081322339168
+nullo 9: valido, né più veloce né più lento 0.9972656023614568
+nullo 10: valido, né più veloce né più lento 0.9975604706776704
+nullo 11: valido, né più veloce né più lento 1.0044777323248997
+nullo 12: valido, né più veloce né più lento 1.010479264555197
+nullo 13: valido, né più veloce né più lento 0.9869798826060444
+nullo 14: valido, né più veloce né più lento 0.9984746942449297
+nullo 15: valido, né più veloce né più lento 0.9733671853613927
+nullo 16: valido, né più veloce né più lento 1.1271494991077342
+nullo 17: valido, né più veloce né più lento 1.0057981447893771
+nullo 18: valido, né più veloce né più lento 1.0037926031678963
+nullo 19: valido, né più veloce né più lento 1.0033592441853902
+
+claude-haiku-4-5-20251001 - corsa 3
+  iter 1: 8590+8531 token, 0.0512 $ — valido
+  iter 2: 8612+7888 token, 0.0481 $ — valido
+  iter 3: 8636+9071 token, 0.0540 $ — valido
+  iter 4: 8660+9159 token, 0.0545 $ — risultato diverso su carico nascosto
+
+claude-sonnet-5 - corsa 3
+  iter 1: 11220+19932 token, 0.2218 $ — valido
+  iter 2: 11251+32000 token, 0.3425 $ — nessun blocco python
+  iter 3: 11269+19734 token, 0.2199 $ — valido
+  iter 4: 11302+29860 token, 0.3212 $ — valido
+{
+ "sessione": "20261013093833d1aed7",
+ "esito": "completata",
+ "corse": 2,
+ "non_avviate": [],
+ "spesa_usd": 8.85828,
+ "fermato": null
+}
