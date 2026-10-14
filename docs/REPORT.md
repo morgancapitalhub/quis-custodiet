@@ -115,6 +115,8 @@ Le regole pre-registrate danno lo STOP scientifico: nessun risultato per B nel p
 
 **Finestra di esposizione (N29).** Lo STOP strategico di §5 si decide 90 giorni dopo la pubblicazione: serve almeno una riproduzione indipendente, tre contatti sostanziali da ricercatori o laboratori, oppure un uso esterno documentato. Inizio, fine, segnali e verdetto si registrano in `REGISTRO_ESPOSIZIONE.md`.
 
+La finestra va dal 13 ottobre 2026 all'11 gennaio 2027. **Deviazione dichiarata:** il repository è diventato pubblico il 13 ottobre alle 20:47:58 UTC, e N29 è stato scritto e congelato 67 minuti dopo, non prima come dice il suo testo. La deviazione è registrata in `REGISTRO_ESPOSIZIONE.md` e non cambia durata, segnali né soglie di §5.
+
 **Cosa direbbe la lettura letterale.** Le 6 divergenze letterali basterebbero per «continuare» secondo §6(ii) alla lettera. L'addendum, congelato il 13/10 alle 10:05 UTC prima del confronto, le esclude: sono differenze di scala e di rumore fra due misuratori, non casi in cui la v4 viene ingannata.
 
 **Eccezioni dichiarate prima dei risultati.**
@@ -276,6 +278,8 @@ On the pilot's 31 candidates, v4 and v5 agree on validity 31 times out of 31 and
 The pre-registered rules give the scientific STOP: no result for B in the pilot and no valid divergence in the comparison (`DECISIONE.md` §3(c), with N28). Under §4, what exists is published; the server replication is not needed, since it applied only to a met B and C.
 
 **Exposure window (N29).** The strategic STOP of §5 is decided 90 days after publication: it takes at least one independent reproduction, three substantial contacts from researchers or labs, or one documented external use. Start, end, signals and verdict are logged in `REGISTRO_ESPOSIZIONE.md`.
+
+The window runs from 13 October 2026 to 11 January 2027. **Declared deviation:** the repository became public on 13 October at 20:47:58 UTC, and N29 was written and frozen 67 minutes later, not before as its text says. The deviation is logged in `REGISTRO_ESPOSIZIONE.md` and does not change the duration, signals or thresholds of §5.
 
 **What the literal reading would say.** The 6 literal divergences would be enough to “continue” under §6(ii) taken literally. The addendum, frozen on 13/10 at 10:05 UTC before the comparison, excludes them: they are differences of scale and noise between two meters, not cases of v4 being fooled.
 
