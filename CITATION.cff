@@ -2,6 +2,8 @@ cff-version: 1.2.0
 message: "If you use this benchmark, its attack register or its report, please cite it as below."
 type: software
 title: "quis-custodiet: benchmark integrity for AI code optimization"
+version: "1.0"
+date-released: "2026-10-14"
 abstract: >-
   A pre-registered, adversarially tested benchmark for AI code optimization,
   with isolated measurement, documented attack limits, and a negative pilot

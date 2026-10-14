@@ -1,8 +1,8 @@
 # quis-custodiet — Benchmark v5: rapporto finale / final report
 
-13 ottobre 2026 / 13 October 2026 · Morgan ([@morgancapitalhub](https://github.com/morgancapitalhub))
+14 ottobre 2026 / 14 October 2026 · Morgan ([@morgancapitalhub](https://github.com/morgancapitalhub))
 
-> Licenza / Licence: questo rapporto è distribuito con licenza [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) (vedi / see [`LICENSE-REPORT.md`](../LICENSE-REPORT.md)). La cifra della spesa è provvisoria fino alla riconciliazione con la Console / The cost figure is provisional until reconciled with the Console.
+> Licenza / Licence: questo rapporto è distribuito con licenza [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) (vedi / see [`LICENSE-REPORT.md`](../LICENSE-REPORT.md)).
 
 # Parte I — Italiano
 
@@ -15,7 +15,7 @@ Il benchmark v5 si chiude con lo **STOP scientifico** pre-registrato: nessuna de
 - **Sensibilità.** Un miglioramento vero di circa 1,2× la v5 lo rileva 5 volte su 5 sia sul DEV sia sul finale fixture; supera la soglia di B 5 volte su 5 sul DEV e 4 su 5 sul fixture.
 - **Pilota.** 9 corse (Opus 5.5, Sonnet 5, Haiku 4.5, 3 corse ciascuno): nessuna soddisfa il criterio B, quindi neanche C.
 - **Confronto v4/v5.** 31 candidature rigiudicate. Correttezza: 31 esiti concordi su 31. Velocità: 6 candidature di Opus classificate diversamente rispetto alla soglia letterale, 25 concordi (2 respinte da entrambe). Divergenze valide secondo il criterio congelato: zero.
-- **Spesa.** 7,55 $ sulla Console fino al 12 ottobre; circa 8,86 $ con l'ultima sessione: dato provvisorio, non ancora riconciliato con la Console.
+- **Spesa.** 8,86 $ sulla Console dal 9 al 13 ottobre, riconciliata con il conteggio del client.
 - **Decisione.** `DECISIONE.md` §3(c) con N28: nessun risultato per B e nessuna divergenza valida, quindi STOP. Per §4 si pubblica ciò che c'è.
 
 ## Tesi e metodo
@@ -24,7 +24,7 @@ L'integrità della misura si ottiene **togliendo capacità al candidato**, non c
 
 **Regola madre.** Una difesa conta solo se l'attacco prima riesce su un riferimento vulnerabile (la v4, o una v5 indebolita che toglie *una* sola difesa), e poi viene bloccato o limitato sulla v5 vera.
 
-**Pre-registrazione.** Regole e criteri sono scritti prima dei dati in `REQUISITI_AGGIUNTI.md` (N1–N28) e in `DECISIONE.md`. Cinque congelamenti registrano le impronte di codice, documenti ed esiti; ogni sessione parte solo se la verifica del congelamento esce con 0.
+**Pre-registrazione.** Regole e criteri sono scritti prima dei dati in `REQUISITI_AGGIUNTI.md` (N1–N29) e in `DECISIONE.md`. Sei congelamenti registrano le impronte di codice, documenti ed esiti; ogni sessione parte solo se la verifica del congelamento esce con 0.
 
 **Criteri del pilota.**
 
@@ -113,6 +113,8 @@ Sulle 31 candidature del pilota, v4 e v5 concordano sulla validità 31 volte su 
 
 Le regole pre-registrate danno lo STOP scientifico: nessun risultato per B nel pilota e nessuna divergenza valida nel confronto (`DECISIONE.md` §3(c), con N28). Per §4 si pubblica ciò che c'è; la replica sul server non serve, perché valeva solo per un B e C soddisfatti.
 
+**Finestra di esposizione (N29).** Lo STOP strategico di §5 si decide 90 giorni dopo la pubblicazione: serve almeno una riproduzione indipendente, tre contatti sostanziali da ricercatori o laboratori, oppure un uso esterno documentato. Inizio, fine, segnali e verdetto si registrano in `REGISTRO_ESPOSIZIONE.md`.
+
 **Cosa direbbe la lettura letterale.** Le 6 divergenze letterali basterebbero per «continuare» secondo §6(ii) alla lettera. L'addendum, congelato il 13/10 alle 10:05 UTC prima del confronto, le esclude: sono differenze di scala e di rumore fra due misuratori, non casi in cui la v4 viene ingannata.
 
 **Eccezioni dichiarate prima dei risultati.**
@@ -132,7 +134,7 @@ Le regole pre-registrate danno lo STOP scientifico: nessun risultato per B nel p
 
 ## Spesa, incidenti operativi e riproducibilità
 
-Il pilota è costato 7,55 $ fino al 12 ottobre sulla Console; con l'ultima sessione il totale atteso è circa 8,86 $: è un dato provvisorio, non ancora riconciliato, che diventa definitivo solo con la cifra della Console. Il conteggio del client coincide con la Console al centesimo per le corse completate.
+Il pilota è costato 8,86 $ sulla Console, dal 9 al 13 ottobre. Il conteggio del client coincide con la Console al centesimo per le corse completate; la differenza, 1,06 $, sono le due interruzioni di Sonnet corsa 1 (0,22 $ il 9 ottobre e 0,84 $ il 10), addebitate ma mai ricevute dal client. La riconciliazione è in `pilota/esiti/RICONCILIAZIONE_FINALE.json`.
 
 | Giorno (UTC) | Console | Contato dal client | Differenza |
 | --- | --- | --- | --- |
@@ -140,7 +142,7 @@ Il pilota è costato 7,55 $ fino al 12 ottobre sulla Console; con l'ultima sessi
 | 10 ottobre | 0,84 $ | — | sessione interrotta senza file |
 | 11 ottobre | 2,61 $ | 2,61 $ | 0 |
 | 12 ottobre | 2,59 $ | 2,59 $ | 0 |
-| 13 ottobre | da leggere | 1,31 $ | — |
+| 13 ottobre | 1,31 $ | 1,31 $ | 0 |
 
 L'ipotesi che lo scarto venisse da token di ragionamento è smentita: il ragionamento registrato è 0 caratteri in tutte le 36 iterazioni. Il budget pre-registrato (100 €, entro il 19/11/2026, §4) è rispettato.
 
@@ -148,14 +150,15 @@ L'ipotesi che lo scarto venisse da token di ragionamento è smentita: il ragiona
 
 - Il limite di spesa di 25 $ del workspace dedicato non era attivo: le chiamate sono partite dal workspace `Default`. Ha protetto solo il tetto di 20 $ del codice.
 - Una sessione è stata lanciata con la chiave esportata nel terminale, fuori dalla subshell prevista. La chiave era già stata ruotata; la Console non mostra usi diversi dal pilota. A pilota finito va revocata anche la chiave rimasta attiva; si conservano le prove della rotazione e i dati d'uso della Console.
-- La riconciliazione della prima interruzione è stata fatta a mano, con una nota sbagliata; i file grezzi restano com'erano e la correzione va in un file separato.
+- La riconciliazione della prima interruzione è stata fatta a mano, con una nota sbagliata; i file grezzi restano com'erano e la correzione è in `pilota/esiti/RICONCILIAZIONE_FINALE.json`.
 
 **Riproducibilità.** Repository [morgancapitalhub/quis-custodiet](https://github.com/morgancapitalhub/quis-custodiet).
 
 | Elemento | Valore |
 | --- | --- |
-| Quinto congelamento | `fase5/CONGELAMENTO_5.json`, 118 file, impronta `049cc979a25c…`, commit `b611cbb` |
-| Commit chiave | `249c06c` quarto congelamento · `074967d` pilota · `382f3ff` quinto congelamento · `e8e7cc9` confronto |
+| Quinto congelamento | `fase5/CONGELAMENTO_5.json`, 118 file, impronta `049cc979a25c…`, commit `b611cbb`: quello sotto cui sono girati pilota e confronto |
+| Sesto congelamento | `fase5/CONGELAMENTO_6.json`, 118 file, impronta `3e2c708fee2f…`, commit `3380920`: aggiunge solo N29; è quello che oggi controlla `fase5/verifica_congelamento.py` |
+| Commit chiave | `249c06c` quarto congelamento · `074967d` pilota · `382f3ff` quinto congelamento · `e8e7cc9` confronto · `4d14d66` pubblicazione · `3380920` N29 |
 | Protocollo e oracolo | impronta `e796e339…`, manifest `eaf236b4…` |
 | Ambiente | Docker Desktop 4.93.0 (240920); Python dei container `b1b81d67…` (3.11); osservatore `294b683c…` |
 | Compito | tomli, commit `5a77b12a…`, `src/tomli/_parser.py` |
@@ -174,7 +177,7 @@ Benchmark v5 ends with its pre-registered **scientific STOP**: none of the known
 - **Sensitivity.** v5 detects a genuine improvement of about 1.2× 5 times out of 5 on both the DEV load and the fixture final; it clears the B threshold 5 of 5 on DEV and 4 of 5 on the fixture.
 - **Pilot.** 9 runs (Opus 5.5, Sonnet 5, Haiku 4.5, 3 runs each): none meets criterion B, so C is not met either.
 - **v4/v5 comparison.** 31 candidates re-judged. Correctness: 31 of 31 verdicts agree. Speed: 6 Opus candidates classified differently against the literal threshold, 25 in agreement (2 rejected by both). Valid divergences under the frozen criterion: zero.
-- **Cost.** USD 7.55 on the Console up to 12 October; about USD 8.86 with the last session: a provisional figure, not yet reconciled with the Console.
+- **Cost.** USD 8.86 on the Console from 9 to 13 October, reconciled with the client's count.
 - **Decision.** `DECISIONE.md` §3(c) with N28: no result for B and no valid divergence, hence STOP. Under §4, what exists is published.
 
 ## Thesis and method
@@ -183,7 +186,7 @@ Measurement integrity comes from **removing capabilities from the candidate**, n
 
 **The parent rule.** A defence counts only if the attack first succeeds on a vulnerable reference (v4, or a weakened v5 that removes *one* defence), and is then blocked or limited on the real v5.
 
-**Pre-registration.** Rules and criteria were written before the data, in `REQUISITI_AGGIUNTI.md` (N1–N28) and `DECISIONE.md`. Five freezes record the fingerprints of code, documents and results; a session starts only if the freeze check exits with 0.
+**Pre-registration.** Rules and criteria were written before the data, in `REQUISITI_AGGIUNTI.md` (N1–N29) and `DECISIONE.md`. Six freezes record the fingerprints of code, documents and results; a session starts only if the freeze check exits with 0.
 
 **Pilot criteria.**
 
@@ -272,6 +275,8 @@ On the pilot's 31 candidates, v4 and v5 agree on validity 31 times out of 31 and
 
 The pre-registered rules give the scientific STOP: no result for B in the pilot and no valid divergence in the comparison (`DECISIONE.md` §3(c), with N28). Under §4, what exists is published; the server replication is not needed, since it applied only to a met B and C.
 
+**Exposure window (N29).** The strategic STOP of §5 is decided 90 days after publication: it takes at least one independent reproduction, three substantial contacts from researchers or labs, or one documented external use. Start, end, signals and verdict are logged in `REGISTRO_ESPOSIZIONE.md`.
+
 **What the literal reading would say.** The 6 literal divergences would be enough to “continue” under §6(ii) taken literally. The addendum, frozen on 13/10 at 10:05 UTC before the comparison, excludes them: they are differences of scale and noise between two meters, not cases of v4 being fooled.
 
 **Exceptions declared before the results.**
@@ -291,7 +296,7 @@ The pre-registered rules give the scientific STOP: no result for B in the pilot 
 
 ## Cost, operational incidents and reproducibility
 
-The pilot cost USD 7.55 up to 12 October on the Console; with the last session the expected total is about USD 8.86: a provisional figure, not yet reconciled, that becomes final only with the Console figure. For completed runs the client's count matches the Console to the cent.
+The pilot cost USD 8.86 on the Console, from 9 to 13 October. For completed runs the client's count matches the Console to the cent; the difference, USD 1.06, is the two interruptions of Sonnet run 1 (USD 0.22 on 9 October and USD 0.84 on the 10th), billed but never received by the client. The reconciliation is in `pilota/esiti/RICONCILIAZIONE_FINALE.json`.
 
 | Day (UTC) | Console | Counted by the client | Difference |
 | --- | --- | --- | --- |
@@ -299,7 +304,7 @@ The pilot cost USD 7.55 up to 12 October on the Console; with the last session t
 | 10 October | USD 0.84 | — | interrupted session with no file |
 | 11 October | USD 2.61 | USD 2.61 | 0 |
 | 12 October | USD 2.59 | USD 2.59 | 0 |
-| 13 October | to be read | USD 1.31 | — |
+| 13 October | USD 1.31 | USD 1.31 | 0 |
 
 The hypothesis that the gap came from reasoning tokens is refuted: recorded reasoning is 0 characters in all 36 iterations. The pre-registered budget (EUR 100, by 19/11/2026, §4) is respected.
 
@@ -307,14 +312,15 @@ The hypothesis that the gap came from reasoning tokens is refuted: recorded reas
 
 - The USD 25 spend limit of the dedicated workspace was not in effect: calls went out from the `Default` workspace. Only the code's USD 20 cap protected the pilot.
 - One session was launched with the key exported in the terminal, outside the intended subshell. That key had already been rotated; the Console shows no use other than the pilot. With the pilot over, the key still active must be revoked too; the evidence of the rotation and the Console usage data are kept.
-- The first interruption was reconciled by hand, with a wrong note; the raw files stay as they were and the correction goes into a separate file.
+- The first interruption was reconciled by hand, with a wrong note; the raw files stay as they were and the correction is in `pilota/esiti/RICONCILIAZIONE_FINALE.json`.
 
 **Reproducibility.** Repository [morgancapitalhub/quis-custodiet](https://github.com/morgancapitalhub/quis-custodiet).
 
 | Item | Value |
 | --- | --- |
-| Fifth freeze | `fase5/CONGELAMENTO_5.json`, 118 files, fingerprint `049cc979a25c…`, commit `b611cbb` |
-| Key commits | `249c06c` fourth freeze · `074967d` pilot · `382f3ff` fifth freeze · `e8e7cc9` comparison |
+| Fifth freeze | `fase5/CONGELAMENTO_5.json`, 118 files, fingerprint `049cc979a25c…`, commit `b611cbb`: the one under which the pilot and the comparison ran |
+| Sixth freeze | `fase5/CONGELAMENTO_6.json`, 118 files, fingerprint `3e2c708fee2f…`, commit `3380920`: adds only N29; it is the one `fase5/verifica_congelamento.py` checks today |
+| Key commits | `249c06c` fourth freeze · `074967d` pilot · `382f3ff` fifth freeze · `e8e7cc9` comparison · `4d14d66` publication · `3380920` N29 |
 | Protocol and oracle | fingerprint `e796e339…`, manifest `eaf236b4…` |
 | Environment | Docker Desktop 4.93.0 (240920); container Python `b1b81d67…` (3.11); observer `294b683c…` |
 | Task | tomli, commit `5a77b12a…`, `src/tomli/_parser.py` |

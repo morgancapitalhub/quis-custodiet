@@ -5,8 +5,8 @@ corregge. Date in UTC. Regole: `REQUISITI_AGGIUNTI.md` N29.
 
 ## Inizio e fine
 
-- Repository reso pubblico: (da scrivere il giorno in cui diventa pubblico, data e ora UTC)
-- Fine della finestra (inizio + 90 giorni): (da scrivere insieme all'inizio)
+- Repository reso pubblico: 2026-10-13T22:01:05Z (fonte: API di GitHub, evento PublicEvent)
+- Fine della finestra (inizio + 90 giorni): 2027-01-11
 - Verdetto (entro 7 giorni dalla fine): (da scrivere)
 
 ## Segnali

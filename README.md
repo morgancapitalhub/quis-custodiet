@@ -14,7 +14,7 @@ The task is small and concrete: make the TOML parser of [tomli](https://github.c
 
 The question this repository is about is the judge, not the models. When the thing being measured is code written by the system being evaluated, that code can try to influence its own measurement: read the expected answers, patch the timer, recognise the test cases, leave state behind for the next run. This project builds a judge (**v5**) that tries to make that impossible by *removing capabilities* from the candidate, tests it against a register of known attacks, and records which defences were actually demonstrated and which were not.
 
-**Status: concluded.** The pre-registered decision rule gave a scientific STOP. The full bilingual report (Italian / English) is in [`docs/REPORT.md`](docs/REPORT.md).
+**Status: concluded.** The pre-registered decision rule gave a scientific STOP. The full bilingual report (Italian / English) is in [`docs/REPORT.md`](docs/REPORT.md). A 90-day exposure window runs from publication (`DECISIONE.md` §5, N29); its signals and final verdict are logged in [`REGISTRO_ESPOSIZIONE.md`](REGISTRO_ESPOSIZIONE.md).
 
 > Language note: most of the code, comments and pre-registration documents are in Italian. The report has a complete English part, and this README is in English.
 
@@ -28,7 +28,7 @@ The question this repository is about is the judge, not the models. When the thi
 | Pilot | 9 runs (Opus 5.5, Sonnet 5, Haiku 4.5; 3 runs each, 4 iterations per run): **no run met criterion B**, so criterion C was not met |
 | v4/v5 comparison | 31 pilot candidates re-judged by v4: correctness verdicts agree 31/31; **0 valid divergences** under the frozen criterion; 6 literal-only divergences, all speed-scale differences on Opus candidates |
 | Decision | `DECISIONE.md` §3(c) with N28: no result for B and no valid divergence → **STOP** |
-| Cost | USD 7.55 on the Anthropic Console through 12 October 2026; about USD 8.86 expected with the last session (provisional, not yet reconciled) |
+| Cost | USD 8.86 on the Anthropic Console, 9–13 October 2026, reconciled with the client's count (`pilota/esiti/RICONCILIAZIONE_FINALE.json`); pre-registered budget EUR 100 |
 
 Criterion B (N11, N18): a run's final product counts only if both final parts, synthetic and fixture, are valid, faster and above **1.1755×**, in a session whose noise precondition passed. The best run (Opus 5.5, run 1) reached 1.221× on the synthetic final but 1.076× on the fixture final.
 
@@ -61,7 +61,7 @@ A defence counts only if the attack **first succeeds on a vulnerable reference**
 
 ### Pre-registration and freezes
 
-Rules and criteria were written before the data, in `REQUISITI_AGGIUNTI.md` (N1–N28) and `DECISIONE.md`. Five freezes record domain-separated SHA-256 fingerprints of code, documents and results; a session starts only if `python fase5/verifica_congelamento.py` exits with 0. Deviations (for example the third attempt of Sonnet 5 run 1, against N21) are declared and reported separately rather than dropped.
+Rules and criteria were written before the data, in `REQUISITI_AGGIUNTI.md` (N1–N29) and `DECISIONE.md`. Six freezes record domain-separated SHA-256 fingerprints of code, documents and results; a session starts only if `python fase5/verifica_congelamento.py` exits with 0. Deviations (for example the third attempt of Sonnet 5 run 1, against N21) are declared and reported separately rather than dropped.
 
 ## Why this may be useful
 
@@ -78,7 +78,7 @@ If you build an evaluation harness that times model-written code, the attack reg
 
 What a third party **can** verify:
 
-- the freezes (`fase5/CONGELAMENTO_5.json`, 118 files, fingerprint `049cc979a25c…`, commit `b611cbb`);
+- the freezes: the fifth (`fase5/CONGELAMENTO_5.json`, 118 files, fingerprint `049cc979a25c…`, commit `b611cbb`) is the one under which the pilot and the comparison ran; the sixth (`fase5/CONGELAMENTO_6.json`, fingerprint `3e2c708fee2f…`, commit `3380920`) adds only N29 and is the one `fase5/verifica_congelamento.py` checks today;
 - the test files (`test_*.py`) next to the code;
 - the attack controls on the **public substitute final**;
 - the DEV-side v4/v5 comparison.
@@ -101,6 +101,8 @@ Practical notes:
 | `074967d` | pilot |
 | `382f3ff` | fifth freeze |
 | `e8e7cc9` | v4/v5 comparison |
+| `4d14d66` | publication files |
+| `3380920` | N29 (exposure window) and sixth freeze |
 
 ## Repository map
 
@@ -111,7 +113,8 @@ Practical notes:
 | `fase5/` | freezes and their checker, sensitivity controls |
 | `pilota/` | the pilot orchestrator, session results, candidate texts, spend records |
 | `red_team_v4/` | attacks written against v4 |
-| `REQUISITI_AGGIUNTI.md`, `DECISIONE.md` | pre-registered requirements N1–N28 and decision rule |
+| `REQUISITI_AGGIUNTI.md`, `DECISIONE.md` | pre-registered requirements N1–N29 and decision rule |
+| `REGISTRO_ESPOSIZIONE.md` | log of the 90-day exposure window: start, end, signals, verdict |
 | `docs/REPORT.md` | final report, Italian and English |
 
 ## How it was built

@@ -1,0 +1,161 @@
+{
+ "scritto_il": "2026-10-14",
+ "oggetto": "riconciliazione finale della spesa del pilota con la Console (DECISIONE.md §4); i file grezzi (spesa.json, sessione_*.json) restano invariati e questo file li corregge",
+ "fonti": {
+  "console_costi_csv": {
+   "nome": "claude_api_cost_2026_09_15_to_2026_10_14.csv",
+   "sha256": "7f68d0af3e0ce495827846843cbad6115badfc861139b011a6a1c89cd86346f2",
+   "nota": "righe arrotondate al centesimo; non pubblicato"
+  },
+  "console_token_csv": {
+   "nome": "claude_api_tokens_2026_09_15_to_2026_10_14.csv",
+   "sha256": "5949600113cdc3a0d2f2ddaca0bd748a65ff109ea2faf9c1c3b70e466b489e80",
+   "nota": "non pubblicato"
+  },
+  "client": "pilota/esiti/spesa.json, voci"
+ },
+ "prezzi_usd_per_milione_di_token": {
+  "claude-opus-5-5": {
+   "entrata": 4,
+   "uscita": 20
+  },
+  "claude-sonnet-5": {
+   "entrata": 2,
+   "uscita": 10
+  },
+  "claude-haiku-4-5-20251001": {
+   "entrata": 1,
+   "uscita": 5
+  },
+  "verifica": "token del CSV x questi prezzi = costo della Console in ogni giorno, al centesimo; nel CSV dei costi cost_usd = list_price_usd (nessuno sconto); nessun token di cache"
+ },
+ "giorni": [
+  {
+   "giorno_utc": "2026-10-09",
+   "console_usd_righe_arrotondate": 1.5,
+   "console_usd_da_token": 1.5015,
+   "client_usd": 1.27882,
+   "differenza_usd": 0.22268,
+   "token": {
+    "claude-opus-5-5": {
+     "entrata": 46801,
+     "uscita": 54581
+    },
+    "claude-sonnet-5": {
+     "entrata": 11220,
+     "uscita": 20024
+    }
+   },
+   "chiave_api": [
+    "anthropic"
+   ],
+   "nota": "Opus corsa 1 completata; la riga di Sonnet (11.220 token in entrata, 20.024 in uscita, 0,22 $) e' lo stream di Sonnet corsa 1 interrotto alle 22:20 UTC, addebitato ma mai ricevuto dal client"
+  },
+  {
+   "giorno_utc": "2026-10-10",
+   "console_usd_righe_arrotondate": 0.84,
+   "console_usd_da_token": 0.84146,
+   "client_usd": null,
+   "differenza_usd": 0.84146,
+   "token": {
+    "claude-sonnet-5": {
+     "entrata": 45057,
+     "uscita": 75135
+    }
+   },
+   "chiave_api": [
+    "keys"
+   ],
+   "nota": "sessione 202610101512218d9717 di Sonnet corsa 1, interrotta a mano, senza file di sessione: nessun conteggio del client"
+  },
+  {
+   "giorno_utc": "2026-10-11",
+   "console_usd_righe_arrotondate": 2.61,
+   "console_usd_da_token": 2.61161,
+   "client_usd": 2.6116,
+   "differenza_usd": 1e-05,
+   "token": {
+    "claude-haiku-4-5-20251001": {
+     "entrata": 34490,
+     "uscita": 34615
+    },
+    "claude-opus-5-5": {
+     "entrata": 46397,
+     "uscita": 52969
+    },
+    "claude-sonnet-5": {
+     "entrata": 45027,
+     "uscita": 106902
+    }
+   },
+   "chiave_api": [
+    "keys"
+   ],
+   "nota": ""
+  },
+  {
+   "giorno_utc": "2026-10-12",
+   "console_usd_righe_arrotondate": 2.59,
+   "console_usd_da_token": 2.59358,
+   "client_usd": 2.59357,
+   "differenza_usd": 1e-05,
+   "token": {
+    "claude-haiku-4-5-20251001": {
+     "entrata": 34498,
+     "uscita": 35259
+    },
+    "claude-opus-5-5": {
+     "entrata": 45080,
+     "uscita": 55906
+    },
+    "claude-sonnet-5": {
+     "entrata": 45042,
+     "uscita": 99426
+    }
+   },
+   "chiave_api": [
+    "keys"
+   ],
+   "nota": ""
+  },
+  {
+   "giorno_utc": "2026-10-13",
+   "console_usd_righe_arrotondate": 1.31,
+   "console_usd_da_token": 1.31309,
+   "client_usd": 1.31308,
+   "differenza_usd": 1e-05,
+   "token": {
+    "claude-haiku-4-5-20251001": {
+     "entrata": 34498,
+     "uscita": 34649
+    },
+    "claude-sonnet-5": {
+     "entrata": 45042,
+     "uscita": 101526
+    }
+   },
+   "chiave_api": [
+    "keys"
+   ],
+   "nota": ""
+  }
+ ],
+ "totali": {
+  "console_usd_da_token": 8.86124,
+  "console_usd_somma_righe_arrotondate": 8.85,
+  "client_usd": 7.79707,
+  "differenza_usd": 1.06417,
+  "spesa_json_spesa_usd": 8.85828,
+  "riportato_nel_rapporto": "8,86 $ / USD 8.86"
+ },
+ "correzioni": [
+  {
+   "file": "pilota/esiti/spesa.json",
+   "campo": "riconciliazione.nota",
+   "testo_sbagliato": "lo scarto e' la quota di token di ragionamento non inclusa nella stima del client",
+   "correzione": "lo scarto di 0,22 $ del 9 ottobre non viene da token di ragionamento (il ragionamento registrato e' 0 caratteri in tutte le 36 iterazioni): e' lo stream di Sonnet corsa 1 interrotto, addebitato dalla Console ma mai ricevuto dal client"
+  }
+ ],
+ "rotazione_chiave": "il 9 ottobre le chiamate usano la chiave chiamata 'anthropic', dal 10 al 13 ottobre quella chiamata 'keys' (colonna api_key dei CSV della Console)",
+ "budget": "100 EUR entro il 2026-11-19 (DECISIONE.md §4): rispettato"
+}
